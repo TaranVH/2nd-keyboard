@@ -18,7 +18,6 @@ Application
       Save As...	Ctrl+Shift+S
       Save a Copy...
       Revert
-      luke@linusmediagroup.com
          Sync Settings Now
          Last Sync: Jan 01, 13:34:21
          Use Settings from a Different Account...
