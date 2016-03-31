@@ -1,3 +1,8 @@
+NOTE:
+You can get the entire .kys file here:
+https://www.dropbox.com/s/stqlhhv6qsnbab3/taran%20premiere%202016.kys?dl=0
+You can load that straight into Premiere if you like. Or you can just peruse the shortcuts below and cherry-pick your favourites.
+
 Application
    File
       New
