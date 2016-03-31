@@ -11,7 +11,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; HELLO, poeple who want info about making a second keyboard! scroll down past all this crap until you get to "F24::"
 ; here's how the keyboard works with the F24 key: https://youtu.be/lIFE7h3m40U?t=16m9s
 ; so you also need LUAmacros as well, of course.
-
+; also, here you can see all of my code in action: https://www.youtube.com/user/TaranVH/videos
 
 ;[[[[[[[TRANSITIONS RECALLER]]]]]]]]]]]
 ;variable constants
