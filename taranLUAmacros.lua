@@ -1,17 +1,18 @@
--- assign logical name to macro keyboard
+-- get luamacros here: http://www.hidmacros.eu/
+-- plug in your 2nd keyboard, load this script into LUAmacros, and press the triangle PLAY button.
+-- Then, press any key on that keyboard to assign logical name ('MACROS') to macro keyboard
+-- When done this way, you have to reassign the name to your 2nd keyboard every time you open LUAmacros, using the play button located above.
+-- There may be a better, more permanent solution, but I don't know it.
 lmc_assign_keyboard('MACROS');
 
-taran = function (key)
-	--lmc_send_keys('{F24}')
-	print(key)
-	local file = io.open("C:\\Users\\TaranVanHemert\\Documents\\keypressed.txt", "w")
-	print("we are inside the text file")
-	--io.input(file)
-	file:write(key)
-	file:flush()
-	--print(file:read())
-	file:close()
-	lmc_send_keys('{F24}')
+sendToAHK = function (key)
+      print('It was assigned string:    ' .. key)
+      local file = io.open("C:\\Users\\TaranVanHemert\\Documents\\keypressed.txt", "w") -- writing this string to a text file on disk is probably NOT the best method. Feel free to program something better!
+      --print("we are inside the text file")
+      file:write(key)
+      file:flush()
+      file:close()
+      lmc_send_keys('{F24}')  -- using the F24 key to trigger AutoHotKey is probably NOT the best method. Feel free to program something better!
 end
 
 local config = {
@@ -63,9 +64,21 @@ local config = {
 	[103] = "num7",
 	[104] = "num8",
 	[105] = "num9",
-	[111] = "numDiv",
+
 	[106] = "numMult",
-	
+        [107] = "numDelete",
+        -- 108 is unknown...?
+	[109] = "numMult",
+        [110] = "numDelete",
+	[111] = "numDiv",
+        [144] = "numLock", --probably it is best to avoid this key. I keep numlock ON, or it has unexpected effects
+
+        [192] = "`",  --this is the tilde key just before the number row
+        [9]   = "tab",
+        [20]  = "capslock",
+        [18]  = "alt",
+
+
 	[string.byte('Q')] = "q",
 	[string.byte('W')] = "w",
 	[string.byte('E')] = "e",
@@ -92,30 +105,31 @@ local config = {
 	[string.byte('B')] = "b",
 	[string.byte('N')] = "n",
 	[string.byte('M')] = "m",
-	
-	
+
+        [string.byte('0')] = "0",
 	[string.byte('1')] = "1",
 	[string.byte('2')] = "2",
 	[string.byte('3')] = "3",
 	[string.byte('4')] = "4",
 	[string.byte('5')] = "5",
-	
-	
-	[255] = "printscreen"
+        [string.byte('6')] = "6",
+        [string.byte('7')] = "7",
+        [string.byte('8')] = "8",
+        [string.byte('9')] = "9",
+
+	--[255] = "printscreen" --these keys do not work
 }
 
 -- define callback for whole device
 lmc_set_handler('MACROS', function(button, direction)
-	if (direction == 1) then return end  -- ignore down
-	--if     (button == string.byte('C')) then lmc_spawn("calc")
-	--elseif (button == string.byte('9')) then lmc_spawn("notepad", "C:\\test.txt")
-	-- elseif (button == 9) then lmc_spawn("calc") --tab
-	-- elseif (button == string.byte('0')) then lmc_spawn("notepad", "C:\\Users\\TaranVanHemert\\Documents\\testy.txt")
-	-- elseif (button == string.byte('H')) then lmc_send_keys('Hello world')
+	if (direction == 1) then return end  -- ignore down -- I believe this also has the effect of neutralizing the modifier keys, unfortunately. Not optimal.
 
 	if type(config[button]) == "string" then
-		taran(config[button])
+                print(' ')
+                print('Your key ID number is:   ' .. button)
+		sendToAHK(config[button])
 	else
-		print('Not yet assigned: ' .. button)
+                print(' ')
+                print('Not yet assigned: ' .. button)
 	end
 end)
