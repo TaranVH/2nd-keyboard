@@ -9,14 +9,6 @@ Process, Priority, , High ;----I don't know what this is or what it does or if I
 
 
 
-
-
-
-
-
-
-
-
 #IfWinActive ahk_exe explorer.exe
 
 `::
@@ -27,6 +19,17 @@ Return
 #IfWinActive
 ; everything below this line can now be used outside of premiere
 
+; Untested bit to create directories if needed
+; Also we can use %Path% and %Exec% now
+Path = "c:\Users\" . %A_UserName% . "\Downloads\Taran extra keyboards\insideclipboard\clipboards\"
+if(!InStr(FileExist(%Path%), "D"))
+  FileCreateDir, %Path%
+Exec = "C:\InsideClipboard.exe"
+if(!FileExist(%Exec%)){
+  ; If InsideClipboard isn't installed exit
+  msgBox, "Missing InsideClipboard"
+  ExitApp, 1
+}
 
 ;((((((((((((THREE EXTRA CLIPBOARDS))))))))))))))))))));
 ;COPYING
@@ -35,9 +38,9 @@ sleep 10
 ClipWait, 0.25
 Send ^c
 sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /saveclp "clip1.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+RunWait, %comspec% /c %Exec% /saveclp "clip1.clp", %Path%
 sleep 16
-;C:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards
+;C:\Users\%A_UserName%\Downloads\Taran extra keyboards\insideclipboard\clipboards
 Return
 
 ^!+F2::
@@ -45,7 +48,7 @@ sleep 10
 ClipWait, 0.25
 Send ^c
 sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /saveclp "clip2.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+RunWait, %comspec% /c %Exec% /saveclp "clip2.clp", %Path%
 sleep 16
 Return
 
@@ -54,7 +57,7 @@ sleep 10
 ClipWait, 0.25
 Send ^c
 sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /saveclp "clip3.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+RunWait, %comspec% /c %Exec% /saveclp "clip3.clp", %Path%
 sleep 16
 Return
 
@@ -63,9 +66,9 @@ Return
 
 ^!F1::
 ;RunWait, %comspec% /c C:\woosh.bat, c:\
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip1.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+RunWait, %comspec% /c %Exec% /loadclp "clip1.clp", %Path%
 sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip1.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+RunWait, %comspec% /c %Exec% /loadclp "clip1.clp", %Path%
 sleep 20 ;it does this twice because for some reason if you do it only once, it only works like 30% of the time. durrrr.
 SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
 sleep 20
@@ -76,9 +79,9 @@ Return
 
 ^!F2::
 ;RunWait, %comspec% /c C:\bleep.bat, c:\
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip2.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+RunWait, %comspec% /c %Exec% /loadclp "clip2.clp", %Path%
 sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip2.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+RunWait, %comspec% /c %Exec% /loadclp "clip2.clp", %Path%
 sleep 20
 SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
 sleep 20
@@ -90,9 +93,9 @@ Return
 ;msgbox you pressed Ctrl shift alt 3 = POP sound!
 ;clipboard = ; clear the clipboard
 ;RunWait, %comspec% /c C:\pop.bat, c:\
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip3.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+RunWait, %comspec% /c %Exec% /loadclp "clip3.clp", %Path%
 sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip3.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+RunWait, %comspec% /c %Exec% /loadclp "clip3.clp", %Path%
 sleep 20
 SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
 sleep 20
@@ -105,20 +108,6 @@ Return
 ;If you don't have macro buttons on your keyboard, you can use the function keys instead!
 
 ;((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
