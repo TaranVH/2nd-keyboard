@@ -1,0 +1,11 @@
+file_path = "E:\\Users\\zurbo\\Desktop\\lolmacro\\keypressed.txt"; -- if false the script will pass the keypress via command line arguments
+layout_file = "TARAN.lyt"; -- you can customize your layout if false the script will pass numerical value to AHK
+toggle_modifiers = true; -- if true you can use modifier key to have more macros
+differ_pause_prtscr = true; -- if true the script will try to catch difference between prtscr and pause
+toggle_specials_keys_repeat = true; -- if true the script will resend the key when pressed
+special = {
+    [20]  = function () lmc_send_keys("{CAPSLOCK}") end,
+    [144] = function () lmc_send_keys("{NUMLOCK}") end, -- this does not work ... i don't know why :'(
+    [145] = function () lmc_send_keys("{SCROLLLOCK}") end
+};
+nb_macros_kb = 1; -- not used for the moment
