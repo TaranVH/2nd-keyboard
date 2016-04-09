@@ -2,9 +2,9 @@ function file_exist(name) -- a simple fonction to test if a file exist
 	local file=io.open(name,"r");
 	if (file ~= nil) then
 		io.close(file);
-		return true;
+		return (true);
 	else
-		return false;
+		return (false);
 	end;
 end;
 
@@ -30,11 +30,11 @@ end;
 
 function assign_keyboard(n)
 	if (nb_macros_kb == 1) then
-		local name = "MACROS";
-		local kb = "";
+		name = "MACROS";
+		kb = "";
 	else
-		local name = "MACROS" .. n;
-		local kb = "kb" .. n .. "+";
+		name = "MACROS" .. n;
+		kb = "kb" .. n .. "+";
 	end;
 	if (keyboards[n]) then
 		lmc_device_set_name(name, keyboards[n]);
@@ -43,7 +43,6 @@ function assign_keyboard(n)
 	end;
 	local mod_key = "";
 	lmc_set_handler(name, function(button, direction)
-		print(button .. ' + '..  direction);
 		if (direction == 1 and toggle_modifiers and modifiers[button]) then
 			mod_key = modifiers[button];
 		elseif (direction == 0 and toggle_modifiers and modifiers[button]) then
