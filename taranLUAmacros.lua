@@ -11,9 +11,9 @@ end;
 function sendToAHK(key, button)
 	print("you pressed the key ID: " .. button)
 	print("It was assigned string: " .. key);
-	if (use_command) then --if you prefer to passes the keypress though command line arguments the send_keypress in the options file should be the command you want to execute
+	if (use_command == true) then --if you prefer to passes the keypress though command line arguments the send_keypress in the options file should be the command you want to execute
 		os.execute(send_keypress .. key);
-	else -- else send_keypress should be an ABSOLUTE path to the file containing the keypress
+	else --else send_keypress should be an ABSOLUTE path to the file containing the keypress
 		local file = io.open(send_keypress, "w");
 		file:write(key);
 		file:flush();
@@ -106,13 +106,13 @@ if (layout_file and file_exist(path .. "layouts\\" .. layout_file)) then
 else
 	layout_file = false;
 end;
-if (minimize) then
-	lmc.minimizeToTray = true;
-	lmc_minimize();
-end;
 local i = 0;
 while (i < nb_macros_kb) do
 	i = i + 1;
 	assign_keyboard(i);
 end;
 lmc_print_devices();
+if (minimize) then
+	lmc.minimizeToTray = true;
+	lmc_minimize();
+end;
