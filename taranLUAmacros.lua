@@ -30,17 +30,19 @@ end;
 
 function assign_keyboard(n)
 	if (nb_macros_kb == 1) then
-		str = "MACROS";
+		local name = "MACROS";
+		local kb = "";
 	else
-		str = "MACROS" .. n;
+		local name = "MACROS" .. n;
+		local kb = "kb" .. n .. "+";
 	end;
 	if (keyboards[n]) then
-		lmc_device_set_name(str, keyboards[n]);
+		lmc_device_set_name(name, keyboards[n]);
 	else
-		lmc_assign_keyboard(str);
+		lmc_assign_keyboard(name);
 	end;
 	local mod_key = "";
-	lmc_set_handler(str, function(button, direction)
+	lmc_set_handler(name, function(button, direction)
 		print(button .. ' + '..  direction);
 		if (direction == 1 and toggle_modifiers and modifiers[button]) then
 			mod_key = modifiers[button];
@@ -49,9 +51,9 @@ function assign_keyboard(n)
 		elseif (direction == 0 and differ_pause_prtscr and difference[button]) then
 			local key = difference[button];
 			if (mod_key ~= "") then
-				sendToAHK(mod_key .. "+" .. key, button);
+				sendToAHK(kb .. mod_key .. "+" .. key, button);
 			else
-				sendToAHK(key, button);
+				sendToAHK(kb .. key, button);
 			end;
 		elseif (direction == 0 and ((not layout_file) or layout[button]) and ((not toggle_modifiers) or (not modifiers[button])) and ((not differ_pause_prtscr) or button ~= 255)) then
 			local key = button;
@@ -59,9 +61,9 @@ function assign_keyboard(n)
 				key = layout[button];
 			end;
 			if (mod_key ~= "") then
-				sendToAHK(mod_key .. "+" .. key, button);
+				sendToAHK(kb .. mod_key .. "+" .. key, button);
 			else
-				sendToAHK(key, button);
+				sendToAHK(kb .. key, button);
 			end;
 			if (toggle_specials_keys_repeat and special[button]) then
 				special[button]();
