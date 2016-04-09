@@ -1,6 +1,6 @@
 send_keypress = "E:\\Users\\zurbo\\Desktop\\lolmacro\\keypressed.txt"; --absolute path to the file containing keypress OR command to execute if use_command is true
 use_command = false; --if true the script will pass the keypress though command line arguments
-layout_file = "QWERTY_US.lyt"; --layout file to use (you can create a new layout in the "layouts" folder)
+layout_file = "QWERTY_US.lyt"; --layout file to use (you can create a new layout in the "layouts" folder) if false the script will pass number to AHK
 toggle_modifiers = false; --if false the script will catch modifier key as a normal key
 differ_pause_prtscr = false; --if false the script will not send any difference between the prtscr key and pause key
 toggle_specials_keys_repeat = false; --if true the script will repeat keys like capslock when pressed
