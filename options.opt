@@ -1,11 +1,12 @@
-file_path = "E:\\Users\\zurbo\\Desktop\\lolmacro\\keypressed.txt"; -- if false the script will pass the keypress via command line arguments
-layout_file = "TARAN.lyt"; -- you can customize your layout if false the script will pass numerical value to AHK
-toggle_modifiers = true; -- if true you can use modifier key to have more macros
-differ_pause_prtscr = true; -- if true the script will try to catch difference between prtscr and pause
-toggle_specials_keys_repeat = true; -- if true the script will resend the key when pressed
-special = {
-    [20]  = function () lmc_send_keys("{CAPSLOCK}") end,
-    [144] = function () lmc_send_keys("{NUMLOCK}") end, -- this does not work ... i don't know why :'(
-    [145] = function () lmc_send_keys("{SCROLLLOCK}") end
+send_keypress = "E:\\Users\\zurbo\\Desktop\\lolmacro\\keypressed.txt"; --absolute path to the file containing keypress OR command to execute if use_command is true
+use_command = false; --if true the script will pass the keypress though command line arguments
+layout_file = "QWERTY_US.lyt"; --layout file to use (you can create a new layout in the "layouts" folder)
+toggle_modifiers = false; --if false the script will catch modifier key as a normal key
+differ_pause_prtscr = false; --if false the script will not send any difference between the prtscr key and pause key
+toggle_specials_keys_repeat = false; --if true the script will repeat keys like capslock when pressed
+nb_macros_kb = 1; --number of macro keyboard you want to use
+minimize = false; --if true the script will minimize into tray
+keyboards = { --you can add here your keyboard config
+	--[1] = "DX keyboard string for keyboard 1",
+	--[2] = "DX keyboard string for keyboard 2"
 };
-nb_macros_kb = 1; -- not used for the moment
