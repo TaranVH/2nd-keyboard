@@ -13,7 +13,9 @@ Either follow the instructions below or have a [watch the video](https://youtu.b
 2. Plug in both keyboards.
 3. Run LuaMacros and open `quickstart.lua`
 4. Click on the "play" button, wait for the identification window to pop up and press any key on your 2nd keyboard.
-5. Download and run `Transitions, Effects, and 2nd keyboard functions.ahk` or use it to write your own shortcut script.
+5. Run `taranLUAmacros.lua` in LuaMacros
+6. Press any key on your second keyboard
+7. Download and run `Transitions, Effects, and 2nd keyboard functions.ahk` or use it to write your own shortcut script.
 
 ### You're good to go!
 
