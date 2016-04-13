@@ -66,6 +66,7 @@ load(int) {
 	loadFromFile("clip" . int . ".clp")
 	sleep 20
 	loadFromFile("clip" . int . ".clp")
+	msgbox, "clip" . int . ".clp"
 	sleep 20 ;it does this twice because for some reason if you do it only once, it only works like 30% of the time. durrrr.
 	SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
 	sleep 20
@@ -75,11 +76,11 @@ load(int) {
 }
 
 saveToFile(name) {
-	RunWait, %comspec% /c C:\InsideClipboard.exe /saveclp name, c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+	RunWait, %comspec% /c C:\InsideClipboard.exe /saveclp %name%, c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
 }
 
 loadFromFile(name) {
-	RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp name, c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+	RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp %name%, c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
 }
 
 
