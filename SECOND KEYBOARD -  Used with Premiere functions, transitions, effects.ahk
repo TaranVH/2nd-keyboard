@@ -11,7 +11,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; HELLO, poeple who want info about making a second keyboard! scroll down past all this crap until you get to "F24::"
 ; here's how the keyboard works with the F24 key: https://youtu.be/lIFE7h3m40U?t=16m9s
 ; so you also need LUAmacros as well, of course.
-; also, here you can see all of my code in action: https://www.youtube.com/user/TaranVH/videos
+
 
 ;[[[[[[[TRANSITIONS RECALLER]]]]]]]]]]]
 ;variable constants
@@ -582,12 +582,12 @@ else if (track = 0)
 	;msgbox, this is for the left audio track
 }
 Send ^!a ;control alt a --- ; audio channels shortcut - dont use this anywhere else please
-sleep 350
+sleep 500
 CoordMode, Mouse, Screen
 CoordMode, Pixel, Screen
 MouseGetPos, xPosAudio, yPosAudio
 MouseMove, 1786 + addPixels, 880, 0
-sleep 10
+sleep 50
 MouseGetPos, Xkolor, Ykolor
 sleep 50
 PixelGetColor, kolor, %Xkolor%, %Ykolor%
@@ -605,9 +605,9 @@ else if (kolor = "0xDDDDDD")
 }
 sleep 5
 MouseMove, 1789 + addPixels, 914, 0
-sleep 14
+sleep 30
 MouseGetPos, Xkolor2, Ykolor2
-sleep 20
+sleep 10
 PixelGetColor, k2, %Xkolor2%, %Ykolor2%
 sleep 30
 If (k2 = "0x080808")
@@ -627,4 +627,11 @@ BlockInput, MouseMoveOff ;return mouse control to the user.
 } ; monomaker
 
 
+;The optional script below allows you to use the TILDE to go DOWN one folder level in explorer
+#IfWinActive ahk_exe explorer.exe
 
+`::
+Send !{up}
+Return
+
+#IfWinActive
