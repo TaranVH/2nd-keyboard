@@ -6,17 +6,6 @@ Process, Priority, , High ;----I don't know what this is or what it does or if I
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
-
-
-
-
-
-
-
-
-
-
-
 #IfWinActive ahk_exe explorer.exe
 
 `::
@@ -31,73 +20,30 @@ Return
 ;((((((((((((THREE EXTRA CLIPBOARDS))))))))))))))))))));
 ;COPYING
 ^!+F1::
-sleep 10
-ClipWait, 0.25
-Send ^c
-sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /saveclp "clip1.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
-sleep 16
-;C:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards
+copy(1)
 Return
 
 ^!+F2::
-sleep 10
-ClipWait, 0.25
-Send ^c
-sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /saveclp "clip2.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
-sleep 16
+copy(2)
 Return
 
 ^!+F3::
-sleep 10
-ClipWait, 0.25
-Send ^c
-sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /saveclp "clip3.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
-sleep 16
+copy(3)
 Return
 
 
 ;PASTING;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ^!F1::
-;RunWait, %comspec% /c C:\woosh.bat, c:\
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip1.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
-sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip1.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
-sleep 20 ;it does this twice because for some reason if you do it only once, it only works like 30% of the time. durrrr.
-SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
-sleep 20
-ClipWait, 0.25
-SendInput, {v Up}{Ctrl Up}
-sleep 10
+load(1)
 Return
 
 ^!F2::
-;RunWait, %comspec% /c C:\bleep.bat, c:\
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip2.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
-sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip2.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
-sleep 20
-SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
-sleep 20
-ClipWait, 0.25
-SendInput, {v Up}{Ctrl Up}
+load(2)
 Return
 
 ^!F3::
-;msgbox you pressed Ctrl shift alt 3 = POP sound!
-;clipboard = ; clear the clipboard
-;RunWait, %comspec% /c C:\pop.bat, c:\
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip3.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
-sleep 20
-RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp "clip3.clp", c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
-sleep 20
-SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
-sleep 20
-ClipWait, 0.25
-SendInput, {v Up}{Ctrl Up}
+load(3)
 Return
 
 ;I have assigned all three of these shortcuts to one of my 3-key techkeys keyboards.
@@ -107,20 +53,34 @@ Return
 ;((((((((((((((((((((((((((((())))))))))))))))))))))))))))))))))))))))))))))))))))))))))))
 
 
+copy(int) {
+	sleep 10
+	ClipWait, 0.25
+	Send ^c
+	sleep 20
+	saveToFile("clip" . int . ".clp")
+	sleep 16
+}
 
+load(int) {
+	loadFromFile("clip" . int . ".clp")
+	sleep 20
+	loadFromFile("clip" . int . ".clp")
+	sleep 20 ;it does this twice because for some reason if you do it only once, it only works like 30% of the time. durrrr.
+	SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
+	sleep 20
+	ClipWait, 0.25
+	SendInput, {v Up}{Ctrl Up}
+	sleep 10
+}
 
+saveToFile(name) {
+	RunWait, %comspec% /c C:\InsideClipboard.exe /saveclp name, c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+}
 
-
-
-
-
-
-
-
-
-
-
-
+loadFromFile(name) {
+	RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp name, c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
+}
 
 
 ;control alt shift T -- click on the address bar for any youtube video, and this will link you to the thumbnail!
