@@ -81,7 +81,7 @@ Scroll:
 
 		MouseClick %A_ThisHotkey%
 	}
-	return
+return
 
 Quit:
 	QuickToolTip("Exiting Accelerated Scrolling...", 1000)

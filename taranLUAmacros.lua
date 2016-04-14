@@ -125,11 +125,11 @@ lmc_set_handler('MACROS', function(button, direction)
 	if (direction == 1) then return end  -- ignore down -- I believe this also has the effect of neutralizing the modifier keys, unfortunately. Not optimal.
 
 	if type(config[button]) == "string" then
-                print(' ')
-                print('Your key ID number is:   ' .. button)
+		print(' ')
+		print('Your key ID number is:   ' .. button)
 		sendToAHK(config[button])
 	else
-                print(' ')
-                print('Not yet assigned: ' .. button)
+		print(' ')
+		print('Not yet assigned: ' .. button)
 	end
 end)
