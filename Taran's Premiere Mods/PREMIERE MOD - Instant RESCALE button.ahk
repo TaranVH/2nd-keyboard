@@ -11,9 +11,10 @@ noTip:
 return
 
 
+
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
- 
- 
+
 ;EFFECT CONTROLS PANEL ---TRANSFORM ICON CLICKER
 F5::
 Tippy("transform icon - F5")
@@ -73,7 +74,7 @@ MouseClick, left
 }
 
 
-
+;;;INSTANT RESCALE MOD;;;
 mButton::
 global scaleKey = "mButton"
 dontrestart = 0
@@ -223,16 +224,6 @@ else
 
 ;;;--------------------------------------------------------------------------------------------
 
-
-;code to locate an invisible cursor
-; F7::
-; Loop
-; {
-; tooltip, cursor, , ,3
-; sleep 20
-; }
-;F7 Up::tooltip, , , ,3
-return
 
 
 #IfWinActive ; PREMIERE END

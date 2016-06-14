@@ -581,7 +581,7 @@ else if (track = 0)
 	addPixels = 0
 	;msgbox, this is for the left audio track
 }
-Send ^!a ;control alt a --- ; audio channels shortcut - dont use this anywhere else please
+Send ^!+a ;control alt shift a --- ; audio channels shortcut in premiere - dont use this anywhere else please
 sleep 500
 CoordMode, Mouse, Screen
 CoordMode, Pixel, Screen
@@ -626,12 +626,3 @@ BlockInput, off
 BlockInput, MouseMoveOff ;return mouse control to the user.
 } ; monomaker
 
-
-;The optional script below allows you to use the TILDE to go DOWN one folder level in explorer
-#IfWinActive ahk_exe explorer.exe
-
-`::
-Send !{up}
-Return
-
-#IfWinActive

@@ -6,11 +6,11 @@
 lmc_assign_keyboard('MACROS');
 
 sendToAHK = function (key)
-      print('It was assigned string:    ' .. key)
+      --print('It was assigned string:    ' .. key)
       local file = io.open("C:\\Users\\TaranVanHemert\\Documents\\keypressed.txt", "w") -- writing this string to a text file on disk is probably NOT the best method. Feel free to program something better!
       --print("we are inside the text file")
       file:write(key)
-      file:flush()
+      file:flush() --"flush" means "save"
       file:close()
       lmc_send_keys('{F24}')  -- using the F24 key to trigger AutoHotKey is probably NOT the best method. Feel free to program something better!
 end
@@ -127,7 +127,8 @@ lmc_set_handler('MACROS', function(button, direction)
 	if type(config[button]) == "string" then
                 print(' ')
                 print('Your key ID number is:   ' .. button)
-		sendToAHK(config[button])
+				print('It was assigned string:    ' .. config[button])
+				sendToAHK(config[button])
 	else
                 print(' ')
                 print('Not yet assigned: ' .. button)
