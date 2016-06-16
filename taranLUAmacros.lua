@@ -1,9 +1,24 @@
 -- get luamacros here: http://www.hidmacros.eu/
 -- plug in your 2nd keyboard, load this script into LUAmacros, and press the triangle PLAY button.
--- Then, press any key on that keyboard to assign logical name ('MACROS') to macro keyboard
--- When done this way, you have to reassign the name to your 2nd keyboard every time you open LUAmacros, using the play button located above.
--- There may be a better, more permanent solution, but I don't know it.
-lmc_assign_keyboard('MACROS');
+
+local config_file = "config.txt"
+
+-- Attempt to map the keyboard config file if it exists
+local config = io.open(config_file, "r")
+if(config ~= nil) then
+  local device_string = config:read()
+  if(device_string ~= nil and device_string ~= '') then
+    lmc_device_set_name('MACROS', device_string)
+  end
+  config:close()
+end
+
+lmc_assign_keyboard('MACROS')
+
+if(config == nil) then
+  print("To assign this keyboard automatically, copy a unique portion of the string from the line labelled MACROS (such as the VID_XXXX or PID_XXXX value) and save it to "..config_file..":")
+  lmc_print_devices()
+end 
 
 sendToAHK = function (key)
       print('It was assigned string:    ' .. key)
