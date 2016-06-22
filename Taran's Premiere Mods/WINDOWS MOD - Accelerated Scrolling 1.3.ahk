@@ -42,60 +42,60 @@ WheelDown::  Goto Scroll
 #WheelDown:: Goto Quit
 
 Scroll:
-	t := A_TimeSincePriorHotkey
-	if (A_PriorHotkey = A_ThisHotkey && t < timeout)
-	{
-		; Remember how many times we've scrolled in the current direction
-		distance++
+    t := A_TimeSincePriorHotkey
+    if (A_PriorHotkey = A_ThisHotkey && t < timeout)
+    {
+        ; Remember how many times we've scrolled in the current direction
+        distance++
 
-		; Calculate acceleration factor using a 1/x curve
-		v := (t < 80 && t > 1) ? (250.0 / t) - 1 : 1
+        ; Calculate acceleration factor using a 1/x curve
+        v := (t < 80 && t > 1) ? (250.0 / t) - 1 : 1
 
-		; Apply boost
-		if (boost > 1 && distance > boost)
-		{
-			; Hold onto the highest speed we've achieved during this boost
-			if (v > vmax)
-				vmax := v
-			else
-				v := vmax
+        ; Apply boost
+        if (boost > 1 && distance > boost)
+        {
+            ; Hold onto the highest speed we've achieved during this boost
+            if (v > vmax)
+                vmax := v
+            else
+                v := vmax
 
-			v *= distance / boost
-		}
+            v *= distance / boost
+        }
 
-		; Validate
-		v := (v > 1) ? ((v > limit) ? limit : Floor(v)) : 1
+        ; Validate
+        v := (v > 1) ? ((v > limit) ? limit : Floor(v)) : 1
 
-		if (v > 1 && tooltips)
-			QuickToolTip("×"v, timeout)
-		
-		
+        if (v > 1 && tooltips)
+            QuickToolTip("×"v, timeout)
+        
+        
 
-		MouseClick, %A_ThisHotkey%, , , v
-	}
-	else
-	{
-		; Combo broken, so reset session variables
-		distance := 0
-		vmax := 1
+        MouseClick, %A_ThisHotkey%, , , v
+    }
+    else
+    {
+        ; Combo broken, so reset session variables
+        distance := 0
+        vmax := 1
 
-		MouseClick %A_ThisHotkey%
-	}
-	return
+        MouseClick %A_ThisHotkey%
+    }
+return
 
 Quit:
-	QuickToolTip("Exiting Accelerated Scrolling...", 1000)
-	Sleep 1000
-	ExitApp
+    QuickToolTip("Exiting Accelerated Scrolling...", 1000)
+    Sleep 1000
+    ExitApp
 
 QuickToolTip(text, delay)
 {
-	ToolTip, %text%
-	SetTimer ToolTipOff, %delay%
-	return
+    ToolTip, %text%
+    SetTimer ToolTipOff, %delay%
+    return
 
-	ToolTipOff:
-	SetTimer ToolTipOff, Off
-	ToolTip
-	return
+    ToolTipOff:
+    SetTimer ToolTipOff, Off
+    ToolTip
+    return
 }
