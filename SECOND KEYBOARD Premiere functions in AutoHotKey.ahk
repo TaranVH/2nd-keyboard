@@ -228,7 +228,7 @@ saveClipboard(int) {
 ;This is the real magic. With this script, you can PASTE those previously saved clipboard states, at any time.
 recallClipboard(int) {
 	WinActivate, Adobe Premiere Pro
-	tooltip, now loading random text into the clipboard. 
+	tooltip, "now loading random text into the clipboard."
 	
 	loadFromFile("clipTEXT.clp") ;to create this file, just highlight some plain text, copy it, and use insideclipboard.exe to save it as clipTEXT.clp. The clipboard MUST have some text inside; it CANNOT be completely empty. This has the effect of DELETING all the aspects of the clipboard, EXCEPT for text.
 	sleep 15
@@ -245,7 +245,6 @@ recallClipboard(int) {
 	ClipWait, 0.25 ;this may be more time than is necessary. (Though I think it will advance quicker than this if it is able to.)
 	SendInput, {v Up}{Ctrl Up}
 	sleep 20
-	;Send ^v wait, was I supposed to "paste" twice as well? Need to do testing...
 	;It is necessary to PASTE this COMPLETELY BLANK clipboard into premiere, or Premiere won't "know" that the clipboard has been completely emptied.
 	;If you don't do this, Premiere will just use whatever thing you had previously copied inside of Premiere.
 	sleep 30
