@@ -290,6 +290,8 @@ loadFromFile(name) {
 ;----------------------------------------------------
 
 
+#IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO! remove the first ; from the next line if you want the 2nd keyboard script to work in any application!
+;#IfWinActive ;---- If this code is NOt commented out, it will allow for everything below this line to work in ANY application.
 
 
 
@@ -382,7 +384,7 @@ num1:{Numpad1}
  
  
  
- 
+/*
 
 #IfWinNotActive ahk_exe Adobe Premiere Pro.exe ; this is so that you can use the additional copy/paste features OUTSIDE of premiere also.
 ; I HAVE NOT VERIFIED THAT THIS WORKS....! I THINK THIS IS A BAD IDEA ACTUALLY! AAAAGHHHGHGH
@@ -403,7 +405,7 @@ else if(key = "g")
 Send ^!{F2} ;paste 2
 Return ; from f24 outside premiere
 
-
+*/
 
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
