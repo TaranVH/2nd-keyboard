@@ -19,6 +19,9 @@ Also, You'll have to modify the positioning of the GUI to suit your own computer
 ;Use this script only if you want cursor visualization, AND accelrated scrolling.
 ;SOURCE: https://github.com/TaranVH/2nd-keyboard
 
+Menu, Tray, Icon, shell32.dll, 44 ; changes the icon to a star -- makes it easy to see which one it is.
+
+
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #NoEnv
 ;#NoTrayIcon
@@ -44,7 +47,8 @@ DetectHiddenWindows, On
 WinSet, Region, % "0-0 W" Size " H" Size, ahk_id %GuiHwnd%
 WinSet, ExStyle, +0x20, ahk_id %GuiHwnd% ; set click through style
 ;WinSet, Transparent, 0, ahk_id %GuiHwnd% ;didn't work...
-WinSet, TransColor, %kolor2% 500
+WinSet, TransColor, %kolor2% 255
+WinSet, TransColor, %kolor% 100
 Gui, Show, w%Size% h%Size% ;hide
 Gui, Font, s32, lucida console ;Estrangelo Edessa ;century gothic
 Gui, Add, Text, vMyText cLime,  ; xx  auto-sizes the window.

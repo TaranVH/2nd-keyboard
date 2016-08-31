@@ -1,36 +1,45 @@
 #SingleInstance force
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe ;this line of code means that everythign BELOW will only happen inside of Premiere. (unless changed later)
 
 ;-------------------------------------------------------------------------------------------------------------------------------
 
-; In autohotkey, the following special characters (usually) represent modifier keys:
-; # is windows
-; ^ is control
-; ! is alt
-; + shift
+; NOTE: In autohotkey, the following special characters (usually) represent modifier keys:
+; # is the WIN key. (it can mean other things though, as you can see above.)
+; ^ is CTRL
+; ! is ALT
+; + is SHIFT
 ; list of other keys: http://www.autohotkey.com/docs/Hotkeys.htm
 
-;RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE
-; u  					select clip at playhead
-; ctrl alt shift d  	ripple delete
-; backspace  			ripple delete --- but I don't use that in AutoHotKey because it's dangerous
+
+;RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE'S BUILT IN KEYBOARD SHORTCUTS MENU
+; u  					select clip at playhead. Probably this should be moved to a different series of keystrokes, so that "u" is freed for something else.
+; backspace  			ripple delete --- but I don't use that in AutoHotKey because it's dangerous. This should be changed to something else; I use SHIFT C now.
+; shift c				ripple delete --- very convenient for left handed use. Premiere's poor track targeting makes ripple delete less useful than it could be.
+; ctrl alt shift d  	ripple delete --- I never type this in manually - long shortcuts like this are great for using AHK or a macro to press them. It gets them out of the way of more important, single keystorkes that I can do by hand.
+; delete				delete
+; c						delete --- I have this on C as well, because it puts it directly under my left hand. Very quick to press without having to move my hand.
 ; ctrl r 				speed/duration panel
-; ctrl 1 				toggle track targeting for AUDIO LAYER 1
-; ctrl 2 				toggle track targeting for AUDIO LAYER 2. And so on up to 8.
-; 1 					toggle track targeting for VIDEO LAYER 1
-; 2 					toggle track targeting for VIDEO LAYER 2. And so on up to 8.
+; shift 1 				toggle track targeting for AUDIO LAYER 1
+; shift 2 				toggle track targeting for AUDIO LAYER 2. And so on up to 8.
+; alt 1 				toggle track targeting for VIDEO LAYER 1
+; alt 2 				toggle track targeting for VIDEO LAYER 2. And so on up to 8. I wish there were DEDICATED shortcuts for ALL layers, both to enable and disable.
+; ctrl p 				toggle "selection follows playhead"
+; ctrl alt shift 7		effects --- (NOT the Effect controls panel)
+; ctrl alt shift 4		program monitor
 
 ; Be aware that sometimes other programs like PUUSH can overlap with your customized shortcuts.
 
 ;-------------------------------------------------------------------------------------------------------------------------------
 
-;define timeline possible colors on taran rig
+;Define all the timeline's possible colors on taran's computer. This accounts for trageted and untargeted tracks, both inside and outside the in and out points.
+;Note that your colors will be different, but you can change them inside preferences > appearance > brightness.
 timeline1 = 0x2c2c2c
 timeline2 = 0x252525
 timeline3 = 0x4c4c4c
 timeline4 = 0x212121
 timeline5 = 0xd3d3d3
-timeline6 = nevermind ; 0x2a2a2a ;top of timeline
+timeline6 = nevermind ; 0x2a2a2a is the top of timeline color, but it is also the normal panel color for me, and is therefore useless for this...
 
 Tippy(tipsHere, wait:=333) ;will create and then delete a tooltip
 {
@@ -46,13 +55,8 @@ return
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;exact name was gotten from windowspy
 ;---------------------EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO!------------------------------------
 
-;F1 - ripple delete clip (or blank) at playhead - requires target tracking to be ON!!
-F1::Send u^+!d ;I use this one ALL THE TIME.
 
-; control shift r = reverse selected clip
-^+r::
-Send ^r{tab}{tab}{space}{enter}
-return
+
 
 ;these are commented out because i don't use them anymore:
 ; control g = make 200% speed
@@ -90,6 +94,7 @@ Return ; from right click intercept
 
 ;<<<<<<<<< Apply any transition to a clip -- sadly you cannot use this to SAVE a CUSTOM transition >>>>>>>>>>>
 ;(A clip or clips must be selected first.)
+; THIS FUNCTION IS NOW OBSOLETE, BECAUSE I HAVE FIGURED OUT HOW TO SAVE AND LOAD CLIPBOARDS INSIDE PREMIERE -- MEANING I CAN NOW PASTE ANY TRANSITION I WANT.
 
 transition(name, xx:=70, yy:=245)
 {
@@ -108,7 +113,7 @@ sleep 10
 Send %name%
 ;msgbox, should have typed stuff in
 sleep 10
-MouseMove, %xx%, %yy%, 0, R ;---moves down to the transition's icon. Your pixel count will be different!
+MouseMove, %xx%, %yy%, 0, R ;----------moves down to the transition's icon. Your pixel count will be different!
 sleep 10
 ;msgbox, should be on top of the transition
 MouseClick, right
