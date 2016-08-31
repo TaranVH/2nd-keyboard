@@ -11,9 +11,9 @@ Either follow the instructions below or have a [watch the video](https://youtu.b
 
 1. Download and install [LuaMacros](http://www.hidmacros.eu/) and [AuthoHotkey](https://autohotkey.com/).
 2. Plug in both keyboards.
-3. Run LuaMacros and open `quickstart.lua`
+3. Run LuaMacros, then download and open `taranLUAmacros.lua`
 4. Click on the "play" button, wait for the identification window to pop up and press any key on your 2nd keyboard.
-5. Download and run `Transitions, Effects, and 2nd keyboard functions.ahk` or use it to write your own shortcut script.
+5. Download and run `SECOND KEYBOARD - Used with Premiere functions, transitions, effects.ahk` or use it to write your own shortcut script.
 
 ### You're good to go!
 
