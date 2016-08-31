@@ -1,4 +1,4 @@
--- get luamacros here: http://www.hidmacros.eu/
+-- get luamacros here: http://www.hidmacros.eu/ ... or more accurately, HERE: http://www.hidmacros.eu/forum/viewtopic.php?f=10&t=241#p794
 -- plug in your 2nd keyboard, load this script into LUAmacros, and press the triangle PLAY button.
 -- Then, press any key on that keyboard to assign logical name ('MACROS') to macro keyboard
 -- When done this way, you have to reassign the name to your 2nd keyboard every time you open LUAmacros, using the play button located above.
@@ -7,7 +7,7 @@ lmc_assign_keyboard('MACROS');
 
 sendToAHK = function (key)
       --print('It was assigned string:    ' .. key)
-      local file = io.open("C:\\Users\\TaranVanHemert\\Documents\\keypressed.txt", "w") -- writing this string to a text file on disk is probably NOT the best method. Feel free to program something better!
+      local file = io.open("C:\\Users\\TaranVanHemert\\Documents\\GitHub\\2nd-keyboard\\2nd keyboard support files\\keypressed.txt", "w") -- writing this string to a text file on disk is probably NOT the best method. Feel free to program something better!
       --print("we are inside the text file")
       file:write(key)
       file:flush() --"flush" means "save"
@@ -122,7 +122,7 @@ local config = {
 
 -- define callback for whole device
 lmc_set_handler('MACROS', function(button, direction)
-	if (direction == 1) then return end  -- ignore down -- I believe this also has the effect of neutralizing the modifier keys, unfortunately. Not optimal.
+	if (direction == 1) then return end  -- "ignore down." -- I believe this also has the effect of neutralizing the modifier keys, unfortunately. Not optimal.
 
 	if type(config[button]) == "string" then
                 print(' ')

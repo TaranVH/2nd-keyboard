@@ -1,0 +1,106 @@
+
+preset
+o:flip horizontal
+p:flip vertical
+i:multiply
+
+leftbracket:pop in motion
+rightbracket:pop out motion
+
+y:pop in transform
+u:pop out transform
+
+m:pan down
+j:pan up
+n:pan left
+comma:pan right
+h:zoom fast
+k:zoom slow
+
+period:crop small
+slash:crop full
+singlequote:warp
+
+semicolon:blur with edges
+l:LTT
+
+;it turns out you can SAVE transition presets from the effect controls triple line mnu button. But only cross dissolve and 3rd party transitions. I use filmimpact.net and red giant universe transitions. Lot of good free ones!
+insert:impact flash long
+
+pageup:impact flash short
+delete:cross dissolve long
+end:cross dissolve med
+pagedown:cross dissolve short
+
+up:push up
+left:push left
+down:push down
+right:push right
+
+;"commented out" text like this gets ignored even though I didn't explicitly code for it. should NOT use colons though.
+
+sendKeystrokes
+; this uses insideclipboard.exe to work. more info here: https://www.youtube.com/watch?v=3ScBB7I1BEA
+r:^!+{F1}
+f:^!+{F2}
+v:^!+{F3}
+t:^!{F1}
+g:^!{F2}
+b:^!{F3}
+;these refer to the audio leftener and audio rightener.
+minus:#!l
+equals:#!r
+;this is mapped to "remove effects" in premiere.
+enter:^!e
+;These literally just pass through the exact same keystroke.
+num0:{Numpad0}
+num1:{Numpad1}
+num2:{Numpad2}
+num3:{Numpad3}
+num4:{Numpad4}
+num5:{Numpad5}
+num6:{Numpad6}
+num7:{Numpad7}
+num8:{Numpad8}
+num9:{Numpad9}
+numDiv:{NumpadDiv}
+numMult:{NumpadMulti}
+
+
+
+ 
+recallClipboard
+;this is more stuff that uses insideclipboard. These ones are sound effects.
+F6:F6
+F7:F7
+F8:F8
+F9:F9
+F10:F10
+F11:F11
+F12:F12
+
+;these are all WIPE transitions in different directions. s is an IRIS transition. Again, they are saved clipboards using insideclipboard.exe
+q:q
+w:w
+e:e
+a:a
+s:s
+d:d
+z:z
+x:x
+c:c
+
+home:home
+
+
+
+
+
+
+
+
+
+
+
+
+

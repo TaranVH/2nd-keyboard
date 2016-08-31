@@ -1,8 +1,3 @@
-NOTE:
-You can get the entire .kys file here:
-https://www.dropbox.com/s/stqlhhv6qsnbab3/taran%20premiere%202016.kys?dl=0
-You can load that straight into Premiere if you like. Or you can just peruse the shortcuts below and cherry-pick your favourites.
-
 Application
    File
       New
@@ -23,15 +18,16 @@ Application
       Save As...	Ctrl+Shift+S
       Save a Copy...
       Revert
+      Sync Settings
          Sync Settings Now
-         Last Sync: Jan 01, 13:34:21
+         Last Sync
          Use Settings from a Different Account...
          Clear Settings...
          Manage Sync Settings...
          Manage Creative Cloud Account...
       Capture...
       Batch Capture...
-      Link Media...
+      Link Media...	Ctrl+L
       Make Offline...
       Adobe Dynamic Link
          Replace with After Effects Composition
@@ -42,7 +38,6 @@ Application
          Clear Script Data
       Adobe Anywhere
          Sign In...
-      Direct Link to Adobe SpeedGrade...
       Import from Media Browser
       Import...
       Import Batch List...
@@ -65,6 +60,7 @@ Application
       Project Settings
          General...
          Scratch Disks...
+         Ingest Settings...
       Project Manager...
       Exit	Ctrl+Q
    Edit
@@ -72,15 +68,16 @@ Application
       Redo	Ctrl+Shift+Z	Ctrl+Y
       Cut	Ctrl+X
       Copy	Ctrl+C
-      Paste	Ctrl+V
+      Paste	Ctrl+V	Shift+H
       Paste Insert	Ctrl+Shift+V
       Paste Attributes...	Ctrl+Alt+V
+      Remove Attributes...	Ctrl+Alt+Shift+E
       Clear	Delete	C
-      Ripple Delete	Shift+Delete	Ctrl+Alt+Shift+D
+      Ripple Delete	Shift+Delete	Ctrl+Alt+Shift+D	Shift+C
       Duplicate	Ctrl+Shift+/
       Select All	Ctrl+A
       Select All Matching
-      Deselect All	Ctrl+Shift+D
+      Deselect All
       Find...
       Find Next
       Label
@@ -94,6 +91,7 @@ Application
          Lavender	Num 5
          Purple	Num 3
       Remove Unused
+      Production
       Edit Original
       Edit in Adobe Audition
          Clip
@@ -124,13 +122,13 @@ Application
       Edit Offline...
       Source Settings...
       Modify
-         Audio Channels...	F3	Ctrl+Alt+A
+         Audio Channels...	F3	Ctrl+Alt+Shift+A
          Interpret Footage...
          Timecode...
       Video Options
-         Frame Hold Options...
+         Frame Hold Options...	Ctrl+Alt+Shift+H
          Add Frame Hold	Ctrl+Shift+H
-         Insert Frame Hold Segment	Shift+H
+         Insert Frame Hold Segment
          Field Options...
          Time Interpolation
             Frame Sampling
@@ -141,9 +139,8 @@ Application
       Audio Options
          Audio Gain...	F2
          Breakout to Mono
-         Extract Audio	Shift+/
+         Extract Audio	Alt+Shift+A
       Speed/Duration...	Ctrl+R
-      Remove Effects...	Ctrl+Alt+E
       Capture Settings
          Set Capture Settings...
          Clear Capture Settings
@@ -156,9 +153,10 @@ Application
          From Bin	Ctrl+Shift+B
       Render and Replace...
       Restore Unrendered
+      Generate Audio Waveform
       Automate to Sequence...
       Enable	Shift+E	\
-      Link	Ctrl+L	0
+      Link	0
       Group	Ctrl+G
       Ungroup
       Synchronize...
@@ -173,17 +171,17 @@ Application
       Render Effects in Work Area
       Render Entire Work Area	Ctrl+Alt+I
       Render Selection	Ctrl+Alt+R
-      Render Audio	Ctrl+Shift+A
+      Render Audio	Ctrl+Shift+A	Ctrl+Alt+A
       Delete Render Files
       Delete Work Area Render Files
       Match Frame	M
-      Reverse Match Frame
+      Reverse Match Frame	Shift+M
       Add Edit
       Add Edit to All Tracks	E
-      Trim Edit
+      Trim Edit	9
       Extend Selected Edit to Playhead	Ctrl+Alt+Shift+P
       Apply Video Transition	Ctrl+T
-      Apply Audio Transition	Ctrl+Shift+T
+      Apply Audio Transition	Ctrl+Shift+D
       Apply Default Transitions to Selection
       Lift
       Extract	'
@@ -194,7 +192,7 @@ Application
          Previous in Sequence	Ctrl+Shift+;
          Next in Track
          Previous in Track
-      Snap	Shift+N
+      Snap	N
       Linked Selection
       Selection Follows Playhead	Ctrl+P
       Show Through Edits
@@ -222,7 +220,7 @@ Application
       Clear In	Ctrl+Shift+I
       Clear Out	Ctrl+Shift+O
       Clear In and Out	Ctrl+Shift+X
-      Add Marker	N
+      Add Marker	Ctrl+M	Alt+M
       Go to Next Marker
       Go to Previous Marker
       Clear Selected Marker	Ctrl+Alt+M
@@ -317,25 +315,25 @@ Application
       Adobe Story
       Audio Clip Mixer	Shift+9
       Audio Meters
-      Audio Track Mixer	Shift+6
+      Audio Track Mixer
       Captions
       Capture
       Edit To Tape
-      Effect Controls	Shift+5
-      Effects	Shift+7	Ctrl+Alt+Shift+7
-      Events	Ctrl+Alt+Shift+E
+      Effect Controls
+      Effects	Ctrl+Alt+Shift+7
+      Events
       History
       Info
       Lumetri Color
-      Lumetri Scopes	Shift+3	Ctrl+Alt+Shift+L
+      Lumetri Scopes
       Markers
-      Media Browser	Shift+8
+      Media Browser
       Metadata
-      Program Monitor	Shift+4	Ctrl+Alt+Shift+4
+      Program Monitor	Ctrl+Alt+Shift+4
       Progress
-      Project	Shift+1	Ctrl+Alt+Shift+`
+      Project	Ctrl+Alt+Shift+`
       Reference Monitor
-      Source Monitor	Shift+2
+      Source Monitor
       Timecode
       Timelines	Shift+0	Ctrl+Alt+Shift+0
       Title Actions
@@ -351,6 +349,8 @@ Application
       Keyboard...
       About Adobe Premiere Pro...
    Add Tracks to Match Source
+   Add or Remove Audio Keyframe
+   Add or Remove Video Keyframe	Z	Shift+S
    Clear Poster Frame	Ctrl+Shift+P
    Cut to Camera 1
    Cut to Camera 2
@@ -368,8 +368,10 @@ Application
    Cut to Camera 14
    Cut to Camera 15
    Cut to Camera 16
+   Decrease Audio Keyframe Value
    Decrease Clip Volume	[
    Decrease Clip Volume Many
+   Decrease Video Keyframe Value
    Default Source Assignment
    Edit To Tape
    Enable Transmit
@@ -380,11 +382,11 @@ Application
    Fast Forward
    Go to First Multi-Camera Page
    Go to Last Multi-Camera Page
-   Go to Next Edit Point	Down	Alt+D
+   Go to Next Edit Point	Alt+D	Down	2
    Go to Next Edit Point on Any Track	Shift+Down
    Go to Next Multi-Camera Page
    Go to Next Selected Edit Point
-   Go to Previous Edit Point	Up	Alt+A
+   Go to Previous Edit Point	Alt+A	Up	1
    Go to Previous Edit Point on Any Track	Shift+Up
    Go to Previous Multi-Camera Page
    Go to Previous Selected Edit Point
@@ -392,8 +394,10 @@ Application
    Go to Selected Clip Start	Shift+Home
    Go to Sequence-Clip End
    Go to Sequence-Clip Start	Home
+   Increase Audio Keyframe Value
    Increase Clip Volume	]
    Increase Clip Volume Many
+   Increase Video Keyframe Value
    Manage Source Assignment Presets
    Manage Track Height Presets
    Maximize or Restore Active Frame	Shift+`
@@ -407,6 +411,14 @@ Application
    Move All Video Sources Up	Shift+Num 8
    Move All Video Targets Down
    Move All Video Targets Up
+   Move Audio Keyframe 1 Frame earlier
+   Move Audio Keyframe 1 Frame later
+   Move Audio Keyframe 10 Frames earlier
+   Move Audio Keyframe 10 Frames later
+   Move Video Keyframe 1 Frame earlier	Shift+Left
+   Move Video Keyframe 1 Frame later	Shift+Right
+   Move Video Keyframe 10 Frames earlier
+   Move Video Keyframe 10 Frames later
    Multi-Camera Audio Follows Video
    Multi-Camera Record On/Off Toggle
    Nudge Volume +1dB	Shift+]
@@ -449,7 +461,7 @@ Application
    Select Camera 15
    Select Camera 16
    Select Clip at Playhead	Ctrl+Alt+S	U
-   Select Find Box
+   Select Find Box	Ctrl+\
    Select In to Out
    Select Nearest Edit Point as Ripple In	Ctrl+Shift+,
    Select Nearest Edit Point as Ripple Out	Ctrl+Shift+.
@@ -462,6 +474,8 @@ Application
    Select Previous Camera
    Select Previous Clip	Ctrl+Up
    Select Previous Panel
+   Select next Keyframe	Shift+D
+   Select previous Keyframe	Shift+A
    Set All Source Audio To Gaps
    Set All Source Video To Gaps
    Set Clip Pan to Center
@@ -479,7 +493,7 @@ Application
    Shuttle Left	A	J
    Shuttle Right	D	L
    Shuttle Slow Left	Shift+J
-   Shuttle Slow Right
+   Shuttle Slow Right	Shift+L
    Shuttle Stop	S	K
    Source Assignment Preset 1
    Source Assignment Preset 2
@@ -492,9 +506,9 @@ Application
    Source Assignment Preset 9
    Source Assignment Preset 10
    Step Back 1 Frame	Left
-   Step Back Many Frames - Units	Shift+Left
+   Step Back Many Frames - Units
    Step Forward 1 Frame	Right
-   Step Forward Many Frames - Units	Shift+Right
+   Step Forward Many Frames - Units
    Stop
    Targets Follow Inserts and Overwrites
    Toggle All Audio Targets
@@ -506,26 +520,27 @@ Application
    Toggle Full Screen
    Toggle Maintain Pitch During Shuttling
    Toggle Multi-Camera View
+   Toggle Proxies
    Toggle Source/Program Monitor Focus
-   Toggle Target Audio 1	Ctrl+1
-   Toggle Target Audio 2	Ctrl+2
-   Toggle Target Audio 3	Ctrl+3
-   Toggle Target Audio 4	Ctrl+4
-   Toggle Target Audio 5	Ctrl+5
-   Toggle Target Audio 6	Ctrl+6
-   Toggle Target Audio 7	Ctrl+7
-   Toggle Target Audio 8	Ctrl+8
-   Toggle Target Video 1	1
-   Toggle Target Video 2	2
-   Toggle Target Video 3	3
-   Toggle Target Video 4	4
-   Toggle Target Video 5	5
-   Toggle Target Video 6	6
-   Toggle Target Video 7	7
-   Toggle Target Video 8	8
-   Toggle Trim Type	Ctrl+Alt+Q
-   Track Height Preset 1
-   Track Height Preset 2
+   Toggle Target Audio 1	Alt+1
+   Toggle Target Audio 2	Alt+2
+   Toggle Target Audio 3	Alt+3
+   Toggle Target Audio 4	Alt+4
+   Toggle Target Audio 5	Alt+5
+   Toggle Target Audio 6	Alt+6
+   Toggle Target Audio 7	Alt+7
+   Toggle Target Audio 8	Alt+8
+   Toggle Target Video 1	Shift+1
+   Toggle Target Video 2	Shift+2
+   Toggle Target Video 3	Shift+3
+   Toggle Target Video 4	Shift+4
+   Toggle Target Video 5	Shift+5
+   Toggle Target Video 6	Shift+6
+   Toggle Target Video 7	Shift+7
+   Toggle Target Video 8	Shift+8
+   Toggle Trim Type
+   Track Height Preset 1	Ctrl+`
+   Track Height Preset 2	Ctrl+Shift+`
    Track Height Preset 3
    Track Height Preset 4
    Track Height Preset 5
@@ -549,6 +564,7 @@ Application
    Workspace 7	Alt+Shift+7
    Workspace 8	Alt+Shift+8
    Workspace 9	Alt+Shift+9
+   Zoom to Frame
    Zoom to Sequence
 Panels
    Adobe Story Panel
@@ -605,11 +621,11 @@ Panels
       Record
    Effect Controls Panel
       Effect Controls Panel Menu
-         Save Preset...	Ctrl+Alt+P
+         Save Preset...
          Effect Enabled
          Remove Selected Effect	Backspace
          Remove Effects...
-         Snap	Shift+N
+         Snap	N
          Snap To
             Video Keyframes
             Audio Keyframes
@@ -644,6 +660,7 @@ Panels
    Marker Panel
       Markers Panel Menu
          Sequence Timecode
+         Show all clip markers in sequence
       Next Marker
       Previous Marker
    Media Browser Panel
@@ -694,7 +711,7 @@ Panels
             1/16
          High Quality Playback
          Timecode Overlay During Edit
-         Captions Display
+         Closed Captions Display
             Settings...
          Show Transport Controls
          Show Audio Time Units
@@ -711,9 +728,11 @@ Panels
       Step Back
       Step Forward
       Toggle Transparency Grid
-      Zoom Monitor In	Ctrl+=
-      Zoom Monitor Out	Ctrl+-
-      Zoom Monitor To Fit	Ctrl+0
+      Toggle VR Video Display
+      VR Video Display Settings
+      Zoom Monitor In	Ctrl+Alt+Shift+=
+      Zoom Monitor Out	Ctrl+Alt+Shift+-
+      Zoom Monitor To Fit	Ctrl+Alt+Shift+Backspace
    Progress Panel
       Progress Panel Menu
          Remove Completed Jobs
@@ -739,6 +758,8 @@ Panels
             Extra Large
          Refresh
          Metadata Display...
+      Attach Proxies...
+      Create Proxies...
       Create Search Bin From Query
       Delete Selection with Options	Ctrl+Delete
       Extend Selection Down	Shift+Down
@@ -754,10 +775,10 @@ Panels
       Move Selection Down	Down
       Move Selection End	End
       Move Selection Home	Home
-      Move Selection Left	Left	Alt+Left
+      Move Selection Left	Left
       Move Selection Page Down	Page Down
       Move Selection Page Up	Page Up
-      Move Selection Right	Right	Alt+Right
+      Move Selection Right	Right
       Move Selection Up	Up
       Next Column Field	Tab
       Next Row Field	Enter
@@ -765,6 +786,7 @@ Panels
       Open in Timeline
       Previous Column Field	Shift+Tab
       Previous Row Field	Shift+Enter
+      Reconnect Full Resolution Media...
       Reveal In Explorer
       Reveal Original
       Reveal Project In Explorer
@@ -798,7 +820,7 @@ Panels
             1/8
             1/16
          High Quality Playback
-         Captions Display
+         Closed Captions Display
             Settings...
          Show Transport Controls
          Show Audio Time Units
@@ -816,11 +838,13 @@ Panels
       Source Clip: Close All
       Source Clip: First
       Source Clip: Last
-      Source Clip: Next
-      Source Clip: Previous
+      Source Clip: Next	Shift+Right
+      Source Clip: Previous	Shift+Left
       Step Back
       Step Forward
       Toggle Transparency Grid
+      Toggle VR Video Display
+      VR Video Display Settings
       Zoom Monitor In
       Zoom Monitor Out
       Zoom Monitor To Fit
@@ -839,7 +863,7 @@ Panels
          Video Head Thumbnails
          Continuous Video Thumbnails
          Reveal Sequence in Project	Ctrl+Alt+Shift+S
-      Apply Audio Crossfade Transition	Shift+D
+      Apply Audio Crossfade Transition
       Apply Video Crossfade Transition	Ctrl+D
       Apply Video Dip To White Transition	Ctrl+Shift+W
       Apply Video Wipe Transition	Ctrl+Shift+E
@@ -855,9 +879,9 @@ Panels
       Move Playhead to Cursor	/
       Nudge Clip Selection Down	Alt+Down	Num 2
       Nudge Clip Selection Left Five Frames	Shift+Num 4
-      Nudge Clip Selection Left One Frame	Num 4
+      Nudge Clip Selection Left One Frame	Alt+Left	Num 4
       Nudge Clip Selection Right Five Frames	Shift+Num 6
-      Nudge Clip Selection Right One Frame	Num 6
+      Nudge Clip Selection Right One Frame	Alt+Right	Num 6
       Nudge Clip Selection Up	Alt+Up	Num 8
       Reveal In Project	Alt+X
       Ripple Delete	Alt+Backspace	Backspace
@@ -878,9 +902,9 @@ Panels
       Slide Clip Selection Right Five Frames	Alt+Shift+.
       Slide Clip Selection Right One Frame	Alt+.
       Slip Clip Selection Left Five Frames	Ctrl+Alt+Shift+Left
-      Slip Clip Selection Left One Frame	Ctrl+Alt+Left
+      Slip Clip Selection Left One Frame	Ctrl+Alt+Left	3
       Slip Clip Selection Right Five Frames	Ctrl+Alt+Shift+Right
-      Slip Clip Selection Right One Frame	Ctrl+Alt+Right
+      Slip Clip Selection Right One Frame	Ctrl+Alt+Right	4
    Titler Panel
       Add Anchor Point Tool
       Arc Tool	A
@@ -924,7 +948,7 @@ Panels
       Rotation Tool	O
       Rounded Corner Rectangle Tool
       Rounded Rectangle Tool
-      Selection Tool	V	Alt+V
+      Selection Tool	V	Alt+V	Ctrl+Shift+V
       Show Timeline Video Behind Title	Ctrl+Alt+Shift+S
       Type Tool	T
       Underline	Ctrl+U
@@ -933,7 +957,7 @@ Panels
       Vertical Type Tool	C
       Wedge Tool	W
 Tools
-   Selection Tool	V	Alt+V
+   Selection Tool	V
    Track Select Backward Tool	Shift+T
    Track Select Forward Tool	T
    Ripple Edit Tool

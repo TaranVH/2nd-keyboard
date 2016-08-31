@@ -212,12 +212,10 @@ sendKeystrokes(bar)
 	Send %bar%
 }
 
-; recallClipboard(foo)
-; {
-	; msgbox, clipboard here, parameter %foo%
-; }
 
-
+;you can select something inside of premiere (like a group of clips, or a transition) and then, with this code, you can COPY it and SAVE that clipboard state. I use this in conjunction with my secondary keyboard.
+;You need to have insideclipboard.exe installed, and all the file paths properly comfigured.
+;Keep in mind that you must RESTART your computer before the clipboard states become usable. IDK why.
 saveClipboard(int) {
 	sleep 10
 	;ClipWait, 0.25 ; this line might not be needed.
@@ -227,34 +225,37 @@ saveClipboard(int) {
 	sleep 16
 }
 
+;This is the real magic. With this script, you can PASTE those previously saved clipboard states, at any time.
 recallClipboard(int) {
 	WinActivate, Adobe Premiere Pro
-	tooltip, now loading random text into the clipboard. ;I should try it with BLANK text... This is very necessary. Must be done twice to make sure it takes.
+	tooltip, now loading random text into the clipboard. 
 	
-	loadFromFile("clipTEXT.clp") ;to create this file, just highlight some plain text, copy it, and use insideclipboard.exe to save it as clipTEXT.clp
+	loadFromFile("clipTEXT.clp") ;to create this file, just highlight some plain text, copy it, and use insideclipboard.exe to save it as clipTEXT.clp. The clipboard MUST have some text inside; it CANNOT be completely empty. This has the effect of DELETING all the aspects of the clipboard, EXCEPT for text.
 	sleep 15
-	loadFromFile("clipTEXT.clp")
+	loadFromFile("clipTEXT.clp") ;The clipboard must be loaded twice, or it won't work about 70% of the time! I don't know why...
 	sleep 15
+	;Autohotkey can now delete that string of text, so that no text is accidentlaly pasted into premiere. It doesn't seem to be able to delete EVERYTHING, so the above code is definitely necessary!
 	clipboard = 
+	;The clipboard is now completely empty.
 	sleep 10
 	
-	tooltip, now pasting NOTHING into premiere.
-	SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down} ;this is a more robust way of doing it, rather than using "^v"
+	;tooltip, now pasting NOTHING into premiere.
+	SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down} ;this is a MUCH more robust way of using the keyboard shortcuts to PASTE, rather than just using "Send ^v"
 	sleep 20
-	ClipWait, 0.25
+	ClipWait, 0.25 ;this may be more time than is necessary. (Though I think it will advance quicker than this if it is able to.)
 	SendInput, {v Up}{Ctrl Up}
-	
 	sleep 20
-	;loadFromFile("clipTEXT.clp")
-	Send ^v
+	;Send ^v wait, was I supposed to "paste" twice as well? Need to do testing...
+	;It is necessary to PASTE this COMPLETELY BLANK clipboard into premiere, or Premiere won't "know" that the clipboard has been completely emptied.
+	;If you don't do this, Premiere will just use whatever thing you had previously copied inside of Premiere.
 	sleep 30
-	;tooltip, "clip" . %int% . ".clp" ;this doesn't work
+	;tooltip, "clip" . %int% . ".clp" ;this code doesn't work
 
-	loadFromFile("clip" . int . ".clp")
+	loadFromFile("clip" . int . ".clp") ;now we are loading the previously saved clipboard file!
 	sleep 15
-	loadFromFile("clip" . int . ".clp")
+	loadFromFile("clip" . int . ".clp") ;This must be done twice, or it doesn't work! I don't know why!! :D
 	sleep 15
-	SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down} ;this is a more robust way of doing it, rather than using "^v"
+	SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
 	sleep 50
 	ClipWait, 0.25
 	SendInput, {v Up}{Ctrl Up}
@@ -265,16 +266,21 @@ recallClipboard(int) {
 
 
 saveToFile(name) {
-	;code below does not use any fancy variables. Bare string. Unfortunately, I can't find a way to make the others work.
+	;code below does not use any fancy variables. It's a bare string. Unfortunately, I can't find a way to make it work better...
+	;change this path ----|                  and this one --------|    to your own folder locations.
+	;    	              |										  |
+	;                     v									  	  v
 	RunWait, %comspec% /c C:\InsideClipboard.exe /saveclp %name%, c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
 	
-	;just saving the below lines of code, which didn't work because %pathh% nor %Exec% could not be defined properly. I'm not sure why.
+	
+	;just saving the below lines of code, which didn't work because %pathh% nor %Exec% variables could not be defined properly. Or something... IDK....
 	;RunWait, %comspec% /c %Exec% /saveclp %name%, c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
 	;RunWait, %comspec% /c %Exec% /saveclp %name%, %pathh%
 	
 }
 
 loadFromFile(name) {
+	; You'll need to change these paths too!
 	RunWait, %comspec% /c C:\InsideClipboard.exe /loadclp %name%, c:\Users\TaranVanHemert\Downloads\Taran extra keyboards\insideclipboard\clipboards\
 }
 
@@ -289,7 +295,7 @@ loadFromFile(name) {
 
 F24::
 
-FileRead, key, C:\Users\TaranVanHemert\Documents\keypressed.txt
+FileRead, key, C:\Users\TaranVanHemert\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keypressed.txt
  
 tippy(key) ;this makes a temporary tooltip that reveals the key that was pressed.
  
@@ -300,7 +306,7 @@ currentSection := ""
 
  
 ;This loop will read all the key value pairs (e.g. keybinds).
-Loop, read, C:\Users\TaranVanHemert\Documents\keyActions.txt
+Loop, read, C:\Users\TaranVanHemert\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keyActions.txt
 {
     if (A_LoopReadLine == "preset") or (A_LoopReadLine == "sendKeystrokes") or (A_LoopReadLine == "recallClipboard")
     {
@@ -378,9 +384,10 @@ num1:{Numpad1}
  
  
 
-#IfWinNotActive ahk_exe Adobe Premiere Pro.exe ; this is so that you can use the additional copy/paste features OUTSIDE of premiere also. I HAVE NOT VERIFIED THAT THIS WORKS....!
+#IfWinNotActive ahk_exe Adobe Premiere Pro.exe ; this is so that you can use the additional copy/paste features OUTSIDE of premiere also.
+; I HAVE NOT VERIFIED THAT THIS WORKS....! I THINK THIS IS A BAD IDEA ACTUALLY! AAAAGHHHGHGH
 F24::
-FileRead, key, C:\Users\TaranVanHemert\Documents\keypressed.txt
+FileRead, key, C:\Users\TaranVanHemert\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keypressed.txt
 tippy(key)
 If(key = "r")
 Send ^!+{F1} ;copy 1
