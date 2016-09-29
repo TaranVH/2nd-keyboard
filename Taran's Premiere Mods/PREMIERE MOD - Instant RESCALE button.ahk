@@ -16,7 +16,7 @@ return
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
 ;EFFECT CONTROLS PANEL ---TRANSFORM ICON CLICKER
-F5::
+~F5::
 Tippy("transform icon - F5")
 BlockInput, On
 SetKeyDelay, 0
@@ -37,7 +37,7 @@ Return
 ;watch the associated video for more information!
 ;   
 
-F4::
+~F4::
 Tippy("triangle unfurl - F4")
 BlockInput, on
 BlockInput, MouseMove

@@ -64,7 +64,7 @@ num7:{Numpad7}
 num8:{Numpad8}
 num9:{Numpad9}
 numDiv:{NumpadDiv}
-numMult:{NumpadMulti}
+numMult:{NumpadMult}
 
 
 
@@ -92,6 +92,19 @@ c:c
 
 home:home
 
+
+SFXActions
+
+1:
+2:
+3:
+4:
+5:
+6:
+7:swoosh noise
+8:woosh
+9:boop
+0:pop
 
 
 

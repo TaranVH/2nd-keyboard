@@ -40,12 +40,13 @@ Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyb
 ; alt 1 				toggle track targeting for VIDEO LAYER 1
 ; alt 2 				toggle track targeting for VIDEO LAYER 2. And so on up to 8. I wish there were DEDICATED shortcuts for ALL layers, both to enable and disable.
 ; ctrl p 				toggle "selection follows playhead"
-; ctrl alt shift 7		effects --- (NOT the Effect controls panel)
+; ctrl alt shift 7		effects --- (NOT the Effect controls panel) --- Note that this is SHIFT 7 by default, which is dumb because that's a "&"
 ; ctrl alt shift 4		program monitor
 ; ctrl alt shift a 		audio channels --- (I will NOT change this, so that it can always be reliably triggered using AutoHotKey.)
 ; F2					gain
 ; F3					audio channels --- (but this might change in the future.)
 ; ctrl shift m			From source monitor, match frame. -- awkward to press by hand. This is done with a macro instead.
+; ctrl \				select find box --- This is such a useful function when you pair it the the effects panel!! When did they add this??
 ;                                                                                                                        
 ; Be aware that sometimes other programs like PUUSH can overlap with your customized shortcuts.
 ;_______________________________________________________________________________________________________________________
@@ -72,7 +73,7 @@ return
 effectsPanelType(item)
 {
 Send ^+!7 ;set in premiere to "effects" panel
-Send ^\ ;set in premiere to "select find box."
+Send ^\ ;set in premiere to "select find box"
 sleep 20
 Send +{backspace} ;shift backspace deletes any text that may be present.
 Sleep, 10
@@ -168,7 +169,7 @@ BlockInput, off ;do not comment out or delete this line -- or you won't regain c
 !l::preset("2.4 limiter") ;macro key G8. A compressor and limiter for the audio, to keep it from clipping at 0dB.
 ;Macro key G9 is set completely in the keyboard's software. It is simply: {F2}{7}{enter}, which increases the gain of any selected clips by 7dB.
 
-#!r::audioMonoMaker(1) ; macro key G10. 
+#!k::audioMonoMaker(1) ; macro key G10. ; I had this set to win alt R, but now that interferes with Windows Game Bar, which I couldn't disable even by changing registry files...
 ;Macro key G11 is set completely in the keyboard's software. It is simply: {CTRL}{SHIFT}{m}, which is "From source monitor, match frame"
 !]::preset("DeHummer Preset") ;macro key G12. This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.
 
@@ -203,7 +204,7 @@ Send {space}
 Return
 
 
-
+F12::F11
 
 
 sendKeystrokes(bar)
@@ -211,6 +212,26 @@ sendKeystrokes(bar)
 	tooltip, sendkeystrokes %bar%
 	Send %bar%
 }
+
+SFXActions(leSound)
+{
+sleep 10
+;Send ^!+` ;premiere shortcut to open the "project" panel, which is actually a bin. Only ONE bin is highlightable in this way.
+Send F11
+sleep 100
+msgbox, you in the panel now?
+Send ^\ ;premiere shortcut to "select find box"
+sleep 100
+Send %leSound% ;types in the name of the sound effect you want - hopefully does so instantaneously.
+sleep 100
+Send {tab} ; tabs down, in order to select the sound effect. If there is a folder, it gets in the way....
+sleep 100
+Send ^+y ; opens in source monitor
+sleep 200
+Send ^+!. ;Premiere's shortcut for "overwrite" is a period.  I use modifier keys for THIS, so that a period is never typed accidentally.
+sleep 100
+}
+
 
 
 ;you can select something inside of premiere (like a group of clips, or a transition) and then, with this code, you can COPY it and SAVE that clipboard state. I use this in conjunction with my secondary keyboard.
@@ -303,13 +324,14 @@ tippy(key) ;this makes a temporary tooltip that reveals the key that was pressed
 presetActions := Object()
 sendKeystrokesActions := Object()
 recallClipboardActions := Object()
+recallSFX := Object()
 currentSection := ""
 
  
 ;This loop will read all the key value pairs (e.g. keybinds).
 Loop, read, C:\Users\TaranVanHemert\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keyActions.txt
 {
-    if (A_LoopReadLine == "preset") or (A_LoopReadLine == "sendKeystrokes") or (A_LoopReadLine == "recallClipboard")
+    if (A_LoopReadLine == "preset") or (A_LoopReadLine == "sendKeystrokes") or (A_LoopReadLine == "recallClipboard") or (A_LoopReadLine == "SFXActions")
     {
         currentSection := A_LoopReadLine
         continue
@@ -332,6 +354,11 @@ Loop, read, C:\Users\TaranVanHemert\Documents\GitHub\2nd-keyboard\2nd keyboard s
         action := StrSplit(A_LoopReadLine, ":")
         recallClipboardActions[action[1]] := action[2]
     }
+	else if (currentSection == "SFXActions")
+    {
+        action := StrSplit(A_LoopReadLine, ":")
+        recallSFX[action[1]] := action[2]
+    }
 }
  
 if presetActions[key] != ""
@@ -348,6 +375,11 @@ else if recallClipboardActions[key] != ""
 {
     ; Keybind for recallClipboard exists
     recallClipboard(recallClipboardActions[key])
+}
+else if recallSFX[key] != ""
+{
+    ; Keybind for SFXactions exists
+    SFXActions(recallSFXActions[key])
 }
 else
     tooltip, Keybind not found! :(
@@ -497,7 +529,13 @@ BlockInput, off
 BlockInput, MouseMoveOff ;return mouse control to the user.
 } ; monomaker
 
-
+#ifwinactive
+F6::
+	Send ^s
+	sleep 200
+    SoundBeep, 1100, 500
+	Reload  ;The only thing you need here is the Reload
+Return
 
 
 ;JUNKED CODE BEOW -- was trying to make an array or something in AHK...

@@ -36,21 +36,23 @@ CoordMode, mouse, screen
 ;Use WIN KEY and scroll down to turn it on or off.
 
 size := 200
-kolor := "black"
-kolor2 := "grey"
+kolor := 11FF99
+kolor2 := 008833
 showClicks = 1
 
 Gui, -Caption +ToolWindow +AlwaysOnTop +LastFound
-Gui, Color, %kolor2%
+;Gui, Color, %kolor2%
+Gui, Color, 008833
 GuiHwnd := WinExist()
 DetectHiddenWindows, On
 WinSet, Region, % "0-0 W" Size " H" Size, ahk_id %GuiHwnd%
 WinSet, ExStyle, +0x20, ahk_id %GuiHwnd% ; set click through style
 ;WinSet, Transparent, 0, ahk_id %GuiHwnd% ;didn't work...
-WinSet, TransColor, %kolor2% 255
-WinSet, TransColor, %kolor% 100
+;WinSet, TransColor, %kolor2% 100
+WinSet, TransColor, 008833 100
+;WinSet, TransColor, %kolor% 100
 Gui, Show, w%Size% h%Size% ;hide
-Gui, Font, s32, lucida console ;Estrangelo Edessa ;century gothic
+Gui, Font, s32, lucida console ;This font has nearly perfect ()v^ characters. I also tried these: ;Estrangelo Edessa ;century gothic
 Gui, Add, Text, vMyText cLime,  ; xx  auto-sizes the window.
 
 If showClicks = 1
@@ -215,7 +217,7 @@ Return
 
 looper:
 MouseGetPos, realposX, realposY
-posX := realposX - Size/2.4, posY := realposY - Size/3.1 + 0 ; puts the gui in the middle rather than the corner. Set to posX := realposX - Size/2, posY := realposY - Size/2 + 0 ....if you have UI scaling set to 100% rather than 150% like I do.
+posX := realposX - Size/2.4, posY := realposY - Size/3.1 + 0 ; puts the gui in the middle rather than the corner. You'll have to change these variables if you have UI scaling set to 100% rather than 150% like I do.
 If(Lbuttondown = 1 and Rbuttondown = 1) ;this doesn't really work. Often the ) will be out of alignment or will not show up.
     {
 		GuiControl,, MyText, ()
