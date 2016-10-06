@@ -52,6 +52,75 @@ BlockInput, MouseMoveOff
 Return
 
 
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
+
+~F12::
+Tippy("Bin BACK button press (F12)")
+; CoordMode Pixel, screen
+; CoordMode mouse, screen
+BlockInput, On
+BlockInput, MouseMove
+MouseGetPos, xpos, ypos, Window, classNN
+WinGetClass, class, ahk_id %Window% ;----"ahk_id %Window%" is important for SOME REASON. if you delete it, this doesnt work.
+
+;ToolTip, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
+
+ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
+;---the ahk_class will be: ahk_class DroverLord - Window Class
+
+XX := XX+28
+YY := YY+7 ;------------------------moves the cursor directly onto the light gray part of the "back" icon. Your pixel count may vary.
+
+MouseMove, XX, YY, 0 ;--------------for somereason you DO have to actually move the mouse for PixelGetColor to work.
+
+
+;this color detection does NOT WORK on my monitors 1 and 3, making it useles....
+/*
+PixelGetColor, colorr, XX, YY ;-----I like to double the last letter of some variable names so i know it's one of MINE! :P
+MsgBox color is %colorr%, but 0x505050 is what we want
+;sleep 10
+if (colorr = "0x505050") ;----------YOUR COLOR WILL VARY! In Premiere CS6, it's 0xC1C1C1. You'll have to run the script just up to this point to get the right color.
+{
+	MsgBox color %colorr% is CORRECT
+	Click XX, YY
+}
+*/
+
+
+Click XX, YY
+sleep 10
+
+MouseMove, xpos, ypos, 0 ;--------------instantly returns cursor to original coordinates
+;MsgBox now we return mouse control ;---used for debugging
+BlockInput, Off ;-----------------------if you forget to turn blockinput off, CTRL ALT DELETE will still work to return control.
+BlockInput, MouseMoveOff
+
+Return
+
+
+
+
+
+
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;
+
+
+BlockInput, off
+BlockInput, MouseMoveOff
+Return
+
+
+
+
+
+
+
+
  ; SINGLE KEYSTROKE SCALING FUNCTION
 ;--------------------------------------------------------------------------------
 ; You have to HOLD DOWN scaleKey the entire time. no need to click and hold the mouse button, it is done for you

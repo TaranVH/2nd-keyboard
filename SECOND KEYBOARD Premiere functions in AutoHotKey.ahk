@@ -6,6 +6,78 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyboard!
 #SingleInstance force ;only one instance of this script may run at a time!
+
+
+
+
+
+
+
+applicationname=SecondKeyboard
+
+statusy = 1800
+statusx = 30
+statusheight=125
+statuswidth=400
+font=Arial
+
+
+
+;++++++++++++++++++++++++++++++++++++++++++++++
+
+Gui,+Owner +AlwaysOnTop -Resize -SysMenu -MinimizeBox -MaximizeBox -Disabled -Caption -Border -ToolWindow
+Gui,Margin,0,0
+Gui,Color,000000
+Gui,Font,CFFFF00 S27 W200 Q5, Arial
+Gui,Add,Text,Vtextt,KEY GOES HERE WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+Gui,Font,c44FF55 S20 W990 norm, Arial
+Gui,Add,Text,Vnamee,THE TYPE OF FUNCTION and the SELECTION WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+Gui,Font,cEE6622 S20 W300 norm, Arial
+Gui,Add,Text,Vkeyb,2ND KEYBOARD IT BE WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
+Gui, -Caption +ToolWindow +AlwaysOnTop +LastFound 
+
+Gui,Show,X%statusx% Y%statusy% W%statuswidth% H%statusheight% NoActivate ,%applicationname%
+
+
+revealkey(selectionn, keyy, functionn)
+{
+;msgbox, revealkey %keyy% %selectionn%
+Gui,Show
+GuiControl,,textt, %keyy%
+GuiControl,,namee, %functionn%  (%selectionn%)
+GuiControl,,keyb, second keyboard
+
+SetTimer,revealtimer,-1500
+
+
+}
+
+
+revealtimer:
+; GuiControl,,textt,
+; sleep 100
+Gui, hide
+Return
+
+
+
+;;;;;;temporary tooltip maker;;;;;;
+Tippy(tipsHere, wait:=333)
+{
+ToolTip, %tipsHere%
+SetTimer, noTip, %wait% ;--in 1/3 seconds by default, remove the tooltip
+}
+noTip:
+	ToolTip,
+	;removes the tooltip
+return
+;;;;;;temporary tooltip maker;;;;;;
+
+
+
+
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO!
 
 
@@ -52,18 +124,7 @@ Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyb
 ;_______________________________________________________________________________________________________________________
 
 
-;;;;;;temporary tooltip maker;;;;;;
-Tippy(tipsHere, wait:=333)
-{
-ToolTip, %tipsHere%
-SetTimer, noTip, %wait% ;--in 1/3 seconds by default, remove the tooltip
-}
-noTip:
-	ToolTip,
-	;removes the tooltip
-return
-;;;;;;temporary tooltip maker;;;;;;
-
+;+++++++++++++++++++++++++++++++++++
 
 
 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -150,6 +211,8 @@ MouseClick, left, , , 1 ;------------------------returns focus to the timeline. 
 BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL+ALT+DEL will still work!! Cool.
 }
 
+
+
 ;That's the end of the function. Now we make shortcuts to CALL that function, each with a different parameter!
 
 ;All of these refer to presets I have already created and named in Premiere
@@ -184,7 +247,9 @@ G18: Activate Premiere
 */
 
 
-;;---I have assigned all of the above keystroke combinations to my MACRO KEYS on my logitech keyboard, so it's really just ONE KEYSTROKE to apply them!
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 
 
 ;F1 -> [select clip at playhead] and then [ripple delete] . Note the keyboard shortcuts I have assigned in Premiere, above.
@@ -204,8 +269,11 @@ Send {space}
 Return
 
 
-F12::F11
 
+; Send F11 ; was testing something...
+; Return
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
 
 sendKeystrokes(bar)
 {
@@ -216,8 +284,8 @@ sendKeystrokes(bar)
 SFXActions(leSound)
 {
 sleep 10
-;Send ^!+` ;premiere shortcut to open the "project" panel, which is actually a bin. Only ONE bin is highlightable in this way.
-Send F11
+Send ^!+` ;premiere shortcut to open the "project" panel, which is actually a bin. Only ONE bin is highlightable in this way.
+;Send F11
 sleep 100
 msgbox, you in the panel now?
 Send ^\ ;premiere shortcut to "select find box"
@@ -314,8 +382,13 @@ loadFromFile(name) {
 ;#IfWinActive ;---- If this code is NOt commented out, it will allow for everything below this line to work in ANY application.
 
 
+;22222222222222222222222222222222222222222222222222222222222222222222222222 second keyboard magic beigns here 22222222222222222222222222222222222222222
 
-F24::
+F23::
+;Send {F24}
+;SetTimer, pressF24, -100 
+;SetTimer, pressF24, -1000 
+;SetTimer, pressF24, -1500 ;all obsolete. I've created a new visualizer especially for secondary keypresses
 
 FileRead, key, C:\Users\TaranVanHemert\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keypressed.txt
  
@@ -325,9 +398,10 @@ presetActions := Object()
 sendKeystrokesActions := Object()
 recallClipboardActions := Object()
 recallSFX := Object()
+sectionview := ""
 currentSection := ""
 
- 
+
 ;This loop will read all the key value pairs (e.g. keybinds).
 Loop, read, C:\Users\TaranVanHemert\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keyActions.txt
 {
@@ -365,26 +439,35 @@ if presetActions[key] != ""
 {
     ; Keybind for preset exists
     preset(presetActions[key])
+	Revealkey("Preset", key, presetActions[key])
 }
 else if sendKeystrokesActions[key] != ""
 {
     ; Keybind for sendKeystrokes exists
     sendKeystrokes(sendKeystrokesActions[key])
+	Revealkey("send keystrokes", key, sendKeystrokesActions[key])
 }
 else if recallClipboardActions[key] != ""
 {
     ; Keybind for recallClipboard exists
     recallClipboard(recallClipboardActions[key])
+	Revealkey("Recall Clipboard", key, recallClipboardActions[key])
 }
 else if recallSFX[key] != ""
 {
     ; Keybind for SFXactions exists
     SFXActions(recallSFXActions[key])
+	Revealkey("Recall sound effect", key, recallSFXActions[key])
 }
 else
     tooltip, Keybind not found! :(
-Return ;from F24
- 
+; Comment out the following line if you DON'T want an annoying visualizer that tells you that you just pressed a key on your secondary keyboard
+
+Return ;from F23
+
+
+
+
  
  /*  FYI:  Keyactions.txt is filled with text exactly like this:
 preset
@@ -410,7 +493,8 @@ num1:{Numpad1}
  */
  
  
- 
+ ;2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+
  
  
  
@@ -529,13 +613,13 @@ BlockInput, off
 BlockInput, MouseMoveOff ;return mouse control to the user.
 } ; monomaker
 
-#ifwinactive
-F6::
-	Send ^s
-	sleep 200
-    SoundBeep, 1100, 500
-	Reload  ;The only thing you need here is the Reload
-Return
+; #ifwinactive
+; F6::
+	; Send ^s
+	; sleep 200
+    ; SoundBeep, 1100, 500
+	; Reload  ;The only thing you need here is the Reload
+; Return
 
 
 ;JUNKED CODE BEOW -- was trying to make an array or something in AHK...

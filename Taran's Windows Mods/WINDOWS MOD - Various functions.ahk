@@ -214,10 +214,7 @@ tooltip, , , , 3
 
 
 
-#IfWinActive ahk_exe explorer.exe
-^F11::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\Vessel Final 4K\")
-^F12::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\YT Publish 4K\")
-#IfWinActive
+
 
 
 ;;;;;;;;;;THESE ARE ALL STUPID CRAP AND DONT WORK:;;;;;;;;
@@ -234,11 +231,6 @@ tooltip, counter = %counter%`nnlines = %nlines%, , , 10
 ;tooltip, , , , 10
 return
 ;;;;;;;;;;;;;;;;THOSE DIDNT WORK.;;;;;;;;;;;;;;;
-
-
-
-
-
 
 
 
@@ -291,6 +283,17 @@ NavRun(Path) {
 ;--------The above script origninally from: https://autohotkey.com/board/topic/102127-navigating-explorer-directories/
 
 
+
+#IfWinActive ahk_class MozillaWindowClass
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w ;control w, which closes a tab
+F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
+#IfWinActive 
+
+
+
+
 #IfWinActive ahk_class Notepad++
 ;instant save and reload for this script -- and i guess not the other ones...?
 F5::
@@ -304,52 +307,102 @@ Return
 
 
 
-;ahk_class Notepad++
-; ahk_class Premiere Pro
-;ahk_class OpusApp ; MS WORD
-
-
-
-
-
-
-
-
-
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
 ^numpad1::
+IfWinNotExist, ahk_class MozillaWindowClass
+	Run, firefox.exe
 if WinActive("ahk_class MozillaWindowClass")
 	Send ^{tab}
 else
 	WinActivate ahk_class MozillaWindowClass
 Return
 
+; ^numpad1::
+; IfWinNotExist, ahk_class Chrome_WidgetWin_1
+	; Run, chrome.exe
+	
+; if WinActive("ahk_class Chrome_WidgetWin_1")
+	; Send ^{tab}
+; else
+	; WinActivate ahk_class Chrome_WidgetWin_1
+; Return
 
 
-; This is a script that will always go to the NEXT Explorer window if you hit the same button again.
+
+#ifwinactive
+F7::
+	Send ^s
+	sleep 200
+    SoundBeep, 1100, 500
+	Reload  ;The only thing you need here is the Reload
+Return
+
+
+; This is a script that will always go to The last explorer window you had open.
+; If explorer is already active, it will go to the NEXT Explorer window
 ; CTRL Numpad2 is pressed with a SINGLE button stoke from my logitech G15 keyboard -- Macro key 17.
 #IfWinActive 
 ^numpad2::
-GroupAdd, taranexplorers, ahk_class CabinetWClass
-if WinActive("ahk_exe explorer.exe")
-	GroupActivate, taranexplorers, r
-else
-	WinActivate ahk_class CabinetWClass ;activates the most recently used explorer window IN THIS CONTEXT, otherwise you have to use WinActivatebottom
+IfWinNotExist, ahk_class CabinetWClass
+	Run, explorer.exe
+
+;	{
+		GroupAdd, taranexplorers, ahk_class CabinetWClass
+		if WinActive("ahk_exe explorer.exe")
+			GroupActivate, taranexplorers, r
+		else
+			WinActivate ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
+;	}
+
 Return
 
+;F13 is pressed with macro key G13
+F13::
+if WinActive("ahk_class MozillaWindowClass")
+	Send ^+{tab} ;"back" in tabs for firefox
+else
+	;something magical here
+Return
+
+
+
 #IfWinActive 
-^numpad3::WinActivate ahk_class Premiere Pro
+^numpad3::
+IfWinNotExist, ahk_class Premiere Pro
+	Run, Adobe Premiere Pro.exe
+WinActivate ahk_class Premiere Pro
+Return
 
 
-;This is a script that will always go to the Word, or the NEXT Word window if you hit the same button again.
+
+
+; ;This is a script that will always go to the Word, or the NEXT Word window if you hit the same button again.
+; #IfWinActive 
+; ^numpad4::
+; GroupAdd, taranwords, ahk_class OpusApp
+; if WinActive("ahk_class OpusApp")
+	; GroupActivate, taranwords, r
+; else
+	; WinActivate ahk_class OpusApp
+; Return
+;This new verion will activate Word if it isn't open already
 #IfWinActive 
 ^numpad4::
-GroupAdd, taranwords, ahk_class OpusApp
-if WinActive("ahk_class OpusApp")
-	GroupActivate, taranwords, r
-else
-	WinActivate ahk_class OpusApp
+Process, Exist, WINWORD.EXE
+;msgbox errorLevel `n%errorLevel%
+	If errorLevel = 0
+		Run, WINWORD.EXE
+	else
+	{
+	GroupAdd, taranwords, ahk_class OpusApp
+	if WinActive("ahk_class OpusApp")
+		GroupActivate, taranwords, r
+	else
+		WinActivate ahk_class OpusApp
+	}
 Return
+
+
 
 ;apparently CRTL NUM5 is some kind of select all shortcut?
 
@@ -360,16 +413,7 @@ Return
 
 
 
-
-
-
-
-
-
-
-
 #IfWinActive
-
 ;SNIP MAKER - DOES NOT WORK AT THE MOMENT
 Break:: ; this refers to the actual pause/break key on a keyboard
 ;msgbox, hello
@@ -383,12 +427,12 @@ return
 
 
 
-
 ;The optional script below allows you to use the TILDE to go DOWN one folder level in explorer
 #IfWinActive ahk_exe explorer.exe
 `::
 Send !{up}
 Return
+
 
 ;this converts F4 into ALT F4, but only for explorer. this is just to save one more keypress, since i close explorer windows in this way quite a lot.
 ;There is a deliberate delay added, since in SOME situations, ALT would be recognised, but not F4. Adding a delay takes care of that.
@@ -400,6 +444,12 @@ Send {F4}
 sleep 10
 Send {alt up}
 Return
+
+
+#IfWinActive ahk_exe explorer.exe
+^F11::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\Vessel Final 4K\")
+^F12::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\YT Publish 4K\")
+#IfWinActive
 
 
 
@@ -429,14 +479,3 @@ Return
 #c::
 Send #b{left}{enter}
 Return
-
-
-;code to locate an invisible cursor
-; F7::
-; Loop
-; {
-; tooltip, cursor, , ,3
-; sleep 20
-; }
-;F7 Up::tooltip, , , ,3
-;return

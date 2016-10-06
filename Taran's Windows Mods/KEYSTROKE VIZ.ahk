@@ -46,8 +46,8 @@ Gui,Add,Text,Vname,FUNCTION GOES HERE WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 ; statusy = %A_ScreenHeight% - %statusheight% - 10
 ; statusx = %A_ScreenWidth% - %statuswidth% - 10
 
-statusy = 1900
-statusx = 40
+statusy = 1850
+statusx = 30
 
 Gui, -Caption +ToolWindow +AlwaysOnTop +LastFound ;Turns out you NEED THIS LINE for the transparency to work...????
 ;Gui -Caption +ToolWindow
@@ -189,8 +189,8 @@ if superdim = 1
 		;Gui Font, cBlue
 		Gui,Font,CFFFFFF S%fontsize% W%boldness% Q5 underline,%font%
 		GuiControl,,text,%keys% ;The magic happens HERE!
-		GuiControl,,name,%activity%
-		Guicontrol Font, %keys%
+		GuiControl,,name,%activity% ;The magic on line 2 happens HERE!
+		Guicontrol Font, %keys% ; I dont know if this line is needed!!
 		WinSet, TransColor, %backcolor% 255
 		;WinSet, TransColor, Blue 50
 		;Gui -Caption +ToolWindow
@@ -201,7 +201,7 @@ if superdim = 1
 		stillholding = 1
 		;SetTimer,STATUSOFF,%timetoshow%
 		superdim = 0
-		SetTimer,DIMMER,-100
+		SetTimer,DIMMER,-100 ;It'll dim the display if you let go of the key!! But it won't vanish yet!
 		;tooltip,
 		skip = 0
 	}
@@ -209,7 +209,7 @@ if superdim = 1
   }
 ;msgbox, magic has happened
 
-;this is code to move the wondow around with the mouse. I think.
+;this is code to move the window around with the mouse. probably. Also, probably no longer needed.
   GetKeyState,mstate,LButton,P
   If mstate=D
   {
@@ -254,12 +254,15 @@ if downer = 1
 	return
 }
 ;TOOLTIP, NOT RETURNED NOW DOWNER IS NOT 1
+
 ;Gui, Color, dd6644
 ;WinSet, TransColor, DDDDDD 50
 ;WinSet, TransColor, DD6644 50
 ;WinSet, TransColor, FEFEFE 100
 ;WinSet, TransColor, FEFEFE 
-;WinSet, TransColor, dd6644
+;WinSet, TransColor, dd6644            ; NONE OF THESE WORK!
+
+;for some reason, it is impossible to tell the GUI to dim using a timer. I can, however, change a variable, and then inside the big loop, I can have a GUI dimming command which is only triggered if that variable is 1, and THEN the display can dim. Doesn't make sense to me but there it is.
 superdim = 1
 settimer, STATUSOFF, %timetoshow%
 Return

@@ -82,7 +82,7 @@ if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = t
 	while GetKeyState("Rbutton")
 		{
 		Send /
-		Tooltip, Timeline!
+		Tooltip, Right click playhead mod
 		sleep 16
 		}
 	Tooltip,

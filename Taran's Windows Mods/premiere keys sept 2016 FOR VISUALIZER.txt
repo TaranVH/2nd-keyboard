@@ -11,12 +11,12 @@ BEGIN!
 
 
 
-Firefox&Ctrl Numpad1
-Explorer&Ctrl Numpad2
-Premiere&Ctrl Numpad3
-Word&Ctrl Numpad4
+(G16)Firefox&Ctrl Numpad1
+(G17)Explorer&Ctrl Numpad2
+(G18)Premiere&Ctrl Numpad3
+(G15)Word&Ctrl Numpad4
 Ctrl Numpad5 apparently already is used as some weird shortcut similar to select all, or Home or something....
-Notepad++&Ctrl Numpad6
+(G13)Notepad++&Ctrl Numpad6
 
 
 
@@ -34,6 +34,22 @@ Taran Mod-Bin back Button&F12
 
 Copy file to Vessel Transcode folder&Ctrl F11
 Copy file to Vessel YouTube folder&Ctrl F12
+
+TESTING&F13
+&F14
+&F15
+&F16
+&F17
+&F18
+&F19
+&F20
+&F21
+&F22
+&F23
+2ND KEYBOARD&F24
+
+Taran mod-reverse selected clip&ctrl shift R
+
 
 
 Premiere shortcuts below
@@ -143,16 +159,23 @@ Select All Matching
 Deselect All
 Find...
 Find Next
+
 Label
 Select Label Group
-Cyan&Num 7
-Chartreuse&Num /
-Green&Num 9
-Yellow&Num *
-Orange&Num 0
-Pink&Num 1
-Lavender&Num 5
-Purple&Num 3
+
+Label Purple&Numpad7
+Label blue&Numpad/
+Label blue&NumpadDiv
+Label dark green&Numpad9
+Label pink&Numpad*
+Label pink&NumpadMult
+Label sky blue&Numpad0
+Label blue-green&Numpad1
+Label red&Numpad5
+Label orange&Numpad3
+
+
+
 Remove Unused
 Production
 Edit Original
@@ -163,7 +186,7 @@ Edit in Adobe Photoshop
 Keyboard Shortcuts...&Shift K
 Keyboard Shortcuts...&Ctrl Shift K
 Preferences
-General...&Shift P
+Preferences, General...&Shift P
 Appearance...
 Audio...
 Audio Hardware...
@@ -306,7 +329,7 @@ New Title
 Default Still...
 Default Roll...
 Default Crawl...
-Based on Current Title...&Ctrl Shift Q
+New Title Based on Current Title...&Ctrl Shift Q
 Based on Template...
 Font
 Size
@@ -391,6 +414,8 @@ Captions
 Capture
 Edit To Tape
 Effect Controls
+
+
 Effects&Ctrl Alt Shift 7
 Events
 History
@@ -415,11 +440,13 @@ Title Styles
 Title Tools
 Tools
 Workspaces
+
 Help
 Adobe Premiere Pro Help...
 Adobe Premiere Pro Support Center...
 Keyboard...
 About Adobe Premiere Pro...
+
 Add Tracks to Match Source
 Add or Remove Audio Keyframe
 Add or Remove Video Keyframe&Shift S
@@ -453,6 +480,7 @@ Export Frame
 Extend Next Edit To Playhead
 Extend Previous Edit To Playhead
 Fast Forward
+
 Go to First Multi-Camera Page
 Go to Last Multi-Camera Page
 Go to Next Edit Point&Alt D
@@ -471,6 +499,7 @@ Go to Selected Clip End&Shift End
 Go to Selected Clip Start&Shift Home
 Go to Sequence-Clip End
 Go to Sequence-Clip Start&Home
+
 Increase Audio Keyframe Value
 Increase Clip Volume&]
 Increase Clip Volume Many
@@ -484,8 +513,8 @@ Move All Audio Sources Down
 Move All Audio Sources Up
 Move All Audio Targets Down
 Move All Audio Targets Up
-Move All Video Sources Down&Shift Num 2
-Move All Video Sources Up&Shift Num 8
+Move All Video Sources Down&Shift Numpad2
+Move All Video Sources Up&Shift Numpad8
 Move All Video Targets Down
 Move All Video Targets Up
 Move Audio Keyframe 1 Frame earlier
@@ -498,10 +527,12 @@ Move Video Keyframe 10 Frames earlier
 Move Video Keyframe 10 Frames later
 Multi-Camera Audio Follows Video
 Multi-Camera Record On/Off Toggle&F7
-Nudge Volume  1dB&Shift ]
+
+Nudge Volume  1dB&]
 Nudge Volume  3dB
-Nudge Volume -1dB&Shift [
+Nudge Volume -1dB&[
 Nudge Volume -3dB
+
 Overlay Settings
 Overlays
 Play Around
@@ -513,12 +544,16 @@ Play from Playhead to Audio Out Point
 Play from Playhead to Out Point
 Play from Playhead to Video Out Point
 Play-Stop Toggle&Space
-Record Voiceover&Shift Num 0
+Record Voiceover&Shift Numpad0
 Reveal Nested Sequence
 Revert Trim Session
 Rewind
+
+
 Ripple Trim Next Edit To Playhead&W
 Ripple Trim Previous Edit To Playhead&Q
+
+
 Save Source Assignment Preset
 Save Track Height Preset
 Select Camera 1
@@ -537,6 +572,7 @@ Select Camera 13
 Select Camera 14
 Select Camera 15
 Select Camera 16
+
 Select Clip at Playhead&U
 Select Clip at Playhead&Ctrl Alt S
 Select Find Box&Ctrl \
@@ -568,6 +604,7 @@ Set Marker Color 6
 Set Marker Color 7
 Set Marker Color 8
 Set Poster Frame
+
 Shuttle Left&J
 Shuttle Left&A
 Shuttle Right&L
@@ -576,6 +613,7 @@ Shuttle Slow Left&Shift J
 Shuttle Slow Right&Shift L
 Shuttle Stop&S
 Shuttle Stop&K
+
 Source Assignment Preset 1
 Source Assignment Preset 2
 Source Assignment Preset 3
@@ -586,12 +624,14 @@ Source Assignment Preset 7
 Source Assignment Preset 8
 Source Assignment Preset 9
 Source Assignment Preset 10
+
 Step Back 1 Frame&Left
 Step Back Many Frames - Units
 Step Forward 1 Frame&Right
 Step Forward Many Frames - Units
 Stop
 Targets Follow Inserts and Overwrites
+
 Toggle All Audio Targets
 Toggle All Source Audio
 Toggle All Source Video
@@ -604,6 +644,7 @@ Toggle Maintain Pitch During Shuttling
 Toggle Multi-Camera View
 Toggle Proxies
 Toggle Source/Program Monitor Focus
+
 Toggle Target Audio 1&Alt 1
 Toggle Target Audio 2&Alt 2
 Toggle Target Audio 3&Alt 3
@@ -621,6 +662,7 @@ Toggle Target Video 6&Shift 6
 Toggle Target Video 7&Shift 7
 Toggle Target Video 8&Shift 8
 Toggle Trim Type
+
 Track Height Preset 1&Ctrl `
 Track Height Preset 2&Ctrl Shift `
 Track Height Preset 3
@@ -631,6 +673,8 @@ Track Height Preset 7
 Track Height Preset 8
 Track Height Preset 9
 Track Height Preset 10
+
+
 Trim Backward&Ctrl Left
 Trim Backward&Ctrl ,
 Trim Backward Many&Ctrl Shift Left
@@ -639,6 +683,7 @@ Trim Forward&Ctrl Right
 Trim Forward Many&Ctrl Shift Right
 Trim Next Edit to Playhead&Shift W
 Trim Previous Edit to Playhead&Shift Q
+
 Workspace 1&Alt Shift 1
 Workspace 2&Alt Shift 2
 Workspace 3&Alt Shift 3
@@ -650,6 +695,7 @@ Workspace 8&Alt Shift 8
 Workspace 9&Alt Shift 9
 Zoom to Frame
 Zoom to Sequence
+
 Panels
 Adobe Story Panel
 Audio Clip Mixer Panel
@@ -963,12 +1009,12 @@ Join All Through Edits
 Lock/Unlock All Audio Tracks
 Lock/Unlock All Video Tracks
 Move Playhead to Cursor&/
-Nudge Clip Selection Down&Num 2
-Nudge Clip Selection Left Five Frames&Shift Num 4
-Nudge Clip Selection Left One Frame&Num 4
-Nudge Clip Selection Right Five Frames&Shift Num 6
-Nudge Clip Selection Right One Frame&Num 6
-Nudge Clip Selection Up&Num 8
+Nudge Clip Selection Down&Numpad2
+Nudge Clip Selection Left Five Frames&shift Numpad4
+Nudge Clip Selection Left One Frame&Numpad4
+Nudge Clip Selection Right Five Frames&shift Numpad6
+Nudge Clip Selection Right One Frame&Numpad6
+Nudge Clip Selection Up&Numpad8
 Reveal In Project&Alt X
 Ripple Delete&Alt Backspace&Backspace
 Set Work Area Bar In Point&Alt [

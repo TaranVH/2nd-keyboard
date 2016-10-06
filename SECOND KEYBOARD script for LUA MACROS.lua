@@ -12,7 +12,7 @@ sendToAHK = function (key)
       file:write(key)
       file:flush() --"flush" means "save"
       file:close()
-      lmc_send_keys('{F24}')  -- using the F24 key to trigger AutoHotKey is probably NOT the best method. Feel free to program something better!
+      lmc_send_keys('{F23}')  -- using the F23 key to trigger AutoHotKey is probably NOT the best method. Feel free to program something better!
 end
 
 local config = {

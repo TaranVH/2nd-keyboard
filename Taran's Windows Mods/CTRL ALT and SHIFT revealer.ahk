@@ -111,62 +111,30 @@ Loop
 	; you have either pressed, or let go of, a key. I dont know if I can tell which.
 	}
 
-  oldshiftkeys=%shiftkeys%
-  shiftkeys=
-  StringReplace,shiftkeys,shiftkeys,LWin
-  StringReplace,shiftkeys,shiftkeys,RWin
-  StringReplace,shiftkeys,shiftkeys,LCtrl
-  StringReplace,shiftkeys,shiftkeys,RCtrl
-  StringReplace,shiftkeys,shiftkeys,LShift
-  StringReplace,shiftkeys,shiftkeys,RShift
-  StringReplace,shiftkeys,shiftkeys,LAlt
-  StringReplace,shiftkeys,shiftkeys,RAlt
-  StringReplace,shiftkeys,shiftkeys,AltGr
-  StringReplace,shiftkeys,shiftkeys,%A_SPACE%,,All  
-  If shiftkeys=
-  If oldshiftkeys<>
-    Continue
-  ; TaranArray := [Win, Ctrl, Alt, Shift]
-  ; msgbox, %Taranarray%
-  ; If keys := "ctrl"
-	; break
+  ; oldshiftkeys=%shiftkeys%
+  ; shiftkeys=
+  ; StringReplace,shiftkeys,shiftkeys,LWin
+  ; StringReplace,shiftkeys,shiftkeys,RWin
+  ; StringReplace,shiftkeys,shiftkeys,LCtrl
+  ; StringReplace,shiftkeys,shiftkeys,RCtrl
+  ; StringReplace,shiftkeys,shiftkeys,LShift
+  ; StringReplace,shiftkeys,shiftkeys,RShift
+  ; StringReplace,shiftkeys,shiftkeys,LAlt
+  ; StringReplace,shiftkeys,shiftkeys,RAlt
+  ; StringReplace,shiftkeys,shiftkeys,AltGr
+  ; StringReplace,shiftkeys,shiftkeys,%A_SPACE%,,All  
+  ; If shiftkeys=
+  ; If oldshiftkeys<>
+    ; Continue
 
   ;;;;; below is where the magic happens!
   If keys<>
   {
-	Loop, read, Premiere work keys.txt
-	{
-		index = %A_Index% ;this is the lin'es NUMBER you are currently looking at.
-		currentline = %A_LoopReadLine% ;this is the exact string of the line
-		Position := InStr(currentline, "&")
-
-		StringTrimLeft,rightside,currentline, %position%
-
-		if rightside = %keys%
-		{
-			keyOnLine = %A_Index%
-			;linenumber = %A_Index%
-			;msgbox, %rightside%
-			lenny := % Strlen(currentline)
-			lols := lenny - Position + 1
-			
-			StringTrimRight,activity,currentline, %lols%
-			break
-		}
-		if rightside <> %keys%
-		{
-			;keyOnLine = 0
-			activity = 
-			;msgbox, fail
-		}
-		; if activity =
-			; break
-	}
 
 
 
 	skip = 0
-	if (keys = "ctrl" || keys = "shift" || keys = "alt" || keys = "ctrl shift" || keys = "ctrl alt" || keys = "shift alt" || keys = "ctrl shift alt" || keys = "ctrl  alt shift" || keys = "shift alt ctrl")
+	if (keys = "Lwin" || keys = "Windows" ||keys = "ctrl" || keys = "shift" || keys = "alt" || keys = "ctrl shift" || keys = "ctrl win" || keys = "ctrl alt" || keys = "shift alt" || keys = "ctrl shift alt" || keys = "ctrl  alt shift" || keys = "shift alt ctrl")
 	  {
 		;tooltip, found one
 		Gui, Color, %backcolor%
