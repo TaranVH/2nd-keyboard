@@ -15,8 +15,8 @@ BEGIN!
 (G17)Explorer&Ctrl Numpad2
 (G18)Premiere&Ctrl Numpad3
 (G15)Word&Ctrl Numpad4
-Ctrl Numpad5 apparently already is used as some weird shortcut similar to select all, or Home or something....
-(G13)Notepad++&Ctrl Numpad6
+Ctrl Numpad5 apparently already is used as some weird shortcut like Select All, or Home or something....
+(G14)Notepad++&Ctrl Numpad6
 
 
 
@@ -30,14 +30,18 @@ Nothin'&F8
 Nothin'&F9
 Nothin'&F10
 Nothin'&F11
-Taran Mod-Bin back Button&F12
+"Go back" (in bin)&F12
 
 Copy file to Vessel Transcode folder&Ctrl F11
 Copy file to Vessel YouTube folder&Ctrl F12
 
-TESTING&F13
-&F14
-&F15
+save application shortcut&shift F13
+save application shortcut&+F13
+Go to application shortcut&F13
+
+
+Instant rescale mod&F14
+Instant transformation point change mod&F15
 &F16
 &F17
 &F18
@@ -52,7 +56,18 @@ Taran mod-reverse selected clip&ctrl shift R
 
 
 
+
+
+
 Premiere shortcuts below
+
+
+
+step back many (30) frames&shift left
+step forward many (30) frames&shift right
+
+Stop, rewind 30 frames, play.(taran macro)&alt space
+
 
 
 Tools
@@ -315,6 +330,7 @@ Clear Out&Ctrl Shift O
 Clear In and Out&Ctrl Shift X
 Add Marker&Ctrl M
 Add Marker&Alt M
+Add Marker&\
 Go to Next Marker
 Go to Previous Marker
 Clear Selected Marker&Ctrl Alt M
@@ -913,7 +929,7 @@ Move Selection Page Up&Page Up
 Move Selection Right&Right
 Move Selection Up&Up
 Next Column Field&Tab
-Next Row Field&Enter
+
 Open in Source Monitor&Y
 Open in Timeline
 Previous Column Field&Shift Tab
@@ -1008,13 +1024,17 @@ Increase Video Tracks Height&Ctrl =
 Join All Through Edits
 Lock/Unlock All Audio Tracks
 Lock/Unlock All Video Tracks
-Move Playhead to Cursor&/
+Move Playhead to Cursor&\
+
 Nudge Clip Selection Down&Numpad2
-Nudge Clip Selection Left Five Frames&shift Numpad4
-Nudge Clip Selection Left One Frame&Numpad4
-Nudge Clip Selection Right Five Frames&shift Numpad6
-Nudge Clip Selection Right One Frame&Numpad6
 Nudge Clip Selection Up&Numpad8
+
+Nudge Clip Selection Left One Frame&Numpad4
+Nudge Clip Selection Right One Frame&Numpad6
+
+Nudge Clip Selection Left Five Frames&shift Numpad4
+Nudge Clip Selection Right Five Frames&shift Numpad6
+
 Reveal In Project&Alt X
 Ripple Delete&Alt Backspace&Backspace
 Set Work Area Bar In Point&Alt [
@@ -1092,3 +1112,6 @@ Wedge Tool&W
 Type Tool&T
 Vertical Area Type Tool
 Vertical Path Type Tool
+
+
+

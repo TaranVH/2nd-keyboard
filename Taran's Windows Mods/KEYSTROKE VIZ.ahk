@@ -2,7 +2,9 @@
 ; Shows pushed down keys and buttons
 ;Skrommel @2005
 
-Menu, Tray, Icon, shell32.dll, 43
+Menu, Tray, Icon, shell32.dll, 190
+; Menu, Tray, Icon, shell32.dll, 209 ; sideways star
+; Menu, Tray, Icon, shell32.dll, 216 ; red thingy
 
 #SingleInstance,Force
 CoordMode,Mouse,Screen
@@ -24,6 +26,7 @@ statusx=10
 statusy=10
 relative=1
 transparency=Off
+					
 					
 SUPERDIM = 0
 
@@ -58,7 +61,7 @@ Gui,Show,X%statusx% Y%statusy% W%statuswidth% H%statusheight% NoActivate,%applic
 ;WinSet,Transparent,%transparency%,%applicationname%
 
 ;WinSet, TransColor, 129573 ;255
-WinSet, TransColor, %backcolor% ;100
+WinSet, TransColor, %backcolor% , KEYSTROKE VIZ;100
 ;WinSet, TransColor, FEFEFE ;100
 
 ;WinSet, TransColor, 0000FF 150
@@ -67,7 +70,6 @@ WinSet, TransColor, %backcolor% ;100
 
 Loop
 {
-
 
 ; if superdim = 0
 	; {
@@ -84,7 +86,7 @@ if superdim = 1
 		; GuiControl,,text,fook ;The magic happens HERE!
 		; GuiControl,,name,%activity%
 		; Guicontrol,,Font, fook2
-	WinSet, TransColor, %backcolor% 180
+	WinSet, TransColor, %backcolor% 180, KEYSTROKE VIZ
 	}
 
 
@@ -171,7 +173,7 @@ if superdim = 1
 
 
 	skip = 0
-	if (keys = "ctrl" || keys = "shift" || keys = "alt" || keys = "ctrl shift" || keys = "ctrl alt" || keys = "shift alt" || keys = "ctrl shift alt" || keys = "ctrl  alt shift" || keys = "shift alt ctrl" || keys = "Lbutton" || keys = "Rbutton")
+	if (keys = "ctrl" || keys = "shift" || keys = "alt"  || keys = "alt lwin"  || keys = "shift lwin" || keys = "ctrl shift" || keys = "ctrl alt" || keys = "shift alt" || keys = "ctrl shift alt" || keys = "ctrl  alt shift" || keys = "shift alt ctrl" || keys = "Lbutton" || keys = "Rbutton" || keys = "lwin" || keys = "ctrl lwin" || keys = "ctrl shift lwin" || keys = "ctrl shift alt lwin")
 	  {
 		;tooltip, found one
 		; Gui, Color, EEEEEE
@@ -185,13 +187,16 @@ if superdim = 1
 
 	if skip <> 1
 	{
-		Gui, Color, %backcolor%
+		;Gui, Color, %backcolor%
 		;Gui Font, cBlue
 		Gui,Font,CFFFFFF S%fontsize% W%boldness% Q5 underline,%font%
 		GuiControl,,text,%keys% ;The magic happens HERE!
-		GuiControl,,name,%activity% ;The magic on line 2 happens HERE!
+		if WinActive("ahk_exe Adobe Premiere Pro.exe")
+			GuiControl,,name,%activity% ;The magic on line 2 happens HERE!
+		else
+			GuiControl,,name, ;Premiere is not open, so empty line 2.
 		Guicontrol Font, %keys% ; I dont know if this line is needed!!
-		WinSet, TransColor, %backcolor% 255
+		WinSet, TransColor, %backcolor% 255, KEYSTROKE VIZ
 		;WinSet, TransColor, Blue 50
 		;Gui -Caption +ToolWindow
 		;WinSet, TransColor, FFFFFF 1
@@ -233,9 +238,6 @@ if superdim = 1
     }
   }
 
- 
- 
-
 
   
 }
@@ -268,6 +270,9 @@ settimer, STATUSOFF, %timetoshow%
 Return
 
 
+
+
+
 STATUSOFF:
 if downer = 1
 {
@@ -280,6 +285,8 @@ SetTimer,STATUSOFF,Off
 superdim = 0
 ;Gui,Font,C%fontcolor% 
 Return
+
+
 
 
 READINI:
@@ -314,14 +321,14 @@ IfNotExist,%applicationname%.ini
   inifile=%inifile%`ntransparency=Off
   ;inifile=%inifile%`ntimetoshow=1000
   inifile=%inifile%`n
-  inifile=%inifile%`nAppsKey`nWin`nCtrl`nShift`nAlt`nAltGr
+  inifile=%inifile%`nAppsKey`nWin`nrWin`nlWin`nCtrl`nShift`nAlt`nAltGr
   inifile=%inifile%`nPrintScreen`nCtrlBreak`nPause`nBreak`nHelp`nBrowser_Back`nBrowser_Forward`nBrowser_Refresh`nBrowser_Stop`nBrowser_Search`nBrowser_Favorites`nBrowser_Home`nVolume_Mute`nVolume_Down`nVolume_Up`nMedia_Next`nMedia_Prev`nMedia_Stop`nMedia_Play_Pause`nLaunch_Mail`nLaunch_Media`nLaunch_App1`nLaunch_App2
   inifile=%inifile%`nF1`nF2`nF3`nF4`nF5`nF6`nF7`nF8`nF9`nF10`nF11`nF12`nF13`nF14`nF15`nF16`nF17`nF18`nF19`nF20`nF21`nF22`nF23`nF24
   inifile=%inifile%`nJoy1`nJoy2`nJoy3`nJoy4`nJoy5`nJoy6`nJoy7`nJoy8`nJoy9`nJoy10`nJoy11`nJoy12`nJoy13`nJoy14`nJoy15`nJoy16`nJoy17`nJoy18`nJoy19`nJoy20`nJoy21`nJoy22`nJoy23`nJoy24`nJoy25`nJoy26`nJoy27`nJoy28`nJoy29`nJoy30`nJoy31`nJoy32`nJoyX`nJoyY`nJoyZ`nJoyR`nJoyU`nJoyV`nJoyPOV
   inifile=%inifile%`nSpace`nTab`nEnter`nEscape`nBackspace`nDelete`nInsert`nHome`nEnd`nPgUp`nPgDn`nUp`nDown`nLeft`nRight`nScrollLock`nCapsLock
-  inifile=%inifile%`nNumLock`nNumpadDiv`nNumpadMult`nNumpadAdd`nNumpadSub`nNumpadEnter`nNumpadDel`nNumpadIns`nNumpadClear`nNumpadDot`nNumpad0`nNumpad1`nNumpad2`nNumpad3`nNumpad4`nNumpad5`nNumpad6`nNumpad7`nNumpad8`nNumpad9
-  inifile=%inifile%`nA`nB`nC`nD`nE`nF`nG`nH`nI`nJ`nK`nL`nM`nN`nO`nP`nQ`nR`nS`nT`nU`nV`nW`nX`nY`nZ`nÆ`nØ`nÅ`n1`n2`n3`n4`n5`n6`n7`n8`n9`n0`n```n`,`n`n+`n-`n`n\`n/`n`n`n`n`n`n`n`n`n`n`n`n`n`n`n´`n'`n¨`n~`n;`n`n.`n`n`n`n`n`nµ
-  inifile=%inifile%`nLButton`nRButton`nMButton`nWheelDown`nWheelUp`nXButton1`nXButton2`n
+  inifile=%inifile%`nNumLock`nNumpadDiv`nNumpadMult`nNumpadAdd`nNumpadSub`n`n`n`nNumpadClear`nNumpadDot`nNumpad0`nNumpad1`nNumpad2`nNumpad3`nNumpad4`nNumpad5`nNumpad6`nNumpad7`nNumpad8`nNumpad9
+  inifile=%inifile%`nA`nB`nC`nD`nE`nF`nG`nH`nI`nJ`nK`nL`nM`nN`nO`nP`nQ`nR`nS`nT`nU`nV`nW`nX`nY`nZ`nÆ`nØ`nÅ`n1`n2`n3`n4`n5`n6`n7`n8`n9`n0`n```n`,`n`n+`n-`n`n\`n/`n[`n]`n`n`n`n`n`n`n`n`n`n`n`n`n´`n'`n¨`n~`n;`n`n.`n`n`n`n`n`nµ
+  inifile=%inifile%`nLButton`nRButton`n`nWheelDown`nWheelUp`nXButton1`nXButton2`n
   FileAppend,%inifile%,%applicationname%.ini
 }
 ;"
@@ -440,9 +447,6 @@ Return
 
 
 
-; F6::
-	; Send ^s
-	; sleep 200
-    ; SoundBeep, 1100, 500
-	; Reload  ;The only thing you need here is the Reload
-; Return
+
+
+

@@ -33,13 +33,14 @@
 ;-------------------------------------------------------------------------------------------------------------------------------
 
 ;Define all the timeline's possible colors on taran's computer. This accounts for trageted and untargeted tracks, both inside and outside the in and out points.
-;Note that your colors will be different, but you can change them inside preferences > appearance > brightness.
+;Note that your colors will be different, but you can change UI brightness inside preferences > appearance > brightness.
+;use Window Spy (it comes with AHK) to detect exact colors onscreen.
 timeline1 = 0x2c2c2c
 timeline2 = 0x252525
 timeline3 = 0x4c4c4c
 timeline4 = 0x212121
 timeline5 = 0xd3d3d3
-timeline6 = nevermind ; 0x2a2a2a is the top of timeline color, but it is also the normal panel color for me, and is therefore useless for this...
+timeline6 = 0xdadada ;just in case the UI brightness gets kinda screwy, as it has been lately...
 
 Tippy(tipsHere, wait:=333) ;will create and then delete a tooltip
 {
@@ -81,7 +82,7 @@ if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = t
 	; tooltip, %colorr%
 	while GetKeyState("Rbutton")
 		{
-		Send /
+		Send \
 		Tooltip, Right click playhead mod
 		sleep 16
 		}

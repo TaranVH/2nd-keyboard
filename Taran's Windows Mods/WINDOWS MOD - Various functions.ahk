@@ -12,6 +12,21 @@ Menu, Tray, Icon, shell32.dll, 16 ;this changes the icon into a little laptop th
 
 
 
+savedCLASS = "ahk_class Photoshop"
+savedEXE = "photoshop.exe"
+
+
+
+;a script to open the snipping tool and create a new snip.
+ScrollLock::
+WinClose ahk_exe SnippingTool.exe
+send {Lwin down}
+send {Lwin up}
+sleep 20
+send snip{enter}
+WinWaitActive ahk_exe SnippingTool.exe, , 2
+Send ^n ;new snip. For SOME computers, the new snip is already engaged by deafult. IDK why, but mine is not.
+return
 
 /*
 MsgBox, % GetAhkStats("lines")
@@ -303,11 +318,60 @@ Reload
 Return
 #IfWinActive
 
+; #ifwinactive
+; F7::
+	; Send ^s
+	; sleep 200
+    ; SoundBeep, 1100, 500
+	; Reload  ;The only thing you need here is the Reload
+; Return
 
 
 
+
+
+
+;BEGIN INSTANT APPLICATION SWITCHER SCRIPTS;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+windowSwitcher(theClass, theEXE)
+{
+IfWinNotExist, %theClass%
+	Run, % theEXE
+if not WinActive(theClass)
+	WinActivate %theClass%
+}
+
+
+windowSaver()
+{
+WinGet, lolexe, ProcessName, A
+WinGetClass, lolclass, A ; "A" refers to the currently active window
+global savedCLASS = "ahk_class "lolclass
+global savedEXE = lolexe ;is this the way to do it? IDK.
+}
+
+
+;F13 is pressed with macro key G13. but this one includes SHIFT
++F13::
+windowSaver()
+msgbox,,, class = %savedCLASS% `nEXE = %savedEXE%, 0.5
+Return
+
+;;F13 is pressed with macro key G13
+;F13::windowSwitcher(savedCLASS, savedEXE)
+
+
+F13::
+if WinActive("ahk_class MozillaWindowClass")
+	Send ^+{tab}
+if WinActive("ahk_class Notepad++")
+	Send ^+{tab}
+return
 
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
+
 ^numpad1::
 IfWinNotExist, ahk_class MozillaWindowClass
 	Run, firefox.exe
@@ -317,6 +381,9 @@ else
 	WinActivate ahk_class MozillaWindowClass
 Return
 
+
+
+;Unused script that can run chrome
 ; ^numpad1::
 ; IfWinNotExist, ahk_class Chrome_WidgetWin_1
 	; Run, chrome.exe
@@ -329,40 +396,21 @@ Return
 
 
 
-#ifwinactive
-F7::
-	Send ^s
-	sleep 200
-    SoundBeep, 1100, 500
-	Reload  ;The only thing you need here is the Reload
-Return
-
-
 ; This is a script that will always go to The last explorer window you had open.
 ; If explorer is already active, it will go to the NEXT Explorer window
-; CTRL Numpad2 is pressed with a SINGLE button stoke from my logitech G15 keyboard -- Macro key 17.
+; CTRL Numpad2 is pressed with a single button stoke from my logitech G15 keyboard -- Macro key 17.
 #IfWinActive 
 ^numpad2::
 IfWinNotExist, ahk_class CabinetWClass
 	Run, explorer.exe
 
-;	{
-		GroupAdd, taranexplorers, ahk_class CabinetWClass
-		if WinActive("ahk_exe explorer.exe")
-			GroupActivate, taranexplorers, r
-		else
-			WinActivate ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
-;	}
-
-Return
-
-;F13 is pressed with macro key G13
-F13::
-if WinActive("ahk_class MozillaWindowClass")
-	Send ^+{tab} ;"back" in tabs for firefox
+GroupAdd, taranexplorers, ahk_class CabinetWClass
+if WinActive("ahk_exe explorer.exe")
+	GroupActivate, taranexplorers, r
 else
-	;something magical here
+	WinActivate ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
 Return
+
 
 
 
@@ -375,17 +423,6 @@ Return
 
 
 
-
-; ;This is a script that will always go to the Word, or the NEXT Word window if you hit the same button again.
-; #IfWinActive 
-; ^numpad4::
-; GroupAdd, taranwords, ahk_class OpusApp
-; if WinActive("ahk_class OpusApp")
-	; GroupActivate, taranwords, r
-; else
-	; WinActivate ahk_class OpusApp
-; Return
-;This new verion will activate Word if it isn't open already
 #IfWinActive 
 ^numpad4::
 Process, Exist, WINWORD.EXE
@@ -406,8 +443,22 @@ Return
 
 ;apparently CRTL NUM5 is some kind of select all shortcut?
 
+
+
 #IfWinActive 
-^numpad6::WinActivate ahk_class Notepad++
+^numpad6::
+IfWinNotExist, ahk_class Notepad++
+	Run, notepad++.exe
+if WinActive("ahk_class Notepad++")
+	Send ^{tab}
+WinActivate ahk_class Notepad++
+
+return
+
+
+;+++++END OF INSTANT APPLICATION SWITCHER SCRIPTS;+++++++++++++++++++++++++++++++++++++
+
+
 
 
 
@@ -459,7 +510,7 @@ Return
 #IfWinActive
 ^!+1::explorerLaunch("Z:\Linus\1. Linus Tech Tips\Pending") 
 ^!+2::explorerLaunch("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
-^!+3::explorerLaunch("C:\Users\TaranVanHemert\Videos\SHADOWPLAY CAPTURE\Desktop")
+^!+3::explorerLaunch("C:\Users\TaranWORK\Videos\Desktop")
 ;;; done ;;;;
 
 

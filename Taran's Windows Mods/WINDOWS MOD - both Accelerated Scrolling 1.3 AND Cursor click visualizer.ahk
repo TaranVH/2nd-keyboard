@@ -40,6 +40,11 @@ kolor := 11FF99
 kolor2 := 008833
 showClicks = 1
 
+
+
+
+
+
 Gui, -Caption +ToolWindow +AlwaysOnTop +LastFound
 ;Gui, Color, %kolor2%
 Gui, Color, 008833
@@ -64,7 +69,7 @@ delay = 200
 
 
 ; Show scroll velocity as a tooltip while scrolling. 1 or 0.
-tooltips := 0
+tooltips := 1
 
 ; The length of a scrolling session.
 ; Keep scrolling within this time to accumulate boost.
@@ -74,7 +79,7 @@ timeout := 600
 ; If you scroll a long distance in one session, apply additional boost factor.
 ; The higher the value, the longer it takes to activate, and the slower it accumulates.
 ; Set to zero to disable completely. Default: 30.
-boost := 60
+boost := 30
 
 ; Spamming applications with hundreds of individual scroll events can slow them down.
 ; This sets the maximum number of scrolls sent per click, i.e. max velocity. Default: 60.
@@ -179,6 +184,9 @@ QuickToolTip(text, delay)
 }
 
 
+
+; pgup::send {wheelup 50}
+; pgdn::send {wheeldown 50}
 
 
 

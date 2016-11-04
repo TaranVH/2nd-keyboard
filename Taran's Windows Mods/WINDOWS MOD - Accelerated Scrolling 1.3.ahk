@@ -41,6 +41,8 @@ WheelDown::  Goto Scroll
 #WheelUp::   Suspend
 #WheelDown:: Goto Quit
 
+
+
 Scroll:
 	t := A_TimeSincePriorHotkey
 	if (A_PriorHotkey = A_ThisHotkey && t < timeout)
