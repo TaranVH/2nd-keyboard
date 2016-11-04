@@ -71,6 +71,7 @@ WinSet, TransColor, %backcolor% , KEYSTROKE VIZ;100
 Loop
 {
 
+sleep 20 ;without this, the script will loop a bazillion times a second. It was taking up 4% of my CPU!!! Even a delay of 1 millisecond means the script remains at "0%" cpu usage, according to task manager. However, I have done some experiements, and determined that 20ms is still small enough for the script to effectively function. 100ms, or god forbid, 500ms, is far too much - most keystrokes go unnoticed, since the script is usually sleeping!
 ; if superdim = 0
 	; {
 	; ;TOOLTIP, make bright, , , 5
