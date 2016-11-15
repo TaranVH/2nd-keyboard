@@ -23,7 +23,7 @@ Menu, Tray, Icon, shell32.dll, 16 ;this changes the icon into a little laptop th
 ;There is a video explaining all of this, coming soon.
 
 
-<<<<<<< HEAD
+
 ;#######THIS IS THE BEST SCRIPT I'VE EVER WRITTEN.#########
 
 ;And also one of the simplest. Basically, If you press the "explorer" key (F1) it will instantly:
@@ -42,8 +42,7 @@ Menu, Tray, Icon, shell32.dll, 16 ;this changes the icon into a little laptop th
 ;There is a video explaining all of this, coming soon.
 
 
-=======
->>>>>>> origin/master
+
 ;Applications used in this example:
 ;explorer
 ;chrome
