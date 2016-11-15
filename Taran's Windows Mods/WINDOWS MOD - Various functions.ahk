@@ -375,11 +375,12 @@ return
 ^numpad1::
 IfWinNotExist, ahk_class MozillaWindowClass
 	Run, firefox.exe
-if WinActive("ahk_class MozillaWindowClass")
+if WinActive("ahk_exe firefox.exe")
 	Send ^{tab}
 else
-	WinActivate ahk_class MozillaWindowClass
+	WinActivate ahk_exe firefox.exe
 Return
+
 
 
 
@@ -412,6 +413,10 @@ else
 Return
 
 
+^numpaddown::
+;closes all explorer windows :/
+WinClose,ahk_group taranexplorers
+return
 
 
 #IfWinActive 
@@ -508,7 +513,8 @@ Return
 ;;; these  things below will turn an explorer window into one with this address, unless it is already open - in which case, we switch over to it.
 ;;; each one is triggered by a pre-programmed techkeys keyboard, so that each is actually just one keystroke to engage.
 #IfWinActive
-^!+1::explorerLaunch("Z:\Linus\1. Linus Tech Tips\Pending") 
+; ^!+1::explorerLaunch("Z:\Linus\1. Linus Tech Tips\Pending") 
+^!+1::explorerLaunch("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard")
 ^!+2::explorerLaunch("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
 ^!+3::explorerLaunch("C:\Users\TaranWORK\Videos\Desktop")
 ;;; done ;;;;

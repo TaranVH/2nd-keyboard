@@ -15,6 +15,36 @@ return
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
+
+
+^w::
+Tippy("Close titler (ctrl w )", 1200)
+coordmode, mouse, screen
+coordmode, pixel, screen
+MouseGetPos, xpos, ypos ;--------stores the cursor's current coordinates at X%xpos% Y%ypos%
+coordmode, mouse, client
+coordmode, pixel, client
+WinGetActiveStats, Title, Width, Height, X, Y
+
+
+MouseMove, Width-40, -20, 0 ;-----moves the mouse onto the "x" at the top right of the titler window
+
+tooltip, closing titler now!
+Click left
+sleep 50 ;-----------------------wait 1/20th of a second to ensure everything is done
+
+coordmode, mouse, screen
+coordmode, pixel, screen
+MouseMove, %xpos%, %ypos%, 0 ;---moves the cursor back
+
+
+return
+
+
+
+
+
+
 ;EFFECT CONTROLS PANEL ---TRANSFORM ICON CLICKER
 ~F5::
 Tippy("transform icon - F5")
@@ -53,7 +83,7 @@ Return
 
 
 
-; THE FOLLOWING CODE IS NO LONGER NEEDED! PREMIERE HAS A SHORTCUT FOR THIS NOW. iT CAN BE FOUND AS: PANELS > PROJECT PANEL > "GO BACK"
+; THE FOLLOWING CODE IS NO LONGER NEEDED! PREMIERE HAS A SHORTCUT FOR THIS. iT CAN BE FOUND AS: PANELS > PROJECT PANEL > "GO BACK"
 /*
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ~F12::
@@ -86,9 +116,6 @@ if (colorr = "0x505050") ;----------YOUR COLOR WILL VARY! In Premiere CS6, it's 
 	MsgBox color %colorr% is CORRECT
 	Click XX, YY
 }
-
-
-
 Click XX, YY
 sleep 10
 
@@ -100,22 +127,6 @@ BlockInput, MouseMoveOff
 Return ; from F12 BACK BUTTON PRESS
 
 */
-
-
-
-
-
-
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;
-
-
-; BlockInput, off
-; BlockInput, MouseMoveOff
-; Return
-
 
 
 
@@ -143,6 +154,131 @@ ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class2, ahk_
 MouseMove, Xcorner+85, Ycorner+100, 0
 MouseClick, left
 }
+
+
+
+
+
+;experimental script to lock video and audio layers V1 and A1.
+F19::
+BlockInput, on
+BlockInput, MouseMove
+MouseGetPos xPosCursor, yPosCursor
+xPos = 400
+yPos = 1050
+CoordMode Pixel  ; Interprets the coordinates below as relative to the screen rather than the active window.
+CoordMode Mouse, screen
+
+ImageSearch, FoundX, FoundY, xPos, yPos, xPos+400, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\v1unlocked.png
+;obviously, you need to take your own screenshot (look at mine to see what is needed) save as .png, and link to it from the line above. Again, your UI brightness will probably be different from mine!
+
+if ErrorLevel = 2
+	{
+    tippy("Could not conduct the search")
+	goto resetlocker
+	}
+if ErrorLevel = 1
+	{
+	;msgbox, , , error level 1, .7
+    ;tippy("no unlocked lock was found...")
+	goto try2
+	}
+else
+	{
+	;tooltip, The icon was found at %FoundX%x%FoundY%.
+	;msgbox, The icon was found at %FoundX%x%FoundY%.
+	MouseMove, FoundX+10, FoundY+10, 0
+	sleep 5
+	click left
+	MouseMove, FoundX+10, FoundY+50, 0
+	click left ;clicks on Audio track 1 as well.
+	sleep 10
+	goto resetlocker
+	}
+	
+try2:
+ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+400, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\v1locked.png
+if ErrorLevel = 2
+	{
+    tippy("Could not conduct the search")
+	goto resetlocker
+	}
+if ErrorLevel = 1
+	{
+	msgbox, , , locked image cannot be found., .7
+    tippy("image could not be found on the screen")
+	}
+else
+{
+	MouseMove, FoundX_LOCK+10, FoundY_LOCK+10, 0
+	sleep 5
+	click left
+	MouseMove, FoundX_LOCK+10, FoundY_LOCK+50, 0
+	click left ;clicks on Audio track 1 as well.
+	sleep 10
+	goto resetlocker
+}
+;msgbox, , , num enter, 0.5;msgbox, , , num enter, 0.5
+resetlocker:
+MouseMove, xPosCursor, yPosCursor, 0
+blockinput, off
+blockinput, MouseMoveOff
+sleep 10
+return
+
+
+; ;experimental script to lock video and audio layers V1 and A1.
+; F19::
+; BlockInput, on
+; BlockInput, MouseMove
+; MouseGetPos xPosCursor, yPosCursor
+; xPos = 400
+; yPos = 1050
+; CoordMode Pixel  ; Interprets the coordinates below as relative to the screen rather than the active window.
+; CoordMode Mouse, screen
+
+; ImageSearch, FoundX, FoundY, xPos, yPos, xPos+400, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\v1unlocked.png
+; ;obviously, you need to take your own screenshot (look at mine to see what is needed) save as .png, and link to it from the line above. Again, your UI brightness will probably be different from mine!
+
+; if ErrorLevel = 0
+	; {
+	; ;tooltip, The icon was found at %FoundX%x%FoundY%.
+	; ;msgbox, The icon was found at %FoundX%x%FoundY%.
+	; MouseMove, FoundX+10, FoundY+10, 0
+	; sleep 5
+	; click left
+	; MouseMove, FoundX+10, FoundY+50, 0
+	; click left ;clicks on Audio track 1 as well.
+	; sleep 10
+	; goto resetlocker
+	; }
+	
+; try2:
+; ImageSearch, FoundX_a1, FoundY_a1, xPos, yPos, xPos+400, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\a1unlocked.png
+; if ErrorLevel = 0
+; {
+	; MouseMove, FoundX_a1+10, FoundY_a1+10, 0
+	; sleep 5
+	; click left
+	; MouseMove, FoundX_a1+10, FoundY_a1+50, 0
+	; click left ;clicks on Audio track 1 as well.
+	; sleep 10
+	; goto resetlocker
+; }
+; ;msgbox, , , num enter, 0.5;msgbox, , , num enter, 0.5
+; resetlocker:
+; MouseMove, xPosCursor, yPosCursor, 0
+; blockinput, off
+; blockinput, MouseMoveOff
+; sleep 10
+; return
+
+
+
+
+
+
+
 
 
 ;;;INSTANT RESCALE MOD;;;
@@ -234,16 +370,22 @@ tooltip, ;deletes tooltips
 sleep 5
 MouseGetPos xPos, yPos
 CoordMode Pixel  ; Interprets the coordinates below as relative to the screen rather than the active window.
-ImageSearch, FoundX, FoundY, xPos-70, yPos, xPos+800, yPos+500, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\scale3.png
+
+
+ImageSearch, FoundX, FoundY, xPos-70, yPos, xPos+800, yPos+500, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\scale2.png
 ;obviously, you need to take your own screenshot (look at mine to see what is needed) save as .png, and link to it from the line above. Again, your UI brightness will probably be different from mine!
+
 if ErrorLevel = 2
 	{
     tippy("Could not conduct the search")
 	resetFromAutoScale()
 	}
-else if ErrorLevel = 1
+
+	
+	
+if ErrorLevel = 1
 	{
-	msgbox, error level 1
+	msgbox, , , error level 1, .7
     tippy("scale could not be found on the screen")
 	resetFromAutoScale()
 	}
@@ -437,7 +579,7 @@ tooltip, ;deletes tooltips
 sleep 5
 MouseGetPos xPos, yPos
 CoordMode Pixel  ; Interprets the coordinates below as relative to the screen rather than the active window.
-ImageSearch, FoundX, FoundY, xPos-70, yPos, xPos+800, yPos+500, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\Anchor3.png
+ImageSearch, FoundX, FoundY, xPos-70, yPos, xPos+800, yPos+500, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\Anchor2.png
 if ErrorLevel = 2
 	{
     ;tippy(Could not conduct the search)
@@ -506,4 +648,9 @@ else
 
 #IfWinActive ; PREMIERE END
 
-
+#IfWinActive ahk_exe notepad++.exe
+F19::
+send ^s
+sleep 20
+reload
+return
