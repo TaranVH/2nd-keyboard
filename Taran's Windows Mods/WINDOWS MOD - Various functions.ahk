@@ -372,14 +372,15 @@ return
 
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
 
-^numpad1::
+^F1::
 IfWinNotExist, ahk_class MozillaWindowClass
 	Run, firefox.exe
-if WinActive("ahk_class MozillaWindowClass")
+if WinActive("ahk_exe firefox.exe")
 	Send ^{tab}
 else
-	WinActivate ahk_class MozillaWindowClass
+	WinActivate ahk_exe firefox.exe
 Return
+
 
 
 
@@ -400,7 +401,7 @@ Return
 ; If explorer is already active, it will go to the NEXT Explorer window
 ; CTRL Numpad2 is pressed with a single button stoke from my logitech G15 keyboard -- Macro key 17.
 #IfWinActive 
-^numpad2::
+^F2::
 IfWinNotExist, ahk_class CabinetWClass
 	Run, explorer.exe
 
@@ -412,10 +413,14 @@ else
 Return
 
 
+^+F2::
+;closes all explorer windows :/
+WinClose,ahk_group taranexplorers
+return
 
 
 #IfWinActive 
-^numpad3::
+^F3::
 IfWinNotExist, ahk_class Premiere Pro
 	Run, Adobe Premiere Pro.exe
 WinActivate ahk_class Premiere Pro
@@ -424,7 +429,7 @@ Return
 
 
 #IfWinActive 
-^numpad4::
+^F4::
 Process, Exist, WINWORD.EXE
 ;msgbox errorLevel `n%errorLevel%
 	If errorLevel = 0
@@ -446,7 +451,7 @@ Return
 
 
 #IfWinActive 
-^numpad6::
+^F6::
 IfWinNotExist, ahk_class Notepad++
 	Run, notepad++.exe
 if WinActive("ahk_class Notepad++")
@@ -465,7 +470,7 @@ return
 
 
 #IfWinActive
-;SNIP MAKER - DOES NOT WORK AT THE MOMENT
+;SNIP MAKER - DOES NOT WORK WELL AT THE MOMENT
 Break:: ; this refers to the actual pause/break key on a keyboard
 ;msgbox, hello
 sleep 10
@@ -508,7 +513,8 @@ Return
 ;;; these  things below will turn an explorer window into one with this address, unless it is already open - in which case, we switch over to it.
 ;;; each one is triggered by a pre-programmed techkeys keyboard, so that each is actually just one keystroke to engage.
 #IfWinActive
-^!+1::explorerLaunch("Z:\Linus\1. Linus Tech Tips\Pending") 
+; ^!+1::explorerLaunch("Z:\Linus\1. Linus Tech Tips\Pending") 
+^!+1::explorerLaunch("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard")
 ^!+2::explorerLaunch("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
 ^!+3::explorerLaunch("C:\Users\TaranWORK\Videos\Desktop")
 ;;; done ;;;;

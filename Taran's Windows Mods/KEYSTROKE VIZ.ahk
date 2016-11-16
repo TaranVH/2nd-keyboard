@@ -9,6 +9,8 @@ Menu, Tray, Icon, shell32.dll, 190
 #SingleInstance,Force
 CoordMode,Mouse,Screen
 
+#InstallKeybdHook ;this is important... it ensures that only physical keypresses are paid attention to, not virtual ones.
+
 applicationname=KEYSTROKE VIZ
 
 Gosub,TRAYMENU
@@ -147,28 +149,33 @@ if superdim = 1
 		index = %A_Index% ;this is the lin'es NUMBER you are currently looking at.
 		currentline = %A_LoopReadLine% ;this is the exact string of the line
 		Position := InStr(currentline, "&")
-
 		StringTrimLeft,rightside,currentline, %position%
-
+		
 		if rightside = %keys%
 		{
 			keyOnLine = %A_Index%
-			;linenumber = %A_Index%
-			;msgbox, %rightside%
 			lenny := % Strlen(currentline)
 			lols := lenny - Position + 1
-			
 			StringTrimRight,activity,currentline, %lols%
+			;/*
+			IfInString, activity, [G
+			{
+				allowEverywhere = 1
+				;msgbox, this is an application switching shortcut.
+				;I know that because those all begin with something like "(G16)"
+			}
+			else
+				allowEverywhere = 0
+			;*/
 			break
 		}
+		
 		if rightside <> %keys%
 		{
-			;keyOnLine = 0
 			activity = 
 			;msgbox, fail
 		}
-		; if activity =
-			; break
+	
 	}
 
 
@@ -192,10 +199,10 @@ if superdim = 1
 		;Gui Font, cBlue
 		Gui,Font,CFFFFFF S%fontsize% W%boldness% Q5 underline,%font%
 		GuiControl,,text,%keys% ;The magic happens HERE!
-		if WinActive("ahk_exe Adobe Premiere Pro.exe")
+		if (WinActive("ahk_exe Adobe Premiere Pro.exe") || allowEverywhere = 1)
 			GuiControl,,name,%activity% ;The magic on line 2 happens HERE!
 		else
-			GuiControl,,name, ;Premiere is not open, so empty line 2.
+			GuiControl,,name, ;Premiere is not open, so empty line 2. But I need a solution that allow app swithing shortcuts to still show up.
 		Guicontrol Font, %keys% ; I dont know if this line is needed!!
 		WinSet, TransColor, %backcolor% 255, KEYSTROKE VIZ
 		;WinSet, TransColor, Blue 50
@@ -447,7 +454,9 @@ WM_MOUSEMOVE(wParam,lParam)
 Return
 
 
-
+^+!v::
+msgbox, visualizer is still running.
+return
 
 
 

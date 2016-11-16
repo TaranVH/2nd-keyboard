@@ -41,6 +41,9 @@ timeline3 = 0x4c4c4c
 timeline4 = 0x212121
 timeline5 = 0xd3d3d3
 timeline6 = 0xdadada ;just in case the UI brightness gets kinda screwy, as it has been lately...
+timeline7 = 0x2b2b2b ;still, the ui brightness is screwy. might be my fault for messing with window transparency...
+timeline8 = 0xd4d4d4
+timeline9 = 0x4b4b4b
 
 Tippy(tipsHere, wait:=333) ;will create and then delete a tooltip
 {
@@ -72,26 +75,77 @@ return
 
 
 
-;<<<use right mouse button to move playhead in timeline>>>>>>
+; Rbutton::
+; MouseGetPos X, Y
+; PixelGetColor colorr, %X%, %Y%, RGB
+; ;Tooltip, not working, colors are different
+; if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7 || colorr = timeline8 || colorr = timeline9)
+; {
+	
+		; Tooltip, Right click playhead mod2
+		
+; }
+; else
+; {
+	; tooltip, click R
+	; click right
+; }	
+; Return
+
+
+
 ~Rbutton::
+;<<<use right mouse button to move playhead in timeline>>>>>>
+;tooltip, you are right clicking....
 MouseGetPos X, Y
 PixelGetColor colorr, %X%, %Y%, RGB
 ;Tooltip, not working, colors are different
-if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6)
+if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7 || colorr = timeline8 || colorr = timeline9)
 {
-	; tooltip, %colorr%
+	;tooltip, COLORRRRRRRRRRRRRRRRR %colorr%
+	; GetKeyState, OutputVar, Rbutton, P
+	; Tooltip, WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW %outputvar%
+	
+	
+	; while GetKeyState(Rbutton, P) = D
 	while GetKeyState("Rbutton")
 		{
 		Send \
 		Tooltip, Right click playhead mod
 		sleep 16
 		}
-	Tooltip,
+	tooltip,
 	Send {escape} ;in case you end up inside the "delete" right click menu from the timeline
 	;MouseClick, left
 }
+; \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Return ; from right click intercept
 
+
+;Rbutton up::Rbutton up
+
+
+; Rbutton up::
+; ;tooltip, do nothing.
+
+; /*
+; msgbox rbutton up
+; MouseGetPos X, Y
+; PixelGetColor colorr, %X%, %Y%, RGB
+; if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7 || colorr = timeline8 || colorr = timeline9)
+; {
+	; msgbox, color matches the timeline. so please block the key...
+	; return
+; }
+; else
+; {
+	; msgbox, do not block the key please
+	; ; sendinput, {Rbutton up}
+	; MouseClick, Right up
+	; return
+; }
+; */
+; return
 
 ;<<<<<<<<< Apply any transition to a clip -- sadly you cannot use this to SAVE a CUSTOM transition >>>>>>>>>>>
 ;(A clip or clips must be selected first.)
