@@ -25,7 +25,7 @@ send {Lwin up}
 sleep 20
 send snip{enter}
 WinWaitActive ahk_exe SnippingTool.exe, , 2
-Send ^n ;new snip. For SOME computers, the new snip is already engaged by deafult. IDK why, but mine is not.
+Send ^n ;new snip. For SOME computers, the new snip is already engaged by deafult. IDK why, but mine is not. 
 return
 
 /*

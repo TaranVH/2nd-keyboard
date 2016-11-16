@@ -1139,7 +1139,7 @@ loop
 	if (thecolor = "0xF0F0F0" || thecolor = "0xF1F1F1")
 		{
 		tooltip, COLOR WAS FOUND
-		;msgbox, COLOR WAS FOUND
+		;msgbox, COLOR WAS FOUND 
 		break
 		}
 		

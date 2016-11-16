@@ -5,7 +5,7 @@ I'll change those later.
 Keep in mind that a shortcut like CTRL + is actually CREL =, since the "+" only happens if you hold shit.
 The ampersand is important, it separates the key from the function
 tabs on the left have been removed, tabs in the middle were replaced with ampersands, and parsed out onto their own lines, if multiple keys lead to the same function.
-This will all make sense if you watch the explanatory video.
+This will all make sense if you watch the explanatory video. 
 
 BEGIN!
 

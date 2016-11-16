@@ -82,7 +82,7 @@ return
 ; if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7 || colorr = timeline8 || colorr = timeline9)
 ; {
 	
-		; Tooltip, Right click playhead mod2
+		; Tooltip, Right click playhead mod2 
 		
 ; }
 ; else

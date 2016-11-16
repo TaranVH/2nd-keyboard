@@ -444,10 +444,10 @@ else if (colorr = "0x2C2C2C" || colorr = "0x2B2B2B")
 	tooltip, this is a normal panel color of 2b2b2b or %colorr%, which means NO CLIP has been selected! So we need to select something - If you didnt change your UI brightness
 	Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
 	sleep 10
-	Send ^p ;this disables "selection follows playehad." I don't know if there is a way to CHECK if it is on or not.
+	Send ^p ;this disables "selection follows playehad." I don't know if there is a way to CHECK if it is on or not. 
 	resetFromAutoScale()
 	;play noise
-	;now you need to do all that again, since the motion menu is now open. But only do it ONCE more!
+	;now you need to do all that again, since the motion menu is now open. But only do it ONCE more! 
 	If (dontrestart = 0)
 		{
 		dontrestart = 1

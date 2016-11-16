@@ -94,7 +94,7 @@ if superdim = 1
 
 
 ;sleep 30
-;tooltip, currentline = %currentline% --- keyOnLine = %keyOnLine% --- index = %index% --- position = %position% --- keys=%keys%
+;tooltip, currentline = %currentline% --- keyOnLine = %keyOnLine% --- index = %index% --- position = %position% ---- keys=%keys%
   oldkeys=%keys%
   keys=
   Loop,%keyarray0%
