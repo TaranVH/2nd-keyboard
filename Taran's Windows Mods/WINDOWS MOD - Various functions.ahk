@@ -334,7 +334,7 @@ Return
 ;BEGIN INSTANT APPLICATION SWITCHER SCRIPTS;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-
+#IfWinActive
 windowSwitcher(theClass, theEXE)
 {
 IfWinNotExist, %theClass%
@@ -353,25 +353,31 @@ global savedEXE = lolexe ;is this the way to do it? IDK.
 }
 
 
-;F13 is pressed with macro key G13. but this one includes SHIFT
-+F13::
-windowSaver()
-msgbox,,, class = %savedCLASS% `nEXE = %savedEXE%, 0.5
-Return
+; ;F13 is pressed with macro key G13. but this one includes SHIFT
+; +F13::
+; windowSaver()
+; msgbox,,, class = %savedCLASS% `nEXE = %savedEXE%, 0.5
+; Return
 
 ;;F13 is pressed with macro key G13
 ;F13::windowSwitcher(savedCLASS, savedEXE)
 
-
+#IfWinActive 
 F13::
 if WinActive("ahk_class MozillaWindowClass")
 	Send ^+{tab}
+	if WinActive("ahk_class Chrome_WidgetWin_1")
+	Send ^+{tab}
 if WinActive("ahk_class Notepad++")
 	Send ^+{tab}
+if WinActive("ahk_exe Adobe Premiere Pro.exe")
+	Send {F12} ;F12 is my shortcut in premiere for "go back"(in bins)
+if WinActive("ahk_exe explorer.exe")
+	Send !{left} ;alt left is the explorer shortcut to go "back" or "down" one folder level.
 return
 
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
-
+#IfWinActive 
 ^F1::
 IfWinNotExist, ahk_class MozillaWindowClass
 	Run, firefox.exe
@@ -381,6 +387,23 @@ else
 	WinActivate ahk_exe firefox.exe
 Return
 
+
+#IfWinActive 
+;Press SHIFT and macro key 16, and it'll switch between different WINDOWS of firefox.
++^F1::
+Process, Exist, firefox.exe
+;msgbox errorLevel `n%errorLevel%
+	If errorLevel = 0
+		Run, firefox.exe
+	else
+	{
+	GroupAdd, taranfirefoxes, ahk_class MozillaWindowClass
+	if WinActive("ahk_class MozillaWindowClass")
+		GroupActivate, taranfirefoxes, r
+	else
+		WinActivate ahk_class MozillaWindowClass
+	}
+Return
 
 
 
@@ -446,6 +469,7 @@ Return
 
 
 
+
 ;apparently CRTL NUM5 is some kind of select all shortcut?
 
 
@@ -503,7 +527,7 @@ Return
 
 
 #IfWinActive ahk_exe explorer.exe
-^F11::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\Vessel Final 4K\")
+^F11::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\Floatplane 4K\")
 ^F12::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\YT Publish 4K\")
 #IfWinActive
 
@@ -536,3 +560,27 @@ Return
 #c::
 Send #b{left}{enter}
 Return
+
+#IfWinActive
+;control alt shift T -- click on the address bar for any youtube video, and this will link you to the thumbnail!
+^!+T::
+Send {end}{left 11}{backspace 40}https://i.ytimg.com/vi/{right 11}/sddefault.jpg{enter}
+; Send {end}{left 11}{backspace 40}https://i.ytimg.com/vi/{right 11}/maxresdefault.jpg{enter}
+return
+;EXAMPLE: https://i.ytimg.com/vi/L-zDtBINvzk/hqdefault.jpg
+
+;http://img.youtube.com/vi/<insert-youtube-video-id-here>/maxresdefault.jpg
+
+
+; F12::
+; sleep 1000
+; send {F13}
+; return
+
+Joy3::
+msgbox hi
+return
+
+Media_Next::
+msgbox hiiiee
+return

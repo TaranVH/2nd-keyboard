@@ -19,7 +19,7 @@ BEGIN!
 [G6]preset("lumetri BRIGHT")				&ctrl alt j
 
 [G7]custom preset 1							&F17
-[G8]Lock/unlock V1/A1						&F19
+[G8]Lock/unlock V1/A1 mod					&F19
 [G9]???										&???
 
 [G10]custom preset 2						&F18
@@ -27,7 +27,7 @@ BEGIN!
 [G12]Instant transform point change mod		&F15
 
 [shift G13]save app shortcut??				&shift F13
-[G13]ctrl shift tab(usually)				&F13
+[G13]"back" (differs per app.)				&F13
 
 [G14]Notepad++								&Ctrl F6
 [G15]Word									&Ctrl F4
@@ -112,6 +112,7 @@ Selection Tool&V
 Selection Tool&Alt V
 Selection Tool&Ctrl Shift V
 
+I have no idea what to put on Z&z
 
 global FX mute&alt x
 
@@ -136,7 +137,7 @@ Save As...&Ctrl Shift S
 Save a Copy...
 Revert
 Sync Settings Now
-Last Sync: Aug 31, 17:25:13
+
 Use Settings from a Different Account...
 Clear Settings...
 Manage Sync Settings...
@@ -149,6 +150,7 @@ Adobe Dynamic Link
 Replace with After Effects Composition
 New After Effects Composition...
 Import After Effects Composition...
+
 Adobe Story
 Attach Script File...
 Clear Script Data
@@ -178,8 +180,10 @@ General...
 Scratch Disks...
 Ingest Settings...
 Project Manager...
+
 Exit&Ctrl Q
-Edit
+
+EDIT MENU:
 Undo&Ctrl Z
 Redo&Ctrl Y
 Redo&Ctrl Shift Z
@@ -227,7 +231,8 @@ Sequence...
 Edit in Adobe Photoshop
 Keyboard Shortcuts (+ taran find box click mod)&Shift K
 Keyboard Shortcuts (+ taran find box click mod)&Ctrl Shift K
-Keyboard Shortcuts (+ taran find box click mod)&Ctrl K
+Keyboard Shortcuts (no find box click mod)&Ctrl K
+
 Preferences
 Preferences, General...&Shift P
 Appearance...
@@ -245,12 +250,14 @@ Playback...
 Sync Settings...
 Titler...
 Trim...
+
 Clip
 Rename...
 Make Subclip...&Ctrl U
 Edit Subclip...
 Edit Offline...
 Source Settings...
+
 Modify
 Audio Channels...&Ctrl Alt Shift A
 Audio Channels...&F3
@@ -373,6 +380,7 @@ Edit Marker...
 Add Chapter Marker...
 Add Flash Cue Marker...
 Ripple Sequence Markers
+
 Title
 Add Fonts from Typekit...
 New Title
@@ -448,7 +456,8 @@ Safe Action Margin
 Text Baselines
 Tab Markers
 Show Video
-Window
+
+WINDOW:
 Workspaces
 Reset to Saved Layout&Alt Shift 0
 Save Changes to this Workspace
@@ -464,7 +473,6 @@ Captions
 Capture
 Edit To Tape
 Effect Controls
-
 
 Effects&Ctrl Alt Shift 7
 Events
@@ -491,7 +499,7 @@ Title Tools
 Tools
 Workspaces
 
-Help
+HELP
 Adobe Premiere Pro Help...
 Adobe Premiere Pro Support Center...
 Keyboard...
@@ -746,7 +754,7 @@ Workspace 9&Alt Shift 9
 Zoom to Frame
 Zoom to Sequence
 
-Panels
+PANELS
 Adobe Story Panel
 Audio Clip Mixer Panel
 Audio Clip Mixer Panel Menu

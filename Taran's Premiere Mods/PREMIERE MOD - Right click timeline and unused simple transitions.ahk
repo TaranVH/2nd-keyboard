@@ -40,10 +40,11 @@ timeline2 = 0x252525
 timeline3 = 0x4c4c4c
 timeline4 = 0x212121
 timeline5 = 0xd3d3d3
-timeline6 = 0xdadada ;just in case the UI brightness gets kinda screwy, as it has been lately...
-timeline7 = 0x2b2b2b ;still, the ui brightness is screwy. might be my fault for messing with window transparency...
+timeline6 = 0xdadada
+timeline7 = "";0x2b2b2b 
 timeline8 = 0xd4d4d4
 timeline9 = 0x4b4b4b
+timeline10 = 0x3d3d3d
 
 Tippy(tipsHere, wait:=333) ;will create and then delete a tooltip
 {
@@ -100,7 +101,7 @@ return
 MouseGetPos X, Y
 PixelGetColor colorr, %X%, %Y%, RGB
 ;Tooltip, not working, colors are different
-if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7 || colorr = timeline8 || colorr = timeline9)
+if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7 || colorr = timeline8 || colorr = timeline9 || colorr = timeline10)
 {
 	;tooltip, COLORRRRRRRRRRRRRRRRR %colorr%
 	; GetKeyState, OutputVar, Rbutton, P

@@ -7,10 +7,16 @@ Menu, Tray, Icon, shell32.dll, 216 ; red thingy
 
 #SingleInstance,Force
 CoordMode,Mouse,Screen
+#InstallKeybdHook ;this is important... it ensures that only physical keypresses are paid attention to, not virtual ones.
+
 
 applicationname=Modifier_key_revealer
 Gosub,TRAYMENU
 Gosub,READINI
+
+setTimer reloadEverything, -2400000 ;sets this to 45-ish minutes, to NOT repeat...
+
+
 FileRead,inifile,%applicationname%.ini
 StringSplit,keyarray,inifile,`n
 inifile=
@@ -30,7 +36,7 @@ boldness=400
 font=Arial
 statusheight=80
 statuswidth=400
-statusy = 1960
+statusy = 1975
 statusx = 20
 relative=1
 transparency=100
@@ -60,8 +66,7 @@ Gui,Add,Text,Vtext,MMMMMMMM MMMMMMMMMMMMM MMMMMM MMMMMMMMMMMMM MMMMMMMMMMMMMMMMM
 ;WinSet, TransColor, %backcolor% 100
 ;Gui, -Caption
 
-statusy = 1775
-statusx = 20
+
 
 
 ;;;;;;;;;;;
@@ -81,6 +86,17 @@ GuiControl,,text,
 ;WinSet,Transparent,%transparency%,%applicationname%
 ;WinSet, TransColor, %backcolor% 50
 WinSet, TransColor, %backcolor% 200
+
+
+
+;;;;;;
+setTimer STATUSOFF, -1000
+; settimer, STATUSOFF, %timetoshow%
+GuiControl,,text, (Modifier keys)
+Gui, Color, %backcolor%
+;;;;;;
+
+
 
 ;WinSet, TransColor, 000000 199
 
@@ -167,9 +183,19 @@ if downer = 1
 	settimer, STATUSOFF, -10
 	return
 }
+Gui, Color, %backcolor%
 GuiControl,,text,
 SetTimer,STATUSOFF,Off
 Return
+
+
+reloadEverything:
+reload
+;SoundBeep, 900, 500
+setTimer reloadEverything, -2400000 ;sets this to 45-ish minutes, to NOT repeat...
+settimer, STATUSOFF, -1000
+Return
+
 
 
 READINI:

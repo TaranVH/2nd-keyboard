@@ -112,7 +112,7 @@ if (A_priorhotkey = "F24" || A_priorhotkey = "~numpadleft" || A_priorhotkey = "~
 	;this was sent from the 2nd keyboard, using interceptor. Interceptor presses F24, then the key, then releases the key, then releases F24. Very simple, but very effective.
 	Gui, kb2: show, NA 
 	Gui, hide
-
+	;msgbox,,,what is hapening,1
 	GuiControl kb2:,line1, %A_space%FROM 2ND KEYBOARD
 	GuiControl kb2:,line2, %A_space%%A_thishotkey%
 	GuiControl kb2:,line3, %A_space%%functionused%(`"%yeah%`")
@@ -259,7 +259,7 @@ if not WinActive(theClass)
 ;THIS IS A VERY SIMPLE FUNCTION FOR JUST TYPING STUFF INTO THE SEARCH BAR
 ;but it doesn't apply them to the clips.
 
-effectsPanelType(item)
+effectsPanelType(item := "")
 {
 Keyshower(item,"effectsPanelType")
 Send ^+!7 ;set in premiere to "effects" panel
@@ -308,44 +308,79 @@ preset(item)
 
 Keyshower(item,"preset")
 
+coordmode, pixel, screen
+coordmode, mouse, screen
+Coordmode, Caret, screen
 
 BlockInput, SendAndMouse
 BlockInput, On
 
-
-
-; the block of code below  moves the cursor to the effects panel FIND BOX, deletes what's in it, and inserts the given text.
 SetKeyDelay, 0
-MouseGetPos, xpos, ypos ;-----------------------stores the cursor's current coordinates at X%xpos% Y%ypos%
-ControlGetPos, X, Y, Width, Height, Edit1, ahk_class Premiere Pro ;highlights Premier's effects panel SEARCH BAR specifically. (info gotten from window spy.) For you, it may have a different name.
-MouseMove, X+Width+10, Y+Height/2, 0
+MouseGetPos, xposP, yposP ;-----------------------stores the cursor's current coordinates at X%xposP% Y%yposP%
+
+Send ^+!7 ;set in premiere to "effects" panel
 sleep 5
-MouseClick, left, , , 1 ;------------------------clicks on X
-MouseMove, X-25, Y+10, 0
+Send ^\ ;set in premiere to "select find box"
 sleep 5
-MouseClick, left, , , 1
+;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret." 
+
+MouseMove, %A_CaretX%, %A_CaretY%, 0
+;and fortunately, AHK knows the exact X and Y position of this caret. So therefore, we can find the effects panel find box, no matter what monitor it is on, with 100% consistency.
+sleep 10
+
+MouseGetPos, , , Window, classNN
+WinGetClass, class, ahk_id %Window%
+;msgbox, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
+ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
+;;my results:  59, 1229, 252, 21,      Edit1,    ahk_class Premiere Pro
+
+;now we have found a lot of useful informaiton about this find box. Turns out, we don't need most of it... just the X and Y coordinates of the "upper left" corner... which
+
+;MouseMove, XX, YY, 0 ;-if you want to move the cursor into position... turns out to be right on the middle left side of the find box.
+;MsgBox, xx=%XX% yy=%YY%
+
+MouseMove, XX-30, YY, 0 ;-----------------------moves cursor onto the magnifying glass
+
+
+; below is part of the old code, which is only usable if the "Edit7" never changes.... which it does.
+; ControlGetPos, X, Y, Width, Height, Edit7, ahk_class Premiere Pro ;highlights Premier's effects panel SEARCH BAR/FIND BOX specifically. (info gotten from window spy.) For you, it may have a different name.
+
+/*
+;this code works, but just wastes time, since we don't actually need to clear the text and then select the box again. The built in premiere shortcut already selects the box for us.
+MouseMove, XX+Width-5, YY+Height-20, 0 ;---------moves cursor to the X
+sleep 5
+MouseClick, left, , , 1 ;------------------------clicks on X, which deletes all text in the find box.
+;msgbox, was X clicked?
+MouseMove, XX-30, YY, 0 ;-----------------------moves cursor to the magnifying glass, which will select the whole find box again.
+sleep 5
+MouseClick, left, , , 1 ;------------------------clicks on magnifying glass
+;msgbox, was mag clicked?
+*/
+
 sleep 5
 Send %item%
-; The above block of code CAN NOT be replaced with effectsPanelType(item) because it moves the cursor into position, in preparation for the upcoming code, which still requires use of the cursor.
+;This types in the text you wanted to search for. Like "pop in." We can do this because the entire find box text was already selevted by Premiere.
 
 sleep 30
-MouseMove, 52, 65, 0, R ;-----------------------moves cursor down and directly onto the effect's icon
-MouseGetPos, iconX, iconY
-ControlGetPos, , , www, hhh, DroverLord - Window Class14, ahk_class Premiere Pro ; --- important -- this must match the EFFECTS panel window class.
-MouseMove, www/4, hhh/2, 0, R ;-----------------clicks in about the CENTER of the Effects panel. This clears the displayed presets from any duplication errors. quite important.
-;msgbox, test
-MouseClick, left, , , 1
-sleep 10
-MouseMove, iconX, iconY, 0 ;--------------------moves cursor BACK onto the effect's icon
+MouseMove, 52, 65, 0, R ;----------------------relative to the position of the magnifying glass (established earlier,) this moves the cursor down and directly onto the effect's icon
 
+MouseGetPos, iconX, iconY, Window, classNN ;---now we have to figure out the ahk_class of the current panel we are on. It used to be DroverLord - Window Class14, but the number changes anytime you move panels around... so i must always obtain the information anew.
+WinGetClass, class, ahk_id %Window% ;----------"ahk_id %Window%" is important for SOME REASON. if you delete it, this doesnt work.
+;msgbox, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
+ControlGetPos, xxx, yyy, www, hhh, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
+MouseMove, www/4, hhh/2, 0, R ;-----------------clicks in about the CENTER of the Effects panel. This clears the displayed presets from any duplication errors. VERY important. without this, the script fails 20% of the time.
+MouseClick, left, , , 1 ;-----------------------the actual click
+sleep 10
+
+MouseMove, iconX, iconY, 0 ;--------------------moves cursor BACK onto the effect's icon
 sleep 35
-MouseClickDrag, Left, , , %xpos%, %ypos%, 0 ;---drags this effect to the cursor's pervious coordinates, which should be above a clip.
+MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---drags this effect to the cursor's pervious coordinates, which should be above a clip.
 sleep 10
 ;Send ^+!0 ;-------------------------------------returns focus to the timeline. doesn't work for multiple timelines :(
 MouseClick, left, , , 1 ;------------------------returns focus to the timeline. Can be annoying if it selects something...
 BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL+ALT+DEL will still work!! Cool.
 }
-
+;END of preset()
 
 
 ;That's the end of the function. Now we make shortcuts to CALL that function, each with a different parameter!
@@ -435,6 +470,39 @@ F18::preset(savedpreset1)
 
 
 
+;;;;OBSOLETE. DO NOT USE.
+; ;;;;;;;;;;;script that increases or decreases the size of the program monitor, no matter what panel you have selected.;;;;;;;;;;;;;;;;;;;
+; #IfWinActive ahk_exe Adobe Premiere Pro.exe
+; ; SHORTCUT				MAPPED TO THIS COMMAND IN PREMIERE
+; ; ctrl numpad -			"zoom (program) monitor in"
+; ; ctrl numpad +			"zoom (program) monitor out"
+; ; ctrl numpad enter		"zoom (program) monitor to fit"
+; ;the following script is designed to allow you to use numpad + - and enter to increase and decrease the zoom of the program monitor, regardless of what panel is actually in focus.
+; ;It's a small but (to me) important workaround.
+; ;This script simply puts the program monirot in focus, and adds the control key
+; numpadAdd::
+; Keyshower("program monitor zoom IN - taran mod",,1)
+; weirdNumpadders()
+; return
+
+; numpadSub::
+; Keyshower("program monitor zoom OUT - taran mod",,1)
+; weirdNumpadders()
+; return
+
+
+; sc11C::
+; ;numpadEnter::
+; Keyshower("program monitor zoom to FIT - taran mod",,1)
+; weirdNumpadders()
+; return
+
+#IfWinActive
+
+
+
+
+
 ;;;;more premiere mods / macros.;;;;;;;;
 
 ;F1 -> [select clip at playhead] and then [ripple delete] . Note the keyboard shortcuts I have assigned in Premiere, above.
@@ -465,13 +533,13 @@ Send d ;"shuttle right" command.
 return
 
 
-~sc11C::
-~numpadEnter::
-;this is the scancode for the numpad enter key.
-;keystroke viz.ahk does not properly notice this key (always combining it the regular Enter) so I am making a visualizer for it here.
-Keyshower("program monitor zoom to fit - taran mod",,1)
+; ;~sc11C::
+; ~numpadEnter::
+; ;this is the scancode for the numpad enter key.
+; ;keystroke viz.ahk does not properly notice this key (always combining it the regular Enter) so I am making a visualizer for it here.
+; Keyshower("program monitor zoom to fit - taran mod",,1)
 
-return
+; return
 
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
@@ -493,7 +561,7 @@ SetKeyDelay, 0 ;for instant writing of text
 MouseGetPos, xpos, ypos
 send ^+x ;shortcut in premiere for "remove in/out points.
 sleep 10
-send ^+{F1}
+send ^!1 ;source assignment preset 1
 sleep 10
 ; Send ^!+` ;premiere shortcut to open the "project" panel, which is actually a bin. Only ONE bin is highlightable in this way.
 ; ;Send F11
@@ -509,7 +577,7 @@ Send ^\ ;premiere shortcut to "select find box"
 ; sleep 600
 Send %leSound% ;types in the name of the sound effect you want - should do so instantaneously.
 tooltip, waiting for premiere to load......
-send ^+{F1}
+send ^!1 ;source assignment preset 1
 ;send {F18} ;shortcut in premiere for "source assignment preset 1" which highlights A3 and V4. CTRL SHIFT F1 is also used. I may end up only using F18, since it does not use the CTRL and SHIFT keys, which can cause problems sometimes.
 sleep 400 ;we are waiting for the search to complete....
 
@@ -525,7 +593,7 @@ sleep 400 ;we are waiting for the search to complete....
 ; CoordMode, mouse, window
 ; Click 170, 224 
 
-MouseMove, -6000, 200, 0
+MouseMove, -6000, 250, 0
 ; MouseGetPos, lol, lel
 ; PixelGetColor, zecolor, lol, lel, alt slow rgb
 ; msgbox, %zecolor% 
@@ -548,7 +616,7 @@ tooltip, so did that work?
 sleep 10
 ;send ^!+0 ;select timeline
 sleep 10
-send ^+F1 ;my shortcut for "assign source assignment preset 1" in Premiere. The preset has V4 and A3 selected as sources. I may end up only using F18, since it does not use the CTRL and SHIFT keys, which can cause problems sometimes.
+send ^!1 ;my shortcut for "assign source assignment preset 1" in Premiere. The preset has V4 and A3 selected as sources. I may end up only using F18, since it does not use the CTRL and SHIFT keys, which can cause problems sometimes.
 sleep 50
 Send ^/ ;Premiere's shortcut for "overwrite" is a period.  I use modifier keys for THIS, so that a period is never typed accidentally.
 sleep 30
@@ -662,14 +730,72 @@ loadFromFile(name) {
 }
 
 
+#ifwinactive
+; ===========================================================================
+; https://autohotkey.com/board/topic/7129-run-a-program-or-switch-to-an-already-running-instance/
+; Run a program or switch to it if already running.
+;    Target - Program to run. E.g. Calc.exe or C:\Progs\Bobo.exe
+;    WinTitle - Optional title of the window to activate.  Programs like
+;       MS Outlook might have multiple windows open (main window and email
+;       windows).  This parm allows activating a specific window.
+; ===========================================================================
+RunOrActivate(Target, WinTitle = "")
+{
+	; Get the filename without a path
+	SplitPath, Target, TargetNameOnly
+
+	Process, Exist, %TargetNameOnly%
+	If ErrorLevel > 0
+		PID = %ErrorLevel%
+	Else
+		Run, %Target%, , , PID
+
+	; At least one app (Seapine TestTrack wouldn't always become the active
+	; window after using Run), so we always force a window activate.
+	; Activate by title if given, otherwise use PID.
+	If WinTitle <> 
+	{
+		SetTitleMatchMode, 2
+		WinWait, %WinTitle%, , 3
+		;TrayTip, , Activating Window Title "%WinTitle%" (%TargetNameOnly%)
+		WinActivate, %WinTitle%
+	}
+	Else
+	{
+		WinWait, ahk_pid %PID%, , 3
+		;TrayTip, , Activating PID %PID% (%TargetNameOnly%)
+		WinActivate, ahk_pid %PID%
+	}
+
+
+	SetTimer, RunOrActivateTrayTipOff, 1500
+}
+
+; Turn off the tray tip
+RunOrActivateTrayTipOff:
+	SetTimer, RunOrActivateTrayTipOff, off
+	TrayTip
+Return
+
+; Example uses...
+;#b::RunOrActivate("C:\Program Files\Seapine\TestTrack Pro\TestTrack Pro Client.exe")
+
+
+
 
 #ifwinactive ;everything below this line can happen in any application!
 runexplorer(foo){
+run, %foo%
 keyShower(foo, "runExplorer")
-run, % foo
+; run, % foo ;the problem with this is that sometims the window is highlighted red in the app tray, but it doesn't actually open itself...
+; explorerpath:= "explorer " foo
+; Run, %explorerpath% ;the problem here is that it opens a new window instead of switching to the old one...
+
+;RunOrActivate(foo) ;this thing just acts super slowly and horribly.... jeeezz...
 }
 
 
+;obsolete... i THINK???
 SendKey(theKEY, fun := "", sometext := ""){
 ;msgbox sendkey has recieved %lols%
 keyShower(sometext, fun)
@@ -818,7 +944,7 @@ g::recallClipboard(A_thishotkey)
 +s::
 +d::
 +f::
-+g::saveClipboard(A_thishotkey) ;need to erase the SHIFT if I want to do it this way...?
++g::saveClipboard(A_thishotkey)
 
 
 h::preset("zoom slow")
@@ -898,13 +1024,13 @@ numpad1::SendKey(A_thishotkey, ,"blue-green")
 numpad2::SendKey(A_thishotkey, ,"nudge down")
 numpad3::SendKey(A_thishotkey, ,"orange")
 numpad4::SendKey(A_thishotkey, ,"nudge left")
-numpad5::msgbox, this text shhould not appear. ;return ;I have remapped this to "shift" in interceptor. Scan Code 04C.
+numpad5::msgbox, this numpad5 text shhould not appear. ;return ;I have remapped this to "shift" in interceptor. Scan Code 04C.
 numpad6::SendKey(A_thishotkey, ,"nudge right")
 numpad7::SendKey(A_thishotkey, ,"purple")
 numpad8::SendKey(A_thishotkey, ,"nudge up")
 numpad9::SendKey(A_thishotkey, ,"dark green") ;this is a nice way to do it where you can affect multiple key assignments at the same time!! :D
 
-
++numlock::msgbox, "shift numpadlock"
 numlock::SendKey("numpad5", ,"red") ;msgbox, , , NUMLOCK - oh god... some keyboards behave very differently with this key! , 0.5
 numpadDiv::SendKey("numpadDiv", ,"clip blue")
 numpadMult::SendKey("numpadmult", ,"pink")
@@ -912,7 +1038,13 @@ numpadMult::SendKey("numpadmult", ,"pink")
 numpadSub::openApp("ahk_class AU3Reveal", "AU3_Spy.exe", "Active Window Info") ;msgbox, , , num minus, 0.5
 ; numpadAdd::openApp("ahk_class Adobe Media Encoder CC", "Adobe Media Encoder.exe") ;msgbox, , , num ADD, 0.5
 numpadAdd::openApp("ahk_class ConsoleWindowClass", "intercept.exe") ;msgbox, , , num ADD, 0.5
-numpadEnter::Sendinput #d;msgbox, , , num enter, 0.5
+numpadEnter::Send #d ;msgbox, , , num enter, 0.5
+
+
+
+
+
+
 numpadDot::openApp("ahk_class Photoshop", "Photoshop.exe") ;msgbox, , , num dot, 0.5
 
 
@@ -939,6 +1071,16 @@ SC0FF::msgbox FF ...this does not register.
 
 #if
 #IfWinActive
+
+;;;forget it, this was a bad idea.:
+; ;These have to be out here in order to not weirdly interfere with some other code (below)
+; numpadSub & F24::openApp("ahk_class AU3Reveal", "AU3_Spy.exe", "Active Window Info") ;msgbox, , , num minus, 0.5
+; ; numpadAdd::openApp("ahk_class Adobe Media Encoder CC", "Adobe Media Encoder.exe") ;msgbox, , , num ADD, 0.5
+; numpadAdd & F24::openApp("ahk_class ConsoleWindowClass", "intercept.exe") ;msgbox, , , num ADD, 0.5
+; numpadEnter & F24::Send #d ;msgbox, , , num enter, 0.5
+
+
+
 ;--------------END OF 2ND KEYBOARD IF USING INTERCEPTOR~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -1056,12 +1198,39 @@ num1:{Numpad1}
  */
  
  
- ;2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+;2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+#IfWinActive
+ 
+ 
+ 
+ 
+ 
 
- 
- 
- 
+;This code is obsolete. Never mind, it turned out not to work....
+weirdNumpadders(){
+IfWinnotExist, Audio Gain ;|| Keyboard Shortcuts ;(does not work...);or titler, but that one has no title!!!
+{
+;msgbox come on
+sendinput ^+!7 ;premiere shortcut to activate the effects panel. this is necessary.
+sleep 50
+sendinput ^+!4 ;shortcut to activate the program monitor. If the program monitor is ALREADY selected, it will cycle to the next sequence. This is stupid. Therefore, another panel (that never cycles through anywhere, and is already always open) must be slected first.
+sleep 10
+send ^{%A_thishotkey%} ;adds the CTRL key and re-presses the key you just pressed. now that you are in the program monitor, this shortcut will work.
+;If there was a way to return focus to the panel you were on before this script was run, I would include that step here. But there's not.... i don't have 2 way communication all the time....
+}
+else
+{
+theKey = %A_thishotkey%
+StringReplace, theKey, theKey, numpadAdd, {+} ;without curly brakets, this sends a SHIFT instead!
+StringReplace, theKey, theKey, numpadSub, -
+StringReplace, theKey, theKey, numpadEnter, {enter}
+StringReplace, theKey, theKey, sc11C, {enter}
+send %theKey%
+;tooltip, normal key sent
 
+}
+;tooltip, all of my wut
+}
 
 
 

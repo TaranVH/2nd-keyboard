@@ -64,8 +64,9 @@ Return
 
 
 F2::
-IfWinNotExist, ahk_class Chrome_WidgetWin_1
-	Run, chrome.exe
+;Pelle showed me that if chrome was opened with this script, it becomes a blank screen, and cannot open unless you restart your computer. I have disabled the opening command for now.
+; IfWinNotExist, ahk_class Chrome_WidgetWin_1
+	; Run, chrome.exe
 if WinActive("ahk_class Chrome_WidgetWin_1")
 	Send ^{tab}
 else
@@ -108,3 +109,5 @@ Return
 #c::
 Send #b{left}{enter}
 Return
+
+

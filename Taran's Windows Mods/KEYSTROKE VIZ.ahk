@@ -11,7 +11,7 @@ CoordMode,Mouse,Screen
 
 #InstallKeybdHook ;this is important... it ensures that only physical keypresses are paid attention to, not virtual ones.
 
-applicationname=KEYSTROKE VIZ
+applicationname=KEYSTROKE
 
 Gosub,TRAYMENU
 Gosub,READINI
@@ -26,6 +26,9 @@ statusheight=75
 statuswidth=1000
 statusx=10
 statusy=10
+statusy = 1850
+statusx = 30
+
 relative=1
 transparency=Off
 					
@@ -38,37 +41,69 @@ keys=
 timetoshow=1500
 downer = 0
 
+setTimer reloadEverything, -1800000 ;sets this to 30 minutes, to NOT repeat...
+setTimer OFFAFTERRELOAD, -1000
 
-Gui,+Owner +AlwaysOnTop -Resize -SysMenu -MinimizeBox -MaximizeBox -Disabled -Caption -Border -ToolWindow
+Gui HIST2: New
+Gui HIST2: +Owner +AlwaysOnTop -Resize -SysMenu -MinimizeBox -MaximizeBox -Disabled -Caption -Border -ToolWindow +E0x20 ;;+E0x20 is click through or something...
+Gui HIST2: Margin,0,0
+Gui HIST2: Color, %backcolor%
+Gui HIST2: Font,CFF0000 S15 W500 Q5, Franklin Gothic
+Gui HIST2: Font,C%fontcolor% S%fontsize% W%boldness% Q5 underline,%font%
+Gui HIST2: Add,Text,Vline1,gui HIST2 line one WWWWWWWWWWWWWW WWWWWWWW WWWWWW WWWW ; the WWWW's are needed so that later text will be shown in full, with a very large character limit. spaces also seem to be important.
+Gui HIST2: Font,CFFFF33 S20 W200 Q5 norm, Arial
+Gui HIST2: Add,Text,Vline2,gui HIST2 line two WWWWWWWWWWWWWW WWWWWWW WWWWWWWWWWWW
+
+Gui HIST2: -Caption +ToolWindow +AlwaysOnTop +LastFound ;Turns out you NEED THIS LINE for the transparency to work...????
+Gui HIST2: Show,X%statusx% Y1590 W%statuswidth% H%statusheight% NoActivate,%applicationname%
+
+WinSet, TransColor, %backcolor% 160, KEYSTROKE
+; WinSet, ExStyle, ^0x00000020, A ;this makes it click-throughable. I think.
+;;;;;;;;;;;;;;;;;;;;
+
+Gui HIST1: New
+Gui HIST1: +Owner +AlwaysOnTop -Resize -SysMenu -MinimizeBox -MaximizeBox -Disabled -Caption -Border -ToolWindow +E0x20
+Gui HIST1: Margin,0,0
+Gui HIST1: Color, %backcolor%
+Gui HIST1: Font,CFF0000 S15 W500 Q5, Franklin Gothic
+Gui HIST1: Font,C%fontcolor% S%fontsize% W%boldness% Q5 underline,%font%
+Gui HIST1: Add,Text,Vline1,gui HIST1 line one WWWWWWWWWWWWWW WWWWWWWW WWWWWW WWWW
+Gui HIST1: Font,CFFBB33 S20 W200 Q5 norm, Arial
+Gui HIST1: Add,Text,Vline2,gui HIST1 line two WWWWWWWWWWWWWW WWWWWWW WWWWWWWWWWWW
+
+Gui HIST1: -Caption +ToolWindow +AlwaysOnTop +LastFound ;Turns out you NEED THIS LINE for the transparency to work...????
+Gui HIST1: Show,X%statusx% Y1710 W%statuswidth% H%statusheight% NoActivate,%applicationname%
+
+WinSet, TransColor, %backcolor% 170, KEYSTROKE
+; WinSet, ExStyle, ^0x00000020, A ;this makes it click-throughable. I think.
+; WinSet, TransColor, %backcolor% , KEYSTROKE ;100
+
+;;;;;;;;;;;;;;;;;;;;
+
+Gui ORIG: New
+Gui,+Owner +AlwaysOnTop -Resize -SysMenu -MinimizeBox -MaximizeBox -Disabled -Caption -Border -ToolWindow +E0x20
 Gui,Margin,0,0
 Gui,Color,%backcolor%
 ;Gui,Font,C555555
 Gui,Font,C%fontcolor% S%fontsize% W%boldness% Q5 underline,%font%
-Gui,Add,Text,Vtext,KEY GOES HERE WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-Gui,Font,cFFCCCC S20 W990 norm,%font%
-Gui,Add,Text,Vname,FUNCTION GOES HERE WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
-
-; statusy = %A_ScreenHeight% - %statusheight% - 10
-; statusx = %A_ScreenWidth% - %statuswidth% - 10
-
-statusy = 1850
-statusx = 30
+Gui,Add,Text,Vtext,KEYSTROKE VIZ.AHK WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+Gui,Font,cFFBBBB S20 W990 norm,%font%
+Gui,Add,Text,Vname,(REFRESHES EVERY 30 MINUTES) WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
 Gui, -Caption +ToolWindow +AlwaysOnTop +LastFound ;Turns out you NEED THIS LINE for the transparency to work...????
-;Gui -Caption +ToolWindow
+Gui, Show,X%statusx% Y%statusy% W%statuswidth% H%statusheight% NoActivate,%applicationname%
 
-Gui,Show,X%statusx% Y%statusy% W%statuswidth% H%statusheight% NoActivate,%applicationname%
+; WinSet, ExStyle, ^0x00000020, A ;this makes it click-throughable. I think.
 
-;GuiControl,,text, ;If you turn this one off, you will see all the MMMMMMs.
-;WinSet,Transparent,%transparency%,%applicationname%
 
-;WinSet, TransColor, 129573 ;255
-WinSet, TransColor, %backcolor% , KEYSTROKE VIZ;100
-;WinSet, TransColor, FEFEFE ;100
 
-;WinSet, TransColor, 0000FF 150
-;WinSet,Transparent,%transparency%,%applicationname% ;IS THIS NEEDED? IT IS UNKNOWN.
-;WinSet, TransColor, DD6644 70
+
+;WinSet, TransColor, %backcolor% , KEYSTROKE ;100
+
+setTimer STATUSOFF, -1000
+superdim = 1
+settimer, STATUSOFF, %timetoshow%
+
 
 Loop
 {
@@ -89,7 +124,20 @@ if superdim = 1
 		; GuiControl,,text,fook ;The magic happens HERE!
 		; GuiControl,,name,%activity%
 		; Guicontrol,,Font, fook2
-	WinSet, TransColor, %backcolor% 180, KEYSTROKE VIZ
+	;GuiControl ORIG:,text,
+	;GuiControl ORIG:,name,
+	WinSet, TransColor, %backcolor% 180, KEYSTROKE
+	
+	; Gui HIST2: Font,CFFFFFF S%fontsize% W%boldness% Q5 underline,%font%
+	; GuiControl HIST2:,line1,%keysH2% ;The magic happens HERE!
+	; GuiControl HIST2:,line2,%activityH2% ;The magic on line 2 happens HERE!
+	; ;WinSet, TransColor, %backcolor% 255, KEYSTROKE
+
+	; Gui HIST1: Font,CFFFFFF S%fontsize% W%boldness% Q5 underline,%font%
+	; GuiControl HIST1:,line1,%keysH1% ;The magic happens HERE!
+	; GuiControl HIST1:,line2,%activityH1% ;The magic on line 2 happens HERE!
+	; WinSet, TransColor, %backcolor% 255, HIST1
+	
 	}
 
 
@@ -195,27 +243,42 @@ if superdim = 1
 
 	if skip <> 1
 	{
-		;Gui, Color, %backcolor%
-		;Gui Font, cBlue
-		Gui,Font,CFFFFFF S%fontsize% W%boldness% Q5 underline,%font%
-		GuiControl,,text,%keys% ;The magic happens HERE!
+	
+
+
+		; now we create our key pressing history in this dumb way...
+		
+		Gui HIST2: Font,CFFFFFF S%fontsize% W%boldness% Q5 underline,%font%
+		GuiControl HIST2:,line1,%keysH2% ;The magic happens HERE!
+		GuiControl HIST2:,line2,%activityH2% ;The magic on line 2 happens HERE!
+
+		Gui HIST1: Font,CFFFFFF S%fontsize% W%boldness% Q5 underline,%font%
+		GuiControl HIST1:,line1,%keysH1% ;The magic happens HERE!
+		GuiControl HIST1:,line2,%activityH1% ;The magic on line 2 happens HERE!
+		
+		;This code will delete the "activity" text from line 2 if Premiere is not open, or it is otherwise not allowed.
 		if (WinActive("ahk_exe Adobe Premiere Pro.exe") || allowEverywhere = 1)
-			GuiControl,,name,%activity% ;The magic on line 2 happens HERE!
+			do = nothing ;this has to have SOME kind of code in it, or the ELSE doesn't work. There is no such thing as "if (winNotActive()" or i would just use that...
 		else
-			GuiControl,,name, ;Premiere is not open, so empty line 2. But I need a solution that allow app swithing shortcuts to still show up.
-		Guicontrol Font, %keys% ; I dont know if this line is needed!!
-		WinSet, TransColor, %backcolor% 255, KEYSTROKE VIZ
-		;WinSet, TransColor, Blue 50
-		;Gui -Caption +ToolWindow
-		;WinSet, TransColor, FFFFFF 1
-		;WinSet, TransColor, 0000FF 99
-		;Gui -Caption +ToolWindow
+			activity = 
+		
+		keysH2 = %keysH1%
+		activityH2 = %activityH1%
+		keysH1 = %keys%
+		activityH1 = %activity%
+		
+		
+		Gui ORIG: Font,CFFFFFF S%fontsize% W%boldness% Q5 underline,%font%
+		GuiControl,,text,%keys% ;The magic happens HERE!
+		GuiControl,,name,%activity% ;The magic on line 2 happens HERE!
+		; Guicontrol Font, %keys% ; I dont know if this line is needed!!
+		WinSet, TransColor, %backcolor% 255, KEYSTROKE
 		previouskey = %keys%
 		stillholding = 1
-		;SetTimer,STATUSOFF,%timetoshow%
 		superdim = 0
 		SetTimer,DIMMER,-100 ;It'll dim the display if you let go of the key!! But it won't vanish yet!
 		;tooltip,
+		
 		skip = 0
 	}
 	
@@ -223,28 +286,28 @@ if superdim = 1
 ;msgbox, magic has happened
 
 ;this is code to move the window around with the mouse. probably. Also, probably no longer needed.
-  GetKeyState,mstate,LButton,P
-  If mstate=D
-  {
-    MouseGetPos,mx1,my1,mid
-    WinGetTitle,stitle,ahk_id %mid%
-    If stitle=%applicationname%
-    {
-      Loop
-      {
-        MouseGetPos,mx2,my2
-        WinGetPos,sx,sy,,,ahk_id %mid%
-        sx:=sx-mx1+mx2
-        sy:=sy-my1+my2
-        WinMove,ahk_id %mid%,,%sx%,%sy%      
-        mx1:=mx2
-        my1:=my2
-        GetKeyState,mstate,LButton,P
-        If mstate=U
-          Break
-      } 
-    }
-  }
+  ; GetKeyState,mstate,LButton,P
+  ; If mstate=D
+  ; {
+    ; MouseGetPos,mx1,my1,mid
+    ; WinGetTitle,stitle,ahk_id %mid%
+    ; If stitle=%applicationname%
+    ; {
+      ; Loop
+      ; {
+        ; MouseGetPos,mx2,my2
+        ; WinGetPos,sx,sy,,,ahk_id %mid%
+        ; sx:=sx-mx1+mx2
+        ; sy:=sy-my1+my2
+        ; WinMove,ahk_id %mid%,,%sx%,%sy%      
+        ; mx1:=mx2
+        ; my1:=my2
+        ; GetKeyState,mstate,LButton,P
+        ; If mstate=U
+          ; Break
+      ; } 
+    ; }
+  ; }
 
 
   
@@ -287,14 +350,44 @@ if downer = 1
 	settimer, STATUSOFF, -100
 	return
 }
-GuiControl,,text,
-GuiControl,,name,
+;tooltip, now invisiblefying
+
+
+;; comment this code IN if you want the text to vanish
+; GuiControl ORIG:,text,
+; GuiControl ORIG:,name,
+
+
+;GuiControl HIST1:,line1, 
+;GuiControl HIST1:,line2,
+;GuiControl HIST2:,line1,
+;GuiControl HIST2:,line2,
+
 SetTimer,STATUSOFF,Off
 superdim = 0
 ;Gui,Font,C%fontcolor% 
 Return
 
 
+OFFAFTERRELOAD:
+GuiControl ORIG:,text,
+GuiControl ORIG:,name,
+GuiControl HIST1:,line1, 
+GuiControl HIST1:,line2,
+GuiControl HIST2:,line1,
+GuiControl HIST2:,line2,
+Return
+
+
+
+reloadEverything:
+reload
+;SoundBeep, 1100, 500
+setTimer reloadEverything, -1800000 ;sets this to 30 minutes, to NOT repeat automatically...
+;If I don't do this, the GUI visuals will eventually just disappear, even though the script is still running.
+; I don't know why, and I don't know how to reproduce or fix the bug. This is a band-aid solution.
+setTimer STATUSOFF, -1000
+Return
 
 
 READINI:
@@ -454,8 +547,11 @@ WM_MOUSEMOVE(wParam,lParam)
 Return
 
 
-^+!v::
-msgbox, visualizer is still running.
+^!v::
+send ^s
+sleep 30
+reload
+;msgbox, visualizer is still running.    
 return
 
 

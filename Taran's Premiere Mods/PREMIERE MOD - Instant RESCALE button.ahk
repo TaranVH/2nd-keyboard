@@ -51,23 +51,6 @@ BlockInput, Off
 return
 
 
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
-;script that increases or decreases the size of the program monitor, no matter what panel you have selected.
-; SHORTCUT				MAPPED TO THIS COMMAND IN PREMIERE
-; ctrl numpad -			"zoom (program) monitor in"
-; ctrl numpad +			"zoom (program) monitor out"
-; ctrl numpad enter		"zoon (program) monitor to fit"
-
-numpadAdd::
-numpadSub::
-numpadEnter::
-sendinput ^+!7 ;premiere shortcut to activate the effects panel. this is necessary.
-sleep 50
-sendinput ^+!4 ;shortcut to activate the program monitor. If the program monitor is ALREADY selected, it will cycle to the next sequence. This is stupid. Therefore, another panel (that never cycles through anywhere, and is already always open) must be slected first.
-sleep 10
-send ^{%A_thishotkey%} ;adds the CTRL key and re-presses the key you just pressed. now that you are in the program monitor, this shortcut will work.
-;If there was a way to return focus to the panel you were on before this script was run, I would include that step here. But there's not.... i don't have 2 way communication all the time....
-return
 
 
 
@@ -264,30 +247,38 @@ MouseClick, left
 
 
 ;experimental script to lock video and audio layers V1 and A1.
-F19::
+~F19::
 BlockInput, on
 BlockInput, MouseMove
 MouseGetPos xPosCursor, yPosCursor
 xPos = 400
 yPos = 1050
-CoordMode Pixel  ; Interprets the coordinates below as relative to the screen rather than the active window.
+CoordMode Pixel ;, screen  ; Interprets the coordinates below as relative to the screen rather than the active window.
 CoordMode Mouse, screen
 
-ImageSearch, FoundX, FoundY, xPos, yPos, xPos+400, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\v1_unlocked_cc2017.png
+ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\v1_unlocked_cc2017_v2.png
+
 ;obviously, you need to take your own screenshot (look at mine to see what is needed) save as .png, and link to it from the line above. Again, your UI brightness will probably be different from mine!
 
+
+if ErrorLevel = 1
+	{
+	;msgbox, , , error level 1, .7
+    tippy("unlocked v1 #2 was not found")
+	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\v1_unlocked_cc2017_v3.png
+	}
+if ErrorLevel = 1
+	{
+	;msgbox, , , error level 1, .7
+    tippy("unlocked v1 #3 not found...")
+	goto try2
+	}
 if ErrorLevel = 2
 	{
     tippy("Could not conduct the search")
 	goto resetlocker
 	}
-if ErrorLevel = 1
-	{
-	;msgbox, , , error level 1, .7
-    ;tippy("no unlocked lock was found...")
-	goto try2
-	}
-else
+if ErrorLevel = 0
 	{
 	;tooltip, The icon was found at %FoundX%x%FoundY%.
 	;msgbox, The icon was found at %FoundX%x%FoundY%.
@@ -301,19 +292,31 @@ else
 	}
 	
 try2:
-ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+400, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\v1_locked_cc2017.png
-if ErrorLevel = 2
-	{
-    tippy("Could not conduct the search")
-	goto resetlocker
-	}
+ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\v1_locked_cc2017_v2.png
+
+	
 if ErrorLevel = 1
 	{
-	msgbox, , , locked image cannot be found., .7
-    tippy("image could not be found on the screen")
+	;msgbox, , , locked v1 #2 cannot be found..., .7
+    tippy("LOCKED V1 #2 could not be found on the screen")
+	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\v1_locked_cc2017_v3.png
 	}
-else
-{
+
+if ErrorLevel = 1
+	{
+	msgbox, , , locked v1 #4 cannot be found..., .7
+    tippy("locked v1 #3 could not be found on the screen")
+	}
+
+if ErrorLevel = 2
+	{
+    tippy("Could not conduct search #2")
+	goto resetlocker
+	}
+	
+if ErrorLevel = 0
+	{
+	tippy("found a locked lock")
 	MouseMove, FoundX_LOCK+10, FoundY_LOCK+10, 0
 	sleep 5
 	click left
@@ -321,7 +324,7 @@ else
 	click left ;clicks on Audio track 1 as well.
 	sleep 10
 	goto resetlocker
-}
+	}
 ;msgbox, , , num enter, 0.5;msgbox, , , num enter, 0.5
 resetlocker:
 MouseMove, xPosCursor, yPosCursor, 0
@@ -519,7 +522,7 @@ if ErrorLevel
 else
 	{
 	;tooltip, A color within 30 shades of variation was found at X%Px% Y%Py%
-    MsgBox, A color within 30 shades of variation was found at X%Px% Y%Py%.
+    ;MsgBox, A color within 30 shades of variation was found at X%Px% Y%Py%.
     MouseMove, Px+10, Py+5, 0
 	Click down left
 	
@@ -754,7 +757,7 @@ else
 #IfWinActive ; PREMIERE END
 
 #IfWinActive ahk_exe notepad++.exe
-F19::
+~F19::
 send ^s
 sleep 20
 reload
