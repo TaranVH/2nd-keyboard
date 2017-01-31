@@ -729,15 +729,15 @@ sleep 20
 savedpreset2 = %clipboard%
 return
 
-F17::
-preset(savedpreset2)
-;msgbox, savedpreset2 %savedpreset2%
+; F17::
+; preset(savedpreset2)
+; ;msgbox, savedpreset2 %savedpreset2%
 
-;msgbox, %savedpreset2%
-return
+; ;msgbox, %savedpreset2%
+; return
 
-F18::preset(savedpreset1)
-;;;;;;;;;;;;;;;END OF FUNCTION FOR DIRECTLY APPLYING A PRESET EFFECT TO A CLIP;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; F18::preset(savedpreset1)
+; ;;;;;;;;;;;;;;;END OF FUNCTION FOR DIRECTLY APPLYING A PRESET EFFECT TO A CLIP;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
@@ -1343,18 +1343,18 @@ FileRead, SavedExplorerAddress, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard
 return
 
 ;Z:\Linus\1. Linus Tech Tips\Pending\Luke Personal Rig Update
-NumpadDot::InstantExplorer(SavedExplorerAddress . "\" . "delivery" . "\" )
-numpad0::InstantExplorer(SavedExplorerAddress . "\" . "thumbnail" . "\" )
+NumpadDot::InstantExplorer(SavedExplorerAddress . "\" . "Delivery" . "\" ) ;capitalization is important! I think...
+numpad0::InstantExplorer(SavedExplorerAddress . "\" . "Thumbnail" . "\" )
 numpad1::InstantExplorer(SavedExplorerAddress . "\" . "music" . "\" )
-numpad2::InstantExplorer(SavedExplorerAddress . "\" . "graphics" . "\" )
+numpad2::InstantExplorer(SavedExplorerAddress . "\" . "Graphics" . "\" )
 numpad3::InstantExplorer(SavedExplorerAddress . "\" . "Extra videos" . "\" )
 numpad4::InstantExplorer(SavedExplorerAddress . "\" . "music" . "\" )
 numpad5::InstantExplorer(SavedExplorerAddress . "\" . "L-Roll" . "\" )
-numpad6::InstantExplorer(SavedExplorerAddress . "\" . "all footage" . "\" )
+numpad6::InstantExplorer(SavedExplorerAddress . "\" . "ALL FOOTAGE" . "\" )
 numpad7::InstantExplorer(SavedExplorerAddress) ;MAIN, ROOT FOLDER
-numpad8::InstantExplorer(SavedExplorerAddress . "\" . "scripts" . "\" )
-numpad9::InstantExplorer(SavedExplorerAddress . "\" . "scripts" . "\" ) ; should open latest script
-NumpadDiv::InstantExplorer(SavedExplorerAddress . "\" . "project" . "\" ) 
+numpad8::InstantExplorer(SavedExplorerAddress . "\" . "Scripts" . "\" )
+numpad9::InstantExplorer(SavedExplorerAddress . "\" . "Scripts" . "\" ) ; should open latest script
+NumpadDiv::InstantExplorer(SavedExplorerAddress . "\" . "Project" . "\" ) 
 NumpadMult::tooltip, mult - open latest project i guess
 
 
@@ -1659,8 +1659,10 @@ SoundBeep, 900, 400
 ; These first few variables are set here and used by f_OpenFavorite:
 WinGet, f_window_id, ID, A
 WinGetClass, f_class, ahk_id %f_window_id%
-if f_class in #32770,ExploreWClass,CabinetWClass  ; Dialog or Explorer.
+if f_class in #32770,ExploreWClass,CabinetWClass  ; if the window class is a save/load dialog, or an Explorer window of either kind.
 	ControlGetPos, f_Edit1Pos, f_Edit1PosY,,, Edit1, ahk_id %f_window_id%
+
+/*
 if f_AlwaysShowMenu = n  ; The menu should be shown only selectively.
 {
 	if f_class in #32770,ExploreWClass,CabinetWClass  ; Dialog or Explorer.
@@ -1673,14 +1675,14 @@ if f_AlwaysShowMenu = n  ; The menu should be shown only selectively.
 }
 ; Otherwise, the menu should be presented for this type of window:
 ;Menu, Favorites, show
-
+*/
 
 
 ; msgbox, A_ThisMenuItemPos %A_ThisMenuItemPos%
 ; msgbox, A_ThisMenuItem %A_ThisMenuItem%
 ; msgbox, A_ThisMenu %A_ThisMenu%
 
-StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
+;;StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
 ; msgbox, f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
 
 
@@ -1688,21 +1690,19 @@ StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
 ;msgbox, BEFORE:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
 
 ; Fetch the array element that corresponds to the selected menu item:
-StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
+;;StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
 if f_path =
 	return
 if f_class = #32770    ; It's a dialog.
 {
 	if f_Edit1Pos <>   ; And it has an Edit1 control.
 	{
+		; IF window Title is NOT "export settings," with the exe "premiere pro.exe"
+			;go to the end or do something else, since you are in Premiere's export media dialouge box... which has the same #23770 classNN for some reason...
 		
-		; ControlClick, ClassNN Edit1
-		; ControlFocus, ClassNN Edit1
-		; ControlClick, Edit1
-		
-		; ControlFocus, Edit1, A
+
 		ControlFocus, Edit1, ahk_id %f_window_id% ;this is really important.... it doesn't work if you don't do this...
-		
+		tippy("DIALOUGE WITH EDIT1`n`nLE controlfocus of edit1 for f_window_id was just engaged.", 1000)
 		; msgbox, is it in focus?
 		; MouseMove, f_Edit1Pos, f_Edit1PosY, 0
 		; sleep 10
@@ -1728,9 +1728,12 @@ if f_class = #32770    ; It's a dialog.
 }
 else if f_class in ExploreWClass,CabinetWClass  ; In Explorer, switch folders.
 {
+	msgbox, f_class is %f_class% and f_window_ID is %f_window_id%
 	if f_Edit1Pos <>   ; And it has an Edit1 control.
 	{
+		tippy("EXPLORER WITH EDIT1 only 2 lines of code here....", 1000)
 		ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
+		msgbox, set text happened
 		; Tekl reported the following: "If I want to change to Folder L:\folder
 		; then the addressbar shows http://www.L:\folder.com. To solve this,
 		; I added a {right} before {Enter}":
@@ -1755,10 +1758,10 @@ else if f_class = ConsoleWindowClass ; In a console window, CD to that directory
 ; 1) It's an unsupported window type but f_AlwaysShowMenu is y (yes).
 ; 2) It's a supported type but it lacks an Edit1 control to facilitate the custom
 ;    action, so instead do the default action below.
-
-;msgbox, nothing else worked
+tippy("end was reached.",1000)
+SoundBeep, 800, 300
 ; Run, Explorer %f_path%  ; Might work on more systems without double quotes.
-Run, %f_path%  ; Might work on more systems without double quotes.
+Run, %f_path%  ; I got rid of the "Explorer" part because it caused redundant windows to be opened, rather than just switching to the existing window
 }
 ;end of instant explorer
 

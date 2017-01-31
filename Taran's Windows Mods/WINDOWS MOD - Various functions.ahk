@@ -332,14 +332,14 @@ F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
 
 
 
-#IfWinActive ahk_class Notepad++
-;instant save and reload for this script -- and i guess not the other ones...?
-F5::
-send ^s
-sleep 100
-Reload
-Return
-#IfWinActive
+; #IfWinActive ahk_class Notepad++
+; ;instant save and reload for this script -- and i guess not the other ones...?
+; F5::
+; send ^s
+; sleep 100
+; Reload
+; Return
+; #IfWinActive
 
 ; #ifwinactive
 ; F7::

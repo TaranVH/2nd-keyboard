@@ -1,52 +1,21 @@
-#SingleInstance force
+#SingleInstance force ; only 1 instance of this script may run at a time.
+#InstallMouseHook
+#IfWinActive ahk_exe Adobe Premiere Pro.exe ;this line of code means that everything BELOW will only happen inside of Premiere. (unless changed later)
 
-#IfWinActive ahk_exe Adobe Premiere Pro.exe ;this line of code means that everythign BELOW will only happen inside of Premiere. (unless changed later)
-
-;-------------------------------------------------------------------------------------------------------------------------------
-
-; NOTE: In autohotkey, the following special characters (usually) represent modifier keys:
-; # is the WIN key. (it can mean other things though, as you can see above.)
-; ^ is CTRL
-; ! is ALT
-; + is SHIFT
-; list of other keys: http://www.autohotkey.com/docs/Hotkeys.htm
-
-
-;RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE'S BUILT IN KEYBOARD SHORTCUTS MENU
-; u  					select clip at playhead. Probably this should be moved to a different series of keystrokes, so that "u" is freed for something else.
-; backspace  			ripple delete --- but I don't use that in AutoHotKey because it's dangerous. This should be changed to something else; I use SHIFT C now.
-; shift c				ripple delete --- very convenient for left handed use. Premiere's poor track targeting makes ripple delete less useful than it could be.
-; ctrl alt shift d  	ripple delete --- I never type this in manually - long shortcuts like this are great for using AHK or a macro to press them. It gets them out of the way of more important, single keystorkes that I can do by hand.
-; delete				delete
-; c						delete --- I have this on C as well, because it puts it directly under my left hand. Very quick to press without having to move my hand.
-; ctrl r 				speed/duration panel
-; shift 1 				toggle track targeting for AUDIO LAYER 1
-; shift 2 				toggle track targeting for AUDIO LAYER 2. And so on up to 8.
-; alt 1 				toggle track targeting for VIDEO LAYER 1
-; alt 2 				toggle track targeting for VIDEO LAYER 2. And so on up to 8. I wish there were DEDICATED shortcuts for ALL layers, both to enable and disable.
-; ctrl p 				toggle "selection follows playhead"
-; ctrl alt shift 7		effects --- (NOT the Effect controls panel)
-; ctrl alt shift 4		program monitor
-
-; Be aware that sometimes other programs like PUUSH can overlap with your customized shortcuts.
+CoordMode, Mouse, screen
+CoordMode, Pixel, screen
 
 ;-------------------------------------------------------------------------------------------------------------------------------
 
-;Define all the timeline's possible colors on taran's computer. This accounts for trageted and untargeted tracks, both inside and outside the in and out points.
-;Note that your colors will be different, but you can change UI brightness inside preferences > appearance > brightness.
+;Define all the timeline's DEFAULT possible colors.
+;Note that your colors will be different IF you changed the UI brightness inside preferences > appearance > brightness.
 ;use Window Spy (it comes with AHK) to detect exact colors onscreen.
-timeline1 = 0x2c2c2c
-timeline2 = 0x252525
-timeline3 = 0x4c4c4c
-timeline4 = 0x212121
-timeline5 = 0xd3d3d3
-timeline6 = 0xdadada
-timeline7 = "";0x2b2b2b 
-timeline8 = 0xd4d4d4
-timeline9 = 0x4b4b4b
-timeline10 = 0x3d3d3d
+timeline1 = 0x414141 ;timeline color inside the in/out points ON a targeted track
+timeline2 = 0x313131 ;timeline color of the separating LINES between targeted AND non targeted tracks inside the in/out points
+timeline3 = 0x1b1b1b ;the timeline color inside in/out points on a NON targeted track
+timeline4 = 0x202020 ;the color of the bare timeline NOT inside the in out points
 
-Tippy(tipsHere, wait:=333) ;will create and then delete a tooltip
+Tippy(tipsHere, wait:=3000) ;will create and then delete a tooltip
 {
 ToolTip, %tipsHere%
 SetTimer, noTip, %wait% ;--in 1/3 seconds by default, remove the tooltip
@@ -94,36 +63,84 @@ return
 ; Return
 
 
+/*
+Rbutton::
 
-~Rbutton::
+;tooltip, `nwhat
+MouseGetPos X, Y
+PixelGetColor colorr, %X%, %Y%, RGB
+if (colorr = timeline1)
+	{
+		tooltip, timeline color yeah
+	}
+else
+	sendinput {Rbutton}
+return
+*/
+
+
+
+
+Rbutton::
+;tooltip, `nwhat
 ;<<<use right mouse button to move playhead in timeline>>>>>>
 ;tooltip, you are right clicking....
 MouseGetPos X, Y
 PixelGetColor colorr, %X%, %Y%, RGB
-;Tooltip, not working, colors are different
-if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7 || colorr = timeline8 || colorr = timeline9 || colorr = timeline10)
+if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4)
 {
 	;tooltip, COLORRRRRRRRRRRRRRRRR %colorr%
-	; GetKeyState, OutputVar, Rbutton, P
-	; Tooltip, WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW %outputvar%
-	
-	
+	;GetKeyState, OutputVar, Rbutton, P
+	;Tooltip, WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW %outputvar%
 	; while GetKeyState(Rbutton, P) = D
-	while GetKeyState("Rbutton")
+		; {
+		; tooltip, hello
+		; if GetKeyState(Rbutton, P) = U
+			; break
+		; }
+	;sleep 100
+	; tooltip, `nshit
+	; GetKeyState, OutputVar, rbutton, P
+	; ;msgbox,,,rbutton state is %OutputVar%,1
+	; tooltip, "rbutton state is " %OutputVar%
+	; sleep 1000
+	; tooltip,
+	
+	
+	; tooltip, % GetKeyState("Rbutton", "P") ;<----this was essential for me to figure out EXACTLY how AHK wanted this query to be phrased. Why should i need the quotation marks?? Why does it return a 1 and 0, but for the other method, it returns U and D? Who the hell knows....
+	; if GetKeyState("$Rbutton") = D ;<--- see, this line did not work AT ALL.
+	if GetKeyState("Rbutton", "P") = 1 ;<----THIS is the only way to phrase this query. Took me 2 hours to figure this shit out.
 		{
-		Send \
-		Tooltip, Right click playhead mod
-		sleep 16
+		;tooltip, we are inside the IF now
+		;sleep 1000
+		;tooltip,
+		loop
+			{
+			Send \ ;in premiere, this is set to "move playhead to cursor."
+			Tooltip, Right click playhead mod!
+			sleep 16
+			; if GetKeyState("$Rbutton") = U
+			if GetKeyState("Rbutton", "P") = 0
+				{
+				;msgbox,,,time to break,1
+				tooltip,
+				goto theEnd
+				break
+				}
+			}
 		}
-	tooltip,
+	;tooltip,
 	Send {escape} ;in case you end up inside the "delete" right click menu from the timeline
 	;MouseClick, left
 }
+else
+	sendinput {Rbutton} ;this is to make up for the lack of a ~ in front of Rbutton. ... ~Rbutton. It allows the command to pass through, but only if the abpve conditions were NOT met.
+theEnd:
 ; \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Return ; from right click intercept
 
 
-;Rbutton up::Rbutton up
+; $RButton up::Send, {RButton up}
 
 
 ; Rbutton up::
@@ -193,7 +210,13 @@ BlockInput, MouseMoveOff ;-------------returns mouse control
 #IfWinActive
 
 
-
+#ifwinactive ahk_class Notepad++
+^r::
+send ^s
+sleep 10
+SoundBeep, 1000, 500
+reload
+return
 
 
 
