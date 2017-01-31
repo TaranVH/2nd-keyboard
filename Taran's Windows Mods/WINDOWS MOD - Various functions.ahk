@@ -15,7 +15,30 @@ Menu, Tray, Icon, shell32.dll, 16 ;this changes the icon into a little laptop th
 savedCLASS = "ahk_class Photoshop"
 savedEXE = "photoshop.exe"
 
+GroupAdd, ExplorerGroup, ahk_class #32770 ;This is for all the Explorer-based "save" and "load" boxes, from any program!
 
+
+#IfWinActive, ahk_group ExplorerGroup
+`::
+Send !{up} ;This allows you to use the TILDE to go DOWN one folder level in explorer save boxes
+Return
+
++`::Send !{left} ;shift tilde will go "back" in explorer save boxes
+
+; ctrl L, alt D, or F4 will highlight the address bar. But in different ways..?
+^+!d::
+sleep 10
+Sendinput !d
+sleep 10
+return
+#IfWinExist
+
+
+
+
+
+
+#IfWinActive
 
 ;a script to open the snipping tool and create a new snip.
 ScrollLock::
@@ -25,7 +48,7 @@ send {Lwin up}
 sleep 20
 send snip{enter}
 WinWaitActive ahk_exe SnippingTool.exe, , 2
-Send ^n ;new snip. For SOME computers, the new snip is already engaged by deafult. IDK why, but mine is not. 
+Send ^n ;new snip. For SOME computers, the new snip is already engaged by deafult. IDK why, but mine is not.
 return
 
 /*
@@ -47,7 +70,7 @@ GetAhkStats(xxSection="", xxUseWindow=99, xxDestroyAfter=1)
   If xxSection=
     xxSection = History
   Loop, Parse, xxSectionN, |
-    IfInString, A_LoopField, %xxSection% 
+    IfInString, A_LoopField, %xxSection%
       xxSection = %A_Index%
   DetectHiddenWindows, On
   SetTitleMatchMode, 2
@@ -107,10 +130,10 @@ Explorer_GetSelection(hwnd="") {
     return Trim(ToReturn,"`n")
 }
 
-filetomovePATH = 
+filetomovePATH =
 SlashPosition = 0
-file2move = 
-filetomovePATH =  
+file2move =
+filetomovePATH =
 FileListLocations =
 Fileposition =
 counter = 0
@@ -126,9 +149,9 @@ tooltip, Filemover Activated, , , 3
 
 
 sleep 10
-existingfile = 
+existingfile =
 SlashPosition = 0
-file2move = 
+file2move =
 filetomovePATH =  ;if you don't refresh these variables, they will retain data from previous run-throughs.
 FileListLocations =
 Fileposition =
@@ -175,7 +198,7 @@ Loop, parse, FileList, `n
             if A_index = %Fileposition%
                 existingfile = %A_LoopField% ;I have to confess, I wrote those 4 lines all at once and i have no idea how they work... they just do.
         ;;msgbox, existingfile = %existingfile%
-       
+
         ;A match has been found in this folder system, meaning the file was ALREADY moved over here before!
         msgbox, 1, ,%A_LoopField%`nis already present at`n%existingfile%`n...Want to see?
         IfMsgBox, OK
@@ -225,7 +248,7 @@ tooltip, , , , 3
 ;;msgbox, you are at the VERY end
 }
 ;end of file mover.
-#IfWinActive 
+#IfWinActive
 
 
 
@@ -304,7 +327,7 @@ F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^w ;control w, which closes a tab
 F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
-#IfWinActive 
+#IfWinActive
 
 
 
@@ -362,7 +385,7 @@ global savedEXE = lolexe ;is this the way to do it? IDK.
 ;;F13 is pressed with macro key G13
 ;F13::windowSwitcher(savedCLASS, savedEXE)
 
-#IfWinActive 
+#IfWinActive
 F13::
 if WinActive("ahk_class MozillaWindowClass")
 	Send ^+{tab}
@@ -377,7 +400,7 @@ if WinActive("ahk_exe explorer.exe")
 return
 
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
-#IfWinActive 
+#IfWinActive
 ^F1::
 IfWinNotExist, ahk_class MozillaWindowClass
 	Run, firefox.exe
@@ -388,7 +411,7 @@ else
 Return
 
 
-#IfWinActive 
+#IfWinActive
 ;Press SHIFT and macro key 16, and it'll switch between different WINDOWS of firefox.
 +^F1::
 Process, Exist, firefox.exe
@@ -407,23 +430,11 @@ Return
 
 
 
-;Unused script that can run chrome
-; ^numpad1::
-; IfWinNotExist, ahk_class Chrome_WidgetWin_1
-	; Run, chrome.exe
-	
-; if WinActive("ahk_class Chrome_WidgetWin_1")
-	; Send ^{tab}
-; else
-	; WinActivate ahk_class Chrome_WidgetWin_1
-; Return
-
-
 
 ; This is a script that will always go to The last explorer window you had open.
 ; If explorer is already active, it will go to the NEXT Explorer window
 ; CTRL Numpad2 is pressed with a single button stoke from my logitech G15 keyboard -- Macro key 17.
-#IfWinActive 
+#IfWinActive
 ^F2::
 IfWinNotExist, ahk_class CabinetWClass
 	Run, explorer.exe
@@ -442,7 +453,7 @@ WinClose,ahk_group taranexplorers
 return
 
 
-#IfWinActive 
+#IfWinActive
 ^F3::
 IfWinNotExist, ahk_class Premiere Pro
 	Run, Adobe Premiere Pro.exe
@@ -451,7 +462,7 @@ Return
 
 
 
-#IfWinActive 
+#IfWinActive
 ^F4::
 Process, Exist, WINWORD.EXE
 ;msgbox errorLevel `n%errorLevel%
@@ -469,12 +480,18 @@ Return
 
 
 
+^F5::
+IfWinNotExist, ahk_class Chrome_WidgetWin_1
+	Run, chrome.exe
 
-;apparently CRTL NUM5 is some kind of select all shortcut?
+if WinActive("ahk_class Chrome_WidgetWin_1")
+	Send ^{tab}
+else
+	WinActivate ahk_class Chrome_WidgetWin_1
+Return
 
 
-
-#IfWinActive 
+#IfWinActive
 ^F6::
 IfWinNotExist, ahk_class Notepad++
 	Run, notepad++.exe
@@ -537,10 +554,10 @@ Return
 ;;; these  things below will turn an explorer window into one with this address, unless it is already open - in which case, we switch over to it.
 ;;; each one is triggered by a pre-programmed techkeys keyboard, so that each is actually just one keystroke to engage.
 #IfWinActive
-; ^!+1::explorerLaunch("Z:\Linus\1. Linus Tech Tips\Pending") 
-^!+1::explorerLaunch("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard")
-^!+2::explorerLaunch("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
-^!+3::explorerLaunch("C:\Users\TaranWORK\Videos\Desktop")
+; ^!+1::explorerLaunch("Z:\Linus\1. Linus Tech Tips\Pending")
+!+1::explorerLaunch("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard") ;(alt shift 1)
+!+2::explorerLaunch("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
+!+3::explorerLaunch("C:\Users\TaranWORK\Videos\Desktop")
 ;;; done ;;;;
 
 
@@ -582,5 +599,14 @@ msgbox hi
 return
 
 Media_Next::
-msgbox hiiiee
+msgbox hiiiee. testing stuff.
 return
+
+#MaxHotkeysPerInterval 2000
+
+;experimental functions...
+
+; F8::WheelDown
+
+; F9::WheelUp
+

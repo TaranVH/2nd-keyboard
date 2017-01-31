@@ -7,34 +7,71 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyboard!
 #SingleInstance force ;only one instance of this script may run at a time!
 
-/*
-##########################################################################################################
-Lots of explanatory videos about how to use this and other AHK scripts can be found on my youtube channel!
-                           https://www.youtube.com/user/TaranVH/videos                                    
-##########################################################################################################
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; HELLO, poeple who want info about making a second keyboard, using LUAmacros! Scroll down past all this stuff until you get to LINE 210.
+; if you want to make the 2nd keyboard with intercept.exe instead, (far superior!) please scroll down to LINE 1100!
+
+; Here's my LTT video about how I use the 2nd keyboard with Luamacros: https://www.youtube.com/watch?v=Arn8ExQ2Gjg
+; And Tom's video, which unfortunately does not have info on how to actually DO it: https://youtu.be/lIFE7h3m40U?t=16m9s
+;(KEEP IN MIND, for Luamacros, I now use 'F23' instead. But the principle is exactly the same.)
+; so you also need LUAmacros as well, of course.
+; Luamacros: http://www.hidmacros.eu/forum/viewtopic.php?f=10&t=241#p794
+; AutohotKey: https://autohotkey.com/
+
+; However, interecept.exe is even better! I'll make a video about how to install and use it, eventually.
+; Intercept.exe: http://orbiter-forum.com/showthread.php?t=30829
+
+; Lots of other explanatory videos other AHK scripts can be found on my youtube channel! https://www.youtube.com/user/TaranVH/videos 
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-Scroll down to the line that contains:
-2ND KEYBOARD IF USING INTERCEPTOR
-if you are interested in using interceptor for your 2nd keyboard.
-[video explanation to come.]
+;_______________________________________________________________________________________________________________________
+;                                                                                                                       
+; NOTE: In autohotkey, the following special characters (usually) represent modifier keys:
+; # is the WIN key. (it can mean other things though, as you can see above.)
+; ^ is CTRL
+; ! is ALT
+; + is SHIFT
+; list of other keys: http://www.autohotkey.com/docs/Hotkeys.htm
+; 
+; 
+;RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE'S BUILT IN KEYBOARD SHORTCUTS MENU
+; KEYS                    PREMIERE FUNCTIONS
+;---------------------------------------------------------------------------------
+; u                     select clip at playhead. Probably this should be moved to a different series of keystrokes, so that "u" is freed for something else.
+; backspace             ripple delete --- but I don't use that in AutoHotKey because it's dangerous. This should be changed to something else; I use SHIFT C now.
+; shift c               ripple delete --- very convenient for left handed use. Premiere's poor track targeting makes ripple delete less useful than it could be.
+; ctrl alt shift d      ripple delete --- I never type this in manually - long shortcuts like this are great for using AHK or a macro to press them.
+; delete                delete
+; c                     delete --- I also have this on C, because it puts it directly under my left hand. Very quick to press without having to move my hand.
+; ctrl r                speed/duration panel
+; shift 1               toggle track targeting for AUDIO LAYER 1
+; shift 2               toggle track targeting for AUDIO LAYER 2. And so on up to 8.
+; alt 1                 toggle track targeting for VIDEO LAYER 1
+; alt 2                 toggle track targeting for VIDEO LAYER 2. And so on up to 8. I wish there were DEDICATED shortcuts to enable and disable ALL layers
+; ctrl p                toggle "selection follows playhead"
+; ctrl alt shift 0      Application > Window > Timeline (This key CANNOT be easily reassigned in PR2017 due to a bug.) (Default is SHIFT 3)
+; ctrl alt shift `      Application > Window > Project  (This sets the focus onto a BIN.) (default is SHIFT 1)
+; ctrl alt shift 1      Application > Window > Project  (This sets the focus onto a BIN.) (default is SHIFT 1)
+; ctrl alt shift 4      Application > Window > program monitor (Default is SHIFT 4)
+; ctrl alt shift 7      Application > Window > Effects   (NOT the Effect Controls panel) (Default is SHIFT 7) --- Note that all of the defaults are stupid. SHIFT 7 is just an ampersand if you happen to be in a text box somewhere...
+; F2                    gain
+; F3                    audio channels --- To be pressed manually by the suer. (this might change in the future.)
+; ctrl alt shift a      audio channels --- (I will NOT change this, so that it can always be reliably triggered using AutoHotKey.)
+; shift F               From source monitor, match frame. -- awkward to press by hand. This is done with a macro instead.
+; ctrl /                Overwrite (default is "." (period))
+; ctrl b                select find box --- This is such a useful function when you pair it the the effects panel!!
+; ctrl alt F            select find box 
+;                                                                                                                        
+; Be aware that sometimes other programs like PUUSH can overlap with your customized shortcuts.                          
+;_______________________________________________________________________________________________________________________
 
 
-Scroll down to the line that contains:
-2ND KEYBOARD USING LUAMACROS... NOW OBSOLETE!
-if you are interested in using luamacros for your 2nd keyboard.
-(It's not as good as interceptor, but I am keeping that code in because I talk about it in this LTT video!)
-https://www.youtube.com/watch?v=Arn8ExQ2Gjg
-(Note that it uses F23 now, instead of F24.)
 
-
-
-*/
+;defining some variables below:
 
 savedpreset1 = 100scale
 savedpreset2 = 2.4 limiter
-
-
 
 applicationname=SecondKeyboardd
 statusy = 1850
@@ -91,10 +128,8 @@ GuiControl,,line1, 2ND KEYBOARD
 GuiControl,,line2, line 2 on gui 2
 GuiControl,,line3, line 3 on gui 2
 
-
 SetTimer,revealtimer,-2500
 SetTimer,revealtimer2,-2500
-
 
 
 
@@ -160,7 +195,6 @@ GuiControl,,keyb, second keyboard
 SetTimer,revealtimer,-1500
 }
 
-
 revealtimer:
 Gui, hide
 return
@@ -169,12 +203,292 @@ revealtimer2:
 Gui, kb2: hide
 Return
 
-
 ;++++++++++++++++++++++++GUI stuff end.+++++++++++++++++++++++++++++
 
 
-;SC04C::shift ;<- very experimental code. This is the scancode for numpad5. Necessary if you want to convert it to a modifier key....
 
+;222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+;---------------2ND KEYBOARD USING LUAMACROS... (I currently use intercept.exe instead, though!)-------------------
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO! remove the first ; from the next line if you want the 2nd keyboard script to work in any application!
+;#IfWinActive ;---- If this code is NOt commented out, it will allow for everything below this line to work in ANY application.
+~F23::
+FileRead, key, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keypressed.txt
+tippy(key) ; this function will just launch a quick tooltip that shows you what key you pressed. OPTIONAL.
+If (key = "o")
+preset("flip horizontal") 
+else if(key = "p")
+preset("flip vertical")
+else if(key = "i")
+preset("multiply")
+
+else if (key = "leftbracket")
+preset("pop in motion") 
+else if(key = "rightbracket")
+preset("pop out motion")
+
+else if (key = "y")
+preset("pop in transform") 
+else if(key = "u")
+preset("pop out transform")
+
+else if(key = "m")
+preset("pan down")
+else if(key = "j")
+preset("pan up")
+else if(key = "n")
+preset("pan left")
+else if(key = "comma")
+preset("pan right")
+else if(key = "h")
+preset("zoom fast")
+else if(key = "k")
+preset("zoom slow")
+
+else if(key = "period")
+preset("crop small")
+else if(key = "slash")
+preset("crop full")
+else if(key = "singlequote")
+preset("warp")
+
+else if(key = "semicolon")
+preset("blur with edges")
+else if(key = "l")
+preset("LTT")
+
+else if(key = "F6")
+SFXActions("buzz")
+else if(key = "F7")
+SFXActions("ding")
+else if(key = "F8")
+SFXActions("bleep")
+else if(key = "F9")
+SFXActions("woosh")
+else if(key = "F10")
+SFXActions("woosh TSFX")
+else if(key = "F11")
+SFXActions("bwoop")
+else if(key = "F12")
+SFXActions("pop")
+else if(key = "F5")
+SFXActions("SEARCH")
+
+;[[[[[[[[begin transitions]]]]]]]]]]]]
+
+else if (key = "insert") ;FLASH TRANSITIONS
+preset("impact flash long") ;recallTransition(15) ;it turns out you can SAVE transition presets from the effect controls triple line mnu button. But only cross dissolve and 3rd party transitions. I use filmimpact.net and red giant universe transitions. Lot of good free ones!
+else if(key = "home") 
+preset("impact flash med") ;recallTransition(14)
+else if(key = "pageup")
+preset("impact flash short") ;recallTransition(13)
+else if(key = "delete") ;DISSOLVE TRANSITIONS
+preset("cross dissolve long") ;recallTransition(12)
+else if(key = "end")
+preset("cross dissolve med") ;recallTransition(11)
+else if(key = "pagedown")
+preset("cross dissolve short") ;recallTransition(10)
+else if(key = "q") ;WIPE transitions
+recallTransition(20)
+else if(key = "w")
+recallTransition(21)
+else if(key = "e")
+recallTransition(22)
+else if(key = "a")
+recallTransition(23)
+; else if(key = "s")
+; recallTransition(??) ; iris
+else if(key = "d")
+recallTransition(24)
+else if(key = "z")
+recallTransition(25)
+else if(key = "x")
+recallTransition(26)
+else if(key = "c")
+recallTransition(27)
+
+else if(key = "minus")
+audioMonoMaker(0)
+else if(key = "equals")
+audioMonoMaker(1)
+
+else if(key = "r")
+Send ^!+{F1} ;copy 1 ; this uses insideclipboard.exe to work. more info here: https://www.youtube.com/watch?v=3ScBB7I1BEA
+else if(key = "f")
+Send ^!+{F2} ;copy 2
+else if(key = "v")
+Send ^!+{F3} ;copy 3
+
+else if(key = "t")
+Send ^!{F1} ;paste 1
+else if(key = "g")
+Send ^!{F2} ;paste 2
+else if(key = "b")
+Send ^!{F3} ;paste 3
+
+
+else if(key = "up") ;impact push transitions - fun fact, you can SAVE TRANSITION PRESETS if they are cross dissolve or from a 3rd party. In the effect conrtols triple line menu.
+preset("push up") ;			recallTransition(1) ;<--- previously was this.
+else if(key = "left")
+preset("push left") ;		recallTransition(2)
+else if(key = "down")
+preset("push down") ;		recallTransition(4)
+else if(key = "right")
+preset("push right") ;		recallTransition(3)
+
+else if(key = "enter")
+Send ^!e ;remove effects
+
+else if(key = "num0") ;just mirroring the normal numpad - IDK how else to do this.
+Send {Numpad0}
+else if(key = "num1")
+Send {Numpad1}
+else if(key = "num2")
+Send {Numpad2}
+else if(key = "num3")
+Send {Numpad3}
+else if(key = "num4")
+Send {Numpad4}
+else if(key = "num5")
+Send {Numpad5}
+else if(key = "num6")
+Send {Numpad6}
+else if(key = "num7")
+Send {Numpad7}
+else if(key = "num8")
+Send {Numpad8}
+else if(key = "num9")
+Send {Numpad9}
+else if(key = "numDiv")
+Send {NumpadDiv}
+else if(key = "numMult")
+Send {NumpadMult}
+
+Return ;from F24
+;THE BLOCK OF CODE ABOVE is the original, simple script.
+
+
+;/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+;THE KEYACTIONS CODE BELOW is a fancier way of doing the same thing, that does NOT involve dozens of ELSE IF statements.
+;However, it is annoying to use for several reasons, so I am mothballing it. I do NOT reccomend that you use this code.
+/*
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
+~F23::
+FileRead, key, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keypressed.txt
+tippy(key)
+
+presetActions := Object()
+sendKeystrokesActions := Object()
+recallClipboardActions := Object()
+recallSFX := Object()
+sectionview := ""
+currentSection := ""
+
+;This loop will read all the key value pairs (e.g. keybinds).
+Loop, read, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keyActions.txt
+{
+    if (A_LoopReadLine == "preset") or (A_LoopReadLine == "sendKeystrokes") or (A_LoopReadLine == "recallClipboard") or (A_LoopReadLine == "SFXActions")
+    {
+        currentSection := A_LoopReadLine
+        continue
+    }
+    else if (A_LoopReadLine == "")
+        continue
+   
+    if (currentSection == "preset")
+    {
+        action := StrSplit(A_LoopReadLine, ":")
+        presetActions[action[1]] := action[2]
+    }
+    else if (currentSection == "sendKeystrokes")
+    {
+        action := StrSplit(A_LoopReadLine, ":")
+        sendKeystrokesActions[action[1]] := action[2]
+    }
+    else if (currentSection == "recallClipboard")
+    {
+        action := StrSplit(A_LoopReadLine, ":")
+        recallClipboardActions[action[1]] := action[2]
+    }
+	else if (currentSection == "SFXActions")
+    {
+        action := StrSplit(A_LoopReadLine, ":")
+        recallSFX[action[1]] := action[2]
+    }
+}
+ 
+if presetActions[key] != ""
+{
+    ; Keybind for preset exists
+    preset(presetActions[key])
+	Revealkey("Preset", key, presetActions[key])
+}
+else if sendKeystrokesActions[key] != ""
+{
+    ; Keybind for sendKeystrokes exists
+    sendKeystrokes(sendKeystrokesActions[key])
+	Revealkey("send keystrokes", key, sendKeystrokesActions[key])
+}
+else if recallClipboardActions[key] != ""
+{
+    ; Keybind for recallClipboard exists
+    recallClipboard(recallClipboardActions[key])
+	Revealkey("Recall Clipboard", key, recallClipboardActions[key])
+}
+else if recallSFX[key] != ""
+{
+    ; Keybind for SFXactions exists
+    SFXActions(recallSFXActions[key])
+	Revealkey("Recall sound effect", key, recallSFXActions[key])
+}
+else
+    tooltip, Keybind not found! :(
+
+Return ;from F23
+*/
+
+;;---I DO NOT RECCOMEND THAT YOU USE THE CODE ABOVE. I AM MOTHBALLING IT.---
+;;/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+
+/*
+;; FYI:  Keyactions.txt is filled with text exactly like this:
+preset
+o:flip horizontal
+p:flip vertical
+i:multiply
+
+leftbracket:pop in motion
+rightbracket:pop out motion
+
+sendKeystrokes
+r:^!+{F1}
+f:^!+{F2}
+
+;these refer to the audio leftener and audio rightener.
+minus:#!l
+equals:#!r
+;this is mapped to "remove effects" in premiere.
+enter:^!e
+;These literally just pass through the exact same keystroke.
+num0:{Numpad0}
+num1:{Numpad1}
+ */
+ 
+;;END OF 2ND KEYBOARD CODE AS LAUNCHED FROM LUAMACROS.
+;;22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+
+
+recallTransition(foo)
+{
+;Do nothing.
+;this function was deleted, it never worked very well.
+}
+
+
+
+
+;SC04C::shift ;<- very experimental code. This is the scancode for numpad5. Necessary if you want to convert it to a modifier key....
 
 ;;;;;;temporary tooltip maker;;;;;;
 Tippy(tipsHere, wait:=333)
@@ -209,51 +523,6 @@ if not WinActive(theClass)
 
 
 
-; HELLO, poeple who want info about making a second keyboard! scroll down past all this crap until you get to "F24::"
-; here's Tom's video about how the keyboard works with the F24 key and luaMacros: https://youtu.be/lIFE7h3m40U?t=16m9s
-; (though I now use 'F23' instead. The principle is the same.)
-; so you also need LUAmacros as well, of course.
-; However, interecept.exe is even better! I'll make a video about this, soon.
-
-
-
-;_______________________________________________________________________________________________________________________
-;                                                                                                                       
-; NOTE: In autohotkey, the following special characters (usually) represent modifier keys:
-; # is the WIN key. (it can mean other things though, as you can see above.)
-; ^ is CTRL
-; ! is ALT
-; + is SHIFT
-; list of other keys: http://www.autohotkey.com/docs/Hotkeys.htm
-
-;RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE'S BUILT IN KEYBOARD SHORTCUTS MENU
-; KEYS					PREMIERE FUNCTIONS
-;---------------------------------------------------------------------------------
-; u  					select clip at playhead. Probably this should be moved to a different series of keystrokes, so that "u" is freed for something else.
-; backspace  			ripple delete --- but I don't use that in AutoHotKey because it's dangerous. This should be changed to something else; I use SHIFT C now.
-; shift c				ripple delete --- very convenient for left handed use. Premiere's poor track targeting makes ripple delete less useful than it could be.
-; ctrl alt shift d  	ripple delete --- I never type this in manually - long shortcuts like this are great for using AHK or a macro to press them.
-; delete				delete
-; c						delete --- I have this on C as well, because it puts it directly under my left hand. Very quick to press without having to move my hand.
-; ctrl r 				speed/duration panel
-; shift 1 				toggle track targeting for AUDIO LAYER 1
-; shift 2 				toggle track targeting for AUDIO LAYER 2. And so on up to 8.
-; alt 1 				toggle track targeting for VIDEO LAYER 1
-; alt 2 				toggle track targeting for VIDEO LAYER 2. And so on up to 8. I wish there were DEDICATED shortcuts for ALL layers, both to enable and disable.
-; ctrl p 				toggle "selection follows playhead"
-; ctrl alt shift 7		effects --- (NOT the Effect Controls panel) --- Note that this is SHIFT 7 by default, which is dumb because that's a "&"
-; ctrl alt shift 4		program monitor
-; ctrl alt shift a 		audio channels --- (I will NOT change this, so that it can always be reliably triggered using AutoHotKey.)
-; F2					gain
-; F3					audio channels --- (but this might change in the future.)
-; ctrl shift m			From source monitor, match frame. -- awkward to press by hand. This is done with a macro instead.
-; ctrl \				select find box --- This is such a useful function when you pair it the the effects panel!!
-; ctrl alt F			select find box 
-;                                                                                                                        
-; Be aware that sometimes other programs like PUUSH can overlap with your customized shortcuts.                          
-;_______________________________________________________________________________________________________________________
-
-
 
 ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ;THIS IS A VERY SIMPLE FUNCTION FOR JUST TYPING STUFF INTO THE SEARCH BAR
@@ -262,8 +531,8 @@ if not WinActive(theClass)
 effectsPanelType(item := "")
 {
 Keyshower(item,"effectsPanelType")
-Send ^+!7 ;set in premiere to "effects" panel
-Send ^\ ;set in premiere to "select find box"
+Send ^+!7 ;CTRL SHIFT ALT 7 -- set in premiere to "effects" panel
+Send ^b ;CTRL B --set in premiere to "select find box"
 sleep 20
 Send +{backspace} ;shift backspace deletes any text that may be present.
 Sleep, 10
@@ -306,21 +575,23 @@ send +{tab}
 preset(item)
 {
 
-Keyshower(item,"preset")
+Keyshower(item,"preset") ;YOU DO NOT NEED THIS LINE. -- it simply displays keystrokes on the screen for the sake of tutorials.
 
+;Setting the coordinate mode is really important. This ensures that pixel distances are consistant for everything, everywhere.
 coordmode, pixel, screen
 coordmode, mouse, screen
-Coordmode, Caret, screen
+coordmode, Caret, screen
 
+;This (temporarily) blocks the mouse and keyboard from sending any information, which could interfere with the funcitoning of the script.
 BlockInput, SendAndMouse
 BlockInput, On
 
-SetKeyDelay, 0
+SetKeyDelay, 0 ;this ensures that any text AutoHotKey "types in," will input instantly, rather than one letter at a time.
 MouseGetPos, xposP, yposP ;-----------------------stores the cursor's current coordinates at X%xposP% Y%yposP%
 
-Send ^+!7 ;set in premiere to "effects" panel
-sleep 5
-Send ^\ ;set in premiere to "select find box"
+Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to "effects" panel
+sleep 5 ;"sleep 5" means the script will wait for 5 milliseconds before the next command. This is done to give Premiere some time to load its own things.
+Send ^b ;CTRL B -- set in premiere to "select find box"
 sleep 5
 ;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret." 
 
@@ -334,9 +605,9 @@ WinGetClass, class, ahk_id %Window%
 ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
 ;;my results:  59, 1229, 252, 21,      Edit1,    ahk_class Premiere Pro
 
-;now we have found a lot of useful informaiton about this find box. Turns out, we don't need most of it... just the X and Y coordinates of the "upper left" corner... which
+;now we have found a lot of useful informaiton about this find box. Turns out, we don't need most of it... just the X and Y coordinates of the "upper left" corner...
 
-;MouseMove, XX, YY, 0 ;-if you want to move the cursor into position... turns out to be right on the middle left side of the find box.
+;comment in the following line to get a message box of your current variable values. The script will not advance until you dismiss the message box.
 ;MsgBox, xx=%XX% yy=%YY%
 
 MouseMove, XX-30, YY, 0 ;-----------------------moves cursor onto the magnifying glass
@@ -376,8 +647,8 @@ MouseMove, iconX, iconY, 0 ;--------------------moves cursor BACK onto the effec
 sleep 35
 MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---drags this effect to the cursor's pervious coordinates, which should be above a clip.
 sleep 10
-;Send ^+!0 ;-------------------------------------returns focus to the timeline. doesn't work for multiple timelines :(
-MouseClick, left, , , 1 ;------------------------returns focus to the timeline. Can be annoying if it selects something...
+Send ^+!0 ;--------------------------------------CTRL SHIFT ALT 0 (zero) - set in Premiere to returns focus to the timeline. doesn't work for multiple timelines :(
+;MouseClick, left, , , 1 ;------------------------returns focus to the timeline. Can be annoying if it selects something...
 BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL+ALT+DEL will still work!! Cool.
 }
 ;END of preset()
@@ -470,7 +741,7 @@ F18::preset(savedpreset1)
 
 
 
-;;;;OBSOLETE. DO NOT USE.
+;;;;OBSOLETE CODE BELOW. DO NOT USE.
 ; ;;;;;;;;;;;script that increases or decreases the size of the program monitor, no matter what panel you have selected.;;;;;;;;;;;;;;;;;;;
 ; #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ; ; SHORTCUT				MAPPED TO THIS COMMAND IN PREMIERE
@@ -490,12 +761,13 @@ F18::preset(savedpreset1)
 ; weirdNumpadders()
 ; return
 
-
 ; sc11C::
 ; ;numpadEnter::
 ; Keyshower("program monitor zoom to FIT - taran mod",,1)
 ; weirdNumpadders()
 ; return
+
+;;;;;;;;; OBSOLETE CODE ABOVE.
 
 #IfWinActive
 
@@ -559,26 +831,25 @@ CoordMode, pixel, Screen
 BlockInput, On
 SetKeyDelay, 0 ;for instant writing of text
 MouseGetPos, xpos, ypos
-send ^+x ;shortcut in premiere for "remove in/out points.
+send ^+x ;ctrl shift x -- shortcut in premiere for "remove in/out points.
 sleep 10
-send ^!1 ;source assignment preset 1
+send ^!1 ;ctrl alt 1 -- source assignment preset 1
 sleep 10
 ; Send ^!+` ;premiere shortcut to open the "project" panel, which is actually a bin. Only ONE bin is highlightable in this way.
 ; ;Send F11
 ; sleep 100
 ;msgbox, you in the panel now?
-send ^{F11} ;shortcut for application>window>project (highlights a single bin. In my case, it's on my left monitor.)
+send ^{F11} ;CTRL F11 -- ;shortcut for application>window>project (highlights a single bin. In my case, it's on my left monitor.)
 tooltip, waiting for premiere to select that bin....
 sleep 10
 ;msgbox how about naow?
-Send ^\ ;premiere shortcut to "select find box"
+Send ^b ;CTRL B -- set this in premiere's shortcuts panel to "select find box"
 ; sleep 200
 ; Send +{delete}
 ; sleep 600
 Send %leSound% ;types in the name of the sound effect you want - should do so instantaneously.
 tooltip, waiting for premiere to load......
-send ^!1 ;source assignment preset 1
-;send {F18} ;shortcut in premiere for "source assignment preset 1" which highlights A3 and V4. CTRL SHIFT F1 is also used. I may end up only using F18, since it does not use the CTRL and SHIFT keys, which can cause problems sometimes.
+send ^!1 ;source assignment preset 1, again.
 sleep 400 ;we are waiting for the search to complete....
 
 ;PixelGetColor, zecolor, -6000, 200, alt slow rgb ; this does not work - either it gets FFFFFF or 000000. multiple monitors screw up this function...??
@@ -604,21 +875,13 @@ MouseMove, %xpos%, %ypos%, 0 ;move mouse back to original coordinates.
 sleep 20
 tooltip, so did that work?
 
-; ; Send {tab} ; tabs down, in order to select the sound effect. If there is a folder, it gets in the way....
-; ; sleep 100
-; ; Send {esc} ;deselects the naming field but keeps the thumbnail selected, albeit weirdly
-; ; sleep 200
-; ; Send ^+y ; opens in source monitor
-; ; sleep 200
-; ; ;Send ^+!. ;Premiere's shortcut for "overwrite" is a period.  I use modifier keys for THIS, so that a period is never typed accidentally.
-
 ;send ^!+4 ;select program monitor
 sleep 10
 ;send ^!+0 ;select timeline
 sleep 10
 send ^!1 ;my shortcut for "assign source assignment preset 1" in Premiere. The preset has V4 and A3 selected as sources. I may end up only using F18, since it does not use the CTRL and SHIFT keys, which can cause problems sometimes.
 sleep 50
-Send ^/ ;Premiere's shortcut for "overwrite" is a period.  I use modifier keys for THIS, so that a period is never typed accidentally.
+Send ^/ ;CTRL /  -- SET TO "OVERWRITE" in premiere. Premiere's default shortcut for "overwrite" is a period.  I use modifier keys for THIS, so that a period is never typed accidentally.
 sleep 30
 send ^!+0 ;this is set in premiere to highlight/switch to the timeline. important so that you aren't still stuck in the bin. If this is used more than once, it will unfortunately cycle thorugh all available sequences...
 tooltip,
@@ -833,17 +1096,17 @@ right::msgbox, right
 #if
 
 
-;_______________________2ND KEYBOARD IF USING INTERCEPTOR~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+;_______________________2ND KEYBOARD IF USING INTERCEPTOR_____________________
 
 ; #if (getKeyState("F24", "P")) && IfWinActive ahk_exe Adobe Premiere Pro.exe ;have not tested this to see if it works
 #if (getKeyState("F24", "P"))
-F24::return ;this is the dedicated 2nd keyboard "modifier key." You MUST allow it to return, and cannot use it for anything else.
-
+F24::return ;F24 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," and cannot use it for anything else.
 
 
 ;I converted the numpad "5" button on the 2nd keyboard into a SHIFT.... by using intercept.
 ;it works pretty well, BUT I don't reccomend it. Use CTRL instead. if you use shift, the names of the keys change.
-;for example, it's not +numpad6, it's actually numpadright instead. But some programs just interpret this as a normal "right." It's dumb.
+;for example, it's not "+numpad6", it's actually "numpadright" instead. But some programs just interpret this as a normal "right." It's dumb.
 
 
 ~numpadLeft::Keyshower("Nudge clip Left 5 frames")
@@ -975,8 +1238,8 @@ n::preset("pan left")
 ;m::preset("pan down")
 
 m::preset("a0p0 pan down")
-,::preset("pan right")
-.::preset("corner pin")
+,::preset("crop 50 LEFT")
+.::preset("crop 50 RIGHT")
 /::preset("crop full")
 
 ;;;;;next area;;;;;;;;
@@ -1038,15 +1301,9 @@ numpadMult::SendKey("numpadmult", ,"pink")
 numpadSub::openApp("ahk_class AU3Reveal", "AU3_Spy.exe", "Active Window Info") ;msgbox, , , num minus, 0.5
 ; numpadAdd::openApp("ahk_class Adobe Media Encoder CC", "Adobe Media Encoder.exe") ;msgbox, , , num ADD, 0.5
 numpadAdd::openApp("ahk_class ConsoleWindowClass", "intercept.exe") ;msgbox, , , num ADD, 0.5
-numpadEnter::Send #d ;msgbox, , , num enter, 0.5
-
-
-
-
-
+numpadEnter::sendinput ^{F5} ; this goes to chrome instant application switcher in WINDOWS MOD - various functions .ahk.  ; openApp("ahk_class Chrome_WidgetWin_1", "chrome.exe")
 
 numpadDot::openApp("ahk_class Photoshop", "Photoshop.exe") ;msgbox, , , num dot, 0.5
-
 
 /*
 ;These are now unused - I realized that keeping them as modifiers (allowing them to pass through normally) is more valuable then as single keys.
@@ -1066,19 +1323,11 @@ SC045::msgbox sc045... num lock but actually pause/break?????
 
 SC07F::msgbox sc7F is as high as I could go, after 80 they become unusable for some reason.
 SC080::msgbox sc080... this does not register.
-SC0FF::msgbox FF ...this does not register.
+SC0FF::msgbox sc0FF ...this does not register.
 
 
 #if
 #IfWinActive
-
-;;;forget it, this was a bad idea.:
-; ;These have to be out here in order to not weirdly interfere with some other code (below)
-; numpadSub & F24::openApp("ahk_class AU3Reveal", "AU3_Spy.exe", "Active Window Info") ;msgbox, , , num minus, 0.5
-; ; numpadAdd::openApp("ahk_class Adobe Media Encoder CC", "Adobe Media Encoder.exe") ;msgbox, , , num ADD, 0.5
-; numpadAdd & F24::openApp("ahk_class ConsoleWindowClass", "intercept.exe") ;msgbox, , , num ADD, 0.5
-; numpadEnter & F24::Send #d ;msgbox, , , num enter, 0.5
-
 
 
 ;--------------END OF 2ND KEYBOARD IF USING INTERCEPTOR~~~~~~~~~~~~~~~~~~~~~
@@ -1086,127 +1335,92 @@ SC0FF::msgbox FF ...this does not register.
 
 
 
+;~~~~BEGINNING OF 3RD KEYBOARD (just a USB numpad) USING INTERCEPTOR~~~~~~~~
+#if (getKeyState("F22", "P"))
+;and if <premiere> is running <--add that later
+F22::
+FileRead, SavedExplorerAddress, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
+return
+
+;Z:\Linus\1. Linus Tech Tips\Pending\Luke Personal Rig Update
+NumpadDot::InstantExplorer(SavedExplorerAddress . "\" . "delivery" . "\" )
+numpad0::InstantExplorer(SavedExplorerAddress . "\" . "thumbnail" . "\" )
+numpad1::InstantExplorer(SavedExplorerAddress . "\" . "music" . "\" )
+numpad2::InstantExplorer(SavedExplorerAddress . "\" . "graphics" . "\" )
+numpad3::InstantExplorer(SavedExplorerAddress . "\" . "Extra videos" . "\" )
+numpad4::InstantExplorer(SavedExplorerAddress . "\" . "music" . "\" )
+numpad5::InstantExplorer(SavedExplorerAddress . "\" . "L-Roll" . "\" )
+numpad6::InstantExplorer(SavedExplorerAddress . "\" . "all footage" . "\" )
+numpad7::InstantExplorer(SavedExplorerAddress) ;MAIN, ROOT FOLDER
+numpad8::InstantExplorer(SavedExplorerAddress . "\" . "scripts" . "\" )
+numpad9::InstantExplorer(SavedExplorerAddress . "\" . "scripts" . "\" ) ; should open latest script
+NumpadDiv::InstantExplorer(SavedExplorerAddress . "\" . "project" . "\" ) 
+NumpadMult::tooltip, mult - open latest project i guess
 
 
-
-
-
-
-;---------------;2ND KEYBOARD USING LUAMACROS... NOW OBSOLETE!;-------------------
-#IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO! remove the first ; from the next line if you want the 2nd keyboard script to work in any application!
-;#IfWinActive ;---- If this code is NOt commented out, it will allow for everything below this line to work in ANY application.
-
-~F23::
-
-FileRead, key, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keypressed.txt
- 
-tippy(key) ;this makes a temporary tooltip that reveals the key that was pressed.
- 
-presetActions := Object()
-sendKeystrokesActions := Object()
-recallClipboardActions := Object()
-recallSFX := Object()
-sectionview := ""
-currentSection := ""
-
-
-;This loop will read all the key value pairs (e.g. keybinds).
-Loop, read, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keyActions.txt
-{
-    if (A_LoopReadLine == "preset") or (A_LoopReadLine == "sendKeystrokes") or (A_LoopReadLine == "recallClipboard") or (A_LoopReadLine == "SFXActions")
-    {
-        currentSection := A_LoopReadLine
-        continue
-    }
-    else if (A_LoopReadLine == "")
-        continue
-   
-    if (currentSection == "preset")
-    {
-        action := StrSplit(A_LoopReadLine, ":")
-        presetActions[action[1]] := action[2]
-    }
-    else if (currentSection == "sendKeystrokes")
-    {
-        action := StrSplit(A_LoopReadLine, ":")
-        sendKeystrokesActions[action[1]] := action[2]
-    }
-    else if (currentSection == "recallClipboard")
-    {
-        action := StrSplit(A_LoopReadLine, ":")
-        recallClipboardActions[action[1]] := action[2]
-    }
-	else if (currentSection == "SFXActions")
-    {
-        action := StrSplit(A_LoopReadLine, ":")
-        recallSFX[action[1]] := action[2]
-    }
-}
- 
-if presetActions[key] != ""
-{
-    ; Keybind for preset exists
-    preset(presetActions[key])
-	Revealkey("Preset", key, presetActions[key])
-}
-else if sendKeystrokesActions[key] != ""
-{
-    ; Keybind for sendKeystrokes exists
-    sendKeystrokes(sendKeystrokesActions[key])
-	Revealkey("send keystrokes", key, sendKeystrokesActions[key])
-}
-else if recallClipboardActions[key] != ""
-{
-    ; Keybind for recallClipboard exists
-    recallClipboard(recallClipboardActions[key])
-	Revealkey("Recall Clipboard", key, recallClipboardActions[key])
-}
-else if recallSFX[key] != ""
-{
-    ; Keybind for SFXactions exists
-    SFXActions(recallSFXActions[key])
-	Revealkey("Recall sound effect", key, recallSFXActions[key])
-}
+NumpadAdd::
+IfWinNotExist, ahk_class CabinetWClass
+	Run, explorer.exe
+GroupAdd, taranexplorers, ahk_class CabinetWClass
+if WinActive("ahk_exe explorer.exe")
+	GroupActivate, taranexplorers, r
 else
-    tooltip, Keybind not found! :(
-; Comment out the following line if you DON'T want an annoying visualizer that tells you that you just pressed a key on your secondary keyboard
-
-Return ;from F23
+	WinActivate ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
+Return
 
 
- /*  FYI:  Keyactions.txt is filled with text exactly like this:
-preset
-o:flip horizontal
-p:flip vertical
-i:multiply
+;NumpadSub::tooltip, subtract - check autosave maybe
 
-leftbracket:pop in motion
-rightbracket:pop out motion
+;SC00E::tooltip, backspace
 
-sendKeystrokes
-r:^!+{F1}
-f:^!+{F2}
+^numpad7::
+;msgbox, this will copy the currently highlighted text and replace the contents of C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt with it.
+sendinput, ^a
+sleep 20
+SendInput, {Shift Down}{Shift Up}{Ctrl Down}{c Down}
+sleep 20
+SendInput, {c up}{Ctrl up}
+sleep 20
+FileDelete, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
+FileAppend, %clipboard% , C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
+msgbox, , , it worked, 1
+Return
 
-;these refer to the audio leftener and audio rightener.
-minus:#!l
-equals:#!r
-;this is mapped to "remove effects" in premiere.
-enter:^!e
-;These literally just pass through the exact same keystroke.
-num0:{Numpad0}
-num1:{Numpad1}
- */
- 
- 
-;2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
+; numpadsub::
+; msgbox,,,lel,1
+; return
+
+numpadsub::
+if WinActive("ahk_exe explorer.exe")
+	sendinput ^w
+return
+
+^numpadsub::WinClose, ahk_group taranexplorers
+
+;;the code below WORKS, but does not block the normal "-" keystroke no matter what i have tried...
+; #If (getKeyState("F22", "P")) and WinActive("ahk_exe explorer.exe")
+; numpadsub::
+; sendinput ^w
+; msgbox,,,multiple #ifs used sucessfully ,1
+; return
+
+
+#if
+;~~~~~~~~~END OF 3RD KEYBOARD (just a USB numpad) USING INTERCEPTOR~~~~~~~~~~
+
+
+
+
+
+
+
+
+
 #IfWinActive
  
  
- 
- 
- 
-
-;This code is obsolete. Never mind, it turned out not to work....
+/*
+;This code is obsolete. It turned out not to work....
 weirdNumpadders(){
 IfWinnotExist, Audio Gain ;|| Keyboard Shortcuts ;(does not work...);or titler, but that one has no title!!!
 {
@@ -1231,12 +1445,7 @@ send %theKey%
 }
 ;tooltip, all of my wut
 }
-
-
-
-
-
-
+*/
 
 
 
@@ -1412,4 +1621,157 @@ return
 
 
 
-^!+F2::msgbox, 2nd keyboard is still working
+^!+F2::msgbox, yes, the 2nd keyboard script is still running.
+
+; #ifwinactive
+; F16::
+; sleep 1000
+; sendinput {SC061}
+; tooltip, YEAH
+; sleep 100
+; tooltip,
+; return
+
+
+#ifwinactive
+
+!`::
+WinGet, ActiveId, ID, A
+msgbox, %ActiveId%
+;returns 0x1c0b9c ... and only 3 unique codes for each of the 3 Premiere windows I have on my 3 monitors. Does NOT consider subwindows, though maaaaybe it can get that going....
+ControlGetFocus, OutputVar, A
+msgbox, %OutputVar%
+return
+
+
+
+
+
+;BEGIN savage-folder-navigation CODE!
+;I got MOST of this code from https://autohotkey.com/docs/scripts/FavoriteFolders.htm
+;and modified it to work with any given keypress, rather than middle mouse click as it had before.
+
+InstantExplorer(f_path)
+{
+f_path := """" . f_path . """" ;this adds quotation marks around everything so that it works as a string, not a variable.
+;msgbox, f_path is %f_path%
+SoundBeep, 900, 400
+; These first few variables are set here and used by f_OpenFavorite:
+WinGet, f_window_id, ID, A
+WinGetClass, f_class, ahk_id %f_window_id%
+if f_class in #32770,ExploreWClass,CabinetWClass  ; Dialog or Explorer.
+	ControlGetPos, f_Edit1Pos, f_Edit1PosY,,, Edit1, ahk_id %f_window_id%
+if f_AlwaysShowMenu = n  ; The menu should be shown only selectively.
+{
+	if f_class in #32770,ExploreWClass,CabinetWClass  ; Dialog or Explorer.
+	{
+		if f_Edit1Pos =  ; The control doesn't exist, so don't display the menu
+			return
+	}
+	else if f_class <> ConsoleWindowClass
+		return ; Since it's some other window type, don't display menu.
+}
+; Otherwise, the menu should be presented for this type of window:
+;Menu, Favorites, show
+
+
+
+; msgbox, A_ThisMenuItemPos %A_ThisMenuItemPos%
+; msgbox, A_ThisMenuItem %A_ThisMenuItem%
+; msgbox, A_ThisMenu %A_ThisMenu%
+
+StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
+; msgbox, f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
+
+
+; f_OpenFavorite:
+;msgbox, BEFORE:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
+
+; Fetch the array element that corresponds to the selected menu item:
+StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
+if f_path =
+	return
+if f_class = #32770    ; It's a dialog.
+{
+	if f_Edit1Pos <>   ; And it has an Edit1 control.
+	{
+		
+		; ControlClick, ClassNN Edit1
+		; ControlFocus, ClassNN Edit1
+		; ControlClick, Edit1
+		
+		; ControlFocus, Edit1, A
+		ControlFocus, Edit1, ahk_id %f_window_id% ;this is really important.... it doesn't work if you don't do this...
+		
+		; msgbox, is it in focus?
+		; MouseMove, f_Edit1Pos, f_Edit1PosY, 0
+		; sleep 10
+		; click
+		; sleep 10
+		; msgbox, how about now? x%f_Edit1Pos% y%f_Edit1PosY%
+		;msgbox, edit1 has been clicked maybe
+		
+		; Activate the window so that if the user is middle-clicking
+		; outside the dialog, subsequent clicks will also work:
+		WinActivate ahk_id %f_window_id%
+		; Retrieve any filename that might already be in the field so
+		; that it can be restored after the switch to the new folder:
+		ControlGetText, f_text, Edit1, ahk_id %f_window_id%
+		ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
+		ControlSend, Edit1, {Enter}, ahk_id %f_window_id%
+		Sleep, 100  ; It needs extra time on some dialogs or in some cases.
+		ControlSetText, Edit1, %f_text%, ahk_id %f_window_id%
+		;msgbox, AFTER:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
+		return
+	}
+	; else fall through to the bottom of the subroutine to take standard action.
+}
+else if f_class in ExploreWClass,CabinetWClass  ; In Explorer, switch folders.
+{
+	if f_Edit1Pos <>   ; And it has an Edit1 control.
+	{
+		ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
+		; Tekl reported the following: "If I want to change to Folder L:\folder
+		; then the addressbar shows http://www.L:\folder.com. To solve this,
+		; I added a {right} before {Enter}":
+		ControlSend, Edit1, {Right}{Enter}, ahk_id %f_window_id%
+		return
+	}
+	; else fall through to the bottom of the subroutine to take standard action.
+}
+else if f_class = ConsoleWindowClass ; In a console window, CD to that directory
+{
+	WinActivate, ahk_id %f_window_id% ; Because sometimes the mclick deactivates it.
+	SetKeyDelay, 0  ; This will be in effect only for the duration of this thread.
+	IfInString, f_path, :  ; It contains a drive letter
+	{
+		StringLeft, f_path_drive, f_path, 1
+		Send %f_path_drive%:{enter}
+	}
+	Send, cd %f_path%{Enter}
+	return
+}
+; Since the above didn't return, one of the following is true:
+; 1) It's an unsupported window type but f_AlwaysShowMenu is y (yes).
+; 2) It's a supported type but it lacks an Edit1 control to facilitate the custom
+;    action, so instead do the default action below.
+
+;msgbox, nothing else worked
+; Run, Explorer %f_path%  ; Might work on more systems without double quotes.
+Run, %f_path%  ; Might work on more systems without double quotes.
+}
+;end of instant explorer
+
+
+; #IfWinActive
+; ^F2::
+; IfWinNotExist, ahk_class CabinetWClass
+	; Run, explorer.exe
+
+; GroupAdd, taranexplorers2, ahk_class CabinetWClass
+; if WinActive("ahk_exe explorer.exe")
+	; GroupActivate, taranexplorers2, r
+; else
+	; WinActivate ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
+; Return
+
