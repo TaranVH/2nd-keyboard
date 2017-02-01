@@ -249,31 +249,32 @@ MouseClick, left
 BlockInput, on
 BlockInput, MouseMove
 MouseGetPos xPosCursor, yPosCursor
+
 xPos = 400
-yPos = 1050
+yPos = 1050 ;the coordinates of roughly where my timeline usually is located on the screen
 CoordMode Pixel ;, screen  ; Interprets the coordinates below as relative to the screen rather than the active window.
 CoordMode Mouse, screen
 
-ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_unlocked_cc2017_v2.png
 
-;obviously, you need to take your own screenshot (look at mine to see what is needed) save as .png, and link to it from the line above. Again, your UI brightness will probably be different from mine!
+;you might need to take your own screenshot (look at mine to see what is needed) and save as .png. Mine are done with default UI brightness, plus 150% UI scaling in Wondows.
 
+ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_unlocked_targeted.png
 
 if ErrorLevel = 1
-	{
-	;msgbox, , , error level 1, .7
-    tippy("unlocked v1 #2 was not found")
-	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_unlocked_cc2017_v3.png
-	}
+	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_ALT_unlocked_targeted.png
+if ErrorLevel = 1
+	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_unlocked_untargeted.png
+if ErrorLevel = 1
+	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_ALT_unlocked_untargeted.png
 if ErrorLevel = 1
 	{
-	;msgbox, , , error level 1, .7
-    tippy("unlocked v1 #3 not found...")
+	;msgbox, we made it to try 2
+    tippy("NO UNLOCK WAS FOUND")
 	goto try2
 	}
 if ErrorLevel = 2
 	{
-    tippy("Could not conduct the search")
+    tippy("Could not conduct the search!")
 	goto resetlocker
 	}
 if ErrorLevel = 0
@@ -283,29 +284,26 @@ if ErrorLevel = 0
 	MouseMove, FoundX+10, FoundY+10, 0
 	sleep 5
 	click left
-	MouseMove, FoundX+10, FoundY+50, 0
+	MouseMove, FoundX+10, FoundY+50, 0 ;moves downwards and onto where A1 should be...
 	click left ;clicks on Audio track 1 as well.
 	sleep 10
 	goto resetlocker
 	}
 	
 try2:
-ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_locked_cc2017_v2.png
+ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_locked_targeted.png
 
 	
 if ErrorLevel = 1
 	{
-	;msgbox, , , locked v1 #2 cannot be found..., .7
-    tippy("LOCKED V1 #2 could not be found on the screen")
-	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_locked_cc2017_v3.png
+    tippy("LOCKED V1 could not be found on the screen")
+	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_ALT_locked_targeted.png
 	}
-
 if ErrorLevel = 1
 	{
-	msgbox, , , locked v1 #4 cannot be found..., .7
-    tippy("locked v1 #3 could not be found on the screen")
+    tippy("LOCKED V1 could not be found on the screen")
+	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_locked_untargeted.png
 	}
-
 if ErrorLevel = 2
 	{
     tippy("Could not conduct search #2")
@@ -332,61 +330,9 @@ sleep 10
 return
 
 
-; ;experimental script to lock video and audio layers V1 and A1.
-; F19::
-; BlockInput, on
-; BlockInput, MouseMove
-; MouseGetPos xPosCursor, yPosCursor
-; xPos = 400
-; yPos = 1050
-; CoordMode Pixel  ; Interprets the coordinates below as relative to the screen rather than the active window.
-; CoordMode Mouse, screen
+;;;INSTANT VFX HOT TEXT SELECTOR MOD;;;
+;;;;;;;;;;;;;super useful!;;;;;;;;;;;;;
 
-; ImageSearch, FoundX, FoundY, xPos, yPos, xPos+400, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\v1unlocked.png
-; ;obviously, you need to take your own screenshot (look at mine to see what is needed) save as .png, and link to it from the line above. Again, your UI brightness will probably be different from mine!
-
-; if ErrorLevel = 0
-	; {
-	; ;tooltip, The icon was found at %FoundX%x%FoundY%.
-	; ;msgbox, The icon was found at %FoundX%x%FoundY%.
-	; MouseMove, FoundX+10, FoundY+10, 0
-	; sleep 5
-	; click left
-	; MouseMove, FoundX+10, FoundY+50, 0
-	; click left ;clicks on Audio track 1 as well.
-	; sleep 10
-	; goto resetlocker
-	; }
-	
-; try2:
-; ImageSearch, FoundX_a1, FoundY_a1, xPos, yPos, xPos+400, yPos+1000, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\a1unlocked.png
-; if ErrorLevel = 0
-; {
-	; MouseMove, FoundX_a1+10, FoundY_a1+10, 0
-	; sleep 5
-	; click left
-	; MouseMove, FoundX_a1+10, FoundY_a1+50, 0
-	; click left ;clicks on Audio track 1 as well.
-	; sleep 10
-	; goto resetlocker
-; }
-; ;msgbox, , , num enter, 0.5;msgbox, , , num enter, 0.5
-; resetlocker:
-; MouseMove, xPosCursor, yPosCursor, 0
-; blockinput, off
-; blockinput, MouseMoveOff
-; sleep 10
-; return
-
-
-
-
-
-
-
-
-
-;;;INSTANT RESCALE MOD;;;
 ; I had this on mbutton (middle mouse button) but that was aggravating my RSI :..( so I moved it onto my G12 macro key, which is mapped to F14 because I am magical.
 ; If you can't get F14 to work, just use any of the other function keys, F1-F12. Best NOT to use a modifier key though, since that changes how the hot text operates.
 
@@ -520,13 +466,13 @@ ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+500, %A_WorkingDir%\%
 
 if ErrorLevel = 2
 	{
-    msgbox, ERROR LEVEL 0`nCould not conduct the search
+    msgbox,,, ERROR LEVEL 0`nCould not conduct the search,2
 	resetFromAutoVFX()
 	}
 if ErrorLevel = 1
 	{
 	;msgbox, , , error level 1, .7
-    msgbox, ERROR LEVEL 1`n%foobar% could not be found on the screen
+    msgbox,,, ERROR LEVEL 1`n%foobar% could not be found on the screen,2
 	resetFromAutoVFX()
 	}
 else
@@ -650,192 +596,17 @@ else
 resetFromAutoVFX()
 {
 	;msgbox,,, is resetting working?,1
+	global Xbegin
+	global Ybegin
 	MouseMove, Xbegin, Ybegin, 0
-	MouseMove, global Xbegin, global Ybegin, 0
-	MouseMove, Xbeginlol, Ybeginlol, 0
+	;MouseMove, global Xbegin, global Ybegin, 0
+	;MouseMove, Xbeginlol, Ybeginlol, 0
 	blockinput, off
 	blockinput, MouseMoveOff
 	ToolTip, , , , 2
 	SetTimer, noTip, 333
 }
 
-
-; ;obsolete code below
-; resetFromAutoAnchor()
-; {
-	; MouseMove, XbeginAP, YbeginAP, 0
-	; blockinput, off
-	; blockinput, MouseMoveOff
-	; ToolTip, , , , 2
-	; SetTimer, noTip, 333
-; }
-; ;obsolete code above
-
-
-
-
-
-
-;-------------------------------------------------------------------------------------------
-
-;;;INSTANT anchor point change MOD;;;
-; If you can't get F15 to work, just use any of the other function keys, F1-F12. Best NOT to use a modifier key though, since that changes how the hot text operates.
-; ~F15::
-; global VFXkey = "F15"
-; instantVFX("anchor_point")
-; return
-
-/*
-unused(nope)
-{
-dontrestart = 0
-restartPointAP:
-blockinput, sendandMouse
-blockinput, MouseMove
-blockinput, on
-
-; send ^+d ;deselect anything that might be selected. We want to affect ONLY the clip the playhead is currently on top of - what we can see in the program monitor.
-; sleep 10
-; Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
-; sleep 10
-; Send ^p ;this now disables "selection follows playehad." I don't know if there is a way to CHECK if it is on or not.
-; sleep 10
-
-ToolTip, ^AP, , , 2
-MouseGetPos XbeginAP, YbeginAP
-global XbeginAP = XbeginAP
-global YbeginAP = YbeginAP
-; MsgBox, "please verify that the mouse cannot move"
-; sleep 2000
-ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class2, ahk_class Premiere Pro ;effect controls panel
-
-;move mouse to expected triangle location. this is a VERY SPECIFIC PIXEL which will be right on the EDGE of the triangle when it is OPEN.
-;This takes advantage of the anti-aliasing between the color of the triangle, and that of the background behind it.
-YY := Ycorner+99
-XX := Xcorner+19
-MouseMove, XX, YY, 0
-sleep 10
-
-PixelGetColor, colorr, XX, YY
-
-if (colorr = "0x444444")
-{
-	;tooltip, color %colorr% means closed triangle-will click and then SCALE SEARCH
-	blockinput, Mouse
-	Click XX, YY
-	sleep 5
-	clickTransformIcon()
-	findAnchor()
-	Return
-}
-else if (colorr = "0x868686") ;again, this values will be different for everyone. check with window spy. This color simply needs to be different from the color when the triangle is closed
-{
-	;tooltip, %colorr% means OPENED triangle. SEARCHING FOR SCALE
-	blockinput, Mouse
-	sleep 5
-	clickTransformIcon()
-	findAnchor()
-	Return
-}
-else if (colorr = "0x1d1d1d" || colorr = "0x232323")
-{
-	;tooltip, this is a normal panel color of 313131 or %colorr%
-	Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
-	sleep 10
-	Send ^p ;this disables "selection follows playehad." I don't know if there is a way to CHECK if it is on or not.
-	resetFromAutoAnchor()
-	;play noise
-	If (dontrestart = 0)
-		{
-		dontrestart = 1
-		goto, restartPointAP ;this is stupid but it works. Feel free to improve any of my code; I know it's garbage.
-		}
-	Return
-}
-else
-{
-	tooltip, %colorr% not expected
-	;play noise
-	resetFromAutoAnchor()
-	Return
-}
-Return ;from autoscaler
-}
-
-
-
-findAnchor() ; searches for the "anchor point" using a real image
-{
-tooltip, ;deletes tooltips
-;msgbox, now we are in findAnchor
-sleep 5
-MouseGetPos xPos, yPos
-;CoordMode Pixel  ; Interprets the coordinates below as relative to the screen rather than the active window.
-ImageSearch, FoundX, FoundY, xPos-70, yPos, xPos+800, yPos+500, %A_WorkingDir%\anchorPoint_CC2017.png
-if ErrorLevel = 2
-	{
-    ;tippy(Could not conduct the search)
-	resetFromAutoAnchor()
-	}
-else if ErrorLevel = 1
-	{
-	;msgbox, error level 1
-    ;tippy(Icon could not be found on the screen)
-	resetFromAutoAnchor()
-	}
-else
-	{
-	;tooltip, The icon was found at %FoundX%x%FoundY%.
-	;msgbox, The icon was found at %FoundX%x%FoundY%.
-	MouseMove, FoundX, FoundY, 0
-	sleep 5
-	findHotTextAP()
-	}
-}
-
-findHotTextAP()
-{
-tooltip, ; removes any tooltips that might be in the way of the searcher.
-; https://www.autohotkey.com/docs/commands/PixelSearch.htm
-;CoordMode Pixel
-MouseGetPos, xxx, yyy
-PixelSearch, Px, Py, xxx+20, yyy+10, xxx+500, yyy+13, 0x3398EE, 25, Fast RGB ;this searches in a given rectangle for the exact blueish color of the hot text. Make sure you use RGB or the values are swapped for some stupid reason.
-if ErrorLevel
-	{
-    ;tooltip,"colorNotFound")
-	resetFromAutoAnchor()
-	}
-else
-	{
-	;tooltip, A color within 25 shades of variation was found at X%Px% Y%Py%
-    ;MsgBox, A color within 25 shades of variation was found at X%Px% Y%Py%.
-    MouseMove, Px+10+73, Py+5, 0 ; The +73 is the amount of pixels I need to go to the RIGHT in order to select the SECOND row of hot text. This corresponds to the VERTICAL, or Y coordinate, for the anchor point hot text.
-	Click down left
-	Loop
-		{
-		blockinput, off
-		blockinput, MouseMoveOff
-		tooltip, %anchorKey% Instant Anchor Point mod
-		sleep 15
-		GetKeyState, state, %anchorKey%, P
-		if state = U
-			{
-			Click up left
-			;tooltip, "%anchorKey% is now physically UP so we are exiting now"
-			sleep 15
-			resetFromAutoAnchor()
-			; MouseMove, XbeginAP, Ybegin, 0
-			; tooltip,
-			; ToolTip, , , , 2
-			; blockinput, off
-			; blockinput, MouseMoveOff
-			Return
-			}
-		}
-	}
-}
-*/
-;;;--------------------------------------------------------------------------------------------
 
 
 #IfWinActive ; PREMIERE END

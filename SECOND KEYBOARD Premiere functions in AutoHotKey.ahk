@@ -1481,7 +1481,7 @@ else if (track = "left")
 	;msgbox, this is for the LEFT audio track
 }
 Send ^!+a ;control alt shift a --- ; audio channels shortcut, asigned in premiere - dont use this key combo anywhere else
-;sleep 600
+; fun fact, if you send this keystroke AGAIN, it does NOT close the panel, which is great... that means you can press the button anytime, and it will always result in an open panel.
 sleep 15
 
 ;this doesn't work, the panel thinks its loaded even before any controls appear on it.
@@ -1501,7 +1501,7 @@ sleep 15
 MouseGetPos, xPosAudio, yPosAudio
 
 ;/*
-MouseMove, 2222, 1600, 0 ;moved the mouse onto the expected location of the "okay" box, which has a distinct white color when the cursor is over it, which will let us know the panel has appeared.
+MouseMove, 2222, 1625, 0 ;moved the mouse onto the expected location of the "okay" box, which has a distinct white color when the cursor is over it, which will let us know the panel has appeared.
 
 ; msgbox where am i, cursor says
 MouseGetPos, MouseX, MouseY
@@ -1514,7 +1514,7 @@ loop
 	tooltip, waiting = %waiting%`npixel color = %thecolor%
 	MouseGetPos, MouseX, MouseY
 	PixelGetColor, thecolor, MouseX, MouseY, RGB
-	if (thecolor = "0xF0F0F0" || thecolor = "0xF1F1F1")
+	if (thecolor = "0xE8E8E8")
 		{
 		tooltip, COLOR WAS FOUND
 		;msgbox, COLOR WAS FOUND 
@@ -1540,7 +1540,7 @@ sleep 50
 MouseGetPos, Xkolor, Ykolor
 sleep 50
 PixelGetColor, kolor, %Xkolor%, %Ykolor%
-
+;msgbox, % kolor
 ; INFORMATION:
 ; 2b2b2b or 464646 = color of empty box
 ; cdcdcd = color when cursor is over the box
@@ -1549,7 +1549,7 @@ PixelGetColor, kolor, %Xkolor%, %Ykolor%
 ; For me, the default brightness of all panels is 313131 and/or 2B2B2B
 
 ;msgbox, kolor = %kolor%
-If (kolor = "0x2b2b2b" || kolor = "0x464646") ; "kolor" is the variable name rather than "color" because "color" might be already used for something else in AHK.
+If (kolor = "0x1d1d1d" || kolor = "0x333333") ; This is the color of an EMPTY checkbox. The coordinates hsould NOT lead to a position where the grey of the checkmark would be. Also, "kolor" is the variable name rather than "color" because "color" might be already used for something else in AHK.
 {
 	;msgbox, box is empty
 	; click left
@@ -1557,7 +1557,7 @@ If (kolor = "0x2b2b2b" || kolor = "0x464646") ; "kolor" is the variable name rat
 	MouseClick, left, , , 1
 	sleep 10
 }
-else if (kolor = "0x9a9a9a" || k2 = "0xcdcdcd") ;this coordinate, of course, should be directly on top of the box, but NOT where there is a checkmark, since the check mark is now the same color as the bare panel...
+else if (kolor = "0xb9b9b9") ;We are now looking for CHECK MARKS. This coordinate, should be directly on top of the box, but NOT directly on top of the GRAY checkmark itself. You need to detect telltale WHITE color that means the box has been checked.
 {
 	; Do nothing. There was a checkmark in this box already.
 }
@@ -1569,7 +1569,7 @@ sleep 10
 PixelGetColor, k2, %Xkolor2%, %Ykolor2%
 sleep 30
 ;msgbox, k2 = %k2%
-If (k2 = "0x2b2b2b" || k2 = "0x464646")
+If (k2 = "0x1d1d1d" || k2 = "0x333333") ;both of these are potential dark grey background panel colors
 {
 	;msgbox, box is empty. i should click
 	; click left
@@ -1578,7 +1578,7 @@ If (k2 = "0x2b2b2b" || k2 = "0x464646")
 	sleep 10
 	;msgbox, did clicking happen?
 }
-else if (k2 = "0x9a9a9a" || k2 = "0xcdcdcd")
+else if (k2 = "0xb9b9b9")
 {
 	; Do nothing. There was a checkmark in this box already
 }
@@ -1728,7 +1728,7 @@ if f_class = #32770    ; It's a dialog.
 }
 else if f_class in ExploreWClass,CabinetWClass  ; In Explorer, switch folders.
 {
-	msgbox, f_class is %f_class% and f_window_ID is %f_window_id%
+	tooltip, f_class is %f_class% and f_window_ID is %f_window_id%
 	if f_Edit1Pos <>   ; And it has an Edit1 control.
 	{
 		tippy("EXPLORER WITH EDIT1 only 2 lines of code here....", 1000)

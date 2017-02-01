@@ -210,13 +210,6 @@ BlockInput, MouseMoveOff ;-------------returns mouse control
 #IfWinActive
 
 
-#ifwinactive ahk_class Notepad++
-^r::
-send ^s
-sleep 10
-SoundBeep, 1000, 500
-reload
-return
 
 
 
