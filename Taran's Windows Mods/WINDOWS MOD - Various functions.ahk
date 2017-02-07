@@ -2,6 +2,7 @@
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+#SingleInstance force
 
 ;%A_ScriptDir%\Lib\  ; Local library - requires v1.0.90+.
 ;%A_MyDocuments%\AutoHotkey\Lib\  ; User library.
@@ -115,7 +116,7 @@ Return, xxOutputVar
 ; YTpublish = "Z:\Linus\1. Linus Tech Tips\Transcode\YT Publish 4K\"
 ; VESpublish = "Z:\Linus\1. Linus Tech Tips\Transcode\Vessel Final 4K\"
 
-
+;I did not write the code below, I forget where I got it from. Will look into it.
 Explorer_GetSelection(hwnd="") {
 	;msgbox, now in getselection
     hwnd := hwnd ? hwnd : WinExist("A")
@@ -249,6 +250,43 @@ tooltip, , , , 3
 }
 ;end of file mover.
 #IfWinActive
+
+
+; ;; https://autohotkey.com/board/topic/57475-open-most-recent-file-date-created-in-a-folder/
+; openlatestfile(directory, filetype)
+; {
+; msgbox, %directory% and %filetype%
+; Loop, Files,%directory%\*.prproj, FR
+
+; {
+
+; If (A_LoopFileTimeCreated>Rec)
+
+  ; {
+
+  ; FPath=%A_LoopFileFullPath%
+
+  ; Rec=%A_LoopFileTimeCreated%
+
+  ; }
+
+; }
+
+; msgbox, Fpath is %Fpath%
+; ;Run %Fpath%
+
+; }
+
+
+; !m::openlatestfile("Z:\Linus\6. Channel Super Fun\Flicking football","prproj")
+
+
+
+
+
+
+
+
 
 
 

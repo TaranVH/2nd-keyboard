@@ -13,7 +13,6 @@ Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyb
 
 ; Here's my LTT video about how I use the 2nd keyboard with Luamacros: https://www.youtube.com/watch?v=Arn8ExQ2Gjg
 ; And Tom's video, which unfortunately does not have info on how to actually DO it: https://youtu.be/lIFE7h3m40U?t=16m9s
-;(KEEP IN MIND, for Luamacros, I now use 'F23' instead. But the principle is exactly the same.)
 ; so you also need LUAmacros as well, of course.
 ; Luamacros: http://www.hidmacros.eu/forum/viewtopic.php?f=10&t=241#p794
 ; AutohotKey: https://autohotkey.com/
@@ -142,9 +141,9 @@ Keyshower(yeah, functionused := "", alwaysshow := 0) ;very badass function that 
 ;msgbox, %A_priorhotkey% %A_thishotkey%
 
 
-if (A_priorhotkey = "F24" || A_priorhotkey = "~numpadleft" || A_priorhotkey = "~numpadright") ;please pretend that numpad left and right are not here....
+if (A_priorhotkey = "F23" || A_priorhotkey = "~numpadleft" || A_priorhotkey = "~numpadright") ;please pretend that numpad left and right are not here....
 	{
-	;this was sent from the 2nd keyboard, using interceptor. Interceptor presses F24, then the key, then releases the key, then releases F24. Very simple, but very effective.
+	;this was sent from the 2nd keyboard, using interceptor. Interceptor presses F23, then the key, then releases the key, then releases F23. Very simple, but very effective.
 	Gui, kb2: show, NA 
 	Gui, hide
 	;msgbox,,,what is hapening,1
@@ -157,7 +156,6 @@ if (A_priorhotkey = "F24" || A_priorhotkey = "~numpadleft" || A_priorhotkey = "~
 else if (A_priorhotkey = "F22")
 	{
 		;this space reserved for keyboard 3! ... and so on.
-		;(F23 was used for the 2nd keyboard using luamacros. I am keeping it for compatibility reasons.)
 	}
 else if (alwaysshow = 1)
 	{
@@ -212,7 +210,7 @@ Return
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO! remove the first ; from the next line if you want the 2nd keyboard script to work in any application!
 ;#IfWinActive ;---- If this code is NOt commented out, it will allow for everything below this line to work in ANY application.
-~F23::
+~F24::
 FileRead, key, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keypressed.txt
 tippy(key) ; this function will just launch a quick tooltip that shows you what key you pressed. OPTIONAL.
 If (key = "o")
@@ -374,7 +372,7 @@ Return ;from F24
 /*
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
-~F23::
+~F24::
 FileRead, key, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keypressed.txt
 tippy(key)
 
@@ -445,7 +443,7 @@ else if recallSFX[key] != ""
 else
     tooltip, Keybind not found! :(
 
-Return ;from F23
+Return ;from F24
 */
 
 ;;---I DO NOT RECCOMEND THAT YOU USE THE CODE ABOVE. I AM MOTHBALLING IT.---
@@ -1088,20 +1086,22 @@ return
 
 
 
-#if GetKeyState("F9") && GetKeyState("F24") ;experimental stuff, just ignore it.
-numpad6::msgbox, lol
-F24::msgbox, lel
-shift::msgbox, lal
-right::msgbox, right
-#if
+; #if GetKeyState("F9") && GetKeyState("F23") ;experimental stuff, just ignore it.
+; numpad6::msgbox, lol
+; F24::msgbox, lel
+; shift::msgbox, lal
+; right::msgbox, right
+; #if
+
+
 
 
 
 ;_______________________2ND KEYBOARD IF USING INTERCEPTOR_____________________
 
-; #if (getKeyState("F24", "P")) && IfWinActive ahk_exe Adobe Premiere Pro.exe ;have not tested this to see if it works
-#if (getKeyState("F24", "P"))
-F24::return ;F24 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," and cannot use it for anything else.
+; #if (getKeyState("F23", "P")) && IfWinActive ahk_exe Adobe Premiere Pro.exe ;have not tested this to see if it works
+#if (getKeyState("F23", "P"))
+F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," and cannot use it for anything else.
 
 
 ;I converted the numpad "5" button on the 2nd keyboard into a SHIFT.... by using intercept.
@@ -1353,9 +1353,11 @@ numpad5::InstantExplorer(SavedExplorerAddress . "\" . "L-Roll" . "\" )
 numpad6::InstantExplorer(SavedExplorerAddress . "\" . "ALL FOOTAGE" . "\" )
 numpad7::InstantExplorer(SavedExplorerAddress) ;MAIN, ROOT FOLDER
 numpad8::InstantExplorer(SavedExplorerAddress . "\" . "Scripts" . "\" )
-numpad9::InstantExplorer(SavedExplorerAddress . "\" . "Scripts" . "\" ) ; should open latest script
 NumpadDiv::InstantExplorer(SavedExplorerAddress . "\" . "Project" . "\" ) 
-NumpadMult::tooltip, mult - open latest project i guess
+
+Numpad9::openlatestfile(SavedExplorerAddress . "\" . "Scripts" . "\" , ".docx")
+numpadMult::openlatestfile(SavedExplorerAddress, ".prproj") ;very special... always opens the MOST RECENT .prproj no matter WHAT sub folder it is in.
+
 
 
 NumpadAdd::
@@ -1600,7 +1602,7 @@ tooltip,
 ;JUNKED CODE BEOW -- was trying to make an array or something in AHK...
 ; Array := object()
 ; object := {o:flip vertical, p:flip horizontal, i:multiply}
-; F23:: ;this code DOES NOT WORK...?
+; F24:: ;this code DOES NOT WORK...?
 ; FileRead, keypressed, C:\Users\TaranWORK\Documents\keypressed.txt
 ; tippy(keypressed) ;this makes a temporary tooltip
 ; keyActions := { "o" : preset("flip horizontal"), "p" : preset("flip vertical"), "i" : "multiply" } 
@@ -1677,14 +1679,12 @@ if f_AlwaysShowMenu = n  ; The menu should be shown only selectively.
 ;Menu, Favorites, show
 */
 
-
 ; msgbox, A_ThisMenuItemPos %A_ThisMenuItemPos%
 ; msgbox, A_ThisMenuItem %A_ThisMenuItem%
 ; msgbox, A_ThisMenu %A_ThisMenu%
 
 ;;StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
 ; msgbox, f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
-
 
 ; f_OpenFavorite:
 ;msgbox, BEFORE:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
@@ -1726,6 +1726,7 @@ if f_class = #32770    ; It's a dialog.
 	}
 	; else fall through to the bottom of the subroutine to take standard action.
 }
+/*
 else if f_class in ExploreWClass,CabinetWClass  ; In Explorer, switch folders.
 {
 	tooltip, f_class is %f_class% and f_window_ID is %f_window_id%
@@ -1733,7 +1734,7 @@ else if f_class in ExploreWClass,CabinetWClass  ; In Explorer, switch folders.
 	{
 		tippy("EXPLORER WITH EDIT1 only 2 lines of code here....", 1000)
 		ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
-		msgbox, set text happened
+		msgbox, ControlSetText happened. `nf_class is %f_class% and f_window_ID is %f_window_id%`nAND f_Edit1Pos is %f_Edit1Pos%
 		; Tekl reported the following: "If I want to change to Folder L:\folder
 		; then the addressbar shows http://www.L:\folder.com. To solve this,
 		; I added a {right} before {Enter}":
@@ -1742,6 +1743,7 @@ else if f_class in ExploreWClass,CabinetWClass  ; In Explorer, switch folders.
 	}
 	; else fall through to the bottom of the subroutine to take standard action.
 }
+*/
 else if f_class = ConsoleWindowClass ; In a console window, CD to that directory
 {
 	WinActivate, ahk_id %f_window_id% ; Because sometimes the mclick deactivates it.
@@ -1761,6 +1763,9 @@ else if f_class = ConsoleWindowClass ; In a console window, CD to that directory
 tippy("end was reached.",1000)
 SoundBeep, 800, 300
 ; Run, Explorer %f_path%  ; Might work on more systems without double quotes.
+
+;;; need a line here to check if the path actually exists or not!
+
 Run, %f_path%  ; I got rid of the "Explorer" part because it caused redundant windows to be opened, rather than just switching to the existing window
 }
 ;end of instant explorer
@@ -1777,4 +1782,41 @@ Run, %f_path%  ; I got rid of the "Explorer" part because it caused redundant wi
 ; else
 	; WinActivate ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
 ; Return
+
+
+
+
+
+#ifwinactive
+
+;;;; SCRIPT TO ALWAYS OPEN THE MOST RECENTLY SAVED OR AUTOSAVED FILE OF A GIVEN FILETYPE, IN ANY GIVEN FOLDER (AND ALL SUBFOLDERS.);;;;
+
+;;script partially obtained from https://autohotkey.com/board/topic/57475-open-most-recent-file-date-created-in-a-folder/
+openlatestfile(directory, filetype)
+{
+;filetype := """" . filetype . """" ;this ADDS quotation marks around a string in case you need that.
+StringReplace, directory,directory,", , All ;" ; this REMOVES the quotation marks around the a string if they are present.
+
+;msgbox, directory is %directory%`n and filetype is %filetype%
+Loop, Files,%directory%\*%filetype%, FR
+{
+If (A_LoopFileTimeModified>Rec)
+  {
+  FPath=%A_LoopFileFullPath%
+  Rec=%A_LoopFileTimeModified%
+  }
+}
+
+MsgBox 4,, Select YES to open the latest %filetype% at Fpath `n%Fpath%
+IfMsgBox Yes
+	{
+	Run %Fpath%
+	}
+}
+
+; ; USING THE SCRIPT
+; !n::
+; examplePath = "Z:\Linus\6. Channel Super Fun\Flicking football"
+; openlatestfile(examplePath, ".prproj")
+; return
 

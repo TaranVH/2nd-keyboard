@@ -96,13 +96,24 @@ Gui, Show,X%statusx% Y%statusy% W%statuswidth% H%statusheight% NoActivate,%appli
 ; WinSet, ExStyle, ^0x00000020, A ;this makes it click-throughable. I think.
 
 
+;;below is the info from OFFAFTERRELOAD, which I am putting here because now i have decided i want nothing to display at all.
+GuiControl ORIG:,text,
+GuiControl ORIG:,name,
+GuiControl HIST1:,line1, 
+GuiControl HIST1:,line2,
+GuiControl HIST2:,line1,
+GuiControl HIST2:,line2,
+;;above is the whatever blah blah. Looks like it doesn't work... i might wanna make the whole GUI invisisble until after everything has loaded.
+
+
+
 
 
 ;WinSet, TransColor, %backcolor% , KEYSTROKE ;100
 
-setTimer STATUSOFF, -1000
+setTimer STATUSOFF, -0
 superdim = 1
-settimer, STATUSOFF, %timetoshow%
+;settimer, STATUSOFF, %timetoshow%
 
 
 Loop
@@ -386,7 +397,8 @@ reload
 setTimer reloadEverything, -1800000 ;sets this to 30 minutes, to NOT repeat automatically...
 ;If I don't do this, the GUI visuals will eventually just disappear, even though the script is still running.
 ; I don't know why, and I don't know how to reproduce or fix the bug. This is a band-aid solution.
-setTimer STATUSOFF, -1000
+; superdim = 1
+; setTimer STATUSOFF, -1
 Return
 
 
