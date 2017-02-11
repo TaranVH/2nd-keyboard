@@ -9,7 +9,6 @@ Click on "download the latest release."
 Click on Interception.zip to download it.
 Unzip the file to some location on your computer.
 
-
 INSTALLING INTERCEPTION (tricky):
 Navigate to the folder location of "install-interception.exe" in Windows File Explorer.
 Copy the address from the address bar.
@@ -30,20 +29,22 @@ http://octopup.org/img/code/interception/intercept.zip
 Unzip intercept.zip to some location on your computer.
 Plug in your second keyboard and ensure that it is working normally.
 Double click on intercept.exe. It will open a command prompt thingy.
-Type "a" to add a key.
-On the SECONDARY keyboard, press the Q key once.
+Type <kbd>a</kbd> to add a key.
+On the SECONDARY keyboard, press the <kbd>Q</kbd> key once.
 You will be prompted with "Enter combo for this trigger, end with ESC."
 Carefully execute the following keystrokes (it doesn't matter which keyboard):
-F12 DOWN
-Q DOWN
-Q UP
-F12 UP
-ESC
-Now press Q again to label the script
-Press ENTER to accept this label.
-Press S to save the filter, or C to cancel if you made a mistake.
+
+<kbd>F12 down</kbd>
+<kbd>Q down</kbd>
+<kbd>Q up</kbd>
+<kbd>F12 down</kbd>
+<kbd>ESC</kbd>
+
+Now press <kbd>Q</kbd> again to label the script
+Press <kbd>ENTER</kbd> to accept this label.
+Press <kbd>S</kbd> to save the filter, or <kbd>C</kbd> to cancel if you made a mistake.
 This has the effect of basically "wrapping" the keystroke inside of another keystroke.
-Now repeat the above steps, but using the keys W, E, and R.
+Now repeat the above steps, but using the keys <kbd>W</kbd>, <kbd>E</kbd>, and <kbd>R</kbd>.
 
 
 CREATING THE AUTOHOTKEY SCRIPT
@@ -53,7 +54,7 @@ Right click on the desktop and select "New" > "AutoHotKey Script"
 Name the file "baby's first extra keyboard.ahk"
 Right click on the file and choose "Open with" > "Notepad". (Or, use your text editor of choice. Do not use Word.)
 In that file, there will already be a few lines of code. Beneath them, insert the following lines of code, up to the #if:
-
+```
 #SingleInstance force
 #if (getKeyState("F12", "P"))
 F12::return
@@ -62,7 +63,7 @@ w::msgbox, you pressed %A_thishotkey% on the extra keyboard
 e::tooltip, you pressed %A_thishotkey% on the extra keyboard
 r::SoundBeep, 1000, 500
 #if
-
+```
 Now save the file. ("baby's first extra keyboard.ahk")
 Double click on the file to get it running.
 
@@ -76,7 +77,9 @@ Now that you have that working, you can restart intercept.exe, and (A)dd all the
 HOWEVER, that will be very slow. So instead, you can download and use Taran's files, "keyremap.ini" and "fancy extra keyboards.ahk" and customize them to your own computer.
 
 If you use Taran's keyremap.ini, be sure to "find and replace" all instances of the following line:
+```
 device=HID\VID_046D&PID_C31C&REV_6400&MI_00
+```
 with the device ID of your own secondary keyboard. (Again, you can get this info by (A)dding a filter in intercept.exe.)
 
 If you create your own keyremap.ini, you should replace all instances of "58," (the scan code for F12) with "6E," (the scan code for F23.)
