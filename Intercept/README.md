@@ -91,7 +91,7 @@ device=HID\VID_046D&PID_C31C&REV_6400&MI_00
 ```
 ...with the device ID of your own secondary keyboard. (Again, you can get this info by (A)dding a filter in intercept.exe.)
 
-- If you create your own keyremap.ini, you should find and replace all instances of "***58,***" (the scan code for F12) with "***6E,***" (the scan code for F23.) Be sure to include the commas so you don't also replace any unrelated numbers. This is simply so that you do not make your F12 key unusable.
+- If you create your own keyremap.ini, you should find and replace all instances of `58,0,` (the scan code for F12) with `6E,0,` (the scan code for F23.) This is simply so that you do not make your F12 key unusable.
 - Also, ensure that your AutoHotKey script is listening for F23 rather than F12, by modifying the code like so:
 ```
 #if (getKeyState("F23", "P"))
