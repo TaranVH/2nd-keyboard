@@ -88,8 +88,6 @@ Also, ensure that your AutoHotKey script is listening for F23 rather than F12.
 
 
 
-
-
 -----------------------------------------------------------------------------------------------
 ADDITIONAL RECOURCES:
 Kamaz's original post:
