@@ -1,8 +1,10 @@
 ﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-;The ABOVE CODE ^^^ was automatically generated when I made a new .ahk document. I don't know how essential it is.
+
+; SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+SetWorkingDir C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files
+; the above is what the variable %A_WorkingDir% refers to.
 
 Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyboard!
 #SingleInstance force ;only one instance of this script may run at a time!
@@ -42,27 +44,27 @@ Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyb
 ; shift c               ripple delete --- very convenient for left handed use. Premiere's poor track targeting makes ripple delete less useful than it could be.
 ; ctrl alt shift d      ripple delete --- I never type this in manually - long shortcuts like this are great for using AHK or a macro to press them.
 ; delete                delete
-; c                     delete --- I also have this on C, because it puts it directly under my left hand. Very quick to press without having to move my hand.
+; c                     delete --- I also have this on "C" because it puts it directly under my left hand. Very quick to press without having to move my hand.
 ; ctrl r                speed/duration panel
 ; shift 1               toggle track targeting for AUDIO LAYER 1
 ; shift 2               toggle track targeting for AUDIO LAYER 2. And so on up to 8.
 ; alt 1                 toggle track targeting for VIDEO LAYER 1
 ; alt 2                 toggle track targeting for VIDEO LAYER 2. And so on up to 8. I wish there were DEDICATED shortcuts to enable and disable ALL layers
 ; ctrl p                toggle "selection follows playhead"
-; ctrl alt shift 0      Application > Window > Timeline (This key CANNOT be easily reassigned in PR2017 due to a bug.) (Default is SHIFT 3)
+; ctrl alt shift 0      Application > Window > Timeline (This key CANNOT be easily reassigned in my PR2017 due to a bug.) (Default is SHIFT 3)
 ; ctrl alt shift `      Application > Window > Project  (This sets the focus onto a BIN.) (default is SHIFT 1)
 ; ctrl alt shift 1      Application > Window > Project  (This sets the focus onto a BIN.) (default is SHIFT 1)
 ; ctrl alt shift 4      Application > Window > program monitor (Default is SHIFT 4)
-; ctrl alt shift 7      Application > Window > Effects   (NOT the Effect Controls panel) (Default is SHIFT 7) --- Note that all of the defaults are stupid. SHIFT 7 is just an ampersand if you happen to be in a text box somewhere...
+; ctrl alt shift 7      Application > Window > Effects   (NOT the Effect Controls panel) (Default is SHIFT 7) --- The defaults are stupid. SHIFT 7 is an ampersand if you happen to be in a text box somewhere...
 ; F2                    gain
 ; F3                    audio channels --- To be pressed manually by the suer. (this might change in the future.)
 ; ctrl alt shift a      audio channels --- (I will NOT change this, so that it can always be reliably triggered using AutoHotKey.)
-; shift F               From source monitor, match frame. -- awkward to press by hand. This is done with a macro instead.
+; shift F               From source monitor, match frame.
 ; ctrl /                Overwrite (default is "." (period))
 ; ctrl b                select find box --- This is such a useful function when you pair it the the effects panel!!
 ; ctrl alt F            select find box 
 ;                                                                                                                        
-; Be aware that sometimes other programs like PUUSH can overlap with your customized shortcuts.                          
+; Be aware that sometimes other programs like PUUSH can overlap/conflict with your customized shortcuts.                          
 ;_______________________________________________________________________________________________________________________
 
 
@@ -663,15 +665,20 @@ BlockInput, off ;do not comment out or delete this line -- or you won't regain c
 ^!w::preset("Warp Stabilizer Preset") ;macro key G2. I wish it would also press "analyse..."
 ^!+p::effectsPanelType("presets") ;set to macro key G3. ;Types in "presets," which reveals your own entire list of presets.
 
-^!g::preset("Lumetri Color BLANK") ;macro key G4. This is a completely BLANK lumetri preset, untwirled and ready for me to change specific values.
-^!h::preset("Lumetri shadows up") ;macro key G5. This preset increases brightness, contrast, and saturation slightly, and adds a slight vingette. I use this often
+;^!g::preset("Lumetri Color BLANK") ;macro key G4. This is a completely BLANK lumetri preset, untwirled and ready for me to change specific values.
+;^!h::preset("Lumetri shadows up") ;macro key G5. This preset increases brightness, contrast, and saturation slightly, and adds a slight vingette. I use this often
+
+#!l::audioMonoMaker("left") ;macro key G4. Using the WIn key is prooobably a terrible idea; I do not reccomend it...... :(
+#!k::audioMonoMaker("right") ; macro key G5. ;
+
 ^!j::preset("Lumetri BRIGHT") ;macro key G6. This lumetri preset adds a LOT of brightness, and saturation to balance. I use it for very dark shots.
 
-#!l::audioMonoMaker("left") ;macro key G7. Using the WIn key is prooobably a terrible idea; I do not reccomend it...... :(
+
 !l::preset("2.4 limiter") ;macro key G8. A compressor and limiter for the audio, to keep it from clipping at 0dB.
 ;Macro key G9 is set completely in the keyboard's software. It is simply: {F2}{7}{enter}, which increases the gain of any selected clips by 7dB.
 
-#!k::audioMonoMaker("right") ; macro key G10. ; I had this set to win alt R, but now that interferes with Windows Game Bar, which I couldn't disable even by changing registry files...
+
+
 ;Macro key G11 is set completely in the keyboard's software. It is simply: {CTRL}{SHIFT}{m}, which is "From source monitor, match frame"
 !]::preset("DeHummer Preset") ;macro key G12. This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.
 
@@ -826,12 +833,13 @@ SFXActions(leSound)
 keyShower(leSound, "insertSFX")
 CoordMode, mouse, Screen
 CoordMode, pixel, Screen
+BlockInput, mouse
 BlockInput, On
 SetKeyDelay, 0 ;for instant writing of text
 MouseGetPos, xpos, ypos
 send ^+x ;ctrl shift x -- shortcut in premiere for "remove in/out points.
 sleep 10
-send ^!1 ;ctrl alt 1 -- source assignment preset 1
+send ^!1 ;ctrl alt 1 -- source assignment preset 1. (sets it to A3.)
 sleep 10
 ; Send ^!+` ;premiere shortcut to open the "project" panel, which is actually a bin. Only ONE bin is highlightable in this way.
 ; ;Send F11
@@ -839,12 +847,11 @@ sleep 10
 ;msgbox, you in the panel now?
 send ^{F11} ;CTRL F11 -- ;shortcut for application>window>project (highlights a single bin. In my case, it's on my left monitor.)
 tooltip, waiting for premiere to select that bin....
-sleep 10
+;msgbox, waiting for premiere to select that bin....
+sleep 20
 ;msgbox how about naow?
-Send ^b ;CTRL B -- set this in premiere's shortcuts panel to "select find box"
-; sleep 200
-; Send +{delete}
-; sleep 600
+Send ^b ;CTRL B -- set this in premiere's shortcuts panel to "select find box." Make sure there are NO OTHER conflicting shortcuts on this key, like "create new bin," which would stop it from working.
+
 Send %leSound% ;types in the name of the sound effect you want - should do so instantaneously.
 tooltip, waiting for premiere to load......
 send ^!1 ;source assignment preset 1, again.
@@ -863,15 +870,21 @@ sleep 400 ;we are waiting for the search to complete....
 ; Click 170, 224 
 
 MouseMove, -6000, 250, 0
+;msgbox, wheres de mouse?
 ; MouseGetPos, lol, lel
 ; PixelGetColor, zecolor, lol, lel, alt slow rgb
 ; msgbox, %zecolor% 
 MouseClick, left
 tooltip, CLICK!!!
+sleep 10
+Send ^b
+sleep 10
+Send +{backspace} ;deletes the search text so that the bin returns to normal view with all SFX visible.
 MouseMove, %xpos%, %ypos%, 0 ;move mouse back to original coordinates.
 
 sleep 20
 tooltip, so did that work?
+;msgbox, clicked, mouse should be back at original coordinates.
 
 ;send ^!+4 ;select program monitor
 sleep 10
@@ -881,6 +894,7 @@ send ^!1 ;my shortcut for "assign source assignment preset 1" in Premiere. The p
 sleep 50
 Send ^/ ;CTRL /  -- SET TO "OVERWRITE" in premiere. Premiere's default shortcut for "overwrite" is a period.  I use modifier keys for THIS, so that a period is never typed accidentally.
 sleep 30
+; Send mbutton ;this will MIDDLE CLICK to reselect whatever panel your cursor was hovering over before you engaged this function.
 send ^!+0 ;this is set in premiere to highlight/switch to the timeline. important so that you aren't still stuck in the bin. If this is used more than once, it will unfortunately cycle thorugh all available sequences...
 tooltip,
 BlockInput, off
@@ -1099,7 +1113,7 @@ return
 
 ;_______________________2ND KEYBOARD IF USING INTERCEPTOR_____________________
 
-; #if (getKeyState("F23", "P")) && IfWinActive ahk_exe Adobe Premiere Pro.exe ;have not tested this to see if it works
+;#if (getKeyState("F23", "P")) && IfWinActive ahk_exe Adobe Premiere Pro.exe ;have not tested this to see if it works
 #if (getKeyState("F23", "P"))
 F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," and cannot use it for anything else.
 
@@ -1238,9 +1252,24 @@ n::preset("pan left")
 ;m::preset("pan down")
 
 m::preset("a0p0 pan down")
-,::preset("crop 50 LEFT")
-.::preset("crop 50 RIGHT")
-/::preset("crop full")
+
+,::
+preset("crop 50 LEFT")
+sleep 200
+cropClick()
+return
+
+.::
+preset("crop 50 RIGHT")
+sleep 200
+cropClick()
+return
+
+/::
+preset("crop full")
+sleep 150
+cropClick()
+return
 
 ;;;;;next area;;;;;;;;
 
@@ -1817,6 +1846,51 @@ IfMsgBox Yes
 ; ; USING THE SCRIPT
 ; !n::
 ; examplePath = "Z:\Linus\6. Channel Super Fun\Flicking football"
-; openlatestfile(examplePath, ".prproj")
+; openlatestfile(examplePath, ".prproj") ;<--- notice how i INCLUDE the period in the parameters. IDK if it might be better to add the period later.
 ; return
 
+
+;;;CLICK ON THE 'CROP' TRANSFORM BUTTON IN ORDER TO SELECT THE CROP ITSELF
+cropClick()
+{
+BlockInput, on
+BlockInput, MouseMove
+MouseGetPos xPosCursor, yPosCursor
+
+effectControlsX = 10
+effectControlsY = 200 ;the coordinates of roughly where my Effect Controls usually are located on the screen
+CoordMode Pixel ;, screen
+CoordMode Mouse, screen
+
+;you might need to take your own screenshot (look at mine to see what is needed) and save as .png. Mine are done with default UI brightness, plus 150% UI scaling in Windows.
+ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+300, effectControlsY+1000, %A_WorkingDir%\CROP transform button.png
+if ErrorLevel = 1
+	{
+	;msgbox, we made it to try 2
+    tippy("NO CROP WAS FOUND")
+	goto resetcropper
+	}
+if ErrorLevel = 2
+	{
+    tippy("Could not conduct the search!")
+	goto resetcropper
+	}
+if ErrorLevel = 0
+	{
+	MouseMove, FoundX+10, FoundY+10, 0 ;this moves the cursor onto the little square thingy.
+	;msgbox, is the cursor in position?
+	sleep 5
+	click left
+	}
+
+resetcropper:
+MouseMove, xPosCursor, yPosCursor, 0
+blockinput, off
+blockinput, MouseMoveOff
+sleep 10
+return
+	
+}
+;end of CROP CLICK
+
+F16::cropClick() ;testing here.

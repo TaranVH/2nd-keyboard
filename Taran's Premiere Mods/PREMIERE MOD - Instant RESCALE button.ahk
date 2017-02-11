@@ -172,53 +172,6 @@ BlockInput, MouseMoveOff
 Return
 
 
-
-; THE FOLLOWING CODE IS NO LONGER NEEDED! PREMIERE HAS A SHORTCUT FOR THIS. iT CAN BE FOUND AS: PANELS > PROJECT PANEL > "GO BACK"
-/*
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
-~F12::
-Tippy("Bin BACK button press (F12)")
-; CoordMode Pixel, screen
-; CoordMode mouse, screen
-BlockInput, On
-BlockInput, MouseMove
-MouseGetPos, xpos, ypos, Window, classNN
-WinGetClass, class, ahk_id %Window% ;----"ahk_id %Window%" is important for SOME REASON. if you delete it, this doesnt work.
-
-;ToolTip, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
-
-ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
-;---the ahk_class will be: ahk_class DroverLord - Window Class
-
-XX := XX+28
-YY := YY+7 ;------------------------moves the cursor directly onto the light gray part of the "back" icon. Your pixel count may vary.
-
-MouseMove, XX, YY, 0 ;--------------for somereason you DO have to actually move the mouse for PixelGetColor to work.
-
-
-;this color detection does NOT WORK on my monitors 1 and 3, making it useles....
-/*
-PixelGetColor, colorr, XX, YY ;-----I like to double the last letter of some variable names so i know it's one of MINE! :P
-MsgBox color is %colorr%, but 0x505050 is what we want
-;sleep 10
-if (colorr = "0x505050") ;----------YOUR COLOR WILL VARY! In Premiere CS6, it's 0xC1C1C1. You'll have to run the script just up to this point to get the right color.
-{
-	MsgBox color %colorr% is CORRECT
-	Click XX, YY
-}
-Click XX, YY
-sleep 10
-
-MouseMove, xpos, ypos, 0 ;--------------instantly returns cursor to original coordinates
-;MsgBox now we return mouse control ;---used for debugging
-BlockInput, Off ;-----------------------if you forget to turn blockinput off, CTRL ALT DELETE will still work to return control.
-BlockInput, MouseMoveOff
-
-Return ; from F12 BACK BUTTON PRESS
-
-*/
-
-
 marker(){
 send /
 sleep 10
@@ -244,7 +197,7 @@ MouseClick, left
 
 
 
-;experimental script to lock video and audio layers V1 and A1.
+;script to lock video and audio layers V1 and A1.
 ~F19::
 BlockInput, on
 BlockInput, MouseMove
@@ -381,7 +334,8 @@ global Xbegin = Xbeginlol
 global Ybegin = Ybeginlol
 ; MsgBox, "please verify that the mouse cannot move"
 ; sleep 2000
-ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class2, ahk_class Premiere Pro ;This is the ClassNN of the effect controls panel. Use Window Spy to figure it out. It's actually Window Class3 for me right now but it still works??? I am not going to tempt fate and try to change it.
+ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro ;This is the ClassNN of the effect controls panel. Use Window Spy to figure it out.
+;I might need a far more robust way of ensuring the effect controls panel has been located, in the future.
 
 ;move mouse to expected triangle location. this is a VERY SPECIFIC PIXEL which will be right on the EDGE of the triangle when it is OPEN.
 ;This takes advantage of the anti-aliasing between the color of the triangle, and that of the background behind it.
@@ -417,11 +371,11 @@ else if (colorr = "0x757575") ;again, this values will be different for everyone
 	Return
 }
 else if (colorr = "0x1D1D1D" || colorr = "0x232323")
-{
+	{
 	tooltip, this is a normal panel color of 0x1d1d1d or %colorr%, which means NO CLIP has been selected! So we need to select something - If you didnt change your UI brightness
 	Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
 	sleep 10
-	Send ^p ;this disables "selection follows playehad." I don't know if there is a way to CHECK if it is on or not. 
+	Send ^p ;this disables "selection follows playhead." I don't know if there is a way to CHECK if it is on or not. 
 	resetFromAutoVFX()
 	;play noise
 	;now you need to do all that again, since the motion menu is now open. But only do it ONCE more! 
@@ -431,14 +385,14 @@ else if (colorr = "0x1D1D1D" || colorr = "0x232323")
 		goto, restartPoint ;this is stupid but it works. Feel free to improve any of my code; I know it's garbage.
 		}
 	Return
-}
+	}
 else
-{
+	{
 	tooltip, %colorr% not expected
 	;play noise
 	resetFromAutoVFX()
 	Return
-}
+	}
 }
 Return ;from autoscaler part 1
 
