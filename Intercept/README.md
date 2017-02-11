@@ -28,7 +28,7 @@ install-interception.exe /install
 - Once the program installs sucessfully, you still must restart your computer in order to complete the installation.
 
 
-### INSTALLING INTERCEPT.EXE -- (This is different from intercepTION!)
+### USING INTERCEPT.EXE -- (This is different from intercepTION!)
 - Download Kamaz's intercept.exe zip from here:
 - http://octopup.org/img/code/interception/intercept.zip
 	(Let me know if this file ever goes offline, I'll rehost it.)
