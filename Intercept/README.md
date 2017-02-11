@@ -42,7 +42,7 @@ install-interception.exe /install
 <kbd>F12 down</kbd>
 <kbd>Q down</kbd>
 <kbd>Q up</kbd>
-<kbd>F12 down</kbd>
+<kbd>F12 up</kbd>
 <kbd>ESC</kbd>
 
 - Now press <kbd>Q</kbd> again to label the script
