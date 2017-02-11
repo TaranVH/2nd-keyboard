@@ -15,16 +15,17 @@
 - Copy the address from the address bar.
 - Open the start menu, and type in "CMD". DO NOT hit ENTER.
 - Instead, right click on the command prompt item that appeared in your start menu, and click on "run as administrator"
-- Now inside the admin command prompt, type in "cd " and hit CTRL V to paste the explorer address. Then hit ENTER. For me, I had to type in the following:
+- Now inside the admin command prompt, type in "cd " and hit CTRL V to paste the explorer address. For me, I had to type in the following:
 ```cmd
 cd C:\Users\Taran Baron\Downloads\Interception\command line installer
 ```
+- Hit <kbd>ENTER</kbd>
 - Now, type in the following line of text exactly as shown:
 ```
 install-interception.exe /install
 ```
-- ...and hit ENTER.
-- Now you need to restart your computer in order to complete the installation.
+- ...and hit <kbd>ENTER</kbd>
+- Once the program installs sucessfully, you still must restart your computer in order to complete the installation.
 
 
 ### INSTALLING INTERCEPT.EXE -- (This is different from intercepTION!)
