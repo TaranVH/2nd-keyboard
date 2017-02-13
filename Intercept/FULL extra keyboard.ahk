@@ -1,4 +1,4 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -10,9 +10,12 @@ F23::return
 
 ;;;;;first row;;;;;
 
-F1::
+F1::msgbox, you pressed F1 on the extra keyboard
 F2::
-F3::
+SoundBeep, 900, 400
+tooltip, you pressed F2 AND get a beep sound!
+return
+F3::tooltip, you pressed F3 but do not get a beep.
 F4::
 F5::
 F6::
@@ -21,7 +24,7 @@ F9::
 F8::
 F10::
 F11::
-F12::tooltip, you pressed %A_thishotkey% on the extra keyboard
+F12::tooltip, you pressed the function key %A_thishotkey% on the extra keyboard
 
 ;;;;;next row;;;;;
 
@@ -38,7 +41,7 @@ F12::tooltip, you pressed %A_thishotkey% on the extra keyboard
 0::
 -::
 =::
-backspace::tooltip, you pressed %A_thishotkey% on the extra keyboard
+backspace::tooltip, you pressed %A_thishotkey% on the extra keyboard from the numbers row
 
 ;;;;;next row;;;;;
 
@@ -60,7 +63,7 @@ p::
 ;;;;;next row;;;;;
 
 capslock::
-a::
+a::return
 s::
 d::
 f::
@@ -97,7 +100,7 @@ space::
 Ralt::
 Rwin::
 appskey::
-Rctrl::tooltip, you pressed %A_thishotkey% on the extra keyboard
+Rctrl::tooltip, you pressed %A_thishotkey% from the bottom row of keys
 
 ;;;;;next area;;;;;
 
@@ -116,12 +119,12 @@ pgup::
 
 delete::
 end::
-pgdn::tooltip, you pressed %A_thishotkey% on the extra keyboard
+pgdn::tooltip, you pressed %A_thishotkey% on the extra keyboard weird keys
 
 up::
 down::
 left::
-right::tooltip, you pressed %A_thishotkey% on the extra keyboard
+right::tooltip, you pressed the %A_thishotkey% directional arrow on the extra keyboard
 
 ;;;;;next area;;;;;
 
@@ -134,7 +137,7 @@ numpad5::
 numpad6::
 numpad7::
 numpad8::
-numpad9::tooltip, you pressed %A_thishotkey% on the extra keyboard's numpad
+numpad9::tooltip, you pressed %A_thishotkey% from the extra keyboard's numpad numbers
 
 numlock::
 numpadDiv::
@@ -151,19 +154,19 @@ numpadDot::tooltip, you pressed %A_thishotkey% on the extra keyboard's numpad
 ;These are modifier keys that I prefer to keep as modifier keys
 ;SC060::msgbox sc060 is L SHIFT
 ;SC061::msgbox sc061 is R SHIFT
-;SC062::msgbox sc062 is L CTRL
+;SC062::msgbox sc062 is L CTRLA
 ;SC063::msgbox sc063 is L WIN
 ;SC064::msgbox sc064 is L ALT
 ;SC065::msgbox sc065 is R ALT
 ;SC066::msgbox sc066 is R WIN
 ;SC067::msgbox sc067 is R CTRL
 
-
 SC07E::msgbox, sc7E was pressed.
 SC07F::msgbox, sc7F is as high as I could go, after 80 they become unusable for some reason.
 SC080::msgbox, sc080... this does not register.
 SC0FF::msgbox, sc0FF ...this does not register.
 
+return
 #if
 ;END of F23 based keyboard
 
