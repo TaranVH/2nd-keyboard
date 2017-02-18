@@ -169,5 +169,40 @@ SC0FF::msgbox, sc0FF ...this does not register.
 return
 #if
 ;END of F23 based keyboard
+;-------------------------
 
+
+;BEGINNING OF 3RD KEYBOARD - USB NUMPAD
+#if (getKeyState("F22", "P"))
+F22::return
+
+numpad0::
+numpad1::
+numpad2::
+numpad3::
+numpad4::
+numpad5::
+numpad6::
+numpad7::
+numpad8::
+numpad9::tooltip, you pressed %A_thishotkey% from the 3RD keyboard!
+
+numlock::
+numpadDiv::
+numpadMult::
+
+numpadSub::
+numpadAdd::
+numpadEnter::
+
+numpadDot::tooltip, you pressed %A_thishotkey% from the 3RD keyboard! YEAAAH!
+
+
+#if
+;End of F22 based 3rd keyboard
+
+;And then you can have a 4th keyboard and so on and so FOURTH!
+;If you use all the function keys from F24 to F13, you can start using weird unassigned scancodes, or virtual keys!
+;if you run out of those, you can maybe start doubling up keys! Wrap each on in TWO layers of other keys!
+;If you run out of THAT, then you're absolutely crazy and your whole room would be filled with keyboards.
 
