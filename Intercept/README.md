@@ -1,6 +1,8 @@
 --------------------------------------------------------------------
 # TaranVH's install steps for interception, intercept, and AutoHotKey:
 --------------------------------------------------------------------
+### VIDEO TUTORIAL THAT EXPLAINS ALL THIS IN GREATER DETAIL:
+https://www.youtube.com/watch?v=y3e_ri-vOIo
 
 ### DOWNLOADING INTERCEPTION:
 - Navigate to this page:
