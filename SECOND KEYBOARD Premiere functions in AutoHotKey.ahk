@@ -85,6 +85,8 @@ statuswidth2=700
 font=Arial
 
 
+
+
 ;++++++++++++++++++++++++++++++++++++++++++++++
 ; GUI FOR KEYBOARD 1 COMMANDS
 Gui,+Owner +AlwaysOnTop -Resize -SysMenu -MinimizeBox -MaximizeBox -Disabled -Caption -Border -ToolWindow
@@ -133,7 +135,25 @@ SetTimer,revealtimer,-2500
 SetTimer,revealtimer2,-2500
 
 
+prFocus(panel) ;this function allows you to have ONE spot where you define your personal shortcuts that "focus" panels in premiere.
+{
+;panel := """" . panel . """" ;this adds quotation marks around the parameter so that it works as a string, not a variable.
+;Send ^!+1 ;bring focus to a random bin, in order to "clear" the current focus on any and all bins
+Send ^!+7 ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
+if (panel = "effects")
+	goto theEnd ;Send ^!+7 ;do nothing. the shortcut has already been pressed.
+else if (panel = "timeline")
+	Send ^!+0 ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
+else if (panel = "program")
+	Send ^!+4
+else if (panel = "project") ;AKA a "bin" or "folder"
+	Send ^!+1
+; else if (panel = "effect controls")
+	; you can continue adding any panels you might need, here.
+theEnd:
 
+}
+;end of focusing panel
 
 #ifwinactive
 Keyshower(yeah, functionused := "", alwaysshow := 0) ;very badass function that shows key presses and associated commands, both from the primary and secondary keyboards (keyboard 2 must be configured using intercept.exe!)
@@ -367,117 +387,9 @@ Send {NumpadMult}
 Return ;from F24
 ;THE BLOCK OF CODE ABOVE is the original, simple script.
 
-
-;/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-;THE KEYACTIONS CODE BELOW is a fancier way of doing the same thing, that does NOT involve dozens of ELSE IF statements.
-;However, it is annoying to use for several reasons, so I am mothballing it. I do NOT reccomend that you use this code.
-/*
-
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
-~F24::
-FileRead, key, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keypressed.txt
-tippy(key)
-
-presetActions := Object()
-sendKeystrokesActions := Object()
-recallClipboardActions := Object()
-recallSFX := Object()
-sectionview := ""
-currentSection := ""
-
-;This loop will read all the key value pairs (e.g. keybinds).
-Loop, read, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keyActions.txt
-{
-    if (A_LoopReadLine == "preset") or (A_LoopReadLine == "sendKeystrokes") or (A_LoopReadLine == "recallClipboard") or (A_LoopReadLine == "SFXActions")
-    {
-        currentSection := A_LoopReadLine
-        continue
-    }
-    else if (A_LoopReadLine == "")
-        continue
-   
-    if (currentSection == "preset")
-    {
-        action := StrSplit(A_LoopReadLine, ":")
-        presetActions[action[1]] := action[2]
-    }
-    else if (currentSection == "sendKeystrokes")
-    {
-        action := StrSplit(A_LoopReadLine, ":")
-        sendKeystrokesActions[action[1]] := action[2]
-    }
-    else if (currentSection == "recallClipboard")
-    {
-        action := StrSplit(A_LoopReadLine, ":")
-        recallClipboardActions[action[1]] := action[2]
-    }
-	else if (currentSection == "SFXActions")
-    {
-        action := StrSplit(A_LoopReadLine, ":")
-        recallSFX[action[1]] := action[2]
-    }
-}
- 
-if presetActions[key] != ""
-{
-    ; Keybind for preset exists
-    preset(presetActions[key])
-	Revealkey("Preset", key, presetActions[key])
-}
-else if sendKeystrokesActions[key] != ""
-{
-    ; Keybind for sendKeystrokes exists
-    sendKeystrokes(sendKeystrokesActions[key])
-	Revealkey("send keystrokes", key, sendKeystrokesActions[key])
-}
-else if recallClipboardActions[key] != ""
-{
-    ; Keybind for recallClipboard exists
-    recallClipboard(recallClipboardActions[key])
-	Revealkey("Recall Clipboard", key, recallClipboardActions[key])
-}
-else if recallSFX[key] != ""
-{
-    ; Keybind for SFXactions exists
-    SFXActions(recallSFXActions[key])
-	Revealkey("Recall sound effect", key, recallSFXActions[key])
-}
-else
-    tooltip, Keybind not found! :(
-
-Return ;from F24
-*/
-
-;;---I DO NOT RECCOMEND THAT YOU USE THE CODE ABOVE. I AM MOTHBALLING IT.---
-;;/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-
-/*
-;; FYI:  Keyactions.txt is filled with text exactly like this:
-preset
-o:flip horizontal
-p:flip vertical
-i:multiply
-
-leftbracket:pop in motion
-rightbracket:pop out motion
-
-sendKeystrokes
-r:^!+{F1}
-f:^!+{F2}
-
-;these refer to the audio leftener and audio rightener.
-minus:#!l
-equals:#!r
-;this is mapped to "remove effects" in premiere.
-enter:^!e
-;These literally just pass through the exact same keystroke.
-num0:{Numpad0}
-num1:{Numpad1}
- */
- 
-;;END OF 2ND KEYBOARD CODE AS LAUNCHED FROM LUAMACROS.
-;;22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222
-
+;--------
+;HERE WAS DELETED the old keyactions.txt code that was once used for luamacros
+;--------
 
 recallTransition(foo)
 {
@@ -486,18 +398,14 @@ recallTransition(foo)
 }
 
 
-
-
-;SC04C::shift ;<- very experimental code. This is the scancode for numpad5. Necessary if you want to convert it to a modifier key....
-
 ;;;;;;temporary tooltip maker;;;;;;
 Tippy(tipsHere, wait:=333)
 {
-ToolTip, %tipsHere%
+ToolTip, %tipsHere%,,,8
 SetTimer, noTip, %wait% ;--in 1/3 seconds by default, remove the tooltip
 }
 noTip:
-	ToolTip,
+	ToolTip,,,,8
 	;removes the tooltip
 return
 ;;;;;;/temporary tooltip maker;;;;;;
@@ -528,10 +436,12 @@ if not WinActive(theClass)
 ;THIS IS A VERY SIMPLE FUNCTION FOR JUST TYPING STUFF INTO THE SEARCH BAR
 ;but it doesn't apply them to the clips.
 
-effectsPanelType(item := "")
+effectsPanelType(item := "lol")
 {
 Keyshower(item,"effectsPanelType")
+;prFocus("effects") ;reliably brings focus to the effects panel
 Send ^+!7 ;CTRL SHIFT ALT 7 -- set in premiere to "effects" panel
+sleep 10
 Send ^b ;CTRL B --set in premiere to "select find box"
 sleep 20
 Send +{backspace} ;shift backspace deletes any text that may be present.
@@ -543,28 +453,6 @@ send {tab}
 sleep 5
 send +{tab}
 }
-
-/*
-effectsPanelType_OLD_SCRIPT(item) ;This script is now obsolete!
-{
-SetKeyDelay, 0
-ControlFocus, Edit1, ahk_class Premiere Pro ;this is the effects panel, according to windowspy
-sleep 10
-send {tab}
-sleep 10
-send +{tab}
-sleep 10
-Send +{backspace}
-;Sleep, 10
-Send %item%
-;now this next part re-selects the field in case you want to type anything different
-sleep 5
-send {tab}
-sleep 5
-send +{tab}
-}
-*/
-;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
 ;;;;;;;;;;FUNCTION FOR DIRECTLY APPLYING A PRESET EFFECT TO A CLIP!;;;;;;;;;;;;
@@ -587,9 +475,11 @@ BlockInput, SendAndMouse
 BlockInput, On
 
 SetKeyDelay, 0 ;this ensures that any text AutoHotKey "types in," will input instantly, rather than one letter at a time.
-MouseGetPos, xposP, yposP ;-----------------------stores the cursor's current coordinates at X%xposP% Y%yposP%
+MouseGetPos, xposP, yposP ;---stores the cursor's current coordinates at X%xposP% Y%yposP%
 
-Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to "effects" panel
+;Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to "effects" panel
+prFocus("effects") ;more reliably uses the above shortcut to set focus to the effects panel.
+
 sleep 5 ;"sleep 5" means the script will wait for 5 milliseconds before the next command. This is done to give Premiere some time to load its own things.
 Send ^b ;CTRL B -- set in premiere to "select find box"
 sleep 5
@@ -746,34 +636,6 @@ return
 
 
 
-;;;;OBSOLETE CODE BELOW. DO NOT USE.
-; ;;;;;;;;;;;script that increases or decreases the size of the program monitor, no matter what panel you have selected.;;;;;;;;;;;;;;;;;;;
-; #IfWinActive ahk_exe Adobe Premiere Pro.exe
-; ; SHORTCUT				MAPPED TO THIS COMMAND IN PREMIERE
-; ; ctrl numpad -			"zoom (program) monitor in"
-; ; ctrl numpad +			"zoom (program) monitor out"
-; ; ctrl numpad enter		"zoom (program) monitor to fit"
-; ;the following script is designed to allow you to use numpad + - and enter to increase and decrease the zoom of the program monitor, regardless of what panel is actually in focus.
-; ;It's a small but (to me) important workaround.
-; ;This script simply puts the program monirot in focus, and adds the control key
-; numpadAdd::
-; Keyshower("program monitor zoom IN - taran mod",,1)
-; weirdNumpadders()
-; return
-
-; numpadSub::
-; Keyshower("program monitor zoom OUT - taran mod",,1)
-; weirdNumpadders()
-; return
-
-; sc11C::
-; ;numpadEnter::
-; Keyshower("program monitor zoom to FIT - taran mod",,1)
-; weirdNumpadders()
-; return
-
-;;;;;;;;; OBSOLETE CODE ABOVE.
-
 #IfWinActive
 
 
@@ -857,19 +719,7 @@ tooltip, waiting for premiere to load......
 send ^!1 ;source assignment preset 1, again.
 sleep 400 ;we are waiting for the search to complete....
 
-;PixelGetColor, zecolor, -6000, 200, alt slow rgb ; this does not work - either it gets FFFFFF or 000000. multiple monitors screw up this function...??
-;msgbox, %zecolor% 
-
-;Send {enter} ;this SOMETIMES highlights the object in the bin but USUALLY does not??
-
-;ControlClick, x-6000 y200
-;ControlClick, x-6000 y200, , , left, 1, NA Pos ; , ExcludeTitle, ExcludeText]
-;; Controlclick does NOT work. Looks like the cursor itself MUST be moved into the position.
-;Click -6000, 200 ;without moving the cursor, this clicks on the top leftmost object in the top leftmost bin on my 3rd monitor --- the bin that is highlighted by pressing ctrl F11.
-; CoordMode, mouse, window
-; Click 170, 224 
-
-MouseMove, -6000, 250, 0
+MouseMove, -6000, 250, 0 ;moves the mouse to the expected location of the bin that becomes highlighted from the "project" keyboard shortcut command in Premiere.
 ;msgbox, wheres de mouse?
 ; MouseGetPos, lol, lel
 ; PixelGetColor, zecolor, lol, lel, alt slow rgb
@@ -911,79 +761,249 @@ saveClipboard(int) {
 	StringReplace, int, int, +, , All ;replace + with nothing. This is just in case A_thishotkey contains + if shift was used!
 	StringReplace, int, int, !, , All ;replace ! with nothing. This is just in case A_thishotkey contains ! if alt was used!
 	StringReplace, int, int, ^, , All ;replace ^ with nothing. This is just in case A_thishotkey contains ^ if ctrl was used!
-	msgbox, , , saving as %int%, 0.6
-	tooltip, saving as %int%
+	;msgbox, , , saving as %int%, 0.6
+	tooltip, saving as`n"clip" . %int% . ".clp"
 	sleep 10
-	;ClipWait, 0.25 ; this line might not be needed.
 	SendInput, {Shift Down}{Shift Up}{Ctrl Down}{c Down}
 	sleep 20
+	ClipWait, 0.25 ; this line might not be needed.
 	SendInput, {c up}{Ctrl up}
 	sleep 20
 	saveToFile("clip" . int . ".clp")
-	sleep 16
+	sleep 1000
+	saveToFile("clip" . int . ".clp")
 	tooltip,
 }
 
 ;This is the real magic. With this script, you can PASTE those previously saved clipboard states, at any time.
 #ifwinactive ahk_exe Adobe Premiere Pro.exe
-recallClipboard(int) {
+recallClipboard(int, transition := 0) {
+	;deactivate keyboard and mouse
 	keyShower(int, "recallClipboard")
 	WinActivate, Adobe Premiere Pro
-	tooltip, "now loading random text into the clipboard."
-	
+	prFocus("timeline")
+	;Send ^!d ;this is to deselect any clips that might be selected in the timeline.
+	;tooltip, "now loading random text into the clipboard."
 	loadFromFile("clipTEXT.clp") ;to create this file, just highlight some plain text, copy it, and use insideclipboard.exe to save it as clipTEXT.clp. The clipboard MUST have some text inside; it CANNOT be completely empty. This has the effect of DELETING all the aspects of the clipboard, EXCEPT for text.
 	sleep 15
-	loadFromFile("clipTEXT.clp") ;The clipboard must be loaded twice, or it won't work about 70% of the time! I don't know why...
-	sleep 15
+	; ; WinActivate, Adobe Premiere Pro ;IDK if this is needed here.
+	; ; loadFromFile("clipTEXT.clp") ;The clipboard must be loaded twice, or it won't work about 70% of the time! I don't know why...
+	; ; sleep 15
 	;Autohotkey can now delete that string of text, so that no text is accidentlaly pasted into premiere. It doesn't seem to be able to delete EVERYTHING, so the above code is definitely necessary!
 	clipboard = 
 	;The clipboard is now completely empty.
 	sleep 10
 	
-	; send ^{F9} ;toggle video tracks (hopefully off)
-	; send ^{F9} ;toggle video tracks (hopefully off)
-	; send ^+{F9} ;toggle audio tracks (hopefully off)
-
-	
-	tooltip, now pasting NOTHING into premiere....
-	WinActivate, Adobe Premiere Pro ;extremely important
+	;tooltip, now pasting NOTHING into premiere....
+	WinActivate, Adobe Premiere Pro ;extremely important to ensure you are still active/focused on Premiere
 	SendInput, {Shift Down}{Shift Up}
 	sleep 10
 	SendInput, {Ctrl Down}{v Down} ;this is a MUCH more robust way of using the keyboard shortcuts to PASTE, rather than just using "Send ^v"
-	ClipWait, 0.25 ;this may be more time than is necessary. (Though I think it will advance quicker than this if it is able to.)
+	sleep 5
 	SendInput, {v Up}{Ctrl Up}
 	sleep 20
-	
-	; send ^{F8} ;enable track 8 video
-	; send ^+{F8} ;enable track 8 audio
-	
 	
 	;It is necessary to PASTE this COMPLETELY BLANK clipboard into premiere, or Premiere won't "know" that the clipboard has been completely emptied.
 	;If you don't do this, Premiere will just use whatever thing you had previously copied inside of Premiere.
 	clipboard = 
+	;the above line is another method for clearing the clipboard that must also be done to ensure a totally empty clipboard
 	sleep 30
 	;tooltip, "clip" . %int% . ".clp" ;this code doesn't work
-	tooltip, now preparing to paste %int%
+	;tooltip, now preparing to paste %int%
 	;msgbox, %int%
+	WinActivate, Adobe Premiere Pro 
 	loadFromFile("clip" . int . ".clp") ;now we are loading the previously saved clipboard file!
 	sleep 15
-	loadFromFile("clip" . int . ".clp") ;This must be done twice, or it doesn't work! I don't know why!! :D
-	sleep 15
+	; ; loadFromFile("clip" . int . ".clp") ;This must be done twice, or it doesn't work! I don't know why!! :D ;ADENDUM - i tried it with only 1 load and NOW it IS working??? IDK why
+	; ; sleep 15
 	WinActivate, Adobe Premiere Pro ;this is extremely important.... otherwise, it will try to paste into the command prompt or something. You must ensure the correct program is pasted into.
+	
+	if (transition = 0)
+	{
+		target("v1", "off", "all", 5) ;this will disable all video layers, and enable only layer 5.
+		;Send +{F16} ;this will soon be linked to the target() function.
+		tooltip, only layer 5 was turned on should be
+		sleep 150
+		
+	}
+	tooltip, now PASTING into premiere...
+	WinActivate, Adobe Premiere Pro
 	SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
-	ClipWait, 0.50
+	sleep 5
 	SendInput, {v Up}{Ctrl Up}
+	sleep 10
+	
+	;the below code doesn't work very well.
+	; sleep 100
+	;If (transition = 1){
+	; ;now if we want an accurate label colorwe have to DELETE what we just did, since none of the label colors will be correct due to a premiere bug.
+	; ;tooltip,,,gonna delete now,1
+	; tooltip,gonna delete now
+	; WinActivate, Adobe Premiere Pro
+	; prFocus("timeline")
+	; WinActivate, Adobe Premiere Pro
+	; SendInput, +{delete} ;ripple delete
+	; sleep 100
+	
+	; ;now to paste again, now that the label colors have been loaded.
+	; ;REDO might also work. must test that.
+	; WinActivate, Adobe Premiere Pro
+	; prFocus("timeline")
+	; sleep 30
+	; SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
+	; ClipWait, 0.50
+	; SendInput, {v Up}{Ctrl Up}
+	; sleep 10
+	;}
+	
+	
+	if (transition = 0)
+		target("v1", "on", "all")
 	sleep 10
 	; send ^{F9} ;toggle video tracks (hopefully off)
 	; send ^+{F9} ;toggle audio tracks (hopefully off)
 	tooltip,
+	Send ^!d ;this is to deselect any clips that might be selected in the timeline.
 	
-}
-
-
-
+} ;end of recall Clipboard()
 
 #ifwinactive ;everything below this line can happen in any application!
+
+;;script to TARGET or UNTARGET any arbitrary track
+F16::
+tooltip all video tracks ON
+target("v1", "on", "all")
+return
+^F16::target("v1", "off", "all")
++F16::target("v1", "off", "all", 5)
+
+
+
+Target(v1orA1, onOff, allNoneSolo := 0, numberr := 0)
+{
+;tooltip, now in TARGET function
+; BlockInput, on
+; BlockInput, MouseMove
+; MouseGetPos xPosCursor, yPosCursor
+prFocus("timeline") ;brings focus to the timeline.
+wrenchMarkerX := 400
+wrenchMarkerY := 800 ;the upper left corner for where to begin searching for the timeline WRENCH and MARKER icons -- the only unique and reliable visual i can use for coordinates.
+targetdistance := 98 ;Distance from the edge of the marker Wrench to the left edge of the track targeting graphics
+CoordMode Pixel ;, screen  ; IDK why, but it only works like this...
+CoordMode Mouse, screen
+;tooltip, starting
+ImageSearch, xTime, yTime, wrenchMarkerX, wrenchMarkerY, wrenchMarkerX+600, wrenchMarkerY+1000, %A_WorkingDir%\timelineUniqueLocator2.png
+if ErrorLevel = 0
+	{
+	;MouseMove, xTime, yTime, 0
+	;tooltip, where u at son. y %ytime% and x %xtime%
+	;do nothing. continue on.
+	xTime := xTime - targetdistance
+	;MouseMove, xTime, yTime, 0
+	}
+else
+	{
+	tooltip, fail
+	goto resetTrackTargeter
+	}
+;tooltip, continuing...
+
+
+ImageSearch, FoundX, FoundY, xTime, yTime, xTime+100, yTime+1000, %A_WorkingDir%\%v1orA1%_unlocked_targeted_alone.png
+if ErrorLevel = 1
+	ImageSearch, FoundX, FoundY, xTime, yTime, xTime+100, yTime+1000, %A_WorkingDir%\%v1orA1%_locked_targeted_alone.png
+if ErrorLevel = 2
+	{
+	tippy("TARGETED v1 not found")
+	goto trackIsUntargeted
+	}
+if ErrorLevel = 3
+	{
+	tippy("Could not conduct the TARGETED v1 search!")
+	goto resetTrackTargeter
+	}
+if ErrorLevel = 0
+	{
+	;MouseMove, FoundX, FoundY, 0
+	;tooltip, where is the cursor naow 1,,,2
+	;tippy("a TARGETED track 1 was found.")
+	if (v1orA1 = "v1")
+		{
+		send +9 ;command in premiere to "toggle ALL video track targeting."
+		sleep 10
+		if (onOff = "on")
+			{
+			;tippy("turning ON")
+			send +9 ; do it again to TARGET everything.
+			}
+		sleep 10
+		if (numberr > 0)
+			Send +%numberr%
+		}
+	else if (v1orA1 = "a1")
+		{
+		send !9 ;command in premiere to "toggle ALL audio track targeting."
+		sleep 10
+		if (onOff = "on")
+			send !9 ; do it again to TARGET everything.
+		sleep 10
+		if (numberr > 0)
+			Send !%numberr%
+		}
+	goto resetTrackTargeter
+	}
+
+
+trackIsUntargeted:
+;tooltip, track is untargeted,,,2
+if ErrorLevel = 1
+	ImageSearch, FoundX, FoundY, xTime, yTime, xTime+100, yTime+1000, %A_WorkingDir%\%v1orA1%_locked_untargeted_alone.png
+if ErrorLevel = 1
+	ImageSearch, FoundX, FoundY, xTime, yTime, xTime+100, yTime+1000, %A_WorkingDir%\%v1orA1%_unlocked_untargeted_alone.png
+if ErrorLevel = 0
+	{
+	;MouseMove, FoundX, FoundY, 0
+	;tippy("an UNTARGETED track 1 was found.")
+	;tooltip, where is the cursor naow,,,2
+	
+	if (v1orA1 = "v1")
+		{
+		send +9 ;command in premiere to "toggle ALL video track targets." This should TARGET everything.
+		sleep 10
+		if (onOff = "off")
+			send +9 ; do it again to UNTARGET everything.
+		sleep 10
+		if (numberr > 0)
+			Send +%numberr%
+		}
+	if (v1orA1 = "a1")
+		{
+		send !9 ;command in premiere to "toggle ALL audio track targets." This should TARGET everything.
+		sleep 10
+		if (onOff = "off")
+			send !9 ; do it again to UNTARGET everything.
+		sleep 10
+		if (numberr > 0)
+			Send !%numberr%
+		}
+	goto resetTrackTargeter
+	}
+
+resetTrackTargeter:
+; MouseMove, xPosCursor, yPosCursor, 0
+; blockinput, off
+; blockinput, MouseMoveOff
+;sleep 1000
+tooltip,
+tooltip,,,,2
+sleep 10
+}
+;END of TRACK TARGETER
+
+
+
+
+
 
 saveToFile(name) {
 	;code below does not use any fancy variables. It's a bare string. Unfortunately, I can't find a way to make it work better...
@@ -1113,8 +1133,12 @@ return
 
 ;_______________________2ND KEYBOARD IF USING INTERCEPTOR_____________________
 
+
+
 ;#if (getKeyState("F23", "P")) && IfWinActive ahk_exe Adobe Premiere Pro.exe ;have not tested this to see if it works
+;#if (getKeyState("F23", "P")) && (uselayer = 0) ;;you can also use a varibable like so.
 #if (getKeyState("F23", "P"))
+
 F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," and cannot use it for anything else.
 
 
@@ -1147,7 +1171,7 @@ escape::msgbox,,, you pressed escape. this might cause like problems maybe, 0.9
 
 
 
-F1::SFXActions("")
+
 F2::SFXActions("Whoosh19-Short") ;you may not use spaces for filenames of sounds that you want to retreive in this way... since searching in premiere will disregard spaces in a a weird way... returning multiple wrong results....
 F3::SFXActions("Whoosh7-Short")
 F4::SFXActions("Whoosh2-Short")
@@ -1893,4 +1917,4 @@ return
 }
 ;end of CROP CLICK
 
-F16::cropClick() ;testing here.
+;F16::cropClick() ;testing here.

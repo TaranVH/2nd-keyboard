@@ -17,6 +17,21 @@ noTip:
 return
 
 
+^!F12::
+lolvariable := ReturnString()
+;msgbox %lolvariable%
+return
+
+ReturnString()
+{
+	msgbox, doing an actual thingg
+    retStr := "Yipee"  ;Or: retStr = Yipee
+    Return, retStr
+}
+
+
+
+
 
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
@@ -24,7 +39,7 @@ return
 ~+k::
 ;keyboard shortcut assigned to "keyboard shrtcuts panel."
 ;the trouble with CC2017 is that the find box is not automatically selected.
-;and it is not even possible to us a shortcut to select it, either.
+;and it is not even possible to use a shortcut to select it, either.
 ;so this script will do that.
 ;If i launch it with CTRL K, it will NOT select the find box.
 ;(I use shift K primarily, simply for the fact that the shift key is physically larger, and closer to K.)
@@ -38,7 +53,7 @@ MouseGetPos, xpos, ypos ;-----------------------stores the cursor's current coor
 
 winwait, Keyboard Shortcuts, ,0.5
 
-IfWinExist, Keyboard Shortcuts ;if you are just typing a capital K, NOT in the keyboard shortcuts panel, the script won't do anyhting.
+IfWinExist, Keyboard Shortcuts ;if you are just typing a capital K, while NOT in the keyboard shortcuts panel, the script won't do anyhting.
 {
 coordmode, mouse, window
 coordmode, pixel, window
@@ -188,31 +203,160 @@ sleep 10
 
 clickTransformIcon()
 {
-ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class2, ahk_class Premiere Pro 
-MouseMove, Xcorner+83, Ycorner+98, 0
+ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class2, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.
+MouseMove, Xcorner+83, Ycorner+98, 0 ;these numbers should move the cursor to the location of the transform icon. Use the message box below to debug this.
+;msgbox, the cursor should now be positioned directly over the transform icon.
 MouseClick, left
 }
 
+; ;;script to TARGET or UNTARGET any arbitrary track
+; ~F16::target("v1", "on", "all")
+; ~^F16::target("v1", "off", "all")
+; ~+F16::target("v1", "off", "all", 5)
 
+
+; findTimeline()
+; {
+; xTime = 400
+; yTime = 800
+; ImageSearch, FoundX, FoundY, xTime, yTime, xTime+600, yTime+1000, %A_WorkingDir%\timelineUniqueLocator.png
+
+
+
+; }
+;end of findTimeline()
+;moved this to SECOND KEYBOARD main script
+Target(v1orA1, onOff, allNoneSolo := 0, numberr := 0)
+{
+; BlockInput, on
+; BlockInput, MouseMove
+; MouseGetPos xPosCursor, yPosCursor
+wrenchMarkerX := 400
+wrenchMarkerY := 800 ;the upper left corner for where to begin searching for the timeline WRENCH and MARKER icons -- the only unique and reliable visual i can use for coordinates.
+TargetDistance := 98 ;Distance from the edge of the marker Wrench to the left edge of the track targeting graphics
+CoordMode Pixel ;, screen  ; IDK why, but it only works like this...
+CoordMode Mouse, screen
+tooltip, starting
+ImageSearch, xTime, yTime, wrenchMarkerX, wrenchMarkerY, wrenchMarkerX+600, wrenchMarkerY+1000, %A_WorkingDir%\timelineUniqueLocator2.png
+if ErrorLevel = 0
+{
+	;MouseMove, xTime, yTime, 0
+	;tooltip, where u at son. y %ytime% and x %xtime%
+	;do nothing. continue on.
+}
+else
+{
+	tooltip, fail
+	goto resetTrackTargeter
+}
+
+ImageSearch, FoundX, FoundY, xTime-%TargetDistance%, yTime, xTime, yTime+1000, %A_WorkingDir%\%v1orA1%_unlocked_targeted_alone.png
+if ErrorLevel = 1
+	ImageSearch, FoundX, FoundY, xTime-%TargetDistance%, yTime, xTime, yTime+1000, %A_WorkingDir%\%v1orA1%_locked_targeted_alone.png
+if ErrorLevel = 2
+	{
+	tippy("TARGETED v1 not found")
+	goto trackIsUntargeted
+	}
+if ErrorLevel = 3
+	{
+	tippy("Could not conduct the TARGETED v1 search!")
+	goto resetTrackTargeter
+	}
+if ErrorLevel = 0
+	{
+	;tippy("a TARGETED track 1 was found.")
+	if (v1orA1 = "v1")
+		{
+		send +9 ;command in premiere to "toggle ALL video track targeting."
+		sleep 10
+		if (onOff = "on")
+			{
+			tippy("turning ON")
+			send +9 ; do it again to TARGET everything.
+			}
+		sleep 10
+		if (numberr > 0)
+			Send +%numberr%
+		}
+	else if (v1orA1 = "a1")
+		{
+		send !9 ;command in premiere to "toggle ALL audio track targeting."
+		sleep 10
+		if (onOff = "on")
+			send !9 ; do it again to TARGET everything.
+		sleep 10
+		if (numberr > 0)
+			Send !%numberr%
+		}
+				
+		
+	goto resetTrackTargeter
+	}
+
+
+
+
+
+trackIsUntargeted:
+if ErrorLevel = 1
+	ImageSearch, FoundX, FoundY, xTime-%TargetDistance%, yTime, xTime, yTime+1000, %A_WorkingDir%\%v1orA1%_locked_untargeted_alone.png
+if ErrorLevel = 1
+	ImageSearch, FoundX, FoundY, xTime-%TargetDistance%, yTime, xTime, yTime+1000, %A_WorkingDir%\%v1orA1%_unlocked_untargeted_alone.png
+if ErrorLevel = 0
+	{
+	tippy("an UNTARGETED track 1 was found.")
+	if (v1orA1 = "v1")
+		{
+		send +9 ;command in premiere to "toggle ALL video track targets." This should TARGET everything.
+		sleep 10
+		if (onOff = "off")
+			send +9 ; do it again to UNTARGET everything.
+		sleep 10
+		if (numberr > 0)
+			Send +%numberr%
+		}
+	if (v1orA1 = "a1")
+		{
+		send !9 ;command in premiere to "toggle ALL audio track targets." This should TARGET everything.
+		sleep 10
+		if (onOff = "off")
+			send !9 ; do it again to UNTARGET everything.
+		sleep 10
+		if (numberr > 0)
+			Send !%numberr%
+		}
+	goto resetTrackTargeter
+	}
+
+resetTrackTargeter:
+; MouseMove, xPosCursor, yPosCursor, 0
+; blockinput, off
+; blockinput, MouseMoveOff
+tooltip,
+sleep 10
+}
+;END of TRACK TARGETER
 
 
 
 ;script to lock video and audio layers V1 and A1.
 ~F19::
+
+
 BlockInput, on
 BlockInput, MouseMove
 MouseGetPos xPosCursor, yPosCursor
 
 xPos = 400
 yPos = 1050 ;the coordinates of roughly where my timeline usually is located on the screen
-CoordMode Pixel ;, screen  ; Interprets the coordinates below as relative to the screen rather than the active window.
+CoordMode Pixel ;, screen  ; IDK why but it works like this...
 CoordMode Mouse, screen
 
 
 ;you might need to take your own screenshot (look at mine to see what is needed) and save as .png. Mine are done with default UI brightness, plus 150% UI scaling in Wondows.
 
 ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_unlocked_targeted.png
-
 if ErrorLevel = 1
 	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_ALT_unlocked_targeted.png
 if ErrorLevel = 1
@@ -249,14 +393,19 @@ ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, %A_Worki
 	
 if ErrorLevel = 1
 	{
-    tippy("LOCKED V1 could not be found on the screen")
+    tippy("LOCKED TARGETED V1 could not be found")
 	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_ALT_locked_targeted.png
 	}
 if ErrorLevel = 1
 	{
-    tippy("LOCKED V1 could not be found on the screen")
+    tippy("ALT LOCKED TARGETED V1 could not be found on the screen")
 	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_locked_untargeted.png
 	}
+; if ErrorLevel = 1
+	; {
+    ; tippy("ALT LOCKED TARGETED V1 could not be found on the screen")
+	; ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, %A_WorkingDir%\v1_ALT_locked_untargeted.png
+	; }
 if ErrorLevel = 2
 	{
     tippy("Could not conduct search #2")
@@ -364,15 +513,12 @@ else if (colorr = "0x757575") ;again, this values will be different for everyone
 	sleep 5
 	clickTransformIcon()
 	findVFX(foobar)
-	; if foobar = "scale"
-		; findScale(foobar)
-	; else if foobar = "anchor_point"
-		; findAnchor(foobar)
-	Return
+	;untwirled = 1
+	Return, untwirled
 }
 else if (colorr = "0x1D1D1D" || colorr = "0x232323")
 	{
-	tooltip, this is a normal panel color of 0x1d1d1d or %colorr%, which means NO CLIP has been selected! So we need to select something - If you didnt change your UI brightness
+	tooltip, this is a normal panel color of 0x1d1d1d or %colorr%, which means NO CLIP has been selected ; assuming you didnt change your UI brightness. so we are going to select the top clip at playhead.
 	Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
 	sleep 10
 	Send ^p ;this disables "selection follows playhead." I don't know if there is a way to CHECK if it is on or not. 
@@ -382,16 +528,16 @@ else if (colorr = "0x1D1D1D" || colorr = "0x232323")
 	If (dontrestart = 0)
 		{
 		dontrestart = 1
-		goto, restartPoint ;this is stupid but it works. Feel free to improve any of my code; I know it's garbage.
+		goto, restartPoint ;this is stupid but it works. Feel free to improve any of my code.
 		}
-	Return
+	Return reset
 	}
 else
 	{
 	tooltip, %colorr% not expected
 	;play noise
 	resetFromAutoVFX()
-	Return
+	Return reset
 	}
 }
 Return ;from autoscaler part 1
@@ -420,7 +566,7 @@ ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+500, %A_WorkingDir%\%
 
 if ErrorLevel = 2
 	{
-    msgbox,,, ERROR LEVEL 0`nCould not conduct the search,2
+    msgbox,,, ERROR LEVEL 0`nCould not conduct the search,1
 	resetFromAutoVFX()
 	}
 if ErrorLevel = 1

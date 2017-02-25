@@ -89,26 +89,11 @@ MouseGetPos X, Y
 PixelGetColor colorr, %X%, %Y%, RGB
 if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4)
 {
-	;tooltip, COLORRRRRRRRRRRRRRRRR %colorr%
-	;GetKeyState, OutputVar, Rbutton, P
-	;Tooltip, WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW %outputvar%
-	; while GetKeyState(Rbutton, P) = D
-		; {
-		; tooltip, hello
-		; if GetKeyState(Rbutton, P) = U
-			; break
-		; }
-	;sleep 100
-	; tooltip, `nshit
-	; GetKeyState, OutputVar, rbutton, P
-	; ;msgbox,,,rbutton state is %OutputVar%,1
-	; tooltip, "rbutton state is " %OutputVar%
-	; sleep 1000
-	; tooltip,
 	
 	;BREAKTHROUGH -- it looks like a middle mouse click will SELECT / BRING FOCUS TO a timeline panel without doing ANYTHING ELSE like selecting or going through tabs or anything. So although i can't know with AHK which panel is in focus, I can at least BRING focus to a panel... but only if I already know its position... hmmmmmm...
 	;however, i probably CAN just do an image search on the entire screen, for icons that are unique to each panel! then use the coordinates of that to figure out the unique ClassNN! GREAT IDEA, TARAN!
 	click middle ;sends the middle mouse button to BRONG FOCUS TO the timeline, WITHOUT selecting any clips or empty spaces between clips. very noice.
+	
 	; tooltip, % GetKeyState("Rbutton", "P") ;<----this was essential for me to figure out EXACTLY how AHK wanted this query to be phrased. Why should i need the quotation marks?? Why does it return a 1 and 0, but for the other method, it returns U and D? Who the hell knows....
 	; if GetKeyState("$Rbutton") = D ;<--- see, this line did not work AT ALL.
 	if GetKeyState("Rbutton", "P") = 1 ;<----THIS is the only way to phrase this query. Took me 2 hours to figure this shit out.
@@ -142,30 +127,6 @@ theEnd:
 Return ; from right click intercept
 
 
-; $RButton up::Send, {RButton up}
-
-
-; Rbutton up::
-; ;tooltip, do nothing.
-
-; /*
-; msgbox rbutton up
-; MouseGetPos X, Y
-; PixelGetColor colorr, %X%, %Y%, RGB
-; if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7 || colorr = timeline8 || colorr = timeline9)
-; {
-	; msgbox, color matches the timeline. so please block the key...
-	; return
-; }
-; else
-; {
-	; msgbox, do not block the key please
-	; ; sendinput, {Rbutton up}
-	; MouseClick, Right up
-	; return
-; }
-; */
-; return
 
 ;<<<<<<<<< Apply any transition to a clip -- sadly you cannot use this to SAVE a CUSTOM transition >>>>>>>>>>>
 ;(A clip or clips must be selected first.)
