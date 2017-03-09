@@ -4,6 +4,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance force
 
+
 ;%A_ScriptDir%\Lib\  ; Local library - requires v1.0.90+.
 ;%A_MyDocuments%\AutoHotkey\Lib\  ; User library.
 ;path-to-the-currently-running-AutoHotkey.exe\Lib\  ; Standard library.
@@ -370,14 +371,14 @@ F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
 
 
 
-; #IfWinActive ahk_class Notepad++
-; ;instant save and reload for this script -- and i guess not the other ones...?
-; F5::
-; send ^s
-; sleep 100
-; Reload
-; Return
-; #IfWinActive
+#IfWinActive ahk_class Notepad++
+;instant save and reload for this script -- and i guess not the other ones...?
+F5::
+send ^s
+sleep 100
+Reload
+Return
+#IfWinActive
 
 ; #ifwinactive
 ; F7::
@@ -440,18 +441,26 @@ return
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
 #IfWinActive
 ^F1::
+send {SC0E8} ;scan code of an unassigned key
 IfWinNotExist, ahk_class MozillaWindowClass
 	Run, firefox.exe
 if WinActive("ahk_exe firefox.exe")
 	Send ^{tab}
 else
+{
+	;WinRestore ahk_exe firefox.exe
 	WinActivate ahk_exe firefox.exe
+	;sometimes winactivate is not enough. the window is brought to the foreground, but not put in FOCUS. the below code should fix that.
+	WinGet, hWnd, ID, ahk_class MozillaWindowClass
+	DllCall("SetForegroundWindow", UInt, hWnd) 
+}
 Return
 
 
 #IfWinActive
 ;Press SHIFT and macro key 16, and it'll switch between different WINDOWS of firefox.
 +^F1::
+send {SC0E8} ;scan code of an unassigned key
 Process, Exist, firefox.exe
 ;msgbox errorLevel `n%errorLevel%
 	If errorLevel = 0

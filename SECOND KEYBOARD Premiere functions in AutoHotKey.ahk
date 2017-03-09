@@ -148,8 +148,8 @@ else if (panel = "program")
 	Send ^!+4
 else if (panel = "project") ;AKA a "bin" or "folder"
 	Send ^!+1
-; else if (panel = "effect controls")
-	; you can continue adding any panels you might need, here.
+else if (panel = "effect controls")
+	Send ^!+5
 theEnd:
 
 }
@@ -177,7 +177,13 @@ if (A_priorhotkey = "F23" || A_priorhotkey = "~numpadleft" || A_priorhotkey = "~
 	}
 else if (A_priorhotkey = "F22")
 	{
-		;this space reserved for keyboard 3! ... and so on.
+		Gui, kb2: show, NA 
+		Gui, hide
+		;msgbox,,,what is hapening,1
+		GuiControl kb2:,line1, %A_space%FROM THIRD KEYBOARD
+		GuiControl kb2:,line2, %A_space%%A_thishotkey%
+		GuiControl kb2:,line3, %A_space%%functionused%(`"%yeah%`")
+		SetTimer,revealtimer2,-2000
 	}
 else if (alwaysshow = 1)
 	{
@@ -463,7 +469,11 @@ send +{tab}
 preset(item)
 {
 
+
 Keyshower(item,"preset") ;YOU DO NOT NEED THIS LINE. -- it simply displays keystrokes on the screen for the sake of tutorials.
+
+ifWinNotActive ahk_exe Adobe Premiere Pro.exe
+	goto theEnding
 
 ;Setting the coordinate mode is really important. This ensures that pixel distances are consistant for everything, everywhere.
 coordmode, pixel, screen
@@ -495,36 +505,22 @@ WinGetClass, class, ahk_id %Window%
 ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
 ;;my results:  59, 1229, 252, 21,      Edit1,    ahk_class Premiere Pro
 
-;now we have found a lot of useful informaiton about this find box. Turns out, we don't need most of it... just the X and Y coordinates of the "upper left" corner...
+;now we have found a lot of useful informaiton about this find box. Turns out, we don't need most of it...
+;we just need the X and Y coordinates of the "upper left" corner...
 
 ;comment in the following line to get a message box of your current variable values. The script will not advance until you dismiss the message box.
 ;MsgBox, xx=%XX% yy=%YY%
 
 MouseMove, XX-30, YY, 0 ;-----------------------moves cursor onto the magnifying glass
 
-
-; below is part of the old code, which is only usable if the "Edit7" never changes.... which it does.
-; ControlGetPos, X, Y, Width, Height, Edit7, ahk_class Premiere Pro ;highlights Premier's effects panel SEARCH BAR/FIND BOX specifically. (info gotten from window spy.) For you, it may have a different name.
-
-/*
-;this code works, but just wastes time, since we don't actually need to clear the text and then select the box again. The built in premiere shortcut already selects the box for us.
-MouseMove, XX+Width-5, YY+Height-20, 0 ;---------moves cursor to the X
 sleep 5
-MouseClick, left, , , 1 ;------------------------clicks on X, which deletes all text in the find box.
-;msgbox, was X clicked?
-MouseMove, XX-30, YY, 0 ;-----------------------moves cursor to the magnifying glass, which will select the whole find box again.
-sleep 5
-MouseClick, left, , , 1 ;------------------------clicks on magnifying glass
-;msgbox, was mag clicked?
-*/
-
-sleep 5
+;This types in the text you wanted to search for. Like "pop in." We can do this because the entire find box text was already selected by Premiere.
 Send %item%
-;This types in the text you wanted to search for. Like "pop in." We can do this because the entire find box text was already selevted by Premiere.
+
 
 sleep 30
-MouseMove, 52, 65, 0, R ;----------------------relative to the position of the magnifying glass (established earlier,) this moves the cursor down and directly onto the effect's icon
-
+MouseMove, 52, 65, 0, R ;----------------------relative to the position of the magnifying glass (established earlier,) this moves the cursor down and directly onto the preset's icon
+;msgbox, The cursor should be directly on top of the preset's icon. `n If not, the script needs modification.
 MouseGetPos, iconX, iconY, Window, classNN ;---now we have to figure out the ahk_class of the current panel we are on. It used to be DroverLord - Window Class14, but the number changes anytime you move panels around... so i must always obtain the information anew.
 WinGetClass, class, ahk_id %Window% ;----------"ahk_id %Window%" is important for SOME REASON. if you delete it, this doesnt work.
 ;msgbox, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
@@ -537,9 +533,11 @@ MouseMove, iconX, iconY, 0 ;--------------------moves cursor BACK onto the effec
 sleep 35
 MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---drags this effect to the cursor's pervious coordinates, which should be above a clip.
 sleep 10
-Send ^+!0 ;--------------------------------------CTRL SHIFT ALT 0 (zero) - set in Premiere to returns focus to the timeline. doesn't work for multiple timelines :(
+MouseClick, middle, , , 1
+;Send ^+!0 ;--------------------------------------CTRL SHIFT ALT 0 (zero) - set in Premiere to returns focus to the timeline. doesn't work for multiple timelines :(
 ;MouseClick, left, , , 1 ;------------------------returns focus to the timeline. Can be annoying if it selects something...
-BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL+ALT+DEL will still work!! Cool.
+BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL+ALT+DEL will still work if you get stuck!! Cool.
+theEnding:
 }
 ;END of preset()
 
@@ -549,6 +547,7 @@ BlockInput, off ;do not comment out or delete this line -- or you won't regain c
 ;All of these refer to presets I have already created and named in Premiere
 ;note that using ALT for these is kind of stupid... they can interfere with menus.
 ;ALT C, for example, will always open Premiere's CLIP menu. So I can't use that anywhere.
+;Using the WIN key is also ill-advised.
 
 
 ^!+f::effectsPanelType("") ;set to macro key G1 on my logitech G15 keyboard. ;This just CLEARS the effects panel search bar s o that you can type something in.
@@ -573,15 +572,16 @@ BlockInput, off ;do not comment out or delete this line -- or you won't regain c
 !]::preset("DeHummer Preset") ;macro key G12. This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.
 
 ;IMPORTANT NOTE:
-;for all of the above shortcuts, and many others, I have mapped them in premiere, in the new visual keyboard shortcuts mapper, to various
-;commands from the CAPTURE PANEL. This is becasue I needed to be able to visualize which keystrokes were being used by AHK and other programs
-;OUTSIDE of premiere, and premiere provides no way of doing this. It's a feature I should ask for...
-
-;I NEVER USE the capture panel.
+;for all of the above shortcuts, and many others, I have mapped them in premiere,
+;in the new visual keyboard shortcuts mapper, to various useless commands from the
+;CAPTURE PANEL. (which I never use) This is becasue I needed to be able to visualize
+;which keystrokes were being used by AHK and other programs OUTSIDE of premiere,
+;and premiere provides no way of doing this. It's a feature I should ask for...
 
 
 /*
-See "Windows Mod - various functions.ahk" for a much more complete explanation of the following macro key assignments
+See "Windows Mod - various functions.ahk" for a much more complete
+explanation of the following macro key assignments
 G13: CTRL SHIFT TAB
 G14: Activate Notepad++
 G15: Activae Word
@@ -1080,8 +1080,23 @@ Return
 
 #ifwinactive ;everything below this line can happen in any application!
 runexplorer(foo){
-run, %foo%
+; send {ctrl} ;sending even a single keystroke from the secondary keyboard will prevents the taskbar icon from sometimes flashing pointlessly rather than opening.
+send {SC0E8} ;scan code of an unassigned key
+Run, %foo%
+
 keyShower(foo, "runExplorer")
+; WinWait, ahk_pid %PID%, , 3
+; ;TrayTip, , Activating PID %PID% (%TargetNameOnly%)
+; WinActivate, ahk_pid %PID%
+
+; sleep 10
+; WinGet, winid ,, A ; <-- need to identify window A = acitive
+; sleep 10
+; WinActivate ahk_id %winid%
+
+
+; run, %foo%
+
 ; run, % foo ;the problem with this is that sometims the window is highlighted red in the app tray, but it doesn't actually open itself...
 ; explorerpath:= "explorer " foo
 ; Run, %explorerpath% ;the problem here is that it opens a new window instead of switching to the old one...
@@ -1393,6 +1408,7 @@ SC0FF::msgbox sc0FF ...this does not register.
 ;and if <premiere> is running <--add that later
 F22::
 FileRead, SavedExplorerAddress, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
+send {SC0E8} ;scan code of an unassigned key. This is important to prevent taskbar flashing.
 return
 
 ;Z:\Linus\1. Linus Tech Tips\Pending\Luke Personal Rig Update
@@ -1464,6 +1480,64 @@ return
 ;~~~~~~~~~END OF 3RD KEYBOARD (just a USB numpad) USING INTERCEPTOR~~~~~~~~~~
 
 
+;~~~~~~~~~BEGIN 4TH KEYBOARD using F21
+#if (getKeyState("F21", "P"))
+F21::return 
+
+
+numpad0::
+prFocus("program") ;the following shortcut only works if the program monitor is in focus...
+send ^{numpadEnter} ;zoom to fit program monitor
+prFocus("timeline")
+return
+numpad1::
+prFocus("program")
+send ^{numpadSub} ;zoom out program monitor
+prFocus("timeline")
+return
+numpad2::
+prFocus("program")
+send ^{numpadAdd} ;zoom in program monitor
+prFocus("timeline")
+return
+
+numpad3::
+numpad4::
+numpad5::
+numpad6::
+numpad7::
+numpad8::
+Numpad9::
+NumpadDiv::msgbox,,, 4th keyboard %A_thishotkey%,0.6
+
+backspace::
+prFocus("program")
+send ^+4
+tippy("wat")
+prFocus("timeline")
+return
+NumpadSub::
+prFocus("program")
+send ^+3
+prFocus("timeline")
+return
+NumpadAdd::
+prFocus("program")
+send ^+2
+prFocus("timeline")
+return
+TAB::
+prFocus("program")
+send ^+1
+prFocus("timeline")
+return
+
+NumpadEnter::tippy("nope")
+
+
+
+numpadMult::
+NumpadDot::msgbox,,, 4th keyboard %A_thishotkey%,0.6
 
 
 
@@ -1471,6 +1545,41 @@ return
 
 
 
+
+#if
+;~~~~~~~END OF 4TH KEYBOARD (another USB numpad) USING INTERCEPTOR~~~~~~~~~
+
+
+; https://www.reddit.com/r/MechanicalKeyboards/comments/4kf2gk/review_jellycomb_mechanical_numpad/
+; https://autohotkey.com/board/topic/29542-rebinding-alt-061/
+; this is for the jellycomb numpad 4th keyboard TOP ROW of keys:
+$*~LAlt::
+Loop 10
+	Hotkey, % "*Numpad" A_Index-1, HandleNum, on
+keywait, LAlt ; replace with "Sleep 100" for an alternative
+Loop 10
+	Hotkey, % "*Numpad" A_Index-1, HandleNum, off
+If (Ascii_Unicode_Input = "061")
+	msgbox,,, you pressed the equals key!,1
+If (Ascii_Unicode_Input = "040")
+{
+	prFocus("Effect Controls") ;the following shortcut only works if the Effect Controls panel is in focus...
+	send ^!p ;shortcut for pin to clip
+	prFocus("timeline")
+}
+If (Ascii_Unicode_Input = "041")
+	msgbox,,, you pressed the close parenthisesis key!,1
+Ascii_Unicode_Input := ""
+return
+
+HandleNum:
+Ascii_Unicode_Input .= SubStr( A_ThisHotkey, 0 )
+return
+				
+
+				
+				
+				
 #IfWinActive
  
  
@@ -1708,6 +1817,10 @@ return
 
 InstantExplorer(f_path)
 {
+
+;put code here to find the first / and remove the string before it. otherwise you can't see the final folder name
+Keyshower(f_path,"InstExplor")
+
 f_path := """" . f_path . """" ;this adds quotation marks around everything so that it works as a string, not a variable.
 ;msgbox, f_path is %f_path%
 SoundBeep, 900, 400
@@ -1918,3 +2031,6 @@ return
 ;end of CROP CLICK
 
 ;F16::cropClick() ;testing here.
+
+
+

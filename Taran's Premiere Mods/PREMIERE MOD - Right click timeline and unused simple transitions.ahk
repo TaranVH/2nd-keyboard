@@ -1,5 +1,6 @@
 #SingleInstance force ; only 1 instance of this script may run at a time.
 #InstallMouseHook
+#InstallKeybdHook
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;this line of code means that everything BELOW will only happen inside of Premiere. (unless changed later)
 
 CoordMode, Mouse, screen
