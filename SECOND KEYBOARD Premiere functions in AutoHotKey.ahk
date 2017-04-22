@@ -8,6 +8,7 @@ SetWorkingDir C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard supp
 
 Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyboard!
 #SingleInstance force ;only one instance of this script may run at a time!
+#MaxHotkeysPerInterval 2000
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ; HELLO, poeple who want info about making a second keyboard, using LUAmacros! Scroll down past all this stuff until you get to LINE 210.
@@ -153,7 +154,8 @@ else if (panel = "effect controls")
 theEnd:
 
 }
-;end of focusing panel
+;end of prFocus()
+
 
 #ifwinactive
 Keyshower(yeah, functionused := "", alwaysshow := 0) ;very badass function that shows key presses and associated commands, both from the primary and secondary keyboards (keyboard 2 must be configured using intercept.exe!)
@@ -549,21 +551,22 @@ theEnding:
 ;ALT C, for example, will always open Premiere's CLIP menu. So I can't use that anywhere.
 ;Using the WIN key is also ill-advised.
 
-
-^!+f::effectsPanelType("") ;set to macro key G1 on my logitech G15 keyboard. ;This just CLEARS the effects panel search bar s o that you can type something in.
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
+^+F12::effectsPanelType("")
+F20::effectsPanelType("") ;set to macro key G1 on my logitech G15 keyboard. ;This just CLEARS the effects panel search bar s o that you can type something in.
 ^!w::preset("Warp Stabilizer Preset") ;macro key G2. I wish it would also press "analyse..."
 ^!+p::effectsPanelType("presets") ;set to macro key G3. ;Types in "presets," which reveals your own entire list of presets.
 
 ;^!g::preset("Lumetri Color BLANK") ;macro key G4. This is a completely BLANK lumetri preset, untwirled and ready for me to change specific values.
 ;^!h::preset("Lumetri shadows up") ;macro key G5. This preset increases brightness, contrast, and saturation slightly, and adds a slight vingette. I use this often
 
-#!l::audioMonoMaker("left") ;macro key G4. Using the WIn key is prooobably a terrible idea; I do not reccomend it...... :(
-#!k::audioMonoMaker("right") ; macro key G5. ;
+^+l::audioMonoMaker("left") ;macro key G4. Using the WIn key is prooobably a terrible idea; I do not reccomend it...... :(
+^+r::audioMonoMaker("right") ; macro key G5. ;
 
 ^!j::preset("Lumetri BRIGHT") ;macro key G6. This lumetri preset adds a LOT of brightness, and saturation to balance. I use it for very dark shots.
 
 
-!l::preset("2.4 limiter") ;macro key G8. A compressor and limiter for the audio, to keep it from clipping at 0dB.
+;!l::preset("2.4 limiter") ;macro key G8. A compressor and limiter for the audio, to keep it from clipping at 0dB.
 ;Macro key G9 is set completely in the keyboard's software. It is simply: {F2}{7}{enter}, which increases the gain of any selected clips by 7dB.
 
 
@@ -653,7 +656,7 @@ return
 ;#if
 
 ; control shift r = reverse selected clip
-~^+r::
+~!r::
 Send ^r{tab}{tab}{space}{enter}
 return
 
@@ -695,6 +698,9 @@ SFXActions(leSound)
 keyShower(leSound, "insertSFX")
 CoordMode, mouse, Screen
 CoordMode, pixel, Screen
+coordmode, Caret, screen
+
+
 BlockInput, mouse
 BlockInput, On
 SetKeyDelay, 0 ;for instant writing of text
@@ -712,8 +718,23 @@ tooltip, waiting for premiere to select that bin....
 ;msgbox, waiting for premiere to select that bin....
 sleep 20
 ;msgbox how about naow?
+; 
 Send ^b ;CTRL B -- set this in premiere's shortcuts panel to "select find box." Make sure there are NO OTHER conflicting shortcuts on this key, like "create new bin," which would stop it from working.
+; send +{backspace} ;to delete anything that might be written in the bin, so that the caret coordinates are always accurate.
 
+
+; sleep 10
+; MouseMove, -6000, 250, 0 
+; MouseMove, %A_CaretX%, %A_CaretY%, 0
+; sleep 500
+; msgbox, cursor should be at %A_CaretX%, %A_CaretY%
+; MouseGetPos, , , Window, classNN
+; WinGetClass, class, ahk_id %Window%
+; ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, SubWindow
+; MouseMove, XX-30, YY, 0
+; sleep 500
+
+; msgbox, okay now what
 Send %leSound% ;types in the name of the sound effect you want - should do so instantaneously.
 tooltip, waiting for premiere to load......
 send ^!1 ;source assignment preset 1, again.
@@ -1103,7 +1124,7 @@ keyShower(foo, "runExplorer")
 
 ;RunOrActivate(foo) ;this thing just acts super slowly and horribly.... jeeezz...
 }
-
+;; end of runexplorer()
 
 ;obsolete... i THINK???
 SendKey(theKEY, fun := "", sometext := ""){
@@ -1336,12 +1357,12 @@ pause::msgbox, is this the PAUSE key?? IDK
 Break::msgbox, Maybe THIS is the pause/break key?? WHAT CAN I BELEVE ANYMORE??
 
 insert::runexplorer("Z:\Linus\1. Linus Tech Tips\Pending")
-home::runexplorer("Z:\Linus\6. Channel Super Fun")
-pgup::runexplorer("Z:\Linus\5. Fast As Possible\1. Pending")
+home::runexplorer("Z:\Linus\5. Fast As Possible\1. Pending")
+pgup::runexplorer("Z:\Linus\6. Channel Super Fun")
 
 delete::runexplorer("N:\Linus Tech Tips")
-end::runexplorer("N:\Channel Super Fun")
-pgdn::runexplorer("N:\Fast As Possible")
+end::runexplorer("T:\Linus Tech Tips") ;runexplorer("N:\Fast As Possible")
+pgdn::runexplorer("N:\Channel Super Fun")
 
 up::preset("push up")
 down::preset("push down")
@@ -1537,18 +1558,11 @@ NumpadEnter::tippy("nope")
 
 
 numpadMult::
-NumpadDot::msgbox,,, 4th keyboard %A_thishotkey%,0.6
-
-
-
-
-
-
+NumpadDot::send !p ;choose poster frame shortcut in Premiere
 
 
 #if
 ;~~~~~~~END OF 4TH KEYBOARD (another USB numpad) USING INTERCEPTOR~~~~~~~~~
-
 
 ; https://www.reddit.com/r/MechanicalKeyboards/comments/4kf2gk/review_jellycomb_mechanical_numpad/
 ; https://autohotkey.com/board/topic/29542-rebinding-alt-061/
@@ -1576,7 +1590,33 @@ HandleNum:
 Ascii_Unicode_Input .= SubStr( A_ThisHotkey, 0 )
 return
 				
+; ;BEGIN 5th keyboard - jelly comb compact with F20
+; #if (getKeyState("F20", "P"))
+; F21::return 
 
+
+; numpad1::
+; numpad2::
+; numpad3::
+; numpad4::
+; numpad5::
+; numpad6::
+; numpad7::
+; numpad8::
+; Numpad9::
+; numpad0::
+
+; NumpadDiv::
+; numpadMult::
+; numpadadd::
+; numpadsub::
+; NumpadDot::msgbox,,, 5th keyboard %A_thishotkey%,0.6
+; backspace::msgbox,,,lolbackspace,1
+; n::msgbox,,,was N,1 ;this was remapped in intercep.exe from NUMLOCK to N
+; NumpadEnter::msgbox,,,enterrr,1
+
+; #if
+; ;end 5th keyboard with F20
 				
 				
 				
@@ -1979,6 +2019,7 @@ IfMsgBox Yes
 	Run %Fpath%
 	}
 }
+;; end of openlatestfile()
 
 ; ; USING THE SCRIPT
 ; !n::
@@ -1986,6 +2027,7 @@ IfMsgBox Yes
 ; openlatestfile(examplePath, ".prproj") ;<--- notice how i INCLUDE the period in the parameters. IDK if it might be better to add the period later.
 ; return
 
+~F6::cropClick()
 
 ;;;CLICK ON THE 'CROP' TRANSFORM BUTTON IN ORDER TO SELECT THE CROP ITSELF
 cropClick()

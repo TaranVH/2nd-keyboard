@@ -4,6 +4,27 @@
 SetWorkingDir C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files
 ;Set the above string to your own personal support file folder full of images.
 ;The resulting string is: %A_WorkingDir%
+Menu, Tray, Icon, shell32.dll, 14
+
+
+/*
+IMPORTANT NOTE:	THIS SCRIPT IS NO LONGER IN USE. I DON'T SUGGEST YOU USE IT EITHER.
+I created this new script to test a different method of getting to
+each of the Motion effect's hot text fields - by using TAB to cycle through
+them. The issue with this is that it requires Premiere to not be laggy and
+slow. Unfortunately, Premiere is laggy and slow. So sometimes these scripts just
+don't work, or don't reach the correct hot text.
+
+This code is more robust than the other version, but I am no longer using it
+or upgrading it. I'm keeping it around for the sake of cannibalizing the code
+and some of the functions and stuff.
+
+Even though the other version, which uses imagesearch, is slightly slower, it is
+far more accurate. So that's what I'm using now.
+
+
+*/
+
 
 
 Tippy(tipsHere, wait:=333)
@@ -176,7 +197,7 @@ Tippy("transform icon - F5")
 BlockInput, On
 SetKeyDelay, 0
 MouseGetPos, xpos, ypos
-ControlGetPos, X, Y, Width, Height, DroverLord - Window Class2, ahk_class Premiere Pro, DroverLord - TabPanel Window
+ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window
 X := X+85
 Y := Y+100
 MouseMove, X, Y, 0
@@ -223,7 +244,7 @@ sleep 10
 
 clickTransformIcon()
 {
-ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class2, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.
+ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.
 ;this info might CHANGE every time you add a panel, so you may need a more robust method than this...
 MouseMove, Xcorner+83, Ycorner+98, 0 ;these numbers should move the cursor to the location of the transform icon. Use the message box below to debug this.
 ;msgbox, the cursor should now be positioned directly over the transform icon.
@@ -625,6 +646,7 @@ prFocus("Effect Controls")
 Sendinput {tab %foobar%}
 ;msgbox,,, did that work? the correct thing should be highlighted now,1
 ;msgbox, foobar is %foobar%
+sleep 20
 sleep foobar * 30 ;i have to wait for premiere to execute all those TABs...
 ; sleep 500
 GetKeyState, stateFirstCheck, %VFXkey%, P

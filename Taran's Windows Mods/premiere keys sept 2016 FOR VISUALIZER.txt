@@ -14,22 +14,22 @@ BEGIN!
 [G2]preset("Warp")							&ctrl alt w
 [G3]Effects find box "presets"				&ctrl alt shift p
 
-[G4]preset("lumetri blank")					&ctrl alt g
-[G5]preset("lumetri shadows up")			&ctrl alt h
-[G6]preset("lumetri BRIGHT")				&ctrl alt j
+[G4]Monomaker LEFT							&ctrl shift l
+[G5]Monomaker RIGHT							&ctrl shift r
+[G6]Reselect current clip mod				&???
 
-[G7]custom preset 1							&F17
+[G7]Rotation mod							&F17
 [G8]Lock/unlock V1/A1 mod					&F19
 [G9]???										&???
 
-[G10]custom preset 2						&F18
+[G10]Horizontal anchor mod					&F18
 [G11]Instant rescale mod					&F14
-[G12]Instant transform point change mod		&F15
+[G12]Vertical Anchor mod					&F15
 
-[shift G13]save app shortcut??				&shift F13
 [G13]"back" (differs per app.)				&F13
-
-[G14]Notepad++								&Ctrl F6
+save variable app				&Ctrl Shift F6
+save variable appp				&Shift Ctrl F6
+[G14]Variable App							&Ctrl F6
 [G15]Word									&Ctrl F4
 
 [G16]Firefox								&Ctrl F1

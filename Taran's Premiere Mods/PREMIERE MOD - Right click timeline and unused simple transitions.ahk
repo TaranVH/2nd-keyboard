@@ -15,6 +15,8 @@ timeline1 = 0x414141 ;timeline color inside the in/out points ON a targeted trac
 timeline2 = 0x313131 ;timeline color of the separating LINES between targeted AND non targeted tracks inside the in/out points
 timeline3 = 0x1b1b1b ;the timeline color inside in/out points on a NON targeted track
 timeline4 = 0x202020 ;the color of the bare timeline NOT inside the in out points
+timeline5 = 0xDFDFDF ;the color of a SELECTED blank space on the timeline, NOT in the in/out points
+timeline6 = 0xE4E4E4 ;the color of a SELECTED blank space on the timeline, IN the in/out points
 
 Tippy(tipsHere, wait:=3000) ;will create and then delete a tooltip
 {
@@ -88,7 +90,9 @@ Rbutton::
 ;tooltip, you are right clicking....
 MouseGetPos X, Y
 PixelGetColor colorr, %X%, %Y%, RGB
-if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4)
+if (colorr = timeline5 || colorr = timeline6)
+	send ^!d ;set in premiere to DESELECT
+if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6)
 {
 	
 	;BREAKTHROUGH -- it looks like a middle mouse click will SELECT / BRING FOCUS TO a timeline panel without doing ANYTHING ELSE like selecting or going through tabs or anything. So although i can't know with AHK which panel is in focus, I can at least BRING focus to a panel... but only if I already know its position... hmmmmmm...
@@ -106,6 +110,8 @@ if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = t
 			{
 			Send \ ;in premiere, this is set to "move playhead to cursor."
 			Tooltip, Right click playhead mod!
+			sleep 1
+			;Send {left} ;this will attempt to move 1 frame backwards, but it is held by the other command, so instead it just plays the audio for the current frame!! Delete if you don't want this.
 			sleep 16
 			; if GetKeyState("$Rbutton") = U
 			if GetKeyState("Rbutton", "P") = 0

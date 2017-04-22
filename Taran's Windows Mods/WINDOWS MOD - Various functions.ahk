@@ -5,6 +5,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance force
 
 
+
+
 ;%A_ScriptDir%\Lib\  ; Local library - requires v1.0.90+.
 ;%A_MyDocuments%\AutoHotkey\Lib\  ; User library.
 ;path-to-the-currently-running-AutoHotkey.exe\Lib\  ; Standard library.
@@ -14,8 +16,8 @@ Menu, Tray, Icon, shell32.dll, 16 ;this changes the icon into a little laptop th
 
 
 
-savedCLASS = "ahk_class Photoshop"
-savedEXE = "photoshop.exe"
+savedCLASS = "ahk_class Notepad++"
+savedEXE = "notepad++.exe"
 
 GroupAdd, ExplorerGroup, ahk_class #32770 ;This is for all the Explorer-based "save" and "load" boxes, from any program!
 
@@ -322,6 +324,10 @@ return
 explorerLaunch(foo)
 {
 Run, % foo
+sleep 10
+Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;windows shortcut to resize name feild to fit.
+;alt v o down enter will sort by date modified, but it is stupid...
+
 ;I'm commenting this code out for now because it hasn't been working lately...
 ; if WinActive("ahk_exe explorer.exe")
 	; {
@@ -368,7 +374,12 @@ F3::send ^w ;control w, which closes a tab
 F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
 #IfWinActive
 
-
+#IfWinActive ahk_class Chrome_WidgetWin_1
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w ;control w, which closes a tab
+F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
+#IfWinActive
 
 
 #IfWinActive ahk_class Notepad++
@@ -414,21 +425,26 @@ global savedCLASS = "ahk_class "lolclass
 global savedEXE = lolexe ;is this the way to do it? IDK.
 }
 
+;SHIFT + macro key G14
++^F6::
+;msgbox,,,saving,.3
+windowSaver()
+msgbox,,, class = %savedCLASS% `nEXE = %savedEXE%, 0.6
+Return
 
-; ;F13 is pressed with macro key G13. but this one includes SHIFT
-; +F13::
-; windowSaver()
-; msgbox,,, class = %savedCLASS% `nEXE = %savedEXE%, 0.5
-; Return
+;Macro key G14
+^F6::
+if WinActive("ahk_class Notepad++")
+	Send ^{tab}
+windowSwitcher(savedCLASS, savedEXE)
+return
 
-;;F13 is pressed with macro key G13
-;F13::windowSwitcher(savedCLASS, savedEXE)
 
 #IfWinActive
 F13::
 if WinActive("ahk_class MozillaWindowClass")
 	Send ^+{tab}
-	if WinActive("ahk_class Chrome_WidgetWin_1")
+if WinActive("ahk_class Chrome_WidgetWin_1")
 	Send ^+{tab}
 if WinActive("ahk_class Notepad++")
 	Send ^+{tab}
@@ -450,7 +466,8 @@ else
 {
 	;WinRestore ahk_exe firefox.exe
 	WinActivate ahk_exe firefox.exe
-	;sometimes winactivate is not enough. the window is brought to the foreground, but not put in FOCUS. the below code should fix that.
+	;sometimes winactivate is not enough. the window is brought to the foreground, but not put into FOCUS.
+	;the below code should fix that.
 	WinGet, hWnd, ID, ahk_class MozillaWindowClass
 	DllCall("SetForegroundWindow", UInt, hWnd) 
 }
@@ -493,8 +510,18 @@ else
 	WinActivate ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
 Return
 
-
 ^+F2::
+IfWinNotExist, ahk_class CabinetWClass
+	Run, explorer.exe
+
+GroupAdd, taranexplorers, ahk_class CabinetWClass
+if WinActive("ahk_exe explorer.exe")
+	GroupActivate, taranexplorers ;but NOT most recent.
+else
+	WinActivatebottom ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
+Return
+
+!^F2::
 ;closes all explorer windows :/
 WinClose,ahk_group taranexplorers
 return
@@ -538,15 +565,15 @@ else
 Return
 
 
-#IfWinActive
-^F6::
-IfWinNotExist, ahk_class Notepad++
-	Run, notepad++.exe
-if WinActive("ahk_class Notepad++")
-	Send ^{tab}
-WinActivate ahk_class Notepad++
+; #IfWinActive
+; ^F6::
+; IfWinNotExist, ahk_class Notepad++
+	; Run, notepad++.exe
+; if WinActive("ahk_class Notepad++")
+	; Send ^{tab}
+; WinActivate ahk_class Notepad++
 
-return
+; return
 
 
 ;+++++END OF INSTANT APPLICATION SWITCHER SCRIPTS;+++++++++++++++++++++++++++++++++++++
@@ -588,6 +615,10 @@ Send {F4}
 sleep 10
 Send {alt up}
 Return
+
+;script to resize name field so the entire field is readable
+F7::Send,{LCtrl down}{NumpadAdd}{LCtrl up}
+
 
 
 #IfWinActive ahk_exe explorer.exe

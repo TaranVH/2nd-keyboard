@@ -4,7 +4,7 @@
 SetWorkingDir C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files
 ;Set the above string to your own personal support file folder full of images.
 ;The resulting string is: %A_WorkingDir%
-
+Menu, Tray, Icon, shell32.dll, 15
 
 Tippy(tipsHere, wait:=333)
 {
@@ -31,6 +31,25 @@ ReturnString()
 
 
 
+prFocus(panel) ;this function allows you to have ONE spot where you define your personal shortcuts that "focus" panels in premiere.
+{
+;panel := """" . panel . """" ;this adds quotation marks around the parameter so that it works as a string, not a variable.
+;Send ^!+1 ;bring focus to a random bin, in order to "clear" the current focus on any and all bins
+Send ^!+7 ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
+if (panel = "effects")
+	goto theEnd ;Send ^!+7 ;do nothing. the shortcut has already been pressed.
+else if (panel = "timeline")
+	Send ^!+0 ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
+else if (panel = "program")
+	Send ^!+4
+else if (panel = "project") ;AKA a "bin" or "folder"
+	Send ^!+1
+else if (panel = "effect controls")
+	Send ^!+5
+theEnd:
+
+}
+;end of focusing panel
 
 
 
@@ -156,35 +175,58 @@ Tippy("transform icon - F5")
 BlockInput, On
 SetKeyDelay, 0
 MouseGetPos, xpos, ypos
-ControlGetPos, X, Y, Width, Height, DroverLord - Window Class2, ahk_class Premiere Pro, DroverLord - TabPanel Window
+ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window
 X := X+85
 Y := Y+100
 MouseMove, X, Y, 0
+;MSGBOX, HELLO
 MouseClick, left
 MouseMove, %xpos%, %ypos%, 0
 BlockInput, Off
 Return
 
+~F7::
+Tippy("masterselect()")
+masterselect()
+return
 
-;EFFECT CONTROLS PANEL --- MOTION EFFECT TRIANGLE UNFURL CLICKER;
-;it's not intelligent though. it will only toggle.
-;need to somehow combine this with the intelligent functionality below.
-;watch the associated video for more information!
-;   
-
-~F4::
-Tippy("triangle unfurl - F4")
-BlockInput, on
-BlockInput, MouseMove
+masterSelect()
+{
+BlockInput, On
 SetKeyDelay, 0
 MouseGetPos, xpos, ypos
-ControlGetPos, X, Y, Width, Height, DroverLord - Window Class2, ahk_class Premiere Pro, DroverLord - TabPanel Window
-MouseMove, X+20, Y+94, 0
-MouseClick
-;MouseMove, %xpos%, %ypos%, 0
-BlockInput, off
-BlockInput, MouseMoveOff
-Return
+ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window
+X := X+85
+Y := Y+100
+MouseMove, X, Y, 0
+MSGBOX, trying to select masterclip
+MouseClick, left
+MouseMove, %xpos%, %ypos%, 0
+BlockInput, Off
+}
+
+
+~f4::untwirl()
+
+
+; ;EFFECT CONTROLS PANEL --- MOTION EFFECT TRIANGLE UNFURL CLICKER;
+; ;it's not intelligent though. it will only toggle.
+; ;need to somehow combine this with the intelligent functionality below.
+; ;watch the associated video for more information!
+; ;   
+; ~F4::
+; Tippy("triangle unfurl - F4")
+; BlockInput, on
+; BlockInput, MouseMove
+; SetKeyDelay, 0
+; MouseGetPos, xpos, ypos
+; ControlGetPos, X, Y, Width, Height, DroverLord - Window Class2, ahk_class Premiere Pro, DroverLord - TabPanel Window
+; MouseMove, X+20, Y+94, 0
+; MouseClick
+; ;MouseMove, %xpos%, %ypos%, 0
+; BlockInput, off
+; BlockInput, MouseMoveOff
+; Return
 
 
 marker(){
@@ -461,6 +503,98 @@ return
 global VFXkey = "F17"
 instantVFX("rotation")
 return
+
+
+
+untwirl()
+{
+tooltip, untwirl is starting now
+dontrestart = 0
+
+;the code below serves to save a lot of time in determining if a clip is selected or not.
+prFocus("Effect Controls")
+Send {tab}
+if (A_CaretX = "")
+{
+	;No Caret (blinking vertical line) can be found. Therefore, no clip is selected.
+	Send ^p ;"selection follows playhead,"
+	sleep 10
+	Send ^p
+	If (dontrestart = 0)
+		{
+		dontrestart = 1
+		goto, restartPoint2
+		}
+	;otherwise,
+	Return "reset"
+}
+
+
+
+restartPoint2:
+ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro ;This is the ClassNN of the effect controls panel. Use Window Spy to figure it out.
+;I might need a far more robust way of ensuring the effect controls panel has been located, in the future.
+
+;move mouse to expected triangle location. this is a VERY SPECIFIC PIXEL which will be right on the EDGE of the triangle when it is OPEN.
+;This takes advantage of the anti-aliasing between the color of the triangle, and that of the background behind it.
+;these pixel numbers will be DIFFERENT depending upon the RESOLUTION and UI SCALING of your monitor(s)
+YY := Ycorner+99 ;143??
+XX := Xcorner+19
+MouseMove, XX, YY, 0
+sleep 10
+
+PixelGetColor, colorr, XX, YY
+
+if (colorr = "0x353535")
+{
+	tooltip, color %colorr% means closed triangle. Will click and then SCALE SEARCH
+	blockinput, Mouse
+	Click XX, YY
+	sleep 5
+	Return "untwirled"
+	;clickTransformIcon()
+	;findVFX(foobar)
+}
+else if (colorr = "0x757575") ;again, this values will be different for everyone. check with window spy. This color simply needs to be different from the color when the triangle is closed
+{
+	;tooltip, %colorr% means OPENED triangle. SEARCHING FOR SCALE
+	blockinput, Mouse
+	sleep 5
+	;untwirled = 1
+	
+	Return "untwirled"
+	;clickTransformIcon()
+	;findVFX(foobar)
+	
+}
+else if (colorr = "0x1D1D1D" || colorr = "0x232323")
+	{
+	tooltip, this is a normal panel color of 0x1d1d1d or %colorr%, which means NO CLIP has been selected ; assuming you didnt change your UI brightness. so we are going to select the top clip at playhead.
+	Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
+	sleep 10
+	Send ^p ;this disables "selection follows playhead." I don't know if there is a way to CHECK if it is on or not. 
+		
+	;resetFromAutoVFX()
+	;play noise
+	;now you need to do all that again, since the motion menu is now open. But only do it ONCE more! 
+	If (dontrestart = 0)
+		{
+		dontrestart = 1
+		goto, restartPoint2 ;this is stupid but it works. Feel free to improve any of my code.
+		}
+	;otherwise,
+	Return "reset"
+	}
+else
+	{
+	tooltip, %colorr% not expected
+	;play noise
+	
+	Return "reset"
+	;resetFromAutoVFX()
+	}
+} ;end of untwirl()
+
 
 instantVFX(foobar)
 {

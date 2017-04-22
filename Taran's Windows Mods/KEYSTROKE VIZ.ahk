@@ -44,6 +44,17 @@ downer = 0
 setTimer reloadEverything, -1800000 ;sets this to 30 minutes, to NOT repeat...
 setTimer OFFAFTERRELOAD, -1000
 
+
+
+; GuiControl ORIG:,text,
+; GuiControl ORIG:,name,
+; GuiControl HIST1:,line1, 
+; GuiControl HIST1:,line2,
+; GuiControl HIST2:,line1,
+; GuiControl HIST2:,line2,
+
+
+
 Gui HIST2: New
 Gui HIST2: +Owner +AlwaysOnTop -Resize -SysMenu -MinimizeBox -MaximizeBox -Disabled -Caption -Border -ToolWindow +E0x20 ;;+E0x20 is click through or something...
 Gui HIST2: Margin,0,0
@@ -97,19 +108,16 @@ Gui, Show,X%statusx% Y%statusy% W%statuswidth% H%statusheight% NoActivate,%appli
 
 
 ;;below is the info from OFFAFTERRELOAD, which I am putting here because now i have decided i want nothing to display at all.
-GuiControl ORIG:,text,
-GuiControl ORIG:,name,
-GuiControl HIST1:,line1, 
-GuiControl HIST1:,line2,
-GuiControl HIST2:,line1,
-GuiControl HIST2:,line2,
+; GuiControl ORIG:,text,
+; GuiControl ORIG:,name,
+; GuiControl HIST1:,line1, 
+; GuiControl HIST1:,line2,
+; GuiControl HIST2:,line1,
+; GuiControl HIST2:,line2,
+
 ;;above is the whatever blah blah. Looks like it doesn't work... i might wanna make the whole GUI invisisble until after everything has loaded.
 
 
-
-
-
-;WinSet, TransColor, %backcolor% , KEYSTROKE ;100
 
 setTimer STATUSOFF, -0
 superdim = 1
@@ -138,7 +146,7 @@ if superdim = 1
 	;GuiControl ORIG:,text,
 	;GuiControl ORIG:,name,
 	WinSet, TransColor, %backcolor% 180, KEYSTROKE
-	
+	;tooltip, superdim is equal to 1
 	; Gui HIST2: Font,CFFFFFF S%fontsize% W%boldness% Q5 underline,%font%
 	; GuiControl HIST2:,line1,%keysH2% ;The magic happens HERE!
 	; GuiControl HIST2:,line2,%activityH2% ;The magic on line 2 happens HERE!
@@ -269,7 +277,7 @@ if superdim = 1
 		
 		;This code will delete the "activity" text from line 2 if Premiere is not open, or it is otherwise not allowed.
 		if (WinActive("ahk_exe Adobe Premiere Pro.exe") || allowEverywhere = 1)
-			do = nothing ;this has to have SOME kind of code in it, or the ELSE doesn't work. There is no such thing as "if (winNotActive()" or i would just use that...
+			do = nothing ;this has to have SOME kind of code in here, or the ELSE doesn't work. There is no such thing as "if (winNotActive()" or i would just use that...
 		else
 			activity = 
 		
