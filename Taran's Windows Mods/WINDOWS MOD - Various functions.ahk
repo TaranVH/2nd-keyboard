@@ -16,7 +16,7 @@ Menu, Tray, Icon, shell32.dll, 16 ;this changes the icon into a little laptop th
 
 
 
-savedCLASS = "ahk_class Notepad++"
+savedCLASS = ahk_class Notepad++
 savedEXE = "notepad++.exe"
 
 GroupAdd, ExplorerGroup, ahk_class #32770 ;This is for all the Explorer-based "save" and "load" boxes, from any program!
@@ -130,7 +130,7 @@ Explorer_GetSelection(hwnd="") {
     sel := window.Document.SelectedItems
     for item in sel
     ToReturn .= item.path "`n"
-	;msgbox, %ToReturn% is toreturn
+	;msgbox, %ToReturn% is ToReturn
     return Trim(ToReturn,"`n")
 }
 
@@ -201,7 +201,8 @@ Loop, parse, FileList, `n
         Loop, parse, FileListLocations, `n
             if A_index = %Fileposition%
                 existingfile = %A_LoopField% ;I have to confess, I wrote those 4 lines all at once and i have no idea how they work... they just do.
-        ;;msgbox, existingfile = %existingfile%
+        
+		;;msgbox, existingfile = %existingfile%
 
         ;A match has been found in this folder system, meaning the file was ALREADY moved over here before!
         msgbox, 1, ,%A_LoopField%`nis already present at`n%existingfile%`n...Want to see?
@@ -429,15 +430,32 @@ global savedEXE = lolexe ;is this the way to do it? IDK.
 +^F6::
 ;msgbox,,,saving,.3
 windowSaver()
-msgbox,,, class = %savedCLASS% `nEXE = %savedEXE%, 0.6
+msgbox,,, savedCLASS = %savedCLASS% `nEXE = %savedEXE%, 0.6
 Return
 
 ;Macro key G14
 ^F6::
-if WinActive("ahk_class Notepad++")
-	Send ^{tab}
+;msgbox, savedCLASS is %savedCLASS%
+if savedCLASS = ahk_class Notepad++
+	{
+	;msgbox, is notepad++
+	if WinActive("ahk_class Notepad++")
+		{
+		sleep 5
+		Send ^{tab}
+		}
+	}
 windowSwitcher(savedCLASS, savedEXE)
 return
+
+;Macro key G14 experiment
+!F6::
+if savedCLASS = "ahk_class Notepad++"
+	if WinActive("ahk_class Notepad++")
+		Send ^{tab}
+windowSwitcher(savedCLASS, savedEXE)
+return
+
 
 
 #IfWinActive
@@ -510,6 +528,7 @@ else
 	WinActivate ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
 Return
 
+;trying to activate these windows in reverse order from the above. it does not work.
 ^+F2::
 IfWinNotExist, ahk_class CabinetWClass
 	Run, explorer.exe
@@ -521,8 +540,9 @@ else
 	WinActivatebottom ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
 Return
 
-!^F2::
 ;closes all explorer windows :/
+;^!F2 -- for searchability
+!^F2::
 WinClose,ahk_group taranexplorers
 return
 
@@ -555,13 +575,13 @@ Return
 
 
 ^F5::
-IfWinNotExist, ahk_class Chrome_WidgetWin_1
+IfWinNotExist, ahk_exe chrome.exe
 	Run, chrome.exe
 
-if WinActive("ahk_class Chrome_WidgetWin_1")
-	Send ^{tab}
+if WinActive("ahk_exe chrome.exe")
+	Sendinput ^{tab}
 else
-	WinActivate ahk_class Chrome_WidgetWin_1
+	WinActivate ahk_exe chrome.exe
 Return
 
 
@@ -634,8 +654,12 @@ F7::Send,{LCtrl down}{NumpadAdd}{LCtrl up}
 #IfWinActive
 ; ^!+1::explorerLaunch("Z:\Linus\1. Linus Tech Tips\Pending")
 !+1::explorerLaunch("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard") ;(alt shift 1)
-!+2::explorerLaunch("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
-!+3::explorerLaunch("C:\Users\TaranWORK\Videos\Desktop")
+!+2::
+;msgbox, wtf
+explorerLaunch("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
+return
+;!+3::explorerLaunch("C:\Users\TaranWORK\Videos\Desktop") ;this is labeled "shadowplay."
+!+3::explorerLaunch("C:\Users\TaranWORK\Videos\Desktop") ;C:\Users\TaranWORK\Videos\Base Profile ;for some reason, the recordings actually go into this folder now.
 ;;; done ;;;;
 
 
@@ -657,6 +681,7 @@ Send #b{left}{enter}
 Return
 
 #IfWinActive
+
 ;control alt shift T -- click on the address bar for any youtube video, and this will link you to the thumbnail!
 ^!+T::
 Send {end}{left 11}{backspace 40}https://i.ytimg.com/vi/{right 11}/sddefault.jpg{enter}
@@ -671,6 +696,9 @@ return
 ; sleep 1000
 ; send {F13}
 ; return
+
+
+
 
 Joy3::
 msgbox hi
@@ -688,3 +716,33 @@ return
 
 ; F9::WheelUp
 
+
+/*
+;so apparently AHK can listen for joystick buttons and axes, but canot CREATE those events itself. that makes me sad. I may need to use http://vjoystick.sourceforge.net/site/
+Joy2::msgbox, you pressed joy 2
+
+#IfWinActive ahk_exe notepad++.exe ;logitech gaming software
+; #IfWinActive ahk_exe LCore.exe ;logitech gaming software
+
+F1::
+tooltip, sending
+sleep 555
+send {F20}
+tooltip,
+return
+
+F2::
+tooltip, sending
+sleep 555
+send {SC0E7} ;possibly unassigned scancode. IDK
+tooltip,
+return
+
+f3::send {joy3}
+f4::send joy4
+f5::send joy5
+f6::send joy6
+f7::send joy7
+f8::send joy8
+f9::send joy9
+*/

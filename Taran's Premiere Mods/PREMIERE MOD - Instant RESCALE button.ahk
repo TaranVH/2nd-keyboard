@@ -39,7 +39,7 @@ Send ^!+7 ;bring focus to the effects panel, in order to "clear" the current foc
 if (panel = "effects")
 	goto theEnd ;Send ^!+7 ;do nothing. the shortcut has already been pressed.
 else if (panel = "timeline")
-	Send ^!+0 ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
+	Send ^!+3 ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
 else if (panel = "program")
 	Send ^!+4
 else if (panel = "project") ;AKA a "bin" or "folder"
@@ -383,8 +383,11 @@ sleep 10
 
 
 ;script to lock video and audio layers V1 and A1.
-~F19::
+;Will be known as trackLocker()
+~F19::tracklocker()
 
+tracklocker()
+{
 
 BlockInput, on
 BlockInput, MouseMove
@@ -471,7 +474,9 @@ MouseMove, xPosCursor, yPosCursor, 0
 blockinput, off
 blockinput, MouseMoveOff
 sleep 10
-return
+}
+;End of trackLocker()
+
 
 
 ;;;INSTANT VFX HOT TEXT SELECTOR MOD;;;
@@ -611,7 +616,7 @@ blockinput, on
 ; Send ^p ;this now disables "selection follows playehad." I don't know if there is a way to CHECK if it is on or not.
 ; sleep 10
 
-ToolTip, A, , , 2
+;ToolTip, A, , , 2
 MouseGetPos Xbeginlol, Ybeginlol
 global Xbegin = Xbeginlol
 global Ybegin = Ybeginlol
@@ -802,7 +807,8 @@ else
 		{
 		blockinput, off
 		blockinput, MouseMoveOff
-		tooltip, %VFXkey% Instant %foobar% mod
+		;tooltip, %VFXkey% Instant %foobar% mod
+		tooltip, ;removes any tooltips that might exist.
 		sleep 15
 		GetKeyState, state, %VFXkey%, P
 		if state = U

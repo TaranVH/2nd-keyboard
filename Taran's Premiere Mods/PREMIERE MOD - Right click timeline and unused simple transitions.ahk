@@ -84,20 +84,17 @@ return
 
 
 
-Rbutton::
-;tooltip, `nwhat
+Rbutton:: 
 ;<<<use right mouse button to move playhead in timeline>>>>>>
-;tooltip, you are right clicking....
 MouseGetPos X, Y
 PixelGetColor colorr, %X%, %Y%, RGB
-if (colorr = timeline5 || colorr = timeline6)
+if (colorr = timeline5 || colorr = timeline6) ;these are the timeline colors of a selected clip or blank space, in or outside of in/out points.
 	send ^!d ;set in premiere to DESELECT
 if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6)
 {
-	
 	;BREAKTHROUGH -- it looks like a middle mouse click will SELECT / BRING FOCUS TO a timeline panel without doing ANYTHING ELSE like selecting or going through tabs or anything. So although i can't know with AHK which panel is in focus, I can at least BRING focus to a panel... but only if I already know its position... hmmmmmm...
 	;however, i probably CAN just do an image search on the entire screen, for icons that are unique to each panel! then use the coordinates of that to figure out the unique ClassNN! GREAT IDEA, TARAN!
-	click middle ;sends the middle mouse button to BRONG FOCUS TO the timeline, WITHOUT selecting any clips or empty spaces between clips. very noice.
+	click middle ;sends the middle mouse button to BRING FOCUS TO the timeline, WITHOUT selecting any clips or empty spaces between clips. very noice.
 	
 	; tooltip, % GetKeyState("Rbutton", "P") ;<----this was essential for me to figure out EXACTLY how AHK wanted this query to be phrased. Why should i need the quotation marks?? Why does it return a 1 and 0, but for the other method, it returns U and D? Who the hell knows....
 	; if GetKeyState("$Rbutton") = D ;<--- see, this line did not work AT ALL.
@@ -110,10 +107,8 @@ if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = t
 			{
 			Send \ ;in premiere, this is set to "move playhead to cursor."
 			Tooltip, Right click playhead mod!
-			sleep 1
-			;Send {left} ;this will attempt to move 1 frame backwards, but it is held by the other command, so instead it just plays the audio for the current frame!! Delete if you don't want this.
 			sleep 16
-			; if GetKeyState("$Rbutton") = U
+			; if GetKeyState("$Rbutton") = U ; again, this does not work at all.
 			if GetKeyState("Rbutton", "P") = 0
 				{
 				;msgbox,,,time to break,1
@@ -128,7 +123,7 @@ if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = t
 	;MouseClick, left
 }
 else
-	sendinput {Rbutton} ;this is to make up for the lack of a ~ in front of Rbutton. ... ~Rbutton. It allows the command to pass through, but only if the abpve conditions were NOT met.
+	sendinput {Rbutton} ;this is to make up for the lack of a ~ in front of Rbutton. ... ~Rbutton. It allows the command to pass through, but only if the above conditions were NOT met.
 theEnd:
 ; \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 Return ; from right click intercept

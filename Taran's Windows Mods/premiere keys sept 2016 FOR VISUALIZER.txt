@@ -43,8 +43,8 @@ save variable appp				&Shift Ctrl F6
 Taran Mod-Ripple Delete clip at Playhead&F1
 Taran Mod-Motion Effect Untwirl&F4
 Taran mod-Transformation Icon auto select&F5
-Nothin' yet&F6
-Nothin' yet&F7
+select crop icon&F6
+extend name field in explorer&F7
 Nothin' yet&F8
 Nothin' yet&F9
 Nothin' yet&F10
@@ -84,8 +84,8 @@ Stop, rewind 30 frames, play.(taran macro)&alt spacebar
 
 
 MAYBE "zoom (program) monitor to fit" mod///////killing this one...//////Enter numpadEnter
-"zoom (program) monitor in" mod&numpadSub
-"zoom (program) monitor out" mod&numpadAdd
+nothin?&numpadSub
+nothin?&numpadAdd
 
 
 

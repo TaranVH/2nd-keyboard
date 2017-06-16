@@ -567,12 +567,12 @@ WM_MOUSEMOVE(wParam,lParam)
 Return
 
 
-^!v::
-send ^s
-sleep 30
-reload
-;msgbox, visualizer is still running.    
-return
+; ^!v::
+; send ^s
+; sleep 30
+; reload
+; ;msgbox, visualizer is still running.    
+; return
 
 
 
