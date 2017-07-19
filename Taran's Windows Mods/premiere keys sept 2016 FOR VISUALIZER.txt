@@ -1,34 +1,34 @@
-Taran's premiere shortcuts as of Sept 2016
-Some are stupid, like z and / and u.
+(Most of) Taran's premiere shortcuts as of June 2017-ish
+Some are stupid, like / and u.
 I'll change those later.
 + (plus) characters have been removed and replaced with spaces.
-Keep in mind that a shortcut like CTRL + is actually CREL =, since the "+" only happens if you hold shit.
-The ampersand is important, it separates the key from the function
-tabs on the left have been removed, tabs in the middle were replaced with ampersands, and parsed out onto their own lines, if multiple keys lead to the same function.
+Keep in mind that a shortcut like CTRL + is actually CTRL =, since the "+" only happens if you hold shit.
+The ampersand is important, it separates the key from the function.
+Tabs on the left have been removed, tabs in the middle were replaced with ampersands, and parsed out onto their own lines, if multiple keys lead to the same function.
 This will all make sense if you watch the explanatory video. 
+https://www.youtube.com/watch?v=gF-f25dRbo8
 
 BEGIN!
 
 
-[G1]Effects find box (clear)				&ctrl alt shift f
-[G2]preset("Warp")							&ctrl alt w
-[G3]Effects find box "presets"				&ctrl alt shift p
+[G1]effectsPanelType("")					&ctrl shift 0
+[G2]preset("Warp Stabilizer preset")		&ctrl shift -
+[G3]effectsPanelType("presets")				&ctrl shift =
 
-[G4]Monomaker LEFT							&ctrl shift l
-[G5]Monomaker RIGHT							&ctrl shift r
-[G6]Reselect current clip mod				&???
+[G4]audioMonoMaker("left")					&ctrl shift ,
+[G5]audioMonomaker("right")					&ctrl shift .
+[G6]reselect() clip at playhead				&alt shift f
 
-[G7]Rotation mod							&F17
+[G7]instantVFX("rotation")					&F17
 [G8]Lock/unlock V1/A1 mod					&F19
-[G9]???										&???
+[G9]+7db gain macro							&ctrl shift ]
 
-[G10]Horizontal anchor mod					&F18
-[G11]Instant rescale mod					&F14
-[G12]Vertical Anchor mod					&F15
+[G10]instantVFX("anchor_point")				&F18
+[G11]instantVFX("scale")					&F14
+[G12]instantVFX("anchor_point_vertical")	&F15
 
 [G13]"back" (differs per app.)				&F13
-save variable app				&Ctrl Shift F6
-save variable appp				&Shift Ctrl F6
+Shift [G14] Save variable app				&Ctrl Shift F6
 [G14]Variable App							&Ctrl F6
 [G15]Word									&Ctrl F4
 
@@ -40,53 +40,54 @@ save variable appp				&Shift Ctrl F6
 
 
 
-Taran Mod-Ripple Delete clip at Playhead&F1
-Taran Mod-Motion Effect Untwirl&F4
-Taran mod-Transformation Icon auto select&F5
-select crop icon&F6
-extend name field in explorer&F7
-Nothin' yet&F8
-Nothin' yet&F9
-Nothin' yet&F10
-Nothin' yet&F11
-"Go back"(in bin)&F12
+Ripple Delete clips at playhead	(macro)		&F1
+Audio Gain...								&F2
+Audio Channels...							&F3
+Taran Mod-Motion Effect Untwirl				&F4
+Taran mod-Transformation Icon auto select	&F5
+select crop icon							&F6
+extend name field in explorer				&F7
+Nothin' yet									&F8
+Nothin' yet									&F9
+Nothin' yet									&F10
+Nothin' yet									&F11
+"Go back"(in bin)							&F12
 
-
-
-
-
-
+RE-SELECT CLIP (taran mod)	&ctrl shift 9		
++7db						&ctrl shift 8		
+preset("presets")			&ctrl shift +	
+preset("presets")			&ctrl shift =	
+pin to clip			&ctrl alt p	
 
 
 ??&F16
 ??&F17
 ??&F18
-lock/unlock V1 and A1 (taran mod)&F19
+tracklocker() to lock/unlock V1 and A1		&F19
 ??&F20
 ??&F21
 ??&F22
 ??&F23
-2ND KEYBOARD&F24
+LUAMACROS&F24
 
-Taran mod-reverse selected clip&ctrl shift R
-Taran mod-Close Titler&ctrl w
+Reverse selected clip macro&ctrl shift R
+closeTitler()&ctrl w
 
-
+Show/Hide Title Bar (Taran mod)&ctrl \
 
 
 step back many (30) frames&shift left
 step forward many (30) frames&shift right
 
-Stop, rewind 30 frames, play.(taran macro)&alt space
-Stop, rewind 30 frames, play.(taran macro)&alt spacebar
+Stop, rewind 30 frames, play.(macro)&alt space
+Stop, rewind 30 frames, play.(macro)&alt spacebar
 
 
 
 
 MAYBE "zoom (program) monitor to fit" mod///////killing this one...//////Enter numpadEnter
-nothin?&numpadSub
+nothin?&numpadSub ;this does not show up for some stupid reason...
 nothin?&numpadAdd
-
 
 
 real Premiere shortcuts below
@@ -112,7 +113,7 @@ Selection Tool&V
 Selection Tool&Alt V
 Selection Tool&Ctrl Shift V
 
-I have no idea what to put on Z&z
+Set to frame size&z
 
 global FX mute&alt x
 
@@ -1074,9 +1075,8 @@ Nudge Clip Selection Up&Numpad8
 Nudge Clip Selection Left One Frame&Numpad4
 Nudge Clip Selection Right One Frame&Numpad6
 
-Nudge Clip Selection Left Five Frames&shift Numpad4
-Nudge Clip Selection Right Five Frames&shift Numpad6
-Nudge Clip Selection Right Five Frames&Lshift Numpad6
+Nudge Clip Selection Left Five Frames&ctrl Numpad4
+Nudge Clip Selection Right Five Frames&ctrl Numpad6
 
 Reveal In Project&Alt X
 Ripple Delete&Alt Backspace&Backspace

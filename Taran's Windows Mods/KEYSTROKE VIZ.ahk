@@ -68,7 +68,9 @@ Gui HIST2: Add,Text,Vline2,gui HIST2 line two WWWWWWWWWWWWWW WWWWWWW WWWWWWWWWWW
 Gui HIST2: -Caption +ToolWindow +AlwaysOnTop +LastFound ;Turns out you NEED THIS LINE for the transparency to work...????
 Gui HIST2: Show,X%statusx% Y1590 W%statuswidth% H%statusheight% NoActivate,%applicationname%
 
+;the line below is required to make the background NOT opaque. It must be done for EACH GUI
 WinSet, TransColor, %backcolor% 160, KEYSTROKE
+
 ; WinSet, ExStyle, ^0x00000020, A ;this makes it click-throughable. I think.
 ;;;;;;;;;;;;;;;;;;;;
 
@@ -104,6 +106,10 @@ Gui,Add,Text,Vname,(REFRESHES EVERY 30 MINUTES) WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
 Gui, -Caption +ToolWindow +AlwaysOnTop +LastFound ;Turns out you NEED THIS LINE for the transparency to work...????
 Gui, Show,X%statusx% Y%statusy% W%statuswidth% H%statusheight% NoActivate,%applicationname%
 
+WinSet, TransColor, %backcolor% 170, KEYSTROKE
+
+; sleep 2000
+; tooltip, done sleeping
 ; WinSet, ExStyle, ^0x00000020, A ;this makes it click-throughable. I think.
 
 
@@ -145,6 +151,7 @@ if superdim = 1
 		; Guicontrol,,Font, fook2
 	;GuiControl ORIG:,text,
 	;GuiControl ORIG:,name,
+	;;;;;;;;;;tooltip, superdim, , , 6
 	WinSet, TransColor, %backcolor% 180, KEYSTROKE
 	;tooltip, superdim is equal to 1
 	; Gui HIST2: Font,CFFFFFF S%fontsize% W%boldness% Q5 underline,%font%
@@ -371,11 +378,9 @@ if downer = 1
 }
 ;tooltip, now invisiblefying
 
-
 ;; comment this code IN if you want the text to vanish
 ; GuiControl ORIG:,text,
 ; GuiControl ORIG:,name,
-
 
 ;GuiControl HIST1:,line1, 
 ;GuiControl HIST1:,line2,
@@ -575,4 +580,11 @@ Return
 ; return
 
 
-
+;script reloader, but it only works on this one :(
+#ifwinactive ahk_class Notepad++
+#+r::
+send ^s
+sleep 10
+SoundBeep, 1000, 500
+reload
+return
