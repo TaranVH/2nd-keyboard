@@ -696,7 +696,11 @@ WinClose,ahk_group taranexplorers
 
 switchToPremiere(){
 IfWinNotExist, ahk_class Premiere Pro
-	Run, Adobe Premiere Pro.exe ;Adobe Premiere Pro CC 2017 ;C:\Program Files\Adobe\Adobe Premiere Pro CC 2017\Adobe Premiere Pro.exe
+	{
+	;Run, Adobe Premiere Pro.exe
+	;Adobe Premiere Pro CC 2017
+	Run, C:\Program Files\Adobe\Adobe Premiere Pro CC 2017\Adobe Premiere Pro.exe
+	}
 WinActivate ahk_class Premiere Pro
 }
 
