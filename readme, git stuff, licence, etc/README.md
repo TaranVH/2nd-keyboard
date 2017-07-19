@@ -1,5 +1,7 @@
 # 2nd-keyboard
 
+NOTE: all this info is OBSOLETE, this readme file is dumb now and will be updated when i can get around to it.
+
 A quickstart guide for using a second keyboard purely for macros on Windows.
 It's not super complicated, but you'll need a novice understanding of scripting/programming, and need to know how to effectively debug a script one step at a time (for when you are modifying my code.)
 
@@ -18,8 +20,7 @@ It's not super complicated, but you'll need a novice understanding of scripting/
 
 7. Right-click on `SECOND KEYBOARD - Premiere functions.ahk` and open it in a text editor like notepad++.
 8. Scroll down to line 300 and change the filepath `C:\Users\TaranVanHemert\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keypressed.txt` to the correct location of keypressed.txt on your own computer.
-9. Scroll down to line 311 and change the filepath `C:\Users\TaranVanHemert\Documents\GitHub\2nd-keyboard\2nd keyboard support files\keyActions.txt` to the correct location of keyActions.txt on your own computer.
-10. `keyActions.txt` is basically just a big array. Change it however you like, but pay attention to how the AHK script will read it.
+
 11. `SECOND KEYBOARD Premiere functions in AutoHotKey.ahk` was built for use in Adobe Premiere, but you can delete all the functions and write your own, for whatever application you desire!
 12. If you do want to use my AHK Premiere functions, you'll need to modify them to fit your own computer. Common changes that will have to be made are: Coordinates, panel names, colors.
 
