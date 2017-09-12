@@ -43,6 +43,11 @@ return
 prFocus(panel) ;this function allows you to have ONE spot where you define your personal shortcuts that "focus" panels in premiere.
 {
 ;panel := """" . panel . """" ;this adds quotation marks around the parameter so that it works as a string, not a variable.
+if (panel = "effect controls")
+{
+	Send ^!+5
+	return
+}
 Send ^!+7 ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
 if (panel = "effects")
 	goto theEnd ;Send ^!+7 ;do nothing. the shortcut has already been pressed.
@@ -52,8 +57,7 @@ else if (panel = "program")
 	Send ^!+4
 else if (panel = "project") ;AKA a "bin" or "folder"
 	Send ^!+1
-else if (panel = "effect controls")
-	Send ^!+5
+
 theEnd:
 
 }
@@ -233,6 +237,7 @@ Send %leSound% ;types in the name of the sound effect you want - should do so in
 tooltip, waiting for premiere to load......
 send ^+6 ;source assignment preset 1, again.
 sleep 400 ;we are waiting for the search to complete....
+sleep 400 ;we are still waiting for the search to complete....
 
 MouseMove, -6000, 250, 0 ;moves the mouse to the expected location of the bin that becomes highlighted from the "project" keyboard shortcut command in Premiere.
 ;msgbox, wheres de mouse?
@@ -1003,7 +1008,7 @@ if ErrorLevel = 0
 	tippy("found a locked lock")
 	MouseMove, FoundX_LOCK+10, FoundY_LOCK+10, 0
 	sleep 5
-	click left
+	click left ;clicks on Video track 1
 	MouseMove, FoundX_LOCK+10, FoundY_LOCK+60, 0
 	click left ;clicks on Audio track 1 as well.
 	sleep 10
@@ -1121,7 +1126,9 @@ restartPoint:
 blockinput, sendandMouse
 blockinput, MouseMove
 blockinput, on
-
+;-Sendinput ^!+5
+prFocus("effect controls") ;essentially just hits CTRL ALT SHIFT 5 to highlight the effect controls panel.
+sleep 10
 ; send ^+d ;deselect anything that might be selected. We want to affect ONLY the clip the playhead is currently on top of - what we can see in the program monitor.
 ; sleep 10
 ; Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
@@ -1135,7 +1142,7 @@ global Xbegin = Xbeginlol
 global Ybegin = Ybeginlol
 ; MsgBox, "please verify that the mouse cannot move"
 ; sleep 2000
-ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro ;This is the ClassNN of the effect controls panel. Use Window Spy to figure it out.
+ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro ;This is HOPEFULLY the ClassNN of the effect controls panel. Use Window Spy to figure it out.
 ;I might need a far more robust way of ensuring the effect controls panel has been located, in the future.
 
 ;move mouse to expected triangle location. this is a VERY SPECIFIC PIXEL which will be right on the EDGE of the triangle when it is OPEN.
@@ -1366,12 +1373,12 @@ resetFromAutoVFX()
 ;;;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;;;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;;;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-;
+;46664444444613
 ;end of scripts from INSTANT RESCALE BUTTON script
 
 
 SendKey(theKEY, fun := "", sometext := ""){
-tooltip,sendkey has recieved: %lols%,,12
+tooltip,sendkey has recieved: `n%theKEY%`n%sometext%`n%fun%,,12
 ;keyShower(sometext, fun)
 if IsFunc("Keyshower") {
 	Func := Func("Keyshower")

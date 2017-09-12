@@ -1,24 +1,30 @@
 SetWorkingDir, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files
 ;the above will set A_WorkingDir. It must be done in the autoexecute area, BEFORE the code below.
 
+
+Menu, Tray, Icon, shell32.dll, 283
+;gui must be first, or it does not work for some reason...
 #Include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\gui.ahk
 
 #include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\All Premiere Functions.ahk
 
-#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\Almost All Windows Functions.ahk
+#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Almost All Windows Functions.ahk
 
-Menu, Tray, Icon, shell32.dll, 283
+;NOTE FOR PEOPLE:
+;Using #include is pretty much the same as pasting the entire script into THIS script. So basically, I'm just importing all the functions that I have created in those scripts, so that I can refer to them here.
+;So, this script has all the keyboard assignments, and the other #included scripts have all the functions. I had to slipt it up this way so that I can also directly launch those functions, using means OTHER than a keyboard, like the Stream Deck's "open file" feature.
+
 
 #NoEnv
 SendMode Input
 #InstallKeybdHook ;danger, this is untested right now
 #UseHook On ;danger, also untested.
 
-Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyboard!
+
 
 #SingleInstance force ;only one instance of this script may run at a time!
 #MaxHotkeysPerInterval 2000
-#WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
+#WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm ;this may prevent taskbar flashing.
 
 
 
@@ -224,7 +230,7 @@ g::recallClipboard(A_thishotkey)
 +g::saveClipboard(A_thishotkey)
 
 
-h::preset("zoom motion 110")
+h::preset("100 to 120 zoom")
 j::preset("anchor and position to 0") ;no panning involved here.
 k::preset("zoom motion 115")
 l::preset("ltt color")
@@ -280,12 +286,15 @@ Lalt::msgbox LEFT alt
 
 space::tippy("2nd space") ;change this to EXCLUSIVE "play" only?
 
-Ralt::msgbox Ralt - doesnt work
+;Ralt::msgbox Ralt - doesnt work
 Rwin::msgbox Right Win - doesnt work
-Rshift::msgbox RIGHT SHIFT lol
+;Rshift::msgbox RIGHT SHIFT lol
 
+;SC06E::msgbox,,,this was right WINkey,0.5
+SC06F::msgbox,,,testing scan codes,0.5
 SC062::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~CANNED PRE ROLLS") ;remapped away from appskey, it seemed to cause problems.
 Rctrl::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~INTEGRATIONS")
+;SC065::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~ For Review") ;this is remapped from ALT. JK, SC065 is F14, do not use.
 appskey::msgbox, this is the right click appskey KEY I guess
 
 PrintScreen::runexplorer("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard")
@@ -511,7 +520,7 @@ return
 numpad4::
 IfWinActive, ahk_exe explorer.exe
 {
-	send {alt}vo{down}{enter}
+	send {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
 	tippy("sort Explorer by date")
 	Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
 }
@@ -519,15 +528,15 @@ return
 numpad5::
 IfWinActive, ahk_exe explorer.exe
 {
-	send {alt}vo{enter}
+	send {alt}vo{enter} ;sort by name
 	tippy("sort Explorer by name")
 	Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
 }
 return
-numpad6::
-numpad7::
-numpad8::
-Numpad9::
+numpad6::msgbox,,, 4th keyboard %A_thishotkey%,0.6
+numpad7::runexplorer("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard") 
+numpad8::runexplorer("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
+Numpad9::runexplorer("C:\Users\TaranWORK\Videos\Desktop")
 NumpadDiv::msgbox,,, 4th keyboard %A_thishotkey%,0.6
 
 backspace::
@@ -571,7 +580,18 @@ keywait, LAlt ; replace with "Sleep 100" for an alternative
 Loop 10
 	Hotkey, % "*Numpad" A_Index-1, HandleNum, off
 If (Ascii_Unicode_Input = "061")
+	{
 	msgbox,,, you pressed the equals key!,1
+	; ;InputBox, password, Enter Password, (your input will be hidden), hide 
+	; InputBox, UserInput, Phone Number, Please confirm murdering of premiere, , 640, 480
+	; if UserInput = "="
+		; {
+		; MsgBox, You entered "%UserInput%"
+		; Run, %comspec% /c "taskkill.exe /F /IM Adobe Premiere Pro.exe",, hide 
+		; }	
+	; else
+		; return
+	}
 If (Ascii_Unicode_Input = "040")
 {
 	prFocus("Effect Controls") ;the following shortcut only works if the Effect Controls panel is in focus...
@@ -747,7 +767,8 @@ G18: Activate Premiere
 effectsPanelType("") ;set to macro key G1 on my logitech G15 keyboard. ;This just CLEARS the effects panel search bar so that you can type something in.
 return
 ~^+-::preset("Warp Stabilizer Preset") ;macro key G2. I wish it would also press "analyse..."
-~^+=::effectsPanelType("presets") ;set to macro key G3. ;Types in "presets," which reveals my own entire list of presets.
+;;;~^+=::effectsPanelType("presets") ;set to macro key G3. ;Types in "presets," which reveals my own entire list of presets. ;;I have canceled this one in favor of a global pause/play.
+~^+=::sendinput, {space} ;Macro key G3
 
 ~^+,::audioMonoMaker("left")
 ;macro key G4. Using the WIn key is prooobably a terrible idea; I do not reccomend it...... :(
@@ -788,15 +809,23 @@ return
 
 ;Below is some code to pause/play the timeline in Premiere, when the application is NOT the active window (on top.) This means that I can be reading through the script, WHILE the video is playing, and play/pause as needed without having to switch back to premeire every single time.
 #IfWinNotActive ahk_class Premiere Pro
-F8::
+;;macro key G3, when NOT in Premiere.
 ^+=::
 Keyshower("pause/play Premiere when not active",,1,-400)
 ;Window Class3 is actually the Effect Controls panel... but play/pausing still works if that panel is selected. Trying to bring focus to the TIMELINE itself is really dangerous and unpredictable, since its Class# is always changing, based upon how many sequences, and other panels, that might be open.
 ControlFocus, DroverLord - Window Class3,ahk_exe Adobe Premiere Pro.exe
 ;If we don't use ControlFocus first, ControlSend experiences bizzare and erratic behaviour, only able to work when the video is PLAYING, but not otherwise, but also SOMETIMES working perfectly, in unknown circumstances. Huge thanks to Frank Drebin for figuring this one out; it had been driving me absolutely mad. https://www.youtube.com/watch?v=sC2SeGCTX4U
-sleep 15
+; Window Class11 is the Program monitor, at least on my machine.
+sleep 10
+ControlSend,DroverLord - Window Class11,^!+5,ahk_exe Adobe Premiere Pro.exe
+;that is my shortcut for the Effect Controls.
+sleep 10
+ControlSend,DroverLord - Window Class11,^!+3,ahk_exe Adobe Premiere Pro.exe
+;that is my shortcut for the Timeline.
+;this is to ensure that it doesn't start playing something in the source monitor, or a bin somewhere.
+sleep 10
 ControlSend,DroverLord - Window Class11,{ctrl up}{shift up}{space down},ahk_exe Adobe Premiere Pro.exe
-sleep 40
+sleep 30
 ControlSend,DroverLord - Window Class11,{space up},ahk_exe Adobe Premiere Pro.exe
 ; ControlSend,,{space}, ahk_exe Adobe Premiere Pro.exe
 return
@@ -844,10 +873,11 @@ return
 
 ;Macro key G12 on my Logitech G15 keyboard is set to F14.
 #IfWinActive ahk_exe winword.exe
-F14::F3 ;in Word, the F3 shortcut is "go to next comment."
+~F14::F3 ;in Word, the F3 shortcut is "go to next comment."
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;I was having trouble with cross-talk on F14... so writing it this way allows me to use it for use.
 ~VK7DSC065::
+;msgbox, fuck you
 global VFXkey = "F14"
 instantVFX("scale")
 return
@@ -874,14 +904,23 @@ global VFXkey = "F18"
 instantVFX("anchor_point")
 return
 
+;Macro key G8
 ~F19::tracklocker()
 ~+F19::tracklocker()
 
-;F20 is available?
+#IfWinActive
+
++capslock::capslock ;only SHIFT CAPSLOCK will now turn on capslock, freeing the real capslock key to be used as a MODIFIER KEY, just like CTRL.
++F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
+capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
+
+
+
+;capslock is now F20.
 ;F21 - will free this up by using some other scan code
 ;F22 - will free this up by using some other scan code
-;F23 is for the 2nd keyboard, and intercept.exe
-;F24 is reserved for Luamacros, just for the sake of compatibility
+;F23 is for the 2nd keyboard, and intercept.exe. Will maintain for compatibility with Taran tutorials
+;F24 was used for Luamacros, but I don't use that anymnore, so i will repurpose it.
 ;;---------------------------------------------------
 
 
@@ -975,8 +1014,11 @@ return
 
 ;Just kidding, I want to use alt space to rewind and then play. Premiere's version of this SUCKS because it brings you back to where you started
 ; the ~ is only there so that the keystroke visualizer can see this keypress. Otherwise, it should not be used.
+Lwin::
 ~!space::
 Send s ;"stop" command (From JKL remapped to ASD.)
+Send +{left}
+Send +{left}
 Send +{left}
 sleep 10
 Send d ;"shuttle right" command.

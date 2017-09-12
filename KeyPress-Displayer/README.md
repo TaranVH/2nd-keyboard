@@ -1,4 +1,6 @@
 # KeyPress-Displayer
+THIS IS A SIMPLER ALTERNATIVE TO KEYSTROKE VIZ.AHK. THE TWO SHOULD NOT BE USED AT THE SAME TIME.
+
 Creates an On Screen Display of all the keypresses from the keyboard and mouse buttons
 
 This is a AutoHotKey(.ahk) Script and requires Autohotkey software to run this script,<br>which can be obtained for free <a href="https://autohotkey.com/download/ahk-install.exe">here</a> (Size: 2.96 MB)

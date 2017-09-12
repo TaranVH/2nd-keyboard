@@ -9,7 +9,8 @@ SendMode Input ;needed for script that #includes this one
 #MaxHotkeysPerInterval 2000 ;needed for script that #includes this one
 
 ;defining some variables below:
-
+; Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyboard!
+Menu, Tray, Icon, shell32.dll, 285 ; this changes the tray icon to a piece of paper
 
 applicationname=SecondKeyboard
 statusy = 1850
@@ -113,9 +114,11 @@ Keyshower(parameter, functionused := "", alwaysshow := 0,howLong := -2000) ;very
 
 if (A_priorhotkey = "F23" || A_priorhotkey = "~numpadleft" || A_priorhotkey = "~numpadright") ;please pretend that numpad left and right are not here....
 	{
+	;msgbox, this should be from the 2nd keyboard
 	;this was sent from the 2nd keyboard, using interceptor. Interceptor presses F23, then the key, then releases the key, then releases F23. Very simple, but very effective.
-	Gui, kb2: show, NA 
 	Gui, hide
+	Gui, kb2: show, NA 
+	
 	;msgbox,,,what is hapening,1
 	GuiControl kb2:,line1, %A_space%FROM 2ND KEYBOARD
 	GuiControl kb2:,line2, %A_space%%A_thishotkey%

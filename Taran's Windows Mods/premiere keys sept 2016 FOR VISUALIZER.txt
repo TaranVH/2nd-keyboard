@@ -17,7 +17,8 @@ BEGIN!
 
 [G4]audioMonoMaker("left")					&ctrl shift ,
 [G5]audioMonomaker("right")					&ctrl shift .
-[G6]reselect() clip at playhead				&alt shift f
+[G6]RE-SELECT CLIP (Taran mod)				&ctrl shift 9
+;that used to be ALT SHIFT F, but thats a terrible combo.
 
 [G7]instantVFX("rotation")					&F17
 [G8]Lock/unlock V1/A1 mod					&F19
@@ -40,10 +41,10 @@ Shift [G14] Save variable app				&Ctrl Shift F6
 
 
 
-Ripple Delete clips at playhead	(macro)		&F1
+Ripple delete clips at playhead	(macro)		&F1
 Audio Gain...								&F2
 Audio Channels...							&F3
-Taran Mod-Motion Effect Untwirl				&F4
+Taran mod-Motion Effect Untwirl				&F4
 Taran mod-Transformation Icon auto select	&F5
 select crop icon							&F6
 extend name field in explorer				&F7
@@ -53,22 +54,22 @@ Nothin' yet									&F10
 Nothin' yet									&F11
 "Go back"(in bin)							&F12
 
-RE-SELECT CLIP (taran mod)	&ctrl shift 9		
-+7db						&ctrl shift 8		
-preset("presets")			&ctrl shift +	
-preset("presets")			&ctrl shift =	
-pin to clip			&ctrl alt p	
+[G6]RE-SELECT CLIP (Taran mod)		&ctrl shift 9		
++7db								&ctrl shift 8		
+preset("presets")					&ctrl shift +	
+preset("presets")					&ctrl shift =	
+pin to clip							&ctrl alt p	
 
 
 ??&F16
 ??&F17
 ??&F18
 tracklocker() to lock/unlock V1 and A1		&F19
-??&F20
+CAPSLOCK remapped into a modifier key		&F20
 ??&F21
 ??&F22
-??&F23
-LUAMACROS&F24
+Interception. U should not see this			&F23
+LUAMACROS									&F24
 
 Reverse selected clip macro&ctrl shift R
 closeTitler()&ctrl w
@@ -475,25 +476,27 @@ Capture
 Edit To Tape
 Effect Controls
 
-Effects&Ctrl Alt Shift 7
-Events
-History
-Info
-Lumetri Color
-Lumetri Scopes
-Markers
-Media Browser
-Metadata
-Program Monitor&Ctrl Alt Shift 4
-Progress
-Project&Ctrl Alt Shift `
-Reference Monitor
-Source Monitor
-Timecode
-Timelines&Shift 0
-Timelines&Ctrl Alt Shift 0
-Title Actions
-Title Designer&Ctrl Alt Shift I
+Window>Effects&Ctrl Shift Alt 7
+Window>Events
+Window>History
+Window>Info
+Window>Lumetri Color
+Window>Lumetri Scopes
+Window>Markers
+Window>Media Browser
+Window>Metadata
+Window>Program Monitor&Ctrl Shift Alt 4
+Window>Progress
+Window>Project&Ctrl Shift Alt `
+Window>Project&Ctrl Shift Alt 1
+
+Window>Reference Monitor
+Window>Source Monitor
+Window>Timecode
+Window>Timelines&Shift 0
+Window>Timelines&Ctrl Shift Alt 0
+Window>Title Actions
+Window>Title Designer&Ctrl Shift Alt I
 Title Properties
 Title Styles
 Title Tools

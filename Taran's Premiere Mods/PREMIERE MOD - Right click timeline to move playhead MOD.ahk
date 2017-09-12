@@ -2,14 +2,12 @@
 #InstallMouseHook
 #InstallKeybdHook
 
-
 CoordMode, Mouse, screen
 CoordMode, Pixel, screen
 
 Menu, Tray, Icon, shell32.dll, 17
 
-
-;-------------------------------------------------------------------------------------------------------------------------------
+;-------------------------------------------------------------------------------------------------------------------------
 
 ;Define all the timeline's DEFAULT possible colors.
 ;Note that your colors will be different IF you changed the UI brightness inside preferences > appearance > brightness.

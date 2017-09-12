@@ -1,4 +1,5 @@
-﻿;ShowOff.ahk
+﻿;ORIGINAL SCRIPT WAS TITLED:
+;ShowOff.ahk
 ; Shows pushed down keys and buttons
 ;Skrommel @2005
 

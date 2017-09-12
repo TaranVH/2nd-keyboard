@@ -1,4 +1,6 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+﻿#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\point_to_gui.ahk
+;#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\filemover.ahk
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
@@ -87,150 +89,8 @@ Return, xxOutputVar
 */
 
 
+;this is where filemover() used to be. I moved it to its own script, since using it would prevent all other scripts from running, until the file was completely moved.
 
-
-
-
-;;;;FILE MOVER TO TRANSCODE FOLDERS
-
-; YTpublish = "Z:\Linus\1. Linus Tech Tips\Transcode\YT Publish 4K\"
-; VESpublish = "Z:\Linus\1. Linus Tech Tips\Transcode\Vessel Final 4K\"
-
-;I did not write the code below, I forget where I got it from. Will look into it.
-Explorer_GetSelection(hwnd="") {
-	;msgbox, now in getselection
-    hwnd := hwnd ? hwnd : WinExist("A")
-    WinGetClass class, ahk_id %hwnd%
-    if (class="CabinetWClass" or class="ExploreWClass" or class="Progman")
-        for window in ComObjCreate("Shell.Application").Windows
-            if (window.hwnd==hwnd)
-    sel := window.Document.SelectedItems
-    for item in sel
-    ToReturn .= item.path "`n"
-	;msgbox, %ToReturn% is ToReturn
-    return Trim(ToReturn,"`n")
-}
-
-filetomovePATH =
-SlashPosition = 0
-file2move =
-filetomovePATH =
-FileListLocations =
-Fileposition =
-counter = 0
-nlines = 0
-
-;I really need to improve this so that it opens a window with progress bar, and also separate it from the others so that it does not freeze everything else while it is running.
-;BEGIN FUNCTION DEFINITION:
-FileMover(publishLOC) {
-
-filetomovePATH := Explorer_GetSelection() ;NOTE: does not work from the desktop for some stupid reason...
-;;msgbox, you want to move this file to`n%publishLOC%
-tooltip, Filemover Activated, , , 3
-;Send, ^c
-
-
-sleep 10
-existingfile =
-SlashPosition = 0
-file2move =
-filetomovePATH =  ;if you don't refresh these variables, they will retain data from previous run-throughs.
-FileListLocations =
-Fileposition =
-FileNotPresent = 0
-filetomovePATH := Explorer_GetSelection()
-
-;msgbox, the current file path is `n%filetomovePATH%
-SlashPosition := InStr(filetomovePATH, "\" ,false,-1,1) ;first occurance from the right to the left, supposedly.
-StringTrimLeft,file2move,filetomovePATH, %slashposition%
-;;msgbox, file2move = `n%file2move% `n`nfiletomovePATH =`n%filetomovePATH%
-
-;https://www.autohotkey.com/docs/commands/LoopFile.htm the following code does work to list files in a given directory!
-FileList =  ; Initialize to be blank.
-Loop, Files, %publishLOC%*.*, DFR
-    FileList = %FileList%%A_LoopFileName%`n
-Loop, Files, %publishLOC%*.*, DFR
-    FileListLocations = %FileListLocations%%A_LoopFileFullPath%`n ;A_LoopFileDir -or- A_LoopFileFullPath
-
-;;msgbox, FileListLocations = `n%FileListLocations%
-;;msgbox, FileList = `n%FileList%
-
-counter = 0
-nlines = 0
-;settimer debug2, 20
-;msgbox, launching debugger
-
-sleep 20
-Loop Parse, FileList, `n
-  ++nlines
-;;MsgBox, total lines here, or nlines: %nlines%
-
-Loop, parse, FileList, `n
-{
-	; tooltip, counter = %counter%`nnlines = %nlines%, , , 10
-    if A_LoopField =  ; Ignore the blank item at the end of the list.
-        continue
-	;MsgBox, 4,, File number %A_Index% is %A_LoopField%.  Continue?
-    ;IfMsgBox, No
-    ;    break
-    If A_LoopField = %file2move%
-    {
-        Fileposition = %A_Index%
-        Loop, parse, FileListLocations, `n
-            if A_index = %Fileposition%
-                existingfile = %A_LoopField% ;I have to confess, I wrote those 4 lines all at once and i have no idea how they work... they just do.
-        
-		;;msgbox, existingfile = %existingfile%
-
-        ;A match has been found in this folder system, meaning the file was ALREADY moved over here before!
-        msgbox, 1, ,%A_LoopField%`nis already present at`n%existingfile%`n...Want to see?
-        IfMsgBox, OK
-        {
-            ;Run, explore, % filetomovePATH ;<---this will only go to the folder, but WON'T highlight the file - it will just open it instead, unless you use A_LoopFileDir.
-            Run %COMSPEC% /c explorer.exe /select`, "%existingfile%",, Hide
-            ;Run %COMSPEC% /c explorer.exe /select`, "%FileListLocations%",, Hide
-            ;Msgbox, you win! File SHOULD be there already!
-            Goto, theEnd_FM
-        }
-        IfMsgBox, Cancel
-            Goto, theEnd_FM
-    }
-    ;Msgbox, WHERE AM I
-    ; MsgBox, 4,, File number %A_Index% is: `n%A_LoopField%`n`n...continue?
-    ; IfMsgBox, No
-        ; break
-    counter ++
-    if counter + 1 = nlines
-		{
-        ;;msgbox, looked at all files, didn't find the one you are looking for. time to break.
-		FileNotPresent = 1
-		break
-		}
-    ;tooltip, count: %counter%, , ,5
-}
-;;msgbox, end of the loop
-if FileNotPresent = 1
-{
-	msgbox, 1 , ,%filetomovePATH%`nis NOT present at or above `n%publishLOC%`n...would you like to move it there?
-	IfMsgBox, OK
-	{
-		FileCopy,%filetomovePATH%,%publishLOC%
-		Run %COMSPEC% /c explorer.exe /select`, "%publishLOC%%file2move%",, Hide
-		;;Msgbox, did that work?
-		FileNotPresent = 0
-	}
-}
-Goto, theEnd_FM
-theEnd_FM:
-
-;SetTimer, tooltipper, off
-sleep 10
-; tooltip, , , , 9
-tooltip, , , , 3
-; tooltip,
-;;msgbox, you are at the VERY end
-}
-;end of file mover.
 #IfWinActive
 
 
@@ -295,9 +155,9 @@ If (A_LoopFileTimeModified>Rec)
   Rec=%A_LoopFileTimeModified%
   }
 }
-
-MsgBox 4,, Select YES to open the latest %filetype% at Fpath:`n`n%Fpath%
-IfMsgBox Yes
+;try to get this to work with an ENTER press from thne stream deck...
+MsgBox, 3,, Select YES to open the latest %filetype% at Fpath:`n`n%Fpath%
+IfMsgBox, Yes
 	{
 	Run %Fpath%
 	}
@@ -347,7 +207,7 @@ send {SC0E8} ;scan code of an unassigned key ;;sending even a single keystroke f
 sleep 5
 Run, % foo
 sleep 10
-Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;windows shortcut to resize name feild to fit.
+;Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;windows shortcut to resize name feild to fit.
 ;alt v o down enter will sort by date modified, but it is stupid...
 
 if IsFunc("Keyshower")
@@ -457,6 +317,7 @@ windowSwitcher(savedCLASS, savedEXE)
 
 InstantExplorer(f_path,pleasePrepend := 0)
 {
+send {SC0E8} ;scan code of an unassigned key. This is needed to prevent the item from merely FLASHING on the task bar, rather than opening the folder. Don't ask me why, but this works.
 if pleasePrepend = 1
 	{
 	FileRead, SavedExplorerAddress, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
@@ -701,7 +562,14 @@ IfWinNotExist, ahk_class Premiere Pro
 	;Adobe Premiere Pro CC 2017
 	Run, C:\Program Files\Adobe\Adobe Premiere Pro CC 2017\Adobe Premiere Pro.exe
 	}
-WinActivate ahk_class Premiere Pro
+if WinActive("ahk_class Premiere Pro")
+	{
+	WinActivate ahk_exe notepad++.exe
+	;msgbox,,,lol,0.1
+	WinActivate ahk_class Premiere Pro
+	}
+else
+	WinActivate ahk_class Premiere Pro
 }
 
 

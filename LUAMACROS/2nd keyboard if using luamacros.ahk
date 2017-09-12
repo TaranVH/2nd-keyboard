@@ -220,18 +220,17 @@ msgbox, you launched PRESET with the parameter %parameter%
 }
 
 
-recallTransition(){
+recallTransition(parameter){
 msgbox, you launched recallTransition with the parameter %parameter%
-
 }
 
 
-copy(){
-msgbox, you launched COPY with the parameter %parameter%
+copy(bar){
+msgbox, you launched COPY with the parameter %bar%
 
 }
 
-paste(){
-msgbox, you launched PASTE with the parameter %parameter%
+paste(foo){
+msgbox, you launched PASTE with the parameter %foo%
 
 }

@@ -1,7 +1,7 @@
 #NoEnv
 SendMode Input
 #SingleInstance force
-#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\Almost All Windows Functions.ahk
+#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Almost All Windows Functions.ahk
 #MaxHotkeysPerInterval 2000
 Menu, Tray, Icon, shell32.dll, 16 
 
@@ -35,13 +35,14 @@ F3::send ^w ;control w, which closes a tab
 F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
 #IfWinActive
 
+
+;RIP Monty Oum https://youtu.be/qSuTnCFqMkw?t=1m21s
+#IfWinActive ahk_exe Photoshop.exe
+F1::sendinput {alt down}iac{alt up}
+
+
+
 #IfWinActive, ahk_group ExplorerGroup
-`::
-Send !{up} ;This allows you to use the TILDE to go DOWN one folder level in explorer save boxes
-Return
-
-+`::Send !{left} ;shift tilde will go "back" in explorer save boxes
-
 ; ctrl L, alt D, or F4 will highlight the address bar. But in different ways..?
 ^+!d::
 sleep 10
@@ -49,9 +50,32 @@ Sendinput !d
 sleep 10
 return
 
+`::
+Send !{up} ;This allows you to use the TILDE to go DOWN one folder level in explorer save boxes
+Return
+
++`::Send !{left} ;shift tilde will go "back" in explorer save boxes
+
 #IfWinActive
 
-scrollLock::Sendinput ^+{printscreen} ;assigning this straight to scrollLock in ShareX does not work, so i have to remap.
+scrollLock::Sendinput ^+{printscreen} ;assigning 'capture region' straight to scrollLock in ShareX does not work, so i have to remap it here.
+
+
+; ;use scroll lock's status
+; ;to toggle a macro keyboard
+; #If GetKeyState("ScrollLock","T")
+; a::msgbox, macro 1
+; b::msgbox, macro 2
+; c::msgbox, macro 3
+; d::msgbox, macro 4
+; e::msgbox, macro 5
+; f::Sendinput, {alt down}iac{alt up}
+; g::Send,{LCtrl down}{NumpadAdd}{LCtrl up}
+; h::Send, #b{left}{left}{enter}
+
+; #If
+
+
 
 
 F13::back()
@@ -59,7 +83,10 @@ F13::back()
 ^F1::switchToFirefox()
 +^F1::switchToOtherFirefoxWindow()
 ^+!f::winkill, ahk_exe firefox.exe
-
+^+!p::
+winkill, ahk_exe Adobe Premiere Pro.exe
+msgbox,,,killed premiere,0.5
+return
 ^F2::switchToExplorer()
 !^F2::closeAllExplorers()
 
@@ -102,10 +129,7 @@ F7::Send,{LCtrl down}{NumpadAdd}{LCtrl up}
 
 
 
-#IfWinActive ahk_exe explorer.exe
-^F11::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\Floatplane 4K\")
-^F12::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\YT Publish 4K\")
-#IfWinActive
+
 
 
 
@@ -114,20 +138,38 @@ F7::Send,{LCtrl down}{NumpadAdd}{LCtrl up}
 ;;; each one is triggered by a pre-programmed techkeys keyboard, so that each is actually just one keystroke to engage.
 #IfWinActive
 ; ^!+1::runexplorer("Z:\Linus\1. Linus Tech Tips\Pending")
-!+1::runexplorer("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard") ;(alt shift 1)
-!+2::
+^!numpadEnd::
+StringToSend = runexplorer() 2nd-keyboard
+Send_WM_COPYDATA(StringToSend)
+runexplorer("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard") 
+
+Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
+
+return
+^!numpaddown::
 ;msgbox, wtf
+StringToSend = runexplorer() Project template
+Send_WM_COPYDATA(StringToSend)
 runexplorer("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
 return
+
 ;!+3::runexplorer("C:\Users\TaranWORK\Videos\Desktop") ;this is labeled "shadowplay."
-!+3::runexplorer("C:\Users\TaranWORK\Videos\Desktop") ;C:\Users\TaranWORK\Videos\Base Profile ;for some reason, the recordings sometimes go into this folder now.
+;^!+numpad3::
+^!numpadpgdn::
+StringToSend = runexplorer() shadowplay recordings
+Send_WM_COPYDATA(StringToSend)
+runexplorer("C:\Users\TaranWORK\Videos\Desktop")
+sleep 5
+;send {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
+return
+;C:\Users\TaranWORK\Videos\Base Profile ;for some reason, the recordings sometimes go into this folder now.
 ;;; done ;;;;
 
 
 #IfWinActive
 ;opens the CLOCK / CALENDAR. ;http://superuser.com/questions/290068/windows-keyboard-shortcut-to-view-calendar
 #z::
-Send #b{left}{enter}
+Send #b{left}{left}{enter}
 Return
 
 #IfWinActive

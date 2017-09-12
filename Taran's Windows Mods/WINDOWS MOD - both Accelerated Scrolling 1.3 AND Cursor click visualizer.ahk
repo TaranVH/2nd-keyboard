@@ -93,12 +93,18 @@ vmax := 1
 
 
 ; Key bindings
-WheelUp::    
+~^WheelUp::
+~+WheelUp::
+~!WheelUp::
+WheelUp::
 Gui, hide
 Wup = 1
 Goto Scroll
 return
 
+~^WheelDown::
+~+WheelDown::
+~!WheelDown::
 WheelDown::
 Gui, hide
 Wdown = 1
@@ -107,7 +113,7 @@ return
 
 #WheelUp::   Suspend
 
-#WheelDown:: ; this turns the click visualizer on or off. It had to be paired with the fast scroll script or it didn't work.
+#WheelDown:: ; this turns the click visualizer and fast scroll :( on or off.
 If showClicks = 1
 {	
 	tooltip, changing visualization

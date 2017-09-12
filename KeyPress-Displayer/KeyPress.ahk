@@ -1,4 +1,6 @@
-; KeypressOSD.ahk
+; KeypressOSD.ahk - not programmed by Taran
+;THIS IS A SIMPLER ALTERNATIVE TO KEYSTROKE VIZ.AHK. THE TWO SHOULD NOT BE USED AT THE SAME TIME.
+;This visualizer does not show associated commands.
 
 #SingleInstance force
 #NoEnv
