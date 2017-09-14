@@ -297,21 +297,22 @@ Rctrl::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~INTEGRATIONS")
 ;SC065::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~ For Review") ;this is remapped from ALT. JK, SC065 is F14, do not use.
 appskey::msgbox, this is the right click appskey KEY I guess
 
-PrintScreen::runexplorer("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard")
-ScrollLock::runexplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;"   ;msgbox, , , this key is NO GOOD TO USE!`nmaybe, 0.7
-SC061::runexplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;"   ;msgbox, , , this key is NO GOOD TO USE!`nmaybe, 0.7
+;these were all formerly runExplorer()
+PrintScreen::InstantExplorer("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard")
+ScrollLock::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;"   ;msgbox, , , this key is NO GOOD TO USE!`nmaybe, 0.7
+SC061::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;"   ;msgbox, , , this key is NO GOOD TO USE!`nmaybe, 0.7
 
 CtrlBreak::msgbox, CTRL BREAK - maybe the default output of the pause/break key??
 pause::msgbox, is this the PAUSE key?? IDK
 Break::msgbox, Maybe THIS is the pause/break key?? WHAT CAN I BELEVE ANYMORE??
 
-pgdn::runexplorer("Z:\Linus\1. Linus Tech Tips\Pending")
-end::runexplorer("Z:\Linus\5. Fast As Possible\1. Pending")
-delete::runexplorer("Z:\Linus\6. Channel Super Fun")
+pgdn::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Pending")
+end::InstantExplorer("Z:\Linus\5. Fast As Possible\1. Pending")
+delete::InstantExplorer("Z:\Linus\6. Channel Super Fun")
 
-pgup::runexplorer("N:\Linus Tech Tips")
-home::runexplorer("N:\Fast As Possible") ;runexplorer("N:\Fast As Possible")
-insert::runexplorer("N:\Channel Super Fun")
+pgup::InstantExplorer("N:\Linus Tech Tips")
+home::InstantExplorer("N:\Fast As Possible") ;runexplorer("N:\Fast As Possible")
+insert::InstantExplorer("N:\Channel Super Fun")
 
 up::preset("push up")
 down::preset("push down")
