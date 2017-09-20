@@ -324,7 +324,13 @@ right::preset("push right")
 numpad0::SendKey("numpad0", , "sky blue")
 numpad1::SendKey(A_thishotkey, ,"blue-green")
 numpad2::SendKey(A_thishotkey, ,"nudge down")
-numpad3::SendKey(A_thishotkey, ,"orange")
+numpad3::
+if WinActive("ahk_exe Adobe Premiere Pro.exe")
+	SendKey(A_thishotkey, ,"orange")
+if WinActive("ahk_exe chrome.exe")
+	sendinput, ^+{tab} ;go to previous tab in chrome
+return
+
 numpad4::SendKey(A_thishotkey, ,"nudge left")
 numpad5::msgbox, this text should never appear. I have remapped numpad5 to "left ctrl" in interceptor. scan code 1d,0,0.
 numpad6::SendKey(A_thishotkey, ,"nudge right")
@@ -340,7 +346,8 @@ numpadMult::SendKey("numpadmult", ,"pink")
 numpadSub::openApp("ahk_class AU3Reveal", "AU3_Spy.exe", "Active Window Info") ;msgbox, , , num minus, 0.5
 ; numpadAdd::openApp("ahk_class Adobe Media Encoder CC", "Adobe Media Encoder.exe") ;msgbox, , , num ADD, 0.5
 numpadAdd::openApp("ahk_class Notepad++", "notepad++.exe") ;msgbox, , , num ADD, 0.5
-numpadEnter::sendinput ^{F5} ; this goes to chrome instant application switcher in WINDOWS MOD - various functions .ahk.  ; openApp("ahk_class Chrome_WidgetWin_1", "chrome.exe")
+numpadEnter::switchToChrome()
+
 
 numpadDot::openApp("ahk_class Photoshop", "Photoshop.exe") ;msgbox, , , num dot, 0.5
 
@@ -493,9 +500,9 @@ return
 
 
 ;~~~~~~~~~BEGIN 4TH KEYBOARD using F21~~~NICE MECHANICAL ONE~~~~~~~~~~~
+;#if (getKeyState("F21", "P") and If WinActive("ahk_exe Adobe Premiere Pro.exe"))
 #if (getKeyState("F21", "P"))
 F21::return 
-
 
 numpad0::
 prFocus("program") ;the following shortcut only works if the program monitor is in focus...
@@ -517,27 +524,35 @@ numpad3::
 msgbox,,,hi,0.5
 return
 
+;numpad4::tippy("sort Explorer by date")
+
 
 numpad4::
-IfWinActive, ahk_exe explorer.exe
-{
+IfWinActive, ahk_class CabinetWClass
+	{
 	send {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
 	tippy("sort Explorer by date")
-	Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
-}
+	}
 return
+
 numpad5::
-IfWinActive, ahk_exe explorer.exe
-{
+IfWinActive, ahk_class CabinetWClass
+	{
 	send {alt}vo{enter} ;sort by name
 	tippy("sort Explorer by name")
-	Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
-}
+	}
 return
-numpad6::msgbox,,, 4th keyboard %A_thishotkey%,0.6
-numpad7::runexplorer("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard") 
-numpad8::runexplorer("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
-Numpad9::runexplorer("C:\Users\TaranWORK\Videos\Desktop")
+
+numpad6::
+if WinActive("ahk_class CabinetWClass") ;an explorer window
+	{
+	Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field in explorer
+	}
+return
+
+numpad7::instantexplorer("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard") 
+numpad8::instantexplorer("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
+Numpad9::instantexplorer("C:\Users\TaranWORK\Videos\Desktop") ;shadowplay folder opener
 NumpadDiv::msgbox,,, 4th keyboard %A_thishotkey%,0.6
 
 backspace::
@@ -546,11 +561,13 @@ send ^+4 ;set program monitor resolution to 1/8th
 tippy("wat")
 prFocus("timeline")
 return
+
 NumpadSub::
 prFocus("program")
 send ^+3 ;res to 1/4
 prFocus("timeline")
 return
+
 NumpadAdd::
 prFocus("program")
 send ^+2 ;res to 1/2
@@ -563,10 +580,15 @@ send ^+1 ;set resolution to 1/1
 prFocus("timeline")
 return
 
-NumpadEnter::tippy("nope")
+NumpadEnter::msgbox,,, numpad F21 enter,1
 
-numpadMult::
-NumpadDot::send !p ;choose poster frame shortcut in Premiere
+numpadMult::instantexplorer("C:\Users\TaranWORK\Videos\Base Profile")
+
+
+NumpadDot::
+IfWinActive, ahk_exe Adobe Premiere Pro.exe
+	send !p ;choose poster frame shortcut in Premiere
+return
 
 #if
 ;~~~~END OF 4TH KEYBOARD (mechanical Jelly) USING INTERCEPTOR~~~~
@@ -609,6 +631,7 @@ Ascii_Unicode_Input .= SubStr( A_ThisHotkey, 0 )
 return
 ;~~~~~~~~~~~~~END OF 4TH KEYBOARD OVERALL~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 	
 	
 ; ;BEGIN 5th keyboard - jelly comb compact with F20
@@ -639,76 +662,21 @@ return
 ; ;end 5th keyboard with F20
 				
 				
-				
+		
 #IfWinActive
  
 
-
-
 ;STREAM DECK BEGIN -- 6th keyboard ---------
-
-; !+q::return ;q is unused
-; !+w::insertSFX("bell")
-; !+e::insertSFX("woosh1")
-; !+r::insertSFX("pop")
-; ;!+t::return ;send ^!p ;shortcut for pin to clip
-; ;!+a::preset("blur with edges") ;this was interfering with the monomaker... huge cross talk issues with this, and actually all the rest of them too....
-; !+s::audioMonoMaker("right")
-; !+d::audioMonoMaker("left")
-; !+f::reselect()
-; !+g::addGain()
-; !+z::preset("crop") ;the cropClip function is now auto-triggered.
-; !+x::preset("crop 50 LEFT")
-; !+c::preset("crop 50 RIGHT")
-;!+v::Send F19 ;~F19::tracklocker() ; this is pointless, I'm just gonna have the key hit F19 from the start. aLSO, tracklocker() was moved to another ahk script.
-;!+b::return ;instead, the key will hit CTRL SHIFT 0 straight away. (Effects panel find box selector mod.)
-
-;in premiere, these are listed as Capture Panel>log Clip... which i never use, so it is just showing that these shortcuts HAVE been used by autohotkey.
-;currently, a full stream deck folder full of only shortcuts
 
 ;;^+] is apparently also addGain()
 ~^+8::addGain()
 ~^+9::reSelect()
 ;;^+0 is already the effects panel find box function.
-^!numpad0::
-^!numpad1::
-^!numpad2::
-^!numpad3::
-^!numpad4::
-^!numpad5::
-^!numpad6::
-^!numpad7::
-^!numpad8::
-^!numpad9::
-
-^!numpadDiv::
-^!numpadMult::
-^!numpadSub::
-^!numpadAdd::return
-
-#WinActivateForce
-
-;And this is for the Explorer panel thingy on my stream deck. !+
-+!y::savelocation2()
-; +!u::runexplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery")
-; +!i::runexplorer("Z:\Linus\1. Linus Tech Tips\Pending")
-; +!o::runexplorer("N:\Linus Tech Tips")
-
-+!h::InstantExplorer("Graphics",1)
-+!j::InstantExplorer("ALL FOOTAGE",1)
-+!k::openlatestfile(1, ".prproj")
-; +!l::runexplorer("Z:\Linus\5. Fast As Possible\1. Pending")
-+!`;::runexplorer("N:\Fast As Possible") ;notepad++ syntax highlighting is wrong here.
-
-+!n::InstantExplorer("Thumbnail",1)
-+!m::InstantExplorer("Delivery",1)
-+!,::openlatestfile(1, ".docx")
-; +!.::runexplorer("Z:\Linus\6. Channel Super Fun")
-; +!/::runexplorer("N:\Channel Super Fun")
-#ifWinActive
-
+; - is something
+; = is play/pause outside of premiere
 ;;;;;;;;;;;END OF KEY FOR STREAM DECK (soon to be obsolete, since i will launch directly);;;;;;
 
+;---------------------------------------------
 
 ;experimenting with scan codes. here is a list of blank ones.
 ;https://developer.mozilla.org/en/docs/Web/API/KeyboardEvent/code
@@ -746,7 +714,31 @@ return
 !,::msgbox, A_workingDir should be %A_WorkingDir%
 !.::msgbox, TaranDir should be %TaranDir%
 
-
+^numpad1:: ;EASE IN AND EASE OUT
+; blockinput, sendandMouse
+blockinput, MouseMove
+; blockinput, on
+click right
+send T
+sleep 10
+send E
+send E
+sleep 10
+send {enter}
+sleep 10
+tooltip, 
+; click right
+click middle
+sendinput {click right}
+send T
+sleep 10
+send E
+sleep 10
+send {enter}
+blockinput, off
+blockinput, MouseMoveOff
+tooltip,
+return
 
 /*
 G9: ctrl shift ] - add 7 gain, OR go to prev comment in Word.
@@ -875,10 +867,12 @@ return
 ;Macro key G12 on my Logitech G15 keyboard is set to F14.
 #IfWinActive ahk_exe winword.exe
 ~F14::F3 ;in Word, the F3 shortcut is "go to next comment."
+
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
-;I was having trouble with cross-talk on F14... so writing it this way allows me to use it for use.
+;I was having trouble with cross-talk on F14... so writing it this way allows me to use it.
+;~F14:: ;the virtual key and scan code below refer to F14.
 ~VK7DSC065::
-;msgbox, fuck you
 global VFXkey = "F14"
 instantVFX("scale")
 return
@@ -1056,6 +1050,7 @@ return
 
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
+;TITLE BAR REMOVER
 ;;ctrl backslash is a nice shortcut in MACINTOSH Premiere for hiding the title bar. There is no Windows equivalent... unless you use autohotkey!
 ;;https://jacksautohotkeyblog.wordpress.com/2016/05/27/autohotkey-toggles-and-the-ternary-operator-beginning-hotkeys-part-18/
 ^\::

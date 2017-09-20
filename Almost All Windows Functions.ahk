@@ -25,7 +25,7 @@ GroupAdd, ExplorerGroup, ahk_class #32770 ;This is for all the Explorer-based "s
 ;lololol I have to have tippy(), but i can't redefine an existing function, so I either have to put it in another .ahk script and #include it, or I could go the lazy route and just add a "2" to the end of ALL of them in this file, because I am a such a bad spaghetti coder that I don't even know what that means.
 Tippy2(tipsHere, wait:=333)
 {
-ToolTip, %tipsHere% TP,,,8
+ToolTip, %tipsHere%,,,8
 SetTimer, notip2, %wait% ;--in 1/3 seconds by default, remove the tooltip
 }
 notip2:

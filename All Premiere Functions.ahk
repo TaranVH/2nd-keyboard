@@ -1129,12 +1129,6 @@ blockinput, on
 ;-Sendinput ^!+5
 prFocus("effect controls") ;essentially just hits CTRL ALT SHIFT 5 to highlight the effect controls panel.
 sleep 10
-; send ^+d ;deselect anything that might be selected. We want to affect ONLY the clip the playhead is currently on top of - what we can see in the program monitor.
-; sleep 10
-; Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
-; sleep 10
-; Send ^p ;this now disables "selection follows playehad." I don't know if there is a way to CHECK if it is on or not.
-; sleep 10
 
 ;ToolTip, A, , , 2
 MouseGetPos Xbeginlol, Ybeginlol
