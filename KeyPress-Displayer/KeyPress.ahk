@@ -1,4 +1,5 @@
-; KeypressOSD.ahk - not programmed by Taran heavily modified by Victor Uribe!
+; KeypressOSD.ahk
+; Written by VarunJhajharia, then heavily modified by Victor Uribe! (Not scripted by Taran at all!)
 ;THIS IS A SIMPLER ALTERNATIVE TO KEYSTROKE VIZ.AHK. THE TWO SHOULD NOT BE USED AT THE SAME TIME.
 ;This visualizer does not show associated commands.
 
