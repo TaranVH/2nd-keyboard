@@ -229,3 +229,4 @@ f7::send joy7
 f8::send joy8
 f9::send joy9
 */
+#ifwinactive

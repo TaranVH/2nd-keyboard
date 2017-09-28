@@ -364,7 +364,7 @@ SC064::msgbox sc064, L ALT
 ; SC067::msgbox sc067, R CTRL
 
 
-SC045::msgbox sc045... num lock but actually pause/break?????
+SC045::msgbox sc045... pause/break, but MAYBE numlock???
 
 ;scancode scan code information
 SC07F::msgbox sc7F is as high as I could go, after 80 they become unusable for some reason.
@@ -390,33 +390,35 @@ sleep 100
 return
 
 
-;doing some scancode testing here:
+;experimenting with scan codes. here is a list of blank ones.
+;https://developer.mozilla.org/en/docs/Web/API/KeyboardEvent/code
+; #if (getKeyState("F1", "P"))
+; F1::return 
 
-SC070::tooltip sc070
-SC075::tooltip sc075
-SC07A::tooltip sc07A
-SC07B::tooltip sc07B
-SC07C::tooltip sc07C
-SC07D::tooltip sc07D
-SC07E::tooltip sc07E ...this does register.
-SC07F::tooltip sc07F is as high as I could go
+;IN HERE, WE ARE SENDING THE FIRST SCANCODE KEYSTOKES. win key assignemtns will recieve.
 
-SC080::tooltip sc080... this does not register.
-SC081::tooltip sc081... this does not register.
-SC082::tooltip sc082... this does not register.
-SC083::tooltip sc083... this does not register.
-SC084::tooltip sc084... this does not register.
-SC085::tooltip sc085... this does not register.
-SC086::tooltip sc086... this does not register.
+#ifwinactive
 
-SC0FB::tooltip sc0FB ...this does not register.
-SC0FC::tooltip sc0FC ...this does not register.
-SC0FD::tooltip sc0FD ...this does not register.
+; F10::sendinput, {F14} ;scancode 065 but firefox says 9C - maybe is in hex.
+; F11::
+; tooltip, yeah 05A
+; sleep 500
+; sendinput, {SC05A} ;just after F23, but is not F24.
+; tooltip,
+; return
+; 2::sendinput {SC05B} ;just before F13
+; 3::send {SC05E}
+; 4::send {SC05F}
+; 5::send {SC060}
+; 6::sendinput {SC061}
+; 7::sendinput {SC037} ;numpadmultiply
+; 8::sendinput {SC038} ;alt left (lol)
+; 9::sendinput {SC06A}
+; 0::sendinput {SC06B}
+;***************
+;{SC0E8} is taken by one of my own scripts.*****
 
 
-
-SC0FE::tooltip sc0FE ...this does not register.
-SC0FF::tooltip sc0FF ...this does not register.
 
 #if
 
@@ -428,73 +430,9 @@ SC159:: ; Replace 159 with your key's value.
 MsgBox, %A_ThisHotKey% was pressed.
 return
 
-
-
 */
 
-;~~~~BEGINNING OF 3RD KEYBOARD (just a USB numpad) USING INTERCEPTOR~~~~~~~~
-#if (getKeyState("F22", "P"))
-;and if <premiere> is running <--add that later
-F22::
-; FileRead, SavedExplorerAddress, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
-send {SC0E8} ;scan code of an unused unassigned key. This is important to prevent taskbar flashing.
-return
-
-;Z:\Linus\1. Linus Tech Tips\Pending\Luke Personal Rig Update
-NumpadDot::InstantExplorer("Delivery",1) ;capitalization is important! I think...
-numpad0::InstantExplorer("Thumbnail",1) ;the "1" is there to tell it to use a saved location
-numpad1::InstantExplorer("music",1)
-numpad2::InstantExplorer("Graphics",1)
-numpad3::InstantExplorer("Extra videos",1)
-numpad4::InstantExplorer("music",1)
-numpad5::InstantExplorer("L-Roll",1)
-numpad6::InstantExplorer("ALL FOOTAGE",1)
-numpad7::InstantExplorer("\",1) ;MAIN, ROOT FOLDER
-numpad8::InstantExplorer("Scripts",1)
-NumpadDiv::InstantExplorer("Project",1) 
-
-Numpad9::openlatestfile(1, ".docx")
-numpadMult::openlatestfile(1, ".prproj") ;very special... always opens the MOST RECENT .prproj no matter WHAT sub folder it is in.
-
-
-
-NumpadAdd::
-IfWinNotExist, ahk_class CabinetWClass
-	Run, explorer.exe
-GroupAdd, taranexplorers, ahk_class CabinetWClass
-if WinActive("ahk_exe explorer.exe")
-	GroupActivate, taranexplorers, r
-else
-	WinActivate ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
-Return
-
-;NumpadSub::tooltip, subtract - check autosave maybe
-
-;SC00E::tooltip, backspace
-
-
-^numpad7::saveLocation2()
-
-; numpadsub::
-; msgbox,,,lel,1
-; return
-
-numpadsub::
-if WinActive("ahk_exe explorer.exe")
-	sendinput ^w
-return
-
-^numpadsub::WinClose, ahk_group taranexplorers
-
-;;the code below WORKS, but does not block the normal "-" keystroke no matter what i have tried...
-; #If (getKeyState("F22", "P")) and WinActive("ahk_exe explorer.exe")
-; numpadsub::
-; sendinput ^w
-; msgbox,,,multiple #ifs used sucessfully ,1
-; return
-
-#if
-;~~~~~~~~~END OF 3RD KEYBOARD (just a USB numpad) USING INTERCEPTOR~~~~~~~~~~
+;3RD KEYBOARD CODE WAS HERE (was actually just a shitty numpad) - used F22 - but has been replaced with the stream deck.
 
 
 
@@ -521,7 +459,25 @@ prFocus("timeline")
 return
 
 numpad3::
-msgbox,,,hi,0.5
+;https://stackoverflow.com/questions/23028005/autohotkey-able-to-capture-firefox-tab
+;this is a terrible solution, I think i will look into AAC instead
+; https://autohotkey.com/boards/viewtopic.php?f=6&t=26947&p=126248#p126248
+SetTitleMatchMode 2
+
+needle := "Linus Media Group Inc. - Calendar"
+
+WinActivate, Firefox
+Loop {
+  WinGetTitle, title
+  IfWinNotActive, Firefox
+    break
+  if (InStr(title,needle))
+    Break
+  Else
+    send ^{PgUp}
+  sleep 50
+}
+
 return
 
 ;numpad4::tippy("sort Explorer by date")
@@ -678,29 +634,151 @@ return
 
 ;---------------------------------------------
 
-;experimenting with scan codes. here is a list of blank ones.
-;https://developer.mozilla.org/en/docs/Web/API/KeyboardEvent/code
+
+#if (getKeyState("F24", "P"))
+F24::return ;F24
+
+escape::msgbox,,, you pressed escape. this might cause like problems maybe, 0.9
+F1::
+F2::
+F3::
+F4::
+F5::
+F6::
+F7::
+F9::
+F8::
+F10::
+F11::
+F12::return
+
+`::
+1::
+2::
+3::
+4::
+5::
+6::
+7::
+8::
+9::
+0::
+-::
+=::
+backspace::return
+
+;;;;;next line;;;;;;;;
+
+tab::msgbox,,, you pressed tab. :P,0.8
+
+q::
+w::
+e::
+r::
+t::
+y::
+u::
+i::
+o::
+p::
+[::
+]::
+\::return
+capslock::msgbox, , ,i hate capslock!, 1000
+
+a::
+s::
+d::
+f::
+g::
+h::
+j::
+k::
+l::
+`;::
+'::
+enter::return
+;;;;;next line;;;;;;;;
+
+Lshift::return
+z::
+x::
+c::
+v::
+b::return
+n::
+m::
+,::
+.::
+/::return
+
+Lwin::msgbox, LEFT win
+Lalt::msgbox, LEFT alt
+space::tippy("3rd space")
+Ralt::msgbox, Ralt - doesnt work
+Rwin::msgbox, Right Win 
+Rshift::msgbox RIGHT SHIFT lol
+SC06E::msgbox,,,right WINkey,0.5
+SC06F::msgbox,,,SC06F,0.5
+SC062::msgbox,,,SC062,0.5
+Rctrl::msgbox,,,Rctrl,0.5
+appskey::msgbox, this is the appskey KEY I guess
+
+;these were all formerly runExplorer()
+PrintScreen::
+ScrollLock::return
+SC061::msgbox, scancode061
+CtrlBreak::msgbox, CTRL BREAK?
+pause::msgbox, is this the PAUSE key?? IDK
+Break::msgbox, Maybe THIS is the pause/break key???
+
+pgdn::
+end::
+delete::
+pgup::
+home:: 
+insert::
+
+up::
+down::
+left::
+right::
+
+;;;;;next area;;;;;;;;
+
+numpad0::
+numpad1::
+numpad2::
+numpad3::
+numpad4::
+numpad5::
+numpad6::
+numpad7::
+numpad8::
+numpad9::
+
++numlock::
+numlock::
+numpadDiv::
+numpadMult::
+numpadSub::
+numpadAdd::
+numpadEnter::return
+numpadDot::
+/*
+;These are now unused - I realized that keeping them as modifiers (allowing them to pass through normally) is more valuable then as single keys.
+SC060::msgbox sc060, which I have assigned from LEFT SHIFT using intercept.exe
+SC061::msgbox sc061, right shift
+SC062::msgbox sc062, L CTRL
+SC063::msgbox sc063, L WIN
+SC064::msgbox sc064, L ALT
+*/
 
 
-;6F is CTRL ??
 
-; ^F13::
-; tooltip, yeah
-; sleep 500
-; send {SC05A} ;just after F23, but is not F24.
-; tooltip,
-; return
-; ^F14::send {SC05A} ;just before F13
-; ^F15::send {SC05E}
-; ;^F16::send {SC05F}
-; ^F17::send {SC060}
-; ^F18::send {SC061}
-; ^F19::send {SC062}
-; ^F20::
-; ^F21::
-; ^F22::
+#if
 
-; ;{SC0E8} is taken by one of my own scripts.
+
 
 
 ;---------------ALL NORMAL KEY ASSIGNMENTS---------------------
@@ -788,16 +866,6 @@ return
 
 ;+++++++++++++++++++++++++++++++
 #IfWinActive
-; F9::
-; tooltip, wat
-; WinGetTitle, Title, A
-; WinActivate, ahk_exe Adobe Premiere Pro.exe
-; ;WinWaitActive, ahk_exe Adobe Premiere Pro.exe
-; ;sleep 1000
-; Send {space}
-; WinActivate, %Title%
-; tooltip,
-; return
 
 
 ;Below is some code to pause/play the timeline in Premiere, when the application is NOT the active window (on top.) This means that I can be reading through the script, WHILE the video is playing, and play/pause as needed without having to switch back to premeire every single time.
@@ -806,14 +874,17 @@ return
 ^+=::
 Keyshower("pause/play Premiere when not active",,1,-400)
 ;Window Class3 is actually the Effect Controls panel... but play/pausing still works if that panel is selected. Trying to bring focus to the TIMELINE itself is really dangerous and unpredictable, since its Class# is always changing, based upon how many sequences, and other panels, that might be open.
-ControlFocus, DroverLord - Window Class3,ahk_exe Adobe Premiere Pro.exe
+ControlFocus, DroverLord - Window Class11,ahk_exe Adobe Premiere Pro.exe
 ;If we don't use ControlFocus first, ControlSend experiences bizzare and erratic behaviour, only able to work when the video is PLAYING, but not otherwise, but also SOMETIMES working perfectly, in unknown circumstances. Huge thanks to Frank Drebin for figuring this one out; it had been driving me absolutely mad. https://www.youtube.com/watch?v=sC2SeGCTX4U
 ; Window Class11 is the Program monitor, at least on my machine.
+;I tried windowclass3, (the effect controls) but that does not work, possibly due to its possible tiue to stuff in the bins, which would play instead sometimes.
+
 sleep 10
-ControlSend,DroverLord - Window Class11,^!+5,ahk_exe Adobe Premiere Pro.exe
+;ControlSend,DroverLord - Window Class3,^!+5,ahk_exe Adobe Premiere Pro.exe
 ;that is my shortcut for the Effect Controls.
 sleep 10
-ControlSend,DroverLord - Window Class11,^!+3,ahk_exe Adobe Premiere Pro.exe
+;ControlSend,DroverLord - Window Class3,^!+3,ahk_exe Adobe Premiere Pro.exe
+
 ;that is my shortcut for the Timeline.
 ;this is to ensure that it doesn't start playing something in the source monitor, or a bin somewhere.
 sleep 10
@@ -825,26 +896,6 @@ return
 
 
 
-; ;#IfWinNotActive ahk_exe Adobe Premiere Pro.exe
-; #IfWinActive ;ahk_class Premiere Pro
-; F8::
-; SetTitleMatchMode, 1
-; detecthiddenwindows, on
-; ;SetKeyDelay, 0, 50
-; tooltip, "play/pause in premiere"
-; sleep 10
-; ;ControlSend, DroverLord - Window Class3,{space}, ahk_exe Adobe Premiere Pro.exe
-; ; ControlSend,,{space}, ahk_class Premiere Pro
-; ; ControlSend,ahk_parent,8, ahk_exe Adobe Premiere Pro.exe
-; ; ControlSend,edit1,9, ahk_exe Adobe Premiere Pro.exe
-; ControlSend,,{space}, ahk_class Premiere Pro
-; ;ControlGet, OutputVar, Hwnd,, ClassNN:	DroverLord - Window Class3, Adobe Premiere Pro
-; ;ControlSend,,J, ahk_id %OutputVar%
-; ; sleep 100
-; ; ControlSend,ahk_parent,{8 up}, ahk_exe Adobe Premiere Pro.exe
-; sleep 10
-; tooltip,
-; return
 
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
@@ -853,7 +904,8 @@ return
 ~F1::Send u^+!d ;u is [select clip at playhead] and ctrl alt shift d is [ripple delete]
 ;F2 is set in premiere to the [GAIN] panel.
 ;F3 is set in premiere to the [MODIFY CLIP] panel. 
-~F4::untwirl() ;I never use this, it is too dumb. needs improvement.
+;~F4::untwirl() ;I never use this, it is too dumb. needs improvement.
+~F4::preset("RED DROP SHADOWS") ;I never use this, it is too dumb. needs improvement.
 ~F5::clickTransformIcon2()
 ~F6::cropClick()
 ~F7::masterselect() ;this has not been programmed yet
@@ -876,6 +928,7 @@ return
 global VFXkey = "F14"
 instantVFX("scale")
 return
+
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Macro key G11
@@ -910,12 +963,12 @@ return
 capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
 
 
-
 ;capslock is now F20.
 ;F21 - will free this up by using some other scan code
 ;F22 - will free this up by using some other scan code
 ;F23 is for the 2nd keyboard, and intercept.exe. Will maintain for compatibility with Taran tutorials
-;F24 was used for Luamacros, but I don't use that anymnore, so i will repurpose it.
+;F24 was used for Luamacros
+
 ;;---------------------------------------------------
 
 
@@ -934,54 +987,6 @@ capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
 ;^h::
 ;Send ^r50{Enter}
 ;return
-
-;;---------------------------------------------------
-
-;;;;;;;;shortcuts for creating markers, then makign them into specific colors.;;;;;;;;;;;;
-; #IfWinActive ahk_exe Adobe Premiere Pro.exe
-; ~numpadend::
-; marker()
-
-; send !{numpad1}
-; return
-
-; ;suuposedly shift numpad 5, but remapped from numlock, if interceptor is working....
-; numpadclear::
-; marker()
-; send !{numpad2}
-; msgbox,,, alt numpad2,0.5
-; return
-
-; +numpadmult::
-; marker()
-; send !{numpad3}
-; return
-
-; numpadpgdn::
-; marker()
-; send !{numpad4}
-; return
-
-; numpadhome::
-; marker()
-; send !{numpad5}
-; return
-
-; +numpaddiv::
-; marker()
-; send !{numpad6}
-; ;tooltip, DIV num8
-; return
-
-; numpadins::
-; marker()
-; send !{numpad7}
-; return
-
-; numpadpgup::
-; marker()
-; send !{numpad8}
-; return
 
 
 ;+++++++++++++++++++++++++++++++
@@ -1064,3 +1069,150 @@ Return
 
 ;;shortcut to CLOSE FIREFOX with no bullshit or fanfare or annoying dialouge boxes that try to argue with you. Just completely nuke it from orbit so we can start over
 ^!+f::Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
+
+
+
+
+;saving this for future use
+/*
+#if (getKeyState("F24", "P"))
+F24::return ;F24
+
+escape::msgbox,,, you pressed escape. this might cause like problems maybe, 0.9
+F1::
+F2::
+F3::
+F4::
+F5::
+F6::
+F7::
+F9::
+F8::
+F10::
+F11::
+F12::return
+
+`::
+1::
+2::
+3::
+4::
+5::
+6::
+7::
+8::
+9::
+0::
+-::
+=::
+backspace::return
+
+;;;;;next line;;;;;;;;
+
+tab::msgbox,,, you pressed tab. :P,0.8
+
+q::
+w::
+e::
+r::
+t::
+y::
+u::
+i::
+o::
+p::
+[::
+]::
+\::return
+capslock::msgbox, , ,i hate capslock!, 1000
+
+a::
+s::
+d::
+f::
+g::
+h::
+j::
+k::
+l::
+`;::
+'::
+;;;;;next line;;;;;;;;
+
+Lshift::return
+z::
+x::
+c::
+v::
+b::return
+n::
+m::
+,::
+.::
+/::return
+Lwin::msgbox, LEFT win
+Lalt::msgbox, LEFT alt
+space::tippy("3rd space")
+Ralt::msgbox. Ralt - doesnt work
+Rwin::msgbox, Right Win 
+Rshift::msgbox RIGHT SHIFT lol
+SC06E::msgbox,,,right WINkey,0.5
+SC06F::msgbox,,,SC06F,0.5
+SC062::msgbox,,,SC062,0.5
+Rctrl::msgbox,,,Rctrl,0.5
+appskey::msgbox, this is the appskey KEY I guess
+
+;these were all formerly runExplorer()
+PrintScreen::
+ScrollLock::return
+SC061::msgbox, scancode061
+CtrlBreak::msgbox, CTRL BREAK?
+pause::msgbox, is this the PAUSE key?? IDK
+Break::msgbox, Maybe THIS is the pause/break key???
+
+pgdn::
+end::
+delete::
+pgup::
+home::
+insert::
+
+up::
+down::
+left::
+right::
+
+;;;;;next area;;;;;;;;
+
+numpad0::
+numpad1::
+numpad2::
+numpad3::
+numpad4::
+numpad5::
+numpad6::
+numpad7::
+numpad8::
+numpad9::
+
++numlock::
+numlock::
+numpadDiv::
+numpadMult::
+numpadSub::
+numpadAdd::
+numpadEnter::return
+numpadDot::
+/*
+;These are now unused - I realized that keeping them as modifiers (allowing them to pass through normally) is more valuable then as single keys.
+SC060::msgbox sc060, which I have assigned from LEFT SHIFT using intercept.exe
+SC061::msgbox sc061, right shift
+SC062::msgbox sc062, L CTRL
+SC063::msgbox sc063, L WIN
+SC064::msgbox sc064, L ALT
+*/
+
+
+
+#if
+*/
