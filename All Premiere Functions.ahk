@@ -74,7 +74,7 @@ effectsPanelType(item := "lol")
 if IsFunc("Keyshower") {
 	Func := Func("Keyshower")
 	RetVal := Func.Call(item,"effectsPanelType") 
-}
+	}
 
 
 ;prFocus("effects") ;reliably brings focus to the effects panel
@@ -118,22 +118,24 @@ coordmode, Caret, Window
 
 ;This (temporarily) blocks the mouse and keyboard from sending any information, which could interfere with the funcitoning of the script.
 BlockInput, SendAndMouse
+BlockInput, MouseMove
 BlockInput, On
 
 SetKeyDelay, 0 ;this ensures that any text AutoHotKey "types in," will input instantly, rather than one letter at a time.
 MouseGetPos, xposP, yposP ;---stores the cursor's current coordinates at X%xposP% Y%yposP%
 
-;Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to "effects" panel
-prFocus("effects") ;more reliably uses the above shortcut to set focus to the effects panel.
+Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to "effects" panel
 
-sleep 5 ;"sleep 5" means the script will wait for 5 milliseconds before the next command. This is done to give Premiere some time to load its own things.
+sleep 15 ;"sleep 15" means the script will wait for 15 milliseconds before the next command. This is done to give Premiere some time to load its own things.
 Send ^b ;CTRL B -- set in premiere to "select find box"
-sleep 5
+sleep 15
 ;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret." 
 
 MouseMove, %A_CaretX%, %A_CaretY%, 0
+sleep 15
+MouseMove, %A_CaretX%, %A_CaretY%, 0
 ;and fortunately, AHK knows the exact X and Y position of this caret. So therefore, we can find the effects panel find box, no matter what monitor it is on, with 100% consistency.
-sleep 10
+sleep 15
 
 MouseGetPos, , , Window, classNN
 WinGetClass, class, ahk_id %Window%
@@ -169,15 +171,22 @@ sleep 35
 MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---drags this effect to the cursor's pervious coordinates, which should be above a clip.
 sleep 10
 MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great!
+blockinput, MouseMoveOff ;returning mouse movement ability
 BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL+ALT+DEL will still work if you get stuck!! Cool.
 
+;remove the following thingy if it makes no sense to you
 IfInString, item, CROP
 {
-	
-	sleep 160
-	cropClick()
-	;msgbox, that had "CROP" in it.
+	if IsFunc("cropClick") {
+		Func := Func("cropClick")
+		sleep 160
+		RetVal := Func.Call() 
+		}
+	; sleep 160
+	; cropClick()
+	; ;msgbox, that had "CROP" in it.
 }
+;remove the above thingy if it makes no sense to you
 
 theEnding:
 }
@@ -212,6 +221,7 @@ coordmode, Caret, screen
 
 
 BlockInput, mouse
+blockinput, MouseMove
 BlockInput, On
 SetKeyDelay, 0 ;for instant writing of text
 MouseGetPos, xpos, ypos
