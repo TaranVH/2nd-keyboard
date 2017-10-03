@@ -214,7 +214,8 @@ p::preset("flip horizontal")
 
 ;;;;;next line;;;;;;;;
 
-capslock::msgbox, , ,i hate capslock!, 1000
+; capslock::msgbox, , ,i hate capslock!, 1000
+capslock::capslock
 
 
 a::
@@ -437,7 +438,7 @@ return
 
 
 
-;~~~~~~~~~BEGIN 4TH KEYBOARD using F21~~~NICE MECHANICAL ONE~~~~~~~~~~~
+;~~~~~~~~~JELLY COMB NUMPAD USING F21~~~~~~~~~~~
 ;#if (getKeyState("F21", "P") and If WinActive("ahk_exe Adobe Premiere Pro.exe"))
 #if (getKeyState("F21", "P"))
 F21::return 
@@ -585,44 +586,158 @@ return
 HandleNum:
 Ascii_Unicode_Input .= SubStr( A_ThisHotkey, 0 )
 return
+#if
 ;~~~~~~~~~~~~~END OF 4TH KEYBOARD OVERALL~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 	
 	
-; ;BEGIN 5th keyboard - jelly comb compact with F20
-; #if (getKeyState("F20", "P"))
-; F21::return 
+;BEGIN secondary layer of main keyboard, with CAPSLOCK remapped to F20
+#if (getKeyState("F20", "P"))
+F20::return 
 
-; numpad1::
-; numpad2::
-; numpad3::
-; numpad4::
-; numpad5::
-; numpad6::
-; numpad7::
-; numpad8::
-; Numpad9::
-; numpad0::
+escape::msgbox,,, you pressed escape. this might cause like problems maybe, 0.9
+F1::
+F2::
+F3::
+F4::
+F5::
+F6::
+F7::
+F9::
+F8::
+F10::
+F11::
+F12::return
 
-; NumpadDiv::
-; numpadMult::
-; numpadadd::
-; numpadsub::
-; NumpadDot::msgbox,,, 5th keyboard %A_thishotkey%,0.6
-; backspace::msgbox,,,lolbackspace,1
-; n::msgbox,,,was N,1 ;this was remapped in intercep.exe from NUMLOCK to N
-; NumpadEnter::msgbox,,,enterrr,1
+`::
+1::
+2::
+3::
+4::
+5::
+6::
+7::
+8::
+9::
+0::
+-::
+=::
+backspace::return
 
-; #if
+;;;;;next line;;;;;;;;
+
+tab::msgbox,,, you pressed tab. :P,0.8
+
+q::
+w::
+e::
+r::
+t::
+y::
+u::
+i::
+o::
+p::
+[::
+]::
+\::return
+capslock::msgbox, , ,you should not ever see this text, 1000
+
+a::
+s::
+d::
+f::
+g::
+h::
+j::
+k::
+l::
+`;::
+'::
+;;;;;next line;;;;;;;;
+
+Lshift::return
+z::
+x::
+c::
+v::
+b::return
+n::
+m::
+,::
+.::
+/::return
+Lwin::msgbox, LEFT win
+Lalt::msgbox, LEFT alt
+space::tippy("3rd space")
+Ralt::msgbox, Ralt - doesnt work
+Rwin::msgbox, Right Win 
+Rshift::msgbox RIGHT SHIFT lol
+SC06E::msgbox,,,right WINkey,0.5
+SC06F::msgbox,,,SC06F,0.5
+SC062::msgbox,,,SC062,0.5
+Rctrl::msgbox,,,Rctrl,0.5
+appskey::msgbox, this is the appskey KEY I guess
+
+;these were all formerly runExplorer()
+PrintScreen::
+ScrollLock::return
+SC061::msgbox, scancode061
+CtrlBreak::msgbox, CTRL BREAK?
+pause::msgbox, is this the PAUSE key?? IDK
+Break::msgbox, Maybe THIS is the pause/break key???
+
+pgdn::
+end::
+delete::
+pgup::
+home::
+insert::
+
+up::
+down::
+left::
+right::
+
+;;;;;next area;;;;;;;;
+
+numpad0::
+numpad1::
+numpad2::
+numpad3::
+numpad4::
+numpad5::
+numpad6::
+numpad7::
+numpad8::
+numpad9::
+
++numlock::
+numlock::
+numpadDiv::
+numpadMult::
+numpadSub::
+numpadAdd::
+numpadEnter::return
+numpadDot::
+/*
+;These are now unused - I realized that keeping them as modifiers (allowing them to pass through normally) is more valuable then as single keys.
+SC060::msgbox sc060, which I have assigned from LEFT SHIFT using intercept.exe
+SC061::msgbox sc061, right shift
+SC062::msgbox sc062, L CTRL
+SC063::msgbox sc063, L WIN
+SC064::msgbox sc064, L ALT
+*/
+#if				
 ; ;end 5th keyboard with F20
-				
+
 				
 		
 #IfWinActive
  
 
-;STREAM DECK BEGIN -- 6th keyboard ---------
+;STREAM DECK??
 
 ;;^+] is apparently also addGain()
 ~^+8::addGain()
@@ -635,6 +750,8 @@ return
 ;---------------------------------------------
 
 
+
+;BEGIN KEYBOARD 4, FULL AZIO KEYBOARD
 #if (getKeyState("F24", "P"))
 F24::return ;F24
 
@@ -683,7 +800,7 @@ o::
 p::
 [::
 ]::
-\::return
+\::tippy("you pressed %A_thishotkey%")
 capslock::msgbox, , ,i hate capslock!, 1000
 
 a::
@@ -720,11 +837,10 @@ Rwin::msgbox, Right Win
 Rshift::msgbox RIGHT SHIFT lol
 SC06E::msgbox,,,right WINkey,0.5
 SC06F::msgbox,,,SC06F,0.5
-SC062::msgbox,,,SC062,0.5
+SC062::msgbox,,,SC062 aka APPSKEY,0.5
 Rctrl::msgbox,,,Rctrl,0.5
-appskey::msgbox, this is the appskey KEY I guess
+appskey::msgbox, this is the appskey KEY maybe
 
-;these were all formerly runExplorer()
 PrintScreen::
 ScrollLock::return
 SC061::msgbox, scancode061
@@ -777,7 +893,7 @@ SC064::msgbox sc064, L ALT
 
 
 #if
-
+;END OF FULL AZIO KEYBOARD
 
 
 
@@ -896,7 +1012,7 @@ return
 
 
 
-
+;Here we have a mster list of all function key assignments
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
@@ -905,10 +1021,10 @@ return
 ;F2 is set in premiere to the [GAIN] panel.
 ;F3 is set in premiere to the [MODIFY CLIP] panel. 
 ;~F4::untwirl() ;I never use this, it is too dumb. needs improvement.
-~F4::preset("RED DROP SHADOWS") ;I never use this, it is too dumb. needs improvement.
+~F4::masterClipSelect() ;this has not been programmed yet
 ~F5::clickTransformIcon2()
 ~F6::cropClick()
-~F7::masterselect() ;this has not been programmed yet
+;~F7::unused
 ;F8::unused
 ;F9::unused
 ;F10::unused
@@ -916,7 +1032,7 @@ return
 ;F12::unused
 ;F13 - key G13, "back" in windows mods script.
 
-;Macro key G12 on my Logitech G15 keyboard is set to F14.
+;Macro key G12 on my K95 keyboard is set to F14.
 #IfWinActive ahk_exe winword.exe
 ~F14::F3 ;in Word, the F3 shortcut is "go to next comment."
 
@@ -962,12 +1078,15 @@ return
 +F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
 capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
 
+;F20 is triggered by capslock, and adds a 2nd layer to keyboard #1.
+;F21 - Jelly comb 22 key numpad. will free this up later by using some other scan code
+;F22 - FREE
+;F23 is for the 2nd keyboard, the Logitech K120. Will maintain for sake of tutorials.
+;F24 (SC076) is the FULL AZIO KEYBOARD. Not yet configured. ;F24 used to be used for LuaMacros.
 
-;capslock is now F20.
-;F21 - will free this up by using some other scan code
-;F22 - will free this up by using some other scan code
-;F23 is for the 2nd keyboard, and intercept.exe. Will maintain for compatibility with Taran tutorials
-;F24 was used for Luamacros
+SC075::msgbox, SC075 is just before SC076 which is F24
+SC077::msgbox, I can call this F25 
+SC078::msgbox, I can call this F26
 
 ;;---------------------------------------------------
 
@@ -1153,7 +1272,7 @@ m::
 Lwin::msgbox, LEFT win
 Lalt::msgbox, LEFT alt
 space::tippy("3rd space")
-Ralt::msgbox. Ralt - doesnt work
+Ralt::msgbox, Ralt - doesnt work
 Rwin::msgbox, Right Win 
 Rshift::msgbox RIGHT SHIFT lol
 SC06E::msgbox,,,right WINkey,0.5
@@ -1162,7 +1281,7 @@ SC062::msgbox,,,SC062,0.5
 Rctrl::msgbox,,,Rctrl,0.5
 appskey::msgbox, this is the appskey KEY I guess
 
-;these were all formerly runExplorer()
+
 PrintScreen::
 ScrollLock::return
 SC061::msgbox, scancode061
@@ -1215,4 +1334,4 @@ SC064::msgbox sc064, L ALT
 
 
 #if
-*/
+

@@ -802,7 +802,7 @@ send {enter}
 
 
 marker(){
-send ^{SC027} ;semicolon
+send ^{SC027} ;semicolon. ^;
 ;msgbox,,,hie,0.5
 ;should be hitting CTRL ; to make a marker. That's to a premiere shortcut.
 ;sleep 10
@@ -891,17 +891,17 @@ BlockInput, Off
 
 
 
-masterSelect()
+masterClipSelect()
 {
-Tippy("masterselect()")
+Tippy("masterClipSelect()")
 BlockInput, On
 SetKeyDelay, 0
 MouseGetPos, xpos, ypos
 ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window
 X := X+85
-Y := Y+100
+Y := Y+44
 MouseMove, X, Y, 0
-MSGBOX, trying to select masterclip
+;MSGBOX, trying to select masterclip
 MouseClick, left
 MouseMove, %xpos%, %ypos%, 0
 BlockInput, Off
