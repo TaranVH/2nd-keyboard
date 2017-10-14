@@ -234,7 +234,7 @@ g::recallClipboard(A_thishotkey)
 h::preset("100 to 120 zoom")
 j::preset("anchor and position to 0") ;no panning involved here.
 k::preset("zoom motion 115")
-l::preset("ltt color")
+l::preset("25% blur and darkener")
 `;::preset("blur with edges") ;lol, the syntax highlighting gets this one wrong.
 '::preset("Warp Stabilizer Preset")
 enter::Sendinput ^!e
@@ -484,7 +484,7 @@ return
 ;numpad4::tippy("sort Explorer by date")
 
 
-numpad4::
+numpad6::
 IfWinActive, ahk_class CabinetWClass
 	{
 	send {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
@@ -500,7 +500,7 @@ IfWinActive, ahk_class CabinetWClass
 	}
 return
 
-numpad6::
+numpad4::
 if WinActive("ahk_class CabinetWClass") ;an explorer window
 	{
 	Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field in explorer
@@ -964,6 +964,9 @@ return
 
 !]::preset("DeHummer Preset") ;This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.
 
+appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
+
+
 ;dynamically reassignable preset funtions - now discontinued
 /*
 +F18::
@@ -1020,8 +1023,7 @@ return
 ~F1::Send u^+!d ;u is [select clip at playhead] and ctrl alt shift d is [ripple delete]
 ;F2 is set in premiere to the [GAIN] panel.
 ;F3 is set in premiere to the [MODIFY CLIP] panel. 
-;~F4::untwirl() ;I never use this, it is too dumb. needs improvement.
-~F4::masterClipSelect() ;this has not been programmed yet
+~F4::masterClipSelect() ;this has not been fully programmed yet
 ~F5::clickTransformIcon2()
 ~F6::cropClick()
 ;~F7::unused
@@ -1034,7 +1036,7 @@ return
 
 ;Macro key G12 on my K95 keyboard is set to F14.
 #IfWinActive ahk_exe winword.exe
-~F14::F3 ;in Word, the F3 shortcut is "go to next comment."
+~F14::F2 ;set to "go to previous comment" in Word.
 
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
@@ -1113,7 +1115,7 @@ SC078::msgbox, I can call this F26
 
 ;;MACRO KEY G9;;
 #IfWinActive ahk_exe WINWORD.EXE
-^+]::Send {F2} ;set to "go to previous comment" in Word.
+;^+]::Send {F2} ;set to "go to previous comment" in Word.
 ;this and the other one does NOT show up in the key visualizer? look into that...
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 

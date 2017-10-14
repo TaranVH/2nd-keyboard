@@ -478,6 +478,8 @@ if WinActive("ahk_exe Adobe Premiere Pro.exe")
 	Send {F12} ;F12 is my shortcut in premiere for "go back"(in bins)
 if WinActive("ahk_exe explorer.exe")
 	Send !{left} ;alt left is the explorer shortcut to go "back" or "down" one folder level.
+if WinActive("ahk_class OpusApp")
+	sendinput, {F2} ;"go to previous comment" in Word.
 }
 
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
@@ -581,14 +583,29 @@ Process, Exist, WINWORD.EXE
 		Run, WINWORD.EXE
 	else
 	{
-	GroupAdd, taranwords, ahk_class OpusApp
 	if WinActive("ahk_class OpusApp")
-		GroupActivate, taranwords, r
+		sendinput, {F3} ;set to "go to next comment" in Word.
 	else
 		WinActivate ahk_class OpusApp
 	}
 }
 
+
+switchWordWindow()
+{
+; Process, Exist, WINWORD.EXE
+; ;msgbox errorLevel `n%errorLevel%
+	; If errorLevel = 0
+		; Run, WINWORD.EXE
+	; else
+	; {
+	GroupAdd, taranwords, ahk_class OpusApp
+	if WinActive("ahk_class OpusApp")
+		GroupActivate, taranwords, r
+	else
+		WinActivate ahk_class OpusApp
+	; }
+}
 
 
 

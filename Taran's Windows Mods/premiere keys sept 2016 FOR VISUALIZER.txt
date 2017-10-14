@@ -317,7 +317,7 @@ Flatten
 Sequence
 Sequence Settings...
 Render Effects in Work Area
-Render Entire Work Area&Ctrl Alt I
+Render in to out&Ctrl Alt I
 Render Selection&Ctrl Alt R
 Render Audio&Ctrl Shift A
 Render Audio&Ctrl Alt A

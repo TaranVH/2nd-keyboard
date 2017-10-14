@@ -93,6 +93,7 @@ return
 ^F3::switchToPremiere()
 
 ^F4::switchToWord()
++^F4::switchWordWindow()
 ^F5::switchToChrome()
 
 +^F6::
@@ -172,8 +173,8 @@ return
 Send #b{left}{left}{enter}
 Return
 
-#IfWinActive
 
+#IfWinActive
 ;control alt shift T -- click on the address bar for any youtube video, and this will link you to the thumbnail!
 ^!+T::
 Send {end}{left 11}{backspace 40}https://i.ytimg.com/vi/{right 11}/sddefault.jpg{enter}
@@ -193,40 +194,4 @@ return
 
 
 
-;experimental functions...
-
-; F8::WheelDown
-
-; F9::WheelUp
-
-
-/*
-;so apparently AHK can listen for joystick buttons and axes, but canot CREATE those events itself. that makes me sad. I may need to use http://vjoystick.sourceforge.net/site/
-Joy2::msgbox, you pressed joy 2
-
-#IfWinActive ahk_exe notepad++.exe ;logitech gaming software
-; #IfWinActive ahk_exe LCore.exe ;logitech gaming software
-
-F1::
-tooltip, sending
-sleep 555
-send {F20}
-tooltip,
-return
-
-F2::
-tooltip, sending
-sleep 555
-send {SC0E7} ;possibly unassigned scancode. IDK
-tooltip,
-return
-
-f3::send {joy3}
-f4::send joy4
-f5::send joy5
-f6::send joy6
-f7::send joy7
-f8::send joy8
-f9::send joy9
-*/
 #ifwinactive
