@@ -569,7 +569,7 @@ If (Ascii_Unicode_Input = "061")
 		; MsgBox, You entered "%UserInput%"
 		; Run, %comspec% /c "taskkill.exe /F /IM Adobe Premiere Pro.exe",, hide 
 		; }	
-	; else
+	; else***
 		; return
 	}
 If (Ascii_Unicode_Input = "040")
@@ -737,26 +737,15 @@ SC064::msgbox sc064, L ALT
 #IfWinActive
  
 
-;STREAM DECK??
-
-;;^+] is apparently also addGain()
-~^+8::addGain()
-~^+9::reSelect()
-;;^+0 is already the effects panel find box function.
-; - is something
-; = is play/pause outside of premiere
-;;;;;;;;;;;END OF KEY FOR STREAM DECK (soon to be obsolete, since i will launch directly);;;;;;
-
-;---------------------------------------------
-
-
-
 ;BEGIN KEYBOARD 4, FULL AZIO KEYBOARD
 #if (getKeyState("F24", "P"))
 F24::return ;F24
 
-escape::msgbox,,, you pressed escape. this might cause like problems maybe, 0.9
-F1::
+escape::
+msgbox,,,you pressed escape. this might cause like problems maybe,0.9
+tooltip, 
+return
+F1::tooltip,
 F2::
 F3::
 F4::
@@ -767,7 +756,7 @@ F9::
 F8::
 F10::
 F11::
-F12::return
+F12::tooltip, you pressed  %A_thishotkey%
 
 `::
 1::
@@ -782,7 +771,7 @@ F12::return
 0::
 -::
 =::
-backspace::return
+backspace::tooltip, you pressed  %A_thishotkey%
 
 ;;;;;next line;;;;;;;;
 
@@ -800,8 +789,8 @@ o::
 p::
 [::
 ]::
-\::tippy("you pressed %A_thishotkey%")
-capslock::msgbox, , ,i hate capslock!, 1000
+\::tooltip, you pressed  %A_thishotkey%
+capslock::msgbox,,,i hate capslock!,0.5
 
 a::
 s::
@@ -814,24 +803,24 @@ k::
 l::
 `;::
 '::
-enter::return
+enter::tooltip, you pressed  %A_thishotkey%
 ;;;;;next line;;;;;;;;
 
-Lshift::return
-z::
-x::
-c::
-v::
-b::return
-n::
+Lshift::tooltip, you pressed  %A_thishotkey%
+z::send ^+6
+x::send ^+7
+c::send ^+8
+v::send ^+9
+b::send ^+0
+n::send ^+-
 m::
 ,::
 .::
-/::return
+/::tooltip, you pressed  %A_thishotkey%
 
 Lwin::msgbox, LEFT win
 Lalt::msgbox, LEFT alt
-space::tippy("3rd space")
+space::tooltip,
 Ralt::msgbox, Ralt - doesnt work
 Rwin::msgbox, Right Win 
 Rshift::msgbox RIGHT SHIFT lol
@@ -843,7 +832,7 @@ appskey::msgbox, this is the appskey KEY maybe
 
 PrintScreen::
 ScrollLock::return
-SC061::msgbox, scancode061
+SC061::msgbox,,, scancode061,1
 CtrlBreak::msgbox, CTRL BREAK?
 pause::msgbox, is this the PAUSE key?? IDK
 Break::msgbox, Maybe THIS is the pause/break key???
@@ -879,8 +868,8 @@ numpadDiv::
 numpadMult::
 numpadSub::
 numpadAdd::
-numpadEnter::return
-numpadDot::
+numpadEnter::
+numpadDot::tooltip, you pressed  %A_thishotkey%
 /*
 ;These are now unused - I realized that keeping them as modifiers (allowing them to pass through normally) is more valuable then as single keys.
 SC060::msgbox sc060, which I have assigned from LEFT SHIFT using intercept.exe
@@ -947,21 +936,36 @@ G17: Activate Explorer, then browse through the windows on subsequent key presse
 G18: Activate Premiere
 */
 
+
+
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
-~^+0::
+;macro key G1 on K95keyboard
+~^+J::
 ;Keyshower("effects Panel CLEAR",,1)
 effectsPanelType("") ;set to macro key G1 on my logitech G15 keyboard. ;This just CLEARS the effects panel search bar so that you can type something in.
+;previously was ^+0
 return
-~^+-::preset("Warp Stabilizer Preset") ;macro key G2. I wish it would also press "analyse..."
+
+;macro key G2
+~^+K::preset("Warp Stabilizer Preset") ;macro key G2. I wish it would also press "analyse..."
 ;;;~^+=::effectsPanelType("presets") ;set to macro key G3. ;Types in "presets," which reveals my own entire list of presets. ;;I have canceled this one in favor of a global pause/play.
-~^+=::sendinput, {space} ;Macro key G3
 
-~^+,::audioMonoMaker("left")
+;macro key G3
+~^+L::sendinput, {space} ;Macro key G3
+
 ;macro key G4. Using the WIn key is prooobably a terrible idea; I do not reccomend it...... :(
-~^+.::audioMonoMaker("right")
-; macro key G5. ;
+~^+,::audioMonoMaker("left")
 
+; macro key G5.
+~^+.::audioMonoMaker("right")
+
+#IfWinActive 
+;Macro key G6
+~^+U::reSelect()
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
 !]::preset("DeHummer Preset") ;This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.
 
 appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
@@ -988,15 +992,20 @@ return
 
 
 ;Below is some code to pause/play the timeline in Premiere, when the application is NOT the active window (on top.) This means that I can be reading through the script, WHILE the video is playing, and play/pause as needed without having to switch back to premeire every single time.
+;Maybe this code really shoudl be in ALL PREMIERE FUNCTIONS.ahk.
 #IfWinNotActive ahk_class Premiere Pro
 ;;macro key G3, when NOT in Premiere.
-^+=::
-Keyshower("pause/play Premiere when not active",,1,-400)
-;Window Class3 is actually the Effect Controls panel... but play/pausing still works if that panel is selected. Trying to bring focus to the TIMELINE itself is really dangerous and unpredictable, since its Class# is always changing, based upon how many sequences, and other panels, that might be open.
-ControlFocus, DroverLord - Window Class11,ahk_exe Adobe Premiere Pro.exe
+^+L::
+;WinGet, lolexe, ProcessName, A
+WinGetClass, lolclass, A ; "A" refers to the currently active window
+
+Keyshower("[WC1] pause/play Premiere when not active",,1,-400)
+
+;Trying to bring focus to the TIMELINE itself is really dangerous and unpredictable, since its Class# is always changing, based upon how many sequences, and other panels, that might be open.
+ControlFocus, DroverLord - Window Class14,ahk_exe Adobe Premiere Pro.exe
 ;If we don't use ControlFocus first, ControlSend experiences bizzare and erratic behaviour, only able to work when the video is PLAYING, but not otherwise, but also SOMETIMES working perfectly, in unknown circumstances. Huge thanks to Frank Drebin for figuring this one out; it had been driving me absolutely mad. https://www.youtube.com/watch?v=sC2SeGCTX4U
-; Window Class11 is the Program monitor, at least on my machine.
-;I tried windowclass3, (the effect controls) but that does not work, possibly due to its possible tiue to stuff in the bins, which would play instead sometimes.
+; Window Class14 is the Program monitor, at least on my machine.
+;I tried windowclass3, (the effect controls) but that does not work, possibly due to stuff in the bins, which would play instead sometimes.
 
 sleep 10
 ;ControlSend,DroverLord - Window Class3,^!+5,ahk_exe Adobe Premiere Pro.exe
@@ -1007,10 +1016,15 @@ sleep 10
 ;that is my shortcut for the Timeline.
 ;this is to ensure that it doesn't start playing something in the source monitor, or a bin somewhere.
 sleep 10
-ControlSend,DroverLord - Window Class11,{ctrl up}{shift up}{space down},ahk_exe Adobe Premiere Pro.exe
+ControlSend,DroverLord - Window Class14,{ctrl up}{shift up}{space down},ahk_exe Adobe Premiere Pro.exe
 sleep 30
-ControlSend,DroverLord - Window Class11,{space up},ahk_exe Adobe Premiere Pro.exe
+ControlSend,DroverLord - Window Class14,{space up},ahk_exe Adobe Premiere Pro.exe
 ; ControlSend,,{space}, ahk_exe Adobe Premiere Pro.exe
+
+;in case premiere was accidentally switched to, this will switch the user back to the original window.
+if not WinActive(lolClass)
+	WinActivate, %lolclass%
+
 return
 
 
@@ -1029,10 +1043,12 @@ return
 ;~F7::unused
 ;F8::unused
 ;F9::unused
+;^{F9}  ^F9 toggle all video tracks
+;^!{F9} ^+F9 toggle all audio tracks
 ;F10::unused
 ;F11::unused
 ;F12::unused
-;F13 - key G13, "back" in windows mods script.
+;F13 - from macro key G13, "back" in windows mods script.
 
 ;Macro key G12 on my K95 keyboard is set to F14.
 #IfWinActive ahk_exe winword.exe
@@ -1135,8 +1151,9 @@ SC078::msgbox, I can call this F26
 
 ;Just kidding, I want to use alt space to rewind and then play. Premiere's version of this SUCKS because it brings you back to where you started
 ; the ~ is only there so that the keystroke visualizer can see this keypress. Otherwise, it should not be used.
-Lwin::
-~!space::
+;Lwin::
+; ~!space::
+Rwin::
 Send s ;"stop" command (From JKL remapped to ASD.)
 Send +{left}
 Send +{left}
@@ -1187,10 +1204,6 @@ return
 Return
 
 #IfWinActive
-
-;;shortcut to CLOSE FIREFOX with no bullshit or fanfare or annoying dialouge boxes that try to argue with you. Just completely nuke it from orbit so we can start over
-^!+f::Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
-
 
 
 

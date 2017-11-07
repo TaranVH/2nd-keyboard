@@ -401,10 +401,10 @@ Other...
 120
 156
 180
-Type Alignment
-Left&Ctrl Shift L
-Center
-Right&Ctrl Shift R
+
+Play/pause Premiere&Ctrl Shift L
+Effect find box select&Ctrl Shift J
+
 Orientation
 Horizontal
 Vertical

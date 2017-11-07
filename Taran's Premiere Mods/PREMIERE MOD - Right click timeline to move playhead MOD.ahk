@@ -7,7 +7,13 @@ CoordMode, Pixel, screen
 
 Menu, Tray, Icon, shell32.dll, 17
 
-;-------------------------------------------------------------------------------------------------------------------------
+
+;NOTE: This does not, and cannot work on the timeline where there are no tracks visible.
+;Explanation: https://twitter.com/boxrNathan/status/927371468371103745
+;That is color 0x212121, and last I checked, it shows up in many other places in premiere, not just that part of the timeline.
+;The easy solution is to just fill up your timeline with tracks; have no blank space.
+
+;---------------------------------------------------------------------------------------
 
 ;Define all the timeline's DEFAULT possible colors.
 ;Note that your colors will be different IF you changed the UI brightness inside preferences > appearance > brightness.
@@ -42,7 +48,7 @@ MouseGetPos X, Y
 PixelGetColor colorr, %X%, %Y%, RGB
 if (colorr = timeline5 || colorr = timeline6 || colorr = timeline7) ;these are the timeline colors of a selected clip or blank space, in or outside of in/out points.
 	send ^!d ;set in premiere to DESELECT
-if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7) ;i think I can use "if in" for this kind of thing..
+if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7) ;alternatively, i think I can use "if in" for this kind of thing..
 {
 	;BREAKTHROUGH -- it looks like a middle mouse click will SELECT / BRING FOCUS TO a timeline panel without doing ANYTHING ELSE like selecting or going through tabs or anything. So although i can't know with AHK which panel is in focus, I can at least BRING focus to a panel... but only if I already know its position... hmmmmmm...
 	;however, i probably CAN just do an image search on the entire screen, for icons that are unique to each panel! then use the coordinates of that to figure out the unique ClassNN! GREAT IDEA, TARAN!
@@ -50,7 +56,7 @@ if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = t
 	
 	; tooltip, % GetKeyState("Rbutton", "P") ;<----this was essential for me to figure out EXACTLY how AHK wanted this query to be phrased. Why should i need the quotation marks?? Why does it return a 1 and 0, but for the other method, it returns U and D? Who the hell knows....
 	; if GetKeyState("$Rbutton") = D ;<--- see, this line did not work AT ALL.
-	if GetKeyState("Rbutton", "P") = 1 ;<----THIS is the only way to phrase this query. Took me 2 hours to figure this shit out.
+	if GetKeyState("Rbutton", "P") = 1 ;<----THIS is the only way to phrase this query.
 		{
 		;tooltip, we are inside the IF now
 		;sleep 1000
@@ -59,7 +65,7 @@ if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = t
 			{
 			Send \ ;in premiere, this is set to "move playhead to cursor."
 			Tooltip, Right click playhead mod!
-			sleep 16
+			sleep 16 ;this loop will repeat every 16 milliseconds.
 			; if GetKeyState("$Rbutton") = U ; again, this does not work at all.
 			if GetKeyState("Rbutton", "P") = 0
 				{

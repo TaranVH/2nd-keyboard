@@ -272,44 +272,9 @@ NavRun(Path) {
 
 
 
-;BEGIN INSTANT APPLICATION SWITCHER SCRIPTS;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 #IfWinActive
-
-
-
-windowSaver()
-{
-WinGet, lolexe, ProcessName, A
-WinGetClass, lolclass, A ; "A" refers to the currently active window
-global savedCLASS = "ahk_class "lolclass
-global savedEXE = lolexe ;is this the way to do it? IDK.
-}
-
-;SHIFT + macro key G14
-
-
-
-
-switchToSavedApp(savedCLASS)
-{
-;msgbox, savedCLASS is %savedCLASS%
-if savedCLASS = ahk_class Notepad++
-	{
-	;msgbox, is notepad++
-	if WinActive("ahk_class Notepad++")
-		{
-		sleep 5
-		Send ^{tab}
-		}
-	}
-;msgbox,,,got to here,0.5
-windowSwitcher(savedCLASS, savedEXE)
-}
-
-
-
 
 ;BEGIN savage-folder-navigation CODE!
 ;I got MOST of this code from https://autohotkey.com/docs/scripts/FavoriteFolders.htm
@@ -462,20 +427,54 @@ Tippy2("end was reached.",333)
 
 
 
+;BEGIN INSTANT APPLICATION SWITCHER SCRIPTS;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+#IfWinActive
+
+
+windowSaver()
+{
+WinGet, lolexe, ProcessName, A
+WinGetClass, lolclass, A ; "A" refers to the currently active window
+global savedCLASS = "ahk_class "lolclass
+global savedEXE = lolexe ;is this the way to do it? IDK.
+}
+
+;SHIFT + macro key G14
+
+
+
+
+switchToSavedApp(savedCLASS)
+{
+;msgbox, savedCLASS is %savedCLASS%
+if savedCLASS = ahk_class Notepad++
+	{
+	;msgbox, is notepad++
+	if WinActive("ahk_class Notepad++")
+		{
+		sleep 5
+		Send ^{tab}
+		}
+	}
+;msgbox,,,got to here,0.5
+windowSwitcher(savedCLASS, savedEXE)
+}
 
 
 
 
 
 back(){
-if WinActive("ahk_class MozillaWindowClass")
+; if WinActive("ahk_class MozillaWindowClass")
+if WinActive("ahk_exe firefox.exe")
 	Send ^+{tab}
 if WinActive("ahk_class Chrome_WidgetWin_1")
 	Send ^+{tab}
 if WinActive("ahk_class Notepad++")
 	Send ^+{tab}
 if WinActive("ahk_exe Adobe Premiere Pro.exe")
-	Send {F12} ;F12 is my shortcut in premiere for "go back"(in bins)
 if WinActive("ahk_exe explorer.exe")
 	Send !{left} ;alt left is the explorer shortcut to go "back" or "down" one folder level.
 if WinActive("ahk_class OpusApp")
@@ -485,7 +484,7 @@ if WinActive("ahk_class OpusApp")
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
 
 switchToFirefox(){
-send {SC0E8} ;scan code of an unassigned key
+sendinput, {SC0E8} ;scan code of an unassigned key. Do I NEED this?
 IfWinNotExist, ahk_class MozillaWindowClass
 	Run, firefox.exe
 if WinActive("ahk_exe firefox.exe")
@@ -506,7 +505,7 @@ else
 ;Press SHIFT and macro key 16, and it'll switch between different WINDOWS of firefox.
 
 switchToOtherFirefoxWindow(){
-send {SC0E8} ;scan code of an unassigned key
+;sendinput, {SC0E8} ;scan code of an unassigned key
 Process, Exist, firefox.exe
 ;msgbox errorLevel `n%errorLevel%
 	If errorLevel = 0

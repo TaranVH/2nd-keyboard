@@ -36,9 +36,9 @@ F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
 #IfWinActive
 
 
-;RIP Monty Oum https://youtu.be/qSuTnCFqMkw?t=1m21s
-#IfWinActive ahk_exe Photoshop.exe
-F1::sendinput {alt down}iac{alt up}
+; ;RIP Monty Oum https://youtu.be/qSuTnCFqMkw?t=1m21s
+; #IfWinActive ahk_exe Photoshop.exe
+; F1::sendinput {alt down}iac{alt up}
 
 
 
@@ -50,6 +50,7 @@ Sendinput !d
 sleep 10
 return
 
+#IfWinActive, ahk_class CabinetWClass
 `::
 Send !{up} ;This allows you to use the TILDE to go DOWN one folder level in explorer save boxes
 Return
@@ -75,6 +76,12 @@ scrollLock::Sendinput ^+{printscreen} ;assigning 'capture region' straight to sc
 
 ; #If
 
+;;shortcut to CLOSE FIREFOX with no bullshit or fanfare or annoying dialouge boxes that try to argue with you. Just completely nuke it from orbit so we can start over
+^!+f::Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
+^!+p::
+Run, %comspec% /c "taskkill.exe /F /IM Adobe Premiere Pro.exe",, hide
+msgbox,,,killed premiere,0.5
+return
 
 
 
@@ -82,11 +89,6 @@ F13::back()
 
 ^F1::switchToFirefox()
 +^F1::switchToOtherFirefoxWindow()
-^+!f::winkill, ahk_exe firefox.exe
-^+!p::
-winkill, ahk_exe Adobe Premiere Pro.exe
-msgbox,,,killed premiere,0.5
-return
 ^F2::switchToExplorer()
 !^F2::closeAllExplorers()
 

@@ -247,7 +247,7 @@ Send %leSound% ;types in the name of the sound effect you want - should do so in
 tooltip, waiting for premiere to load......
 send ^+6 ;source assignment preset 1, again.
 sleep 400 ;we are waiting for the search to complete....
-sleep 400 ;we are still waiting for the search to complete....
+;sleep 400 ;we are still waiting for the search to complete....
 
 MouseMove, -6000, 250, 0 ;moves the mouse to the expected location of the bin that becomes highlighted from the "project" keyboard shortcut command in Premiere.
 ;msgbox, wheres de mouse?
@@ -278,6 +278,8 @@ sleep 50
 Send ^/ ;CTRL FORWARD SLASH -- SET TO "OVERWRITE" in premiere. Premiere's default shortcut for "overwrite" is a period.  I use modifier keys for THIS, so that a period is never typed accidentally.
 sleep 30
 ; Send mbutton ;this will MIDDLE CLICK to reselect whatever panel your cursor was hovering over before you engaged this function.
+send ^!+7 ;highlight effects panel
+sleep 30
 send ^!+3 ;this is set in premiere to highlight/switch to the timeline. important so that you aren't still stuck in the bin. If this is used more than once, it will unfortunately cycle thorugh all available sequences...
 tooltip,
 BlockInput, off
@@ -497,7 +499,7 @@ if ErrorLevel = 0
 	
 	if (v1orA1 = "v1")
 		{
-		send +9 ;command in premiere to "toggle ALL video track targets." This should TARGET everything.
+		send ^{F9};send +9 ;command in premiere to "toggle ALL video track targets." This should TARGET everything.
 		sleep 10
 		if (onOff = "off")
 			send +9 ; do it again to UNTARGET everything.
@@ -507,7 +509,7 @@ if ErrorLevel = 0
 		}
 	if (v1orA1 = "a1")
 		{
-		send !9 ;command in premiere to "toggle ALL audio track targets." This should TARGET everything.
+		send ^+{F9} ;command in premiere to "toggle ALL audio track targets." This should TARGET everything. ;also ALT f9 but it's dangerous.
 		sleep 10
 		if (onOff = "off")
 			send !9 ; do it again to UNTARGET everything.
@@ -875,20 +877,18 @@ tooltip,
 ;EFFECT CONTROLS PANEL ---TRANSFORM ICON CLICKER
 clickTransformIcon2()
 {
-Tippy("transform icon - F5")
-BlockInput, On
+Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it causes problems.
+BlockInput, On ;blocks keyboard and mouse input... I think.
 SetKeyDelay, 0
 MouseGetPos, xpos, ypos
-ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window
-X := X+85
-Y := Y+100
+ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window ;This is the Effect controls panel. Info gotten from Window Spy.
+X := X+85 ;change these variables to match the icon's position on your screen
+Y := Y+100 ;change these variables to match the icon's position on your screen
 MouseMove, X, Y, 0
-;MSGBOX, HELLO
 MouseClick, left
 MouseMove, %xpos%, %ypos%, 0
 BlockInput, Off
 }
-
 
 
 masterClipSelect()
@@ -1313,20 +1313,22 @@ else
 			;I am going to take this an an indicaiton that the user just wants to RESET the value, rather than changing it.
 			Click up left
 			Sleep 10
-			if (foobar = "scale")
-			{
-				Send, 100
-				sleep 50
-				Send, {enter} ;"enter" can be a volatile and dangerous key, since it has so many other potential functions that might interfere somehow... in fact, I crashed the whole program once by using this and the anchor point script in rapid sucesssion.... but "ctrl enter" doesn't work... maybe numpad enter is a safer bet?
-				sleep 20
-			}
-			if (foobar = "rotation")
-			{
-				Send, 0
-				sleep 50
-				Send, {enter} ;"enter" can be a volatile and dangerous key, since it has so many other potential functions that might interfere somehow... in fact, I crashed the whole program once by using this and the anchor point script in rapid sucesssion.... but "ctrl enter" doesn't work... maybe numpad enter is a safer bet?
-				sleep 20
-			}
+			;I am removing the clode below, which acts to reset the whole thing. instead, now this allows me to type in my own custom value.
+			
+			; if (foobar = "scale")
+			; {
+				; Send, 100
+				; sleep 50
+				; Send, {enter} ;"enter" can be a volatile and dangerous key, since it has so many other potential functions that might interfere somehow... in fact, I crashed the whole program once by using this and the anchor point script in rapid sucesssion.... but "ctrl enter" doesn't work... maybe numpad enter is a safer bet?
+				; sleep 20
+			; }
+			; if (foobar = "rotation")
+			; {
+				; Send, 0
+				; sleep 50
+				; Send, {enter} ;"enter" can be a volatile and dangerous key, since it has so many other potential functions that might interfere somehow... in fact, I crashed the whole program once by using this and the anchor point script in rapid sucesssion.... but "ctrl enter" doesn't work... maybe numpad enter is a safer bet?
+				; sleep 20
+			; }
 			resetFromAutoVFX()
 			;return
 		}
