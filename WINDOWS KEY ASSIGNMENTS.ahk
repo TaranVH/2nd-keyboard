@@ -78,9 +78,16 @@ scrollLock::Sendinput ^+{printscreen} ;assigning 'capture region' straight to sc
 
 ;;shortcut to CLOSE FIREFOX with no bullshit or fanfare or annoying dialouge boxes that try to argue with you. Just completely nuke it from orbit so we can start over
 ^!+f::Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
+
+;shortcut to forecfully CLOSE PREMIERE WITH NO BULLSHIT. BULLDOZE IT FLAT, BURN IT, SALT THE EATH, THEN NUKE IT FROM ORBIT. JUST FUCKING CLOSE!
 ^!+p::
-Run, %comspec% /c "taskkill.exe /F /IM Adobe Premiere Pro.exe",, hide
-msgbox,,,killed premiere,0.5
+Run, %comspec% /c "taskkill.exe /F /Adobe Premiere Pro.exe",, hide
+sleep 100
+Run, %comspec% /c "taskkill.exe /F /PID 72536",, hide
+
+tooltip, killed premiere
+sleep 100
+tooltip,
 return
 
 

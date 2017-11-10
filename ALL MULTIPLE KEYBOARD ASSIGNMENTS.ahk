@@ -777,8 +777,8 @@ backspace::tooltip, you pressed  %A_thishotkey%
 
 tab::msgbox,,, you pressed tab. :P,0.8
 
-q::
-w::
+q::return
+w::sendinput, +{F12}^w
 e::
 r::
 t::
@@ -955,6 +955,8 @@ return
 ;macro key G3
 ~^+L::sendinput, {space} ;Macro key G3
 
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 ;macro key G4. Using the WIn key is prooobably a terrible idea; I do not reccomend it...... :(
 ~^+,::audioMonoMaker("left")
 
@@ -963,7 +965,9 @@ return
 
 #IfWinActive 
 ;Macro key G6
-~^+U::reSelect()
+~^+U::reSelect() ;formerly ^+9
+
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 !]::preset("DeHummer Preset") ;This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.

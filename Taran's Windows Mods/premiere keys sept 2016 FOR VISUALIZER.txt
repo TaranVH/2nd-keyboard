@@ -11,13 +11,13 @@ https://www.youtube.com/watch?v=gF-f25dRbo8
 BEGIN!
 
 
-[G1]effectsPanelType("")					&ctrl shift 0
-[G2]preset("Warp Stabilizer preset")		&ctrl shift -
-[G3]effectsPanelType("presets")				&ctrl shift =
+[G1]effectsPanelType("")					&ctrl shift J
+[G2]preset("Warp Stabilizer preset")		&ctrl shift K
+[G3]play/pause Premiere						&ctrl shift L
 
 [G4]audioMonoMaker("left")					&ctrl shift ,
 [G5]audioMonomaker("right")					&ctrl shift .
-[G6]RE-SELECT CLIP (Taran mod)				&ctrl shift 9
+[G6]RE-SELECT CLIP (Taran mod)				&ctrl shift U
 ;that used to be ALT SHIFT F, but thats a terrible combo.
 
 [G7]instantVFX("rotation")					&F17
