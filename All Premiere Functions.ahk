@@ -3,13 +3,30 @@
 
 #NoEnv
 Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyboard!
-
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-
 #SingleInstance force ;only one instance of this script may run at a time!
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
+
+;-------------------------------------------------------------------------
+; HELLO PEOPLES
+; CHECK OUT MY BIG TUTORIAL FOR SOME EXPLANATION OF HOW THESE
+; AHK SCRIPTS WORK, AND HOW THEY COMMUNICATE WITH ONE ANOTHER.
+; https://youtu.be/O6ERELse_QY?t=20m7s
+;
+; IMPORTANT NOTE:
+; This script works in tandem with ALL MULTIPLE KEYBOARD ASSIGNMENTS.ahk
+; All the functions from HERE are actually CALLED from keyboard shortcuts
+; in THAT script. I had to do it this way because of the Stream Deck...
+; But you can put your key bindings and functions in the SAME script.
+;
+; Only copy the functions that you NEED. Don't try to use everything all
+; at once. You will need to know some basic scripting to custom tailor
+; most of these scripts to your own machine.
+; https://autohotkey.com/docs/Tutorial.htm
+;------------------------------------------------------------------------
+
 
 ;the variable below POSSIBLY exists for the purpose of communicaiton with gui.ahk if a script is launched from the Stream Deck.
 TargetScriptTitle = "C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\gui.ahk ahk_class AutoHotkey"
@@ -794,14 +811,15 @@ send {enter}
 ;VK25  SC04B  == numpad left
 ;VK64  SC04B  == numpad 4
 ;#if
+#if GetKeyState("F9") && winactive("ahk_exe notepad++.exe")
+p::msgbox lolhi
 
 
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-;these scripts WERE located in the "premiere mod - instant rescale button.ahk" script.
-
+#ifwinactive
 
 marker(){
 send ^{SC027} ;semicolon. ^;
@@ -1129,6 +1147,7 @@ else
 
 
 
+;how to use: https://www.youtube.com/watch?v=Bi3zBqO74ms
 instantVFX(foobar)
 {
 dontrestart = 0

@@ -6,9 +6,26 @@ SendMode Input
 Menu, Tray, Icon, shell32.dll, 16 
 
 
-;;;;;;temporary tooltip maker;;;;;;
 
+;;;https://www.reddit.com/r/AutoHotkey/comments/39gjam/what_are_your_favorite_ahk_tricks/
+; ---------------------------------
+; Auto-reload on save
+; ---------------------------------
+; Reloads script if active window is the script editor
+; Reloads on Ctrl-S in the editor window
 
+GroupAdd, ThisScript, %A_ScriptName%        ; Add any window containing this script's name to the group ThisScript
+                                            ; ; This is used in the Auto-reload on save function
+#IfWinActive ahk_group ThisScript                       ; Only run if met. ; Otherwise, ignore hotkey
+~^s::
+	msgbox,,, reloading meoww. ,0.3
+    TrayTip, Reloading updated script, %A_ScriptName%
+    ;SetTimer, RemoveTrayTip, 2000
+    ;Sleep, 2000
+	sleep 100
+    Reload
+return
+#IfWinActive                                            ; Return to default behavior
 
 
 #IfWinActive ahk_class Notepad++

@@ -1,18 +1,36 @@
 SetWorkingDir, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files
 ;the above will set A_WorkingDir. It must be done in the autoexecute area, BEFORE the code below.
 
-
 Menu, Tray, Icon, shell32.dll, 283
-;gui must be first, or it does not work for some reason...
+;gui must be #included first, or it does not work, for some reason...
+;YOU probably do NOT need the GUI at all. Delete the line below:
 #Include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\gui.ahk
 
 #include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\All Premiere Functions.ahk
 
 #include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Almost All Windows Functions.ahk
 
-;NOTE FOR PEOPLE:
-;Using #include is pretty much the same as pasting the entire script into THIS script. So basically, I'm just importing all the functions that I have created in those scripts, so that I can refer to them here.
-;So, this script has all the keyboard assignments, and the other #included scripts have all the functions. I had to slipt it up this way so that I can also directly launch those functions, using means OTHER than a keyboard, like the Stream Deck's "open file" feature.
+;-------------------------------------------------------------------------
+; HELLO PEOPLES
+; CHECK OUT MY BIG TUTORIAL FOR SOME EXPLANATION OF HOW THESE
+; AHK SCRIPTS WORK, AND HOW THEY COMMUNICATE WITH ONE ANOTHER.
+; https://youtu.be/O6ERELse_QY?t=20m7s
+;
+; IMPORTANT NOTE:
+; Using #include is pretty much the same as pasting an entire script into 
+; THIS script. So basically, I'm just importing all the functions that I
+; have created in those scripts, so that I can refer to them here.
+;
+; So, this script has all the keyboard assignments, and the other
+; #included scripts have all the functions. I had to split it up this way 
+; so that I can also directly launch those functions using means OTHER
+; than a keyboard, like the Stream Deck's "open file" feature.
+;------------------------------------------------------------------------
+
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; WATCH THESE VIDEOS TO UNDERSTAND YOUR OPTIONS FOR ADDING EXTRA KEYBOARDS:
+; https://www.youtube.com/playlist?list=PLH1gH0v9E3ruYrNyRbHhDe6XDfw4sZdZr
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 #NoEnv
@@ -898,6 +916,14 @@ SC064::msgbox sc064, L ALT
 !.::msgbox, TaranDir should be %TaranDir%
 
 ^numpad1:: ;EASE IN AND EASE OUT
+tooltip, yeah
+;might be a hell of a lot easier with this kind of code:
+; WinMenuSelectItem, Adobe Premiere Pro, , Edit, Ripple Delete 
+; WinMenuSelectItem, Adobe Premiere Pro, , Clear
+; WinMenuSelectItem, Adobe Premiere Pro, , Temporal Interpolation, Ease In
+; WinMenuSelectItem, Adobe Premiere Pro, , Temporal Interpolation, Ease Out
+; WinMenuSelectItem, Adobe Premiere Pro, , Spatial Interpolation, Linear
+
 ; blockinput, sendandMouse
 blockinput, MouseMove
 ; blockinput, on
@@ -920,6 +946,7 @@ sleep 10
 send {enter}
 blockinput, off
 blockinput, MouseMoveOff
+;sleep 100
 tooltip,
 return
 
