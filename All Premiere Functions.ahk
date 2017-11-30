@@ -898,6 +898,8 @@ clickTransformIcon2()
 Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it causes problems.
 BlockInput, On ;blocks keyboard and mouse input... I think.
 SetKeyDelay, 0
+sendinput ^!+5 ;highlights the effect controls
+sleep 20
 MouseGetPos, xpos, ypos
 ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window ;This is the Effect controls panel. Info gotten from Window Spy.
 X := X+85 ;change these variables to match the icon's position on your screen
@@ -911,9 +913,25 @@ BlockInput, Off
 
 masterClipSelect()
 {
+
 Tippy("masterClipSelect()")
 BlockInput, On
 SetKeyDelay, 0
+sendinput ^!+5 ;highlights the effect controls
+sleep 20
+
+;NEEDED - code that can tell if a clip is already selected or not. instantVFX uses that.
+;untwirl()
+Send {tab}
+if (A_CaretX = "")
+{
+	;No Caret (blinking vertical line) can be found. Therefore, no clip is selected.
+	Send ^p ;"selection follows playhead,"
+	sleep 10
+	Send ^p
+}
+
+
 MouseGetPos, xpos, ypos
 ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window
 X := X+85
@@ -921,7 +939,8 @@ Y := Y+44
 MouseMove, X, Y, 0
 ;MSGBOX, trying to select masterclip
 MouseClick, left
-MouseMove, %xpos%, %ypos%, 0
+;MouseMove, %xpos%, %ypos%, 0 ;moves back to original coordinates
+MouseMove, 250, 670, 0, R ;moves down and to the right to be inthe middle of the master clip controls.
 BlockInput, Off
 }
 
@@ -949,7 +968,7 @@ BlockInput, Off
 
 
 
-
+;i should delete or merge this but i think it is used SOMEWHERE....
 clickTransformIcon()
 {
 ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.

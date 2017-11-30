@@ -303,16 +303,17 @@ return
 Lwin::msgbox LEFT win
 Lalt::msgbox LEFT alt
 
-space::tippy("2nd space") ;change this to EXCLUSIVE "play" only?
+;space::tippy("2nd space") ;change this to EXCLUSIVE "play" only?
 
 ;Ralt::msgbox Ralt - doesnt work
-Rwin::msgbox Right Win - doesnt work
+;Rwin::msgbox Right Win - doesnt work
 ;Rshift::msgbox RIGHT SHIFT lol
 
 ;SC06E::msgbox,,,this was right WINkey,0.5
 SC06F::msgbox,,,testing scan codes,0.5
-SC062::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~CANNED PRE ROLLS") ;remapped away from appskey, it seemed to cause problems.
-Rctrl::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~INTEGRATIONS")
+SC062::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations\~CANNED PRE ROLLS") ;remapped away from appskey, it seemed to cause problems.
+Rctrl::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations\~INTEGRATIONS")
+space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
 ;SC065::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~ For Review") ;this is remapped from ALT. JK, SC065 is F14, do not use.
 appskey::msgbox, this is the right click appskey KEY I guess
 
@@ -695,7 +696,7 @@ Rshift::msgbox RIGHT SHIFT lol
 SC06E::msgbox,,,right WINkey,0.5
 SC06F::msgbox,,,SC06F,0.5
 SC062::msgbox,,,SC062,0.5
-Rctrl::msgbox,,,Rctrl,0.5
+Rctrl::msgbox,,,Rctrlll,0.5
 appskey::msgbox, this is the appskey KEY I guess
 
 ;these were all formerly runExplorer()
@@ -845,9 +846,18 @@ Rshift::msgbox RIGHT SHIFT lol
 SC06E::msgbox,,,right WINkey,0.5
 SC06F::msgbox,,,SC06F,0.5
 SC062::msgbox,,,SC062 aka APPSKEY,0.5
-Rctrl::msgbox,,,Rctrl,0.5
+; SC063::msgbox,,,SC063 aka LWIN,0.5
+SC063::
+Rctrl::
+;msgbox,,, trying to open VNC,0.5
+IfWinNotExist, ahk_class TvnWindowClass
+	Run, C:\Program Files\TightVNC\tvnviewer.exe
+if WinExist("ahk_exe tvnviewer.exe")
+	WinActivate ahk_exe tvnviewer.exe
+return
+;F14::msgbox,,, wtf is this doing here???,0.6
 appskey::msgbox, this is the appskey KEY maybe
-
+SC05A::msgbox,,, was remapped from ALT. now SC05A,0.5
 PrintScreen::
 ScrollLock::return
 SC061::msgbox,,, scancode061,1
@@ -863,6 +873,11 @@ home::
 insert::
 
 up::
+tooltip, uppp
+WinGetPos,,, Width, Height, A
+WinMove, A,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2)
+return
+
 down::
 left::
 right::
@@ -964,16 +979,29 @@ G18: Activate Premiere
 */
 
 
+#IfWinActive
 
+
+;macro key G1 on K95. universal SEARCH EVERYTHINGER
+; this used to have a ~ to let it pass through... not sure why. it was creating an ENTER keypress effect in notepad++ so i removed it.
+^+J::
+if winactive("ahk_exe Adobe Premiere Pro.exe")
+	{
+	;Keyshower("effects Panel CLEAR",,1)
+	effectsPanelType("") ;set to macro key G1 on my logitech G15 keyboard. ;This just CLEARS the effects panel search bar so that you can type something in.
+	;previously was ^+0
+	}
+else if winactive("ahk_exe notepad++.exe")
+	sendinput ^f
+else if winactive("ahk_exe firefox.exe")
+	sendinput ^e
+else if winactive("ahk_exe chrome.exe")
+	sendinput ^e
+else if winactive("ahk_class CabinetWClass")
+	sendinput ^e
+return
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
-
-;macro key G1 on K95keyboard
-~^+J::
-;Keyshower("effects Panel CLEAR",,1)
-effectsPanelType("") ;set to macro key G1 on my logitech G15 keyboard. ;This just CLEARS the effects panel search bar so that you can type something in.
-;previously was ^+0
-return
 
 ;macro key G2
 ~^+K::preset("Warp Stabilizer Preset") ;macro key G2. I wish it would also press "analyse..."

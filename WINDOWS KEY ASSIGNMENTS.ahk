@@ -1,31 +1,49 @@
 #NoEnv
 SendMode Input
 #SingleInstance force
+
+; GroupAdd, ThisScript, %A_ScriptName%        ; Add any window containing this script's name to the group ThisScript
+; ;;;https://www.reddit.com/r/AutoHotkey/comments/39gjam/what_are_your_favorite_ahk_tricks/
+; ; ---------------------------------
+; ; Auto-reload on save
+; ; ---------------------------------
+; ; Reloads script if active window is the script editor
+; ; Reloads on Ctrl-S in the editor window
+
+
+; WinGetTitle, Title, A
+; MsgBox, The active window is "%Title%".
+; MsgBox, The group is %ThisScript%
+; MsgBox, The name is %A_ScriptName%
+
+; #IfWinActive ahk_group ThisScript  ; Only run if met. ; Otherwise, ignore hotkey
+; #IfWinActive A_ScriptName  ; Only run if met. ; Otherwise, ignore hotkey
+; ~^s::
+	; msgbox,,, reloading meoww. ,0.3
+    ; TrayTip, Reloading updated script, %A_ScriptName%
+    ; ;SetTimer, RemoveTrayTip, 2000
+    ; ;Sleep, 2000
+	; sleep 100
+    ; Reload
+; return
+
+
+; Menu, Tray, Icon, shell32.dll, 16 
+;when you get to #include, it means the END of the autoexecute section. So that stuff must go before this line.
 #include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Almost All Windows Functions.ahk
+
+
+
+
 #MaxHotkeysPerInterval 2000
 Menu, Tray, Icon, shell32.dll, 16 
 
+SetNumLockState, on ;you won't be able to cahnge the state of numlock when this is used.
+SetScrollLockState, off
 
 
-;;;https://www.reddit.com/r/AutoHotkey/comments/39gjam/what_are_your_favorite_ahk_tricks/
-; ---------------------------------
-; Auto-reload on save
-; ---------------------------------
-; Reloads script if active window is the script editor
-; Reloads on Ctrl-S in the editor window
 
-GroupAdd, ThisScript, %A_ScriptName%        ; Add any window containing this script's name to the group ThisScript
-                                            ; ; This is used in the Auto-reload on save function
-#IfWinActive ahk_group ThisScript                       ; Only run if met. ; Otherwise, ignore hotkey
-~^s::
-	msgbox,,, reloading meoww. ,0.3
-    TrayTip, Reloading updated script, %A_ScriptName%
-    ;SetTimer, RemoveTrayTip, 2000
-    ;Sleep, 2000
-	sleep 100
-    Reload
-return
-#IfWinActive                                            ; Return to default behavior
+#IfWinActive
 
 
 #IfWinActive ahk_class Notepad++
@@ -37,8 +55,8 @@ Reload
 Return
 #IfWinActive
 
-;these two can probably be combined with  && but i dont wanna figure that out now.
-#IfWinActive ahk_class MozillaWindowClass
+
+#IfWinActive ahk_class MozillaWindowClass ;or ahk_class Chrome_WidgetWin_1
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^w ;control w, which closes a tab
@@ -50,6 +68,17 @@ F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^w ;control w, which closes a tab
 F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
+
+#IfWinActive ahk_exe notepad++.exe
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w 
+
+#IfWinActive ahk_exe Photoshop.exe
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w 
+
 #IfWinActive
 
 
@@ -96,11 +125,11 @@ scrollLock::Sendinput ^+{printscreen} ;assigning 'capture region' straight to sc
 ;;shortcut to CLOSE FIREFOX with no bullshit or fanfare or annoying dialouge boxes that try to argue with you. Just completely nuke it from orbit so we can start over
 ^!+f::Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
 
-;shortcut to forecfully CLOSE PREMIERE WITH NO BULLSHIT. BULLDOZE IT FLAT, BURN IT, SALT THE EATH, THEN NUKE IT FROM ORBIT. JUST FUCKING CLOSE!
+;shortcut to forcefully CLOSE PREMIERE, WITH NO BULLSHIT. BULLDOZE IT FLAT, BURN IT, SALT THE EATH, NUKE IT FROM ORBIT. JUST FUCKING DIE!!!
 ^!+p::
-Run, %comspec% /c "taskkill.exe /F /Adobe Premiere Pro.exe",, hide
+Run, %comspec% /c "taskkill.exe /IM /Adobe Premiere Pro.exe /T /F" ;,, hide
 sleep 100
-Run, %comspec% /c "taskkill.exe /F /PID 72536",, hide
+;Run, %comspec% /c "taskkill.exe /F /PID 72536",, hide
 
 tooltip, killed premiere
 sleep 100

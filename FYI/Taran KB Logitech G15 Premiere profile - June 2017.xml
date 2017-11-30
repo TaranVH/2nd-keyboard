@@ -1,0 +1,1370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<profiles xmlns="http://www.logitech.com/Cassandra/2010.7/Profile">
+  <profile gpasupported="0" launchable="1" gameid="" guid="{FA1709BA-13E5-4621-9299-82929F3E8411}" lastplayeddate="2017-06-14T19:46:14" gkeysdk="0" lock="0" name="Default Profile2">
+    <description></description>
+    <signature executable="" key="" value="" name=""/>
+    <macros>
+      <macro color="4278228735" hidden="false" guid="{0E5FBC48-AEF2-4D47-AB9A-52FF8DE7A581}" original="true" name="1">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="1"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{63BE7C7A-4937-4CC4-89A1-EA58900D686A}" original="true" name="A">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="A"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{719E14B7-92C8-4231-AD72-C30450EBFC10}" original="true" name="S">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="S"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{438FEFE1-A4AC-40C2-9247-B31379391066}" original="true" name="D">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="D"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{053C4FB8-E85A-4993-9C29-6E504C75DB2F}" original="true" name="F">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{C76A7B08-F7A1-4CB1-A05B-F376B76FEB3C}" original="true" name="G">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="G"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{B6A5C255-A379-498D-AAD9-290F1EB43B98}" original="true" name="LSHIFT">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="LSHIFT"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{474C3E34-3395-4059-93C8-3D4076673135}" original="true" name="Z">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="Z"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{AEB183E0-9019-4392-896B-4DAC8330FA67}" original="true" name="X">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="X"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{0BD1FF8D-B460-46A4-9866-EAFB2ECF3617}" original="true" name="C">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="C"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{33F8DE88-FEAC-42ED-BA8A-3C4755FA6D67}" original="true" name="V">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="V"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{244636E5-5C47-4982-8A76-E216A920F49F}" original="true" name="2">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="2"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{6631B94C-725B-4541-B7FD-E0FEDA3156F3}" original="true" name="LCTRL">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{93ECFD56-95ED-4B57-A385-8CF72DB5F6B6}" original="true" name="LALT">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="LALT"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{012C64E4-210B-4199-97BC-F051CE3488E6}" original="true" name="SPACEBAR">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="SPACEBAR"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{CB9CC75B-A8ED-444E-8EDB-B28802D714CF}" original="true" name="6">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="6"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{D0AE6D96-FA68-44C3-9962-F25237E48823}" original="true" name="7">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="7"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{6FDA729B-2DD1-4505-9693-A8D2CC88A956}" original="true" name="8">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="8"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{D9ED5310-3F5A-42C8-803C-32CF24C0A3CE}" original="true" name="W">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="W"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{088F6952-C5AF-4CD9-8596-C1744B12501F}" original="true" name="Q">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="Q"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{35060C60-D9F5-4F61-B7F0-351005026E00}" original="true" name="E">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="E"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{CEBC90AE-8677-4F05-BA4F-A8436AC9EAB6}" original="true" name="R">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="R"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{569B3CF7-7D76-4E72-94A3-D8B6DA43C6A2}" original="true" name="T">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="T"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{7C5CEB62-4CC5-425F-A442-8ADB5C713D73}" original="true" name="3">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="3"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{585D6928-6DA4-4865-A4CD-6E6A40687F75}" original="true" name="4">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="4"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{FF54FEB5-843F-465A-B8BA-9CAA2C4B70B9}" original="true" name="F1">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F1"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{1ED530F3-5A13-4EB1-800C-DF0D6873ED88}" original="true" name="F2">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F2"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{B06BEC6C-12A7-4F2A-AC97-BBF7B7EDF353}" original="true" name="F3">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F3"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{33BDD50A-3E5C-4EE3-A440-91C2A94230CB}" original="true" name="F4">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F4"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{FA55D2A3-9611-4B9A-8705-17C74B82FB64}" original="true" name="F5">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F5"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{002D4039-63A2-4FFB-B9A6-4F2337042B54}" original="true" name="F10">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F10"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{E432B456-E65C-4009-9115-FFF884011BEF}" original="true" name="F11">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F11"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{A36371DC-A978-440E-85B5-336C2AFCA14F}" original="true" name="F12">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F12"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{793AC04D-F6DB-4E47-8D93-068B95FD54E3}" original="true" name="5">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="5"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{2FDFE890-93C0-4BDB-851B-03D0E06337C1}" original="true" name="F7">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F7"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{23A95548-5C2F-423A-A76C-0A341F636BF5}" original="true" name="F8">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F8"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{A83EA296-1C6B-4523-996A-69D7830524CD}" original="true" name="F9">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F9"/>
+        </keystroke>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{5DAFA657-7E0B-4D37-9F7A-FA252ED551E6}" original="true" name="Left Click">
+        <mousefunction xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MouseFunction">
+          <do task="leftclick"/>
+        </mousefunction>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{9D0F4485-F6CE-49AF-B3FB-328DBF996F1E}" original="true" name="Right Click">
+        <mousefunction xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MouseFunction">
+          <do task="rightclick"/>
+        </mousefunction>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{8B615B23-6FDC-4430-9E57-E5CCBCAC4575}" original="true" name="Middle Click">
+        <mousefunction xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MouseFunction">
+          <do task="middleclick"/>
+        </mousefunction>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{A0D817F6-1D5D-483B-ADD0-2634CD93D42A}" original="true" name="Back">
+        <mousefunction xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MouseFunction">
+          <do task="back"/>
+        </mousefunction>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{8B13562D-60F2-460F-9588-8C84168C81BC}" original="true" name="Forward">
+        <mousefunction xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MouseFunction">
+          <do task="forward"/>
+        </mousefunction>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{68A1C0B2-2996-4992-9CC5-3285AC8E9740}" devicecategory="Logitech.Gaming.Mouse" original="true" name="DPI Up">
+        <mousefunction xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MouseFunction">
+          <do task="dpiup"/>
+        </mousefunction>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{12C9716B-4D7A-4F6F-AF20-A0369219119A}" devicecategory="Logitech.Gaming.Mouse" original="true" name="DPI Down">
+        <mousefunction xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MouseFunction">
+          <do task="dpidown"/>
+        </mousefunction>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{89F0C712-9AF7-4099-9C53-1868BF5B9A4E}" devicecategory="Logitech.Gaming.Mouse" original="true" name="Default DPI">
+        <mousefunction xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MouseFunction">
+          <do task="defaultdpi"/>
+        </mousefunction>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{53E81537-5916-4AB3-B052-ABF88B5DD218}" devicecategory="Logitech.Gaming.Mouse.G300" original="true" name="Mode Switch (G300/s)">
+        <mousefunction xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MouseFunction">
+          <do task="modeswitch"/>
+        </mousefunction>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{A1FEC5BC-9A8A-49C5-B085-0E2EDCEF1F55}" devicecategory="Logitech.Gaming.Mouse" original="true" name="DPI Shift">
+        <mousefunction xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MouseFunction">
+          <do task="dpishift"/>
+        </mousefunction>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{28F1F32A-678A-4CD8-A0F4-41283A737EFC}" devicecategory="Logitech.Gaming.Mouse" original="true" name="DPI Cycling">
+        <mousefunction xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MouseFunction">
+          <do task="dpicycling"/>
+        </mousefunction>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{F7899D9E-8B25-45CB-B4BC-AAF99E4C87D4}" original="true" name="Copy">
+        <hotkeys xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Hotkeys">
+          <do task="copy"/>
+        </hotkeys>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{5638A489-F156-4122-A7DB-E0F880FACC0E}" original="true" name="Paste">
+        <hotkeys xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Hotkeys">
+          <do task="paste"/>
+        </hotkeys>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{2F5C8F56-C184-4143-8852-2EB924626DCC}" original="true" name="Cut">
+        <hotkeys xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Hotkeys">
+          <do task="cut"/>
+        </hotkeys>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{2A78D4E8-9CB8-4233-8A0C-BFC785A43424}" original="true" name="CLEAR">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LSHIFT"/>
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="F"/>
+          <key direction="up" value="F"/>
+          <key direction="up" value="LALT"/>
+          <key direction="up" value="LCTRL"/>
+          <key direction="up" value="LSHIFT"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{C09550A5-6E36-4E34-92B5-7E2C681AA34D}" original="true" name="presets">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LSHIFT"/>
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="F"/>
+          <key direction="up" value="LCTRL"/>
+          <key direction="up" value="LSHIFT"/>
+          <key direction="up" value="LALT"/>
+          <key direction="up" value="F"/>
+          <key direction="down" value="P"/>
+          <key direction="up" value="P"/>
+          <key direction="down" value="R"/>
+          <key direction="up" value="R"/>
+          <key direction="down" value="E"/>
+          <key direction="up" value="E"/>
+          <key direction="down" value="S"/>
+          <key direction="up" value="S"/>
+          <key direction="down" value="E"/>
+          <key direction="up" value="E"/>
+          <key direction="down" value="T"/>
+          <key direction="up" value="T"/>
+          <key direction="down" value="S"/>
+          <key direction="up" value="S"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{F08166CB-8D9C-44C8-BA05-2949DEB37CC9}" original="true" name="Limiter">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="L"/>
+          <key direction="up" value="L"/>
+          <key direction="up" value="LALT"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{BDF882A4-2CCC-4B50-95EE-4F214D202F42}" original="true" name="presets">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LSHIFT"/>
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="P"/>
+          <key direction="up" value="P"/>
+          <key direction="up" value="LALT"/>
+          <key direction="up" value="LSHIFT"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{C5478B94-2EB9-40B6-96B2-97D72D6FAD54}" original="true" name="pink maker">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="U"/>
+          <key direction="up" value="U"/>
+          <key direction="down" value="NUMSTAR"/>
+          <key direction="up" value="NUMSTAR"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{17A1B471-9F62-414D-BC40-47CF977902FF}" original="true" name="match frame source monitor">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LSHIFT"/>
+          <key direction="down" value="M"/>
+          <key direction="up" value="M"/>
+          <key direction="up" value="LCTRL"/>
+          <key direction="up" value="LSHIFT"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{7E0366B3-F875-4AAC-A2E1-D28CB2AA49A0}" original="true" name="marker delete  ^!m">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="M"/>
+          <key direction="up" value="M"/>
+          <key direction="up" value="LALT"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="true" guid="{257BE9C7-1858-4B63-9D40-06D867BD6E6D}" original="true" name="Cycle Effect">
+        <function xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Function">
+          <do task="cycle_effect"/>
+        </function>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{A59040D0-FFF8-4473-B81A-9336D00FDD20}" original="true" name="Cycle Effect">
+        <function xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Function">
+          <do task="cycle_effect"/>
+        </function>
+      </macro>
+      <macro color="4278246655" hidden="true" guid="{B83657F0-4590-473B-B8EA-58D76A3C42E6}" original="true" name="Surround sound on/off">
+        <audio xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Audio">
+          <task command="surroundsoundtoggle"/>
+        </audio>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{9B9FA067-B061-4E91-9517-3BEFC003122C}" original="true" name="Surround sound on/off">
+        <audio xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Audio">
+          <task command="surroundsoundtoggle"/>
+        </audio>
+      </macro>
+      <macro color="4278246655" hidden="true" guid="{6320F8A0-247A-4551-8DC9-B1369ACCB688}" original="true" name="Cycle EQ">
+        <audio xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Audio">
+          <task command="eqcycle"/>
+        </audio>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{A0F51DC5-83F0-4C6D-91F5-E4803E652B64}" original="true" name="Cycle EQ">
+        <audio xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Audio">
+          <task command="eqcycle"/>
+        </audio>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{92E83548-8C55-481E-A665-12B7836699A1}" original="true" name="Warp Stabilizer Preset">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="W"/>
+          <key direction="up" value="W"/>
+          <key direction="up" value="LCTRL"/>
+          <key direction="up" value="LALT"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{90644F34-BBE5-459A-B3AB-5A0B003ADDE5}" original="true" name="alt R -- fill right">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="R"/>
+          <key direction="up" value="R"/>
+          <key direction="up" value="LALT"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{035A0274-52FD-4530-A7B9-EB66B6BEB647}" original="true" name="F6">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F6"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{CC113F83-7EF0-476E-A4ED-ACB41AD69275}" original="true" name="de hummer - alt ]">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="RBRACKET"/>
+          <key direction="up" value="RBRACKET"/>
+          <key direction="up" value="LALT"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{B1A6B467-0F01-4080-A7F2-D0836D5F7BDA}" original="true" name="reverse clip">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="R"/>
+          <key direction="up" value="R"/>
+          <key direction="up" value="LCTRL"/>
+          <key direction="down" value="TAB"/>
+          <key direction="up" value="TAB"/>
+          <key direction="down" value="TAB"/>
+          <key direction="up" value="TAB"/>
+          <key direction="down" value="SPACEBAR"/>
+          <key direction="up" value="SPACEBAR"/>
+          <key direction="down" value="ENTER"/>
+          <key direction="up" value="ENTER"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{84004ACF-A4D6-434D-A99B-0543BBD06945}" original="true" name="paste enter">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="V"/>
+          <key direction="up" value="V"/>
+          <key direction="up" value="LCTRL"/>
+          <key direction="down" value="ENTER"/>
+          <key direction="up" value="ENTER"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{CF5F7A8C-8408-463F-8F16-8032C5E4A2D1}" original="true" name="rename">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="F2"/>
+          <key direction="up" value="F2"/>
+          <key direction="down" value="RIGHT"/>
+          <key direction="up" value="RIGHT"/>
+          <key direction="down" value="LEFT"/>
+          <key direction="up" value="LEFT"/>
+          <key direction="down" value="BACKSPACE"/>
+          <key direction="up" value="BACKSPACE"/>
+          <key direction="down" value="BACKSPACE"/>
+          <key direction="up" value="BACKSPACE"/>
+          <key direction="down" value="ENTER"/>
+          <key direction="up" value="ENTER"/>
+          <key direction="down" value="DOWN"/>
+          <key direction="up" value="DOWN"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{208A97C5-B8CF-4E9D-9E90-4ED2EAD0B200}" original="true" name="rightener">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LGUI"/>
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="K"/>
+          <key direction="up" value="K"/>
+          <key direction="up" value="LALT"/>
+          <key direction="up" value="LGUI"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{DD7583CC-B48F-487D-A10E-4B7643F5D52F}" original="true" name="Word">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LGUI"/>
+          <key direction="down" value="4"/>
+          <key direction="up" value="4"/>
+          <key direction="up" value="LGUI"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{DEBEDF64-AF29-412D-9A91-6ED2474166B8}" original="true" name="CTRL SHIFT TAB">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LSHIFT"/>
+          <key direction="down" value="TAB"/>
+          <key direction="up" value="TAB"/>
+          <key direction="up" value="LSHIFT"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{879DBE52-C42B-4C19-9B06-D48B81DAF41B}" original="true" name="Next Track">
+        <media xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Media">
+          <do task="nexttrack"/>
+        </media>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{3C14C85E-F2BA-46DE-AE73-E821D1A6B985}" original="true" name="F21">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F21"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{0D2C8610-4C1C-4499-9597-1CB10BC03B60}" original="true" name="F22">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F22"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{D9ECF9FB-9B24-4F00-8271-2F008511FB9D}" original="true" name="F24">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F24"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{3287CE81-C98F-4D75-8C07-B8A5D16AB42F}" original="true" name="F23">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F23"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{D2C14D85-7798-4C87-AE31-CE1DA3EBBE7A}" original="true" name="Ctrl + F13">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F13"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{7040689F-C23B-4C38-BA2B-DBFE385794EF}" original="true" name="Ctrl + F14">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F14"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{6E827B44-072B-4B08-A5CA-583268C5AA76}" original="true" name="Ctrl + F15">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F15"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{40E1B6B6-EDDE-4F6E-96DF-D2A2538DBC91}" original="true" name="Ctrl + F16">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F16"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{E5F54E43-EEDA-4D5D-94D2-F0ABDAAF9BC1}" original="true" name="Ctrl + F18">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F18"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{FB411C5B-E4E0-480D-A53A-637E5346C96C}" original="true" name="Ctrl + F17">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F17"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{4C8A2516-CCD9-4550-827F-E23811FC21F2}" original="true" name="Ctrl + F19">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F19"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{7143E537-D507-44DD-A4EF-2C94A788D061}" original="true" name="Ctrl + F20">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F20"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{D8426229-611D-431B-AB83-AE83001E3367}" original="true" name="Ctrl + F21">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F21"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{F3DEF11F-B37E-4A34-A519-8548EED53AB8}" original="true" name="Ctrl + F22">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F22"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{64386C50-E59D-47DE-BB5C-867C3C01865A}" original="true" name="Ctrl + F23">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F23"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{55D05842-5C14-4014-9E37-65B8BEC91A47}" original="true" name="Ctrl + F24">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F24"/>
+          <modifier value="LCTRL"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{DCB216B1-5E76-49A1-9A70-0E67237FB316}" name="presetter">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="P"/>
+          <key direction="up" value="P"/>
+          <key direction="down" value="R"/>
+          <key direction="up" value="R"/>
+          <key direction="down" value="E"/>
+          <key direction="up" value="E"/>
+          <key direction="down" value="S"/>
+          <key direction="up" value="S"/>
+          <key direction="down" value="E"/>
+          <key direction="up" value="E"/>
+          <key direction="down" value="T"/>
+          <key direction="up" value="T"/>
+          <key direction="down" value="RSHIFT"/>
+          <key direction="down" value="9"/>
+          <key direction="up" value="9"/>
+          <key direction="down" value="0"/>
+          <key direction="up" value="0"/>
+          <key direction="up" value="RSHIFT"/>
+          <key direction="down" value="LEFT"/>
+          <key direction="up" value="LEFT"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" backupguid="{69E8818A-25EE-484A-98B6-D8DC53022DFF}" guid="{415A5BF9-A5B8-4CC3-8D49-D767735573AC}" name="F14">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F14"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{69E8818A-25EE-484A-98B6-D8DC53022DFF}" name="F14  rescale">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F14"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{DFB54107-D86B-4E8E-BE33-D14ED99534F2}" name="F15 - anchor">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F15"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" backupguid="{DFB54107-D86B-4E8E-BE33-D14ED99534F2}" guid="{C63449F1-FDA5-4D93-B411-53B7751FC9E7}" name="F15">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F15"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{E04D1F48-E70D-4C8F-B82E-1A5F50D058D2}" name="effects find box">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LSHIFT"/>
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="7"/>
+          <key direction="up" value="7"/>
+          <key direction="up" value="LALT"/>
+          <key direction="up" value="LSHIFT"/>
+          <key direction="up" value="LCTRL"/>
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="F"/>
+          <key direction="up" value="F"/>
+          <key direction="up" value="LALT"/>
+          <key direction="up" value="LCTRL"/>
+          <key direction="down" value="RSHIFT"/>
+          <key direction="down" value="BACKSPACE"/>
+          <key direction="up" value="BACKSPACE"/>
+          <key direction="up" value="RSHIFT"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{85E26F08-183E-4849-ACBF-1B4895258077}" name="lefterner">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="F24"/>
+          <key direction="down" value="MINUS"/>
+          <key direction="up" value="MINUS"/>
+          <key direction="up" value="F24"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" backupguid="{D6619500-39F1-444B-896E-22D7B92169D8}" guid="{5FB01095-A349-48DE-9F0F-63134F5FFE6B}" name="leftener">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LGUI"/>
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="L"/>
+          <key direction="up" value="L"/>
+          <key direction="up" value="LALT"/>
+          <key direction="up" value="LGUI"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" backupguid="{48AF1F51-9C78-4C4B-B51D-B0147998853C}" guid="{F07F1CFD-F657-47F8-A17B-995A9F22F15D}" name="F19">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F19"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" backupguid="{69F9BEDD-EBAF-4C01-9248-F1BB881A54CE}" guid="{22BF837C-AA88-435E-B2C4-4A1FA8648C8D}" name="ctrl h - BLANK lumetri">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="H"/>
+          <key direction="up" value="H"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" backupguid="{69577BEB-060E-445E-AF05-78E6A0BEC163}" guid="{84DEAF19-98AB-419E-8A31-8B46A868E6CE}" name="ctrl g- shadows lumetri">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="G"/>
+          <key direction="up" value="G"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{F3D0CA25-BEFE-482C-92DE-01FC370980C6}" name="ctrl alt J - bright lumetri">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="J"/>
+          <key direction="up" value="J"/>
+          <key direction="up" value="LALT"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" backupguid="{F3D0CA25-BEFE-482C-92DE-01FC370980C6}" guid="{7E91FA11-9164-40B3-9FB6-47296C30B514}" name="ctrl b - brightness">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="B"/>
+          <key direction="up" value="B"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" backupguid="{5CCDF450-4B7C-4783-A76A-728A993753B1}" guid="{CEF7ACC9-0C7F-4973-B6DD-41F2B564411C}" name="CTRL num  6-notepad++">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="NUM6"/>
+          <key direction="up" value="NUM6"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" backupguid="{6DE5D673-D601-4A39-A819-6BF384C895D8}" guid="{F1363133-DC45-4783-9026-DAFF729AA30F}" name="CTRL num4">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="NUM4"/>
+          <key direction="up" value="NUM4"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{988FF697-A6F5-4991-9A02-2D729BBCBC01}" name="ctrlF3-Premiere">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="F3"/>
+          <key direction="up" value="F3"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" backupguid="{988FF697-A6F5-4991-9A02-2D729BBCBC01}" guid="{45ED973D-ED9E-4525-A097-103256C4D283}" name="ctrl num3 - premiere">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="NUM3"/>
+          <key direction="up" value="NUM3"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{31A7935E-0EC0-472D-A72D-0F2404C1E356}" name="ctrlF2-Explorer">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="F2"/>
+          <key direction="up" value="F2"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" backupguid="{31A7935E-0EC0-472D-A72D-0F2404C1E356}" guid="{793D6523-A534-404E-83E9-51ADAFE05648}" name="ctrl num 2 - explorer">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="NUM2"/>
+          <key direction="up" value="NUM2"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{D194F225-E64D-4420-BBE0-5759A2C357DD}" name="ctrlF1-Firefox">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="F1"/>
+          <key direction="up" value="F1"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" backupguid="{D194F225-E64D-4420-BBE0-5759A2C357DD}" guid="{423985D2-D116-4F3A-AEBC-A78E5300B321}" name="CTRL num1">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="NUM1"/>
+          <key direction="up" value="NUM1"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{48AF1F51-9C78-4C4B-B51D-B0147998853C}" name="F19 LOCKS">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F19"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{193FED81-E0D4-4D85-A1A8-02E5114BDB19}" name="open 2nd keyboard explorer">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LGUI"/>
+          <key direction="down" value="E"/>
+          <key direction="up" value="E"/>
+          <key direction="up" value="LGUI"/>
+          <delay milliseconds="100"/>
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="D"/>
+          <key direction="up" value="D"/>
+          <key direction="up" value="LALT"/>
+          <delay milliseconds="50"/>
+          <key direction="down" value="RCTRL"/>
+          <key direction="down" value="L"/>
+          <key direction="up" value="L"/>
+          <key direction="up" value="RCTRL"/>
+          <delay milliseconds="100"/>
+          <key direction="down" value="C"/>
+          <key direction="up" value="C"/>
+          <delay milliseconds="100"/>
+          <key direction="down" value="RSHIFT"/>
+          <delay milliseconds="100"/>
+          <key direction="down" value="SEMICOLON"/>
+          <key direction="up" value="SEMICOLON"/>
+          <key direction="up" value="RSHIFT"/>
+          <delay milliseconds="100"/>
+          <key direction="down" value="BACKSLASH"/>
+          <key direction="up" value="BACKSLASH"/>
+          <key direction="down" value="U"/>
+          <key direction="up" value="U"/>
+          <key direction="down" value="S"/>
+          <key direction="up" value="S"/>
+          <key direction="down" value="E"/>
+          <key direction="up" value="E"/>
+          <key direction="down" value="R"/>
+          <key direction="up" value="R"/>
+          <key direction="down" value="S"/>
+          <key direction="up" value="S"/>
+          <key direction="down" value="BACKSLASH"/>
+          <key direction="up" value="BACKSLASH"/>
+          <delay milliseconds="100"/>
+          <key direction="down" value="T"/>
+          <key direction="up" value="T"/>
+          <key direction="down" value="A"/>
+          <key direction="up" value="A"/>
+          <key direction="down" value="R"/>
+          <key direction="up" value="R"/>
+          <key direction="down" value="A"/>
+          <key direction="up" value="A"/>
+          <key direction="down" value="N"/>
+          <key direction="up" value="N"/>
+          <key direction="down" value="W"/>
+          <key direction="up" value="W"/>
+          <key direction="down" value="O"/>
+          <key direction="up" value="O"/>
+          <key direction="down" value="R"/>
+          <key direction="up" value="R"/>
+          <key direction="down" value="K"/>
+          <key direction="up" value="K"/>
+          <key direction="down" value="BACKSLASH"/>
+          <key direction="up" value="BACKSLASH"/>
+          <delay milliseconds="100"/>
+          <key direction="down" value="D"/>
+          <key direction="up" value="D"/>
+          <key direction="down" value="O"/>
+          <key direction="up" value="O"/>
+          <key direction="down" value="C"/>
+          <key direction="up" value="C"/>
+          <key direction="down" value="U"/>
+          <key direction="up" value="U"/>
+          <key direction="down" value="M"/>
+          <key direction="up" value="M"/>
+          <key direction="down" value="E"/>
+          <key direction="up" value="E"/>
+          <key direction="down" value="N"/>
+          <key direction="up" value="N"/>
+          <key direction="down" value="T"/>
+          <key direction="up" value="T"/>
+          <key direction="down" value="S"/>
+          <key direction="up" value="S"/>
+          <key direction="down" value="BACKSLASH"/>
+          <key direction="up" value="BACKSLASH"/>
+          <key direction="down" value="G"/>
+          <key direction="up" value="G"/>
+          <key direction="down" value="I"/>
+          <key direction="up" value="I"/>
+          <key direction="down" value="T"/>
+          <key direction="up" value="T"/>
+          <key direction="down" value="H"/>
+          <key direction="up" value="H"/>
+          <key direction="down" value="U"/>
+          <key direction="up" value="U"/>
+          <key direction="down" value="B"/>
+          <key direction="up" value="B"/>
+          <key direction="down" value="BACKSLASH"/>
+          <key direction="up" value="BACKSLASH"/>
+          <delay milliseconds="100"/>
+          <key direction="down" value="2"/>
+          <key direction="up" value="2"/>
+          <key direction="down" value="N"/>
+          <key direction="up" value="N"/>
+          <key direction="down" value="D"/>
+          <key direction="up" value="D"/>
+          <key direction="down" value="MINUS"/>
+          <key direction="up" value="MINUS"/>
+          <key direction="down" value="K"/>
+          <key direction="up" value="K"/>
+          <key direction="down" value="E"/>
+          <key direction="up" value="E"/>
+          <key direction="down" value="Y"/>
+          <key direction="up" value="Y"/>
+          <key direction="down" value="B"/>
+          <key direction="up" value="B"/>
+          <key direction="down" value="O"/>
+          <key direction="up" value="O"/>
+          <key direction="down" value="A"/>
+          <key direction="up" value="A"/>
+          <key direction="down" value="R"/>
+          <key direction="up" value="R"/>
+          <key direction="down" value="D"/>
+          <key direction="up" value="D"/>
+          <key direction="down" value="BACKSLASH"/>
+          <key direction="up" value="BACKSLASH"/>
+          <delay milliseconds="100"/>
+          <key direction="down" value="T"/>
+          <key direction="up" value="T"/>
+          <key direction="down" value="A"/>
+          <key direction="up" value="A"/>
+          <key direction="down" value="R"/>
+          <key direction="up" value="R"/>
+          <key direction="down" value="A"/>
+          <key direction="up" value="A"/>
+          <key direction="down" value="N"/>
+          <key direction="up" value="N"/>
+          <key direction="down" value="QUOTE"/>
+          <key direction="up" value="QUOTE"/>
+          <key direction="down" value="S"/>
+          <key direction="up" value="S"/>
+          <key direction="down" value="SPACEBAR"/>
+          <key direction="up" value="SPACEBAR"/>
+          <key direction="down" value="W"/>
+          <key direction="up" value="W"/>
+          <key direction="down" value="I"/>
+          <key direction="up" value="I"/>
+          <key direction="down" value="N"/>
+          <key direction="up" value="N"/>
+          <key direction="down" value="D"/>
+          <key direction="up" value="D"/>
+          <key direction="down" value="O"/>
+          <key direction="up" value="O"/>
+          <key direction="down" value="W"/>
+          <key direction="up" value="W"/>
+          <key direction="down" value="S"/>
+          <key direction="up" value="S"/>
+          <key direction="down" value="SPACEBAR"/>
+          <key direction="up" value="SPACEBAR"/>
+          <key direction="down" value="M"/>
+          <key direction="up" value="M"/>
+          <key direction="down" value="O"/>
+          <key direction="up" value="O"/>
+          <key direction="down" value="D"/>
+          <key direction="down" value="S"/>
+          <key direction="up" value="D"/>
+          <key direction="up" value="S"/>
+          <key direction="down" value="ENTER"/>
+          <key direction="up" value="ENTER"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" backupguid="{8352E192-BDAA-4FF0-B866-1AAD90A920CF}" guid="{3872050C-C3AC-41C3-B957-CAFC04C15934}" name="gain">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="F2"/>
+          <key direction="up" value="F2"/>
+          <key direction="down" value="7"/>
+          <key direction="up" value="7"/>
+          <key direction="down" value="ENTER"/>
+          <key direction="up" value="ENTER"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" backupguid="{DBDDFB9A-8DDA-4322-B280-AED88BBC1821}" guid="{0CB35E16-78FC-4D4A-8631-9FF4265EC61D}" name="F16">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F16"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" backupguid="{117D3953-C4B2-4E33-9C26-506418B31DD1}" guid="{D556166D-1C6A-46CD-95DE-D62F159CF055}" name="F17">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F17"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" backupguid="{3C4A3E44-5045-4EF1-B6E9-D3145426A3C9}" guid="{E2DC6B0D-AE60-4269-A0E4-FD552D4FF9D1}" name="F18">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F18"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{3C4A3E44-5045-4EF1-B6E9-D3145426A3C9}" name="F18  horizontal anchor">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F18"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{F85D730D-E2E6-4080-9BFD-3F71CFB1874E}" name="F20 FX button temp">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F20"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" backupguid="{F85D730D-E2E6-4080-9BFD-3F71CFB1874E}" guid="{2D24D32E-E1B5-42DE-AE5F-1343910383C2}" name="F20">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F20"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{117D3953-C4B2-4E33-9C26-506418B31DD1}" name="F17 -rotation">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F17"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{69F9BEDD-EBAF-4C01-9248-F1BB881A54CE}" name="MONO LEFT">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="RCTRL"/>
+          <key direction="down" value="RSHIFT"/>
+          <key direction="down" value="COMMA"/>
+          <key direction="up" value="COMMA"/>
+          <key direction="up" value="RSHIFT"/>
+          <key direction="up" value="RCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{69577BEB-060E-445E-AF05-78E6A0BEC163}" name="MONO RIGHT">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="RCTRL"/>
+          <key direction="down" value="RSHIFT"/>
+          <key direction="down" value="PERIOD"/>
+          <key direction="up" value="PERIOD"/>
+          <key direction="up" value="RSHIFT"/>
+          <key direction="up" value="RCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{DBDDFB9A-8DDA-4322-B280-AED88BBC1821}" name="F16 not assigned">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F16"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{557074AD-D06F-4974-BCED-2FE5410B6428}" name="F13- BACK">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F13"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" backupguid="{557074AD-D06F-4974-BCED-2FE5410B6428}" guid="{3D6A27C6-742B-47DE-B5CD-1CE966B37531}" name="F13">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="F13"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{E2107B2E-C26A-4D46-BF19-3FA2B98520FE}" name="Left Windows">
+        <keystroke xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/Keystroke">
+          <key value="LGUI"/>
+        </keystroke>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{31C18073-A10A-48AC-83C2-CAB3B42F3904}" name="FX PANEL">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="RCTRL"/>
+          <key direction="down" value="RSHIFT"/>
+          <key direction="down" value="0"/>
+          <key direction="up" value="0"/>
+          <key direction="up" value="RSHIFT"/>
+          <key direction="up" value="RCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{6DE5D673-D601-4A39-A819-6BF384C895D8}" name="ctrl F4 Word">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="F4"/>
+          <key direction="up" value="F4"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{8352E192-BDAA-4FF0-B866-1AAD90A920CF}" name="gain +7db">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LSHIFT"/>
+          <key direction="down" value="RBRACKET"/>
+          <key direction="up" value="RBRACKET"/>
+          <key direction="up" value="LSHIFT"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{75AFD213-5FAE-478E-BEB2-7B4C701FFA12}" name="^+=  &quot;presets&quot; in FX panel">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LSHIFT"/>
+          <key direction="down" value="EQUAL"/>
+          <key direction="up" value="EQUAL"/>
+          <key direction="up" value="LSHIFT"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{D4E1025F-E95F-4D82-B01A-19865BDE121E}" name="^+- &quot;warp stabilizer preset&quot;">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="LSHIFT"/>
+          <key direction="down" value="MINUS"/>
+          <key direction="up" value="MINUS"/>
+          <key direction="up" value="LSHIFT"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278228735" hidden="false" guid="{5CCDF450-4B7C-4783-A76A-728A993753B1}" name="^F6-notepad++">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LCTRL"/>
+          <key direction="down" value="F6"/>
+          <key direction="up" value="F6"/>
+          <key direction="up" value="LCTRL"/>
+        </multikey>
+      </macro>
+      <macro color="4278246655" hidden="false" guid="{C843A486-D5F5-4998-92FE-9B077491DE55}" name="reselect clip at playhead">
+        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
+          <key direction="down" value="LALT"/>
+          <key direction="down" value="LSHIFT"/>
+          <key direction="down" value="F"/>
+          <key direction="up" value="F"/>
+          <key direction="up" value="LSHIFT"/>
+          <key direction="up" value="LALT"/>
+        </multikey>
+      </macro>
+    </macros>
+    <assignments devicecategory="Logitech.Gaming.Keyboard">
+      <assignment shiftstate="1" backup="false" original="false" contextid="G16" macroguid="{D194F225-E64D-4420-BBE0-5759A2C357DD}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G17" macroguid="{31A7935E-0EC0-472D-A72D-0F2404C1E356}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G18" macroguid="{988FF697-A6F5-4991-9A02-2D729BBCBC01}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G14" macroguid="{5CCDF450-4B7C-4783-A76A-728A993753B1}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G9" macroguid="{8352E192-BDAA-4FF0-B866-1AAD90A920CF}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G2" macroguid="{92E83548-8C55-481E-A665-12B7836699A1}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G5" macroguid="{69577BEB-060E-445E-AF05-78E6A0BEC163}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G4" macroguid="{69F9BEDD-EBAF-4C01-9248-F1BB881A54CE}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G15" macroguid="{6DE5D673-D601-4A39-A819-6BF384C895D8}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G13" macroguid="{557074AD-D06F-4974-BCED-2FE5410B6428}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G13" macroguid="{557074AD-D06F-4974-BCED-2FE5410B6428}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G14" macroguid="{69E8818A-25EE-484A-98B6-D8DC53022DFF}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G15" macroguid="{DFB54107-D86B-4E8E-BE33-D14ED99534F2}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G16" macroguid="{DBDDFB9A-8DDA-4322-B280-AED88BBC1821}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G17" macroguid="{117D3953-C4B2-4E33-9C26-506418B31DD1}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G18" macroguid="{3C4A3E44-5045-4EF1-B6E9-D3145426A3C9}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G1" macroguid="{48AF1F51-9C78-4C4B-B51D-B0147998853C}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G3" macroguid="{3C14C85E-F2BA-46DE-AE73-E821D1A6B985}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G4" macroguid="{0D2C8610-4C1C-4499-9597-1CB10BC03B60}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G5" macroguid="{3287CE81-C98F-4D75-8C07-B8A5D16AB42F}"/>
+      <assignment shiftstate="2" backup="true" original="false" contextid="G6" macroguid="{D9ECF9FB-9B24-4F00-8271-2F008511FB9D}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G1" macroguid="{D2C14D85-7798-4C87-AE31-CE1DA3EBBE7A}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G2" macroguid="{7040689F-C23B-4C38-BA2B-DBFE385794EF}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G3" macroguid="{6E827B44-072B-4B08-A5CA-583268C5AA76}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G4" macroguid="{40E1B6B6-EDDE-4F6E-96DF-D2A2538DBC91}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G6" macroguid="{E5F54E43-EEDA-4D5D-94D2-F0ABDAAF9BC1}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G5" macroguid="{FB411C5B-E4E0-480D-A53A-637E5346C96C}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G7" macroguid="{4C8A2516-CCD9-4550-827F-E23811FC21F2}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G8" macroguid="{7143E537-D507-44DD-A4EF-2C94A788D061}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G9" macroguid="{D8426229-611D-431B-AB83-AE83001E3367}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G10" macroguid="{F3DEF11F-B37E-4A34-A519-8548EED53AB8}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G11" macroguid="{64386C50-E59D-47DE-BB5C-867C3C01865A}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G12" macroguid="{55D05842-5C14-4014-9E37-65B8BEC91A47}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G7" macroguid="{DCB216B1-5E76-49A1-9A70-0E67237FB316}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G12" macroguid="{CC113F83-7EF0-476E-A4ED-ACB41AD69275}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G12" macroguid="{69E8818A-25EE-484A-98B6-D8DC53022DFF}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G11" macroguid="{17A1B471-9F62-414D-BC40-47CF977902FF}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G11" macroguid="{DFB54107-D86B-4E8E-BE33-D14ED99534F2}"/>
+      <assignment shiftstate="2" backup="true" original="false" contextid="G14" macroguid="{69E8818A-25EE-484A-98B6-D8DC53022DFF}"/>
+      <assignment shiftstate="3" backup="true" original="false" contextid="G14" macroguid="{69E8818A-25EE-484A-98B6-D8DC53022DFF}"/>
+      <assignment shiftstate="2" backup="true" original="false" contextid="G15" macroguid="{DFB54107-D86B-4E8E-BE33-D14ED99534F2}"/>
+      <assignment shiftstate="3" backup="true" original="false" contextid="G15" macroguid="{DFB54107-D86B-4E8E-BE33-D14ED99534F2}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G10" macroguid="{208A97C5-B8CF-4E9D-9E90-4ED2EAD0B200}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G7" macroguid="{D6619500-39F1-444B-896E-22D7B92169D8}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G1" macroguid="{2A78D4E8-9CB8-4233-8A0C-BFC785A43424}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G7" macroguid="{117D3953-C4B2-4E33-9C26-506418B31DD1}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G10" macroguid="{3C4A3E44-5045-4EF1-B6E9-D3145426A3C9}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G8" macroguid="{F08166CB-8D9C-44C8-BA05-2949DEB37CC9}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G8" macroguid="{48AF1F51-9C78-4C4B-B51D-B0147998853C}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G8" macroguid="{85E26F08-183E-4849-ACBF-1B4895258077}"/>
+      <assignment shiftstate="2" backup="true" original="false" contextid="G1" macroguid="{48AF1F51-9C78-4C4B-B51D-B0147998853C}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G4" macroguid="{69F9BEDD-EBAF-4C01-9248-F1BB881A54CE}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G5" macroguid="{69577BEB-060E-445E-AF05-78E6A0BEC163}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G6" macroguid="{F3D0CA25-BEFE-482C-92DE-01FC370980C6}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G14" macroguid="{5CCDF450-4B7C-4783-A76A-728A993753B1}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G15" macroguid="{6DE5D673-D601-4A39-A819-6BF384C895D8}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G18" macroguid="{988FF697-A6F5-4991-9A02-2D729BBCBC01}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G17" macroguid="{31A7935E-0EC0-472D-A72D-0F2404C1E356}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G16" macroguid="{D194F225-E64D-4420-BBE0-5759A2C357DD}"/>
+      <assignment shiftstate="2" backup="true" original="false" contextid="G2" macroguid="{F85D730D-E2E6-4080-9BFD-3F71CFB1874E}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G2" macroguid="{193FED81-E0D4-4D85-A1A8-02E5114BDB19}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G9" macroguid="{D9ECF9FB-9B24-4F00-8271-2F008511FB9D}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G11" macroguid="{48AF1F51-9C78-4C4B-B51D-B0147998853C}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G10" macroguid="{3C4A3E44-5045-4EF1-B6E9-D3145426A3C9}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G9" macroguid="{8352E192-BDAA-4FF0-B866-1AAD90A920CF}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G6" macroguid="{C843A486-D5F5-4998-92FE-9B077491DE55}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G3" macroguid="{BDF882A4-2CCC-4B50-95EE-4F214D202F42}"/>
+      <assignment shiftstate="2" backup="true" original="false" contextid="G16" macroguid="{DBDDFB9A-8DDA-4322-B280-AED88BBC1821}"/>
+      <assignment shiftstate="3" backup="true" original="false" contextid="G16" macroguid="{DBDDFB9A-8DDA-4322-B280-AED88BBC1821}"/>
+      <assignment shiftstate="3" backup="true" original="false" contextid="G17" macroguid="{117D3953-C4B2-4E33-9C26-506418B31DD1}"/>
+      <assignment shiftstate="3" backup="true" original="false" contextid="G18" macroguid="{3C4A3E44-5045-4EF1-B6E9-D3145426A3C9}"/>
+      <assignment shiftstate="2" backup="false" original="false" contextid="G6" macroguid="{F85D730D-E2E6-4080-9BFD-3F71CFB1874E}"/>
+      <assignment shiftstate="2" backup="true" original="false" contextid="G17" macroguid="{117D3953-C4B2-4E33-9C26-506418B31DD1}"/>
+      <assignment shiftstate="2" backup="true" original="false" contextid="G18" macroguid="{3C4A3E44-5045-4EF1-B6E9-D3145426A3C9}"/>
+      <assignment shiftstate="3" backup="true" original="false" contextid="G13" macroguid="{557074AD-D06F-4974-BCED-2FE5410B6428}"/>
+      <assignment shiftstate="1" backup="true" original="false" contextid="G13" macroguid="{557074AD-D06F-4974-BCED-2FE5410B6428}"/>
+      <assignment shiftstate="2" backup="true" original="false" contextid="G13" macroguid="{557074AD-D06F-4974-BCED-2FE5410B6428}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G1" macroguid="{31C18073-A10A-48AC-83C2-CAB3B42F3904}"/>
+      <assignment shiftstate="3" backup="false" original="false" contextid="G13" macroguid="{63BE7C7A-4937-4CC4-89A1-EA58900D686A}"/>
+      <assignment shiftstate="3" backup="false" original="false" contextid="G14" macroguid="{719E14B7-92C8-4231-AD72-C30450EBFC10}"/>
+      <assignment shiftstate="3" backup="false" original="false" contextid="G15" macroguid="{438FEFE1-A4AC-40C2-9247-B31379391066}"/>
+      <assignment shiftstate="3" backup="false" original="false" contextid="G16" macroguid="{474C3E34-3395-4059-93C8-3D4076673135}"/>
+      <assignment shiftstate="3" backup="false" original="false" contextid="G17" macroguid="{AEB183E0-9019-4392-896B-4DAC8330FA67}"/>
+      <assignment shiftstate="3" backup="false" original="false" contextid="G18" macroguid="{0BD1FF8D-B460-46A4-9866-EAFB2ECF3617}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G3" macroguid="{75AFD213-5FAE-478E-BEB2-7B4C701FFA12}"/>
+      <assignment shiftstate="1" backup="false" original="false" contextid="G2" macroguid="{D4E1025F-E95F-4D82-B01A-19865BDE121E}"/>
+    </assignments>
+    <assignments devicecategory="Logitech.Gaming.LeftHandedController">
+      <assignment shiftstate="1" backup="false" original="true" contextid="G1" macroguid="{0E5FBC48-AEF2-4D47-AB9A-52FF8DE7A581}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G1" macroguid="{0E5FBC48-AEF2-4D47-AB9A-52FF8DE7A581}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G1" macroguid="{0E5FBC48-AEF2-4D47-AB9A-52FF8DE7A581}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G10" macroguid="{63BE7C7A-4937-4CC4-89A1-EA58900D686A}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G10" macroguid="{63BE7C7A-4937-4CC4-89A1-EA58900D686A}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G10" macroguid="{63BE7C7A-4937-4CC4-89A1-EA58900D686A}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G11" macroguid="{719E14B7-92C8-4231-AD72-C30450EBFC10}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G11" macroguid="{719E14B7-92C8-4231-AD72-C30450EBFC10}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G11" macroguid="{719E14B7-92C8-4231-AD72-C30450EBFC10}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G12" macroguid="{438FEFE1-A4AC-40C2-9247-B31379391066}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G12" macroguid="{438FEFE1-A4AC-40C2-9247-B31379391066}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G12" macroguid="{438FEFE1-A4AC-40C2-9247-B31379391066}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G13" macroguid="{053C4FB8-E85A-4993-9C29-6E504C75DB2F}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G13" macroguid="{053C4FB8-E85A-4993-9C29-6E504C75DB2F}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G13" macroguid="{053C4FB8-E85A-4993-9C29-6E504C75DB2F}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G14" macroguid="{C76A7B08-F7A1-4CB1-A05B-F376B76FEB3C}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G14" macroguid="{C76A7B08-F7A1-4CB1-A05B-F376B76FEB3C}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G14" macroguid="{C76A7B08-F7A1-4CB1-A05B-F376B76FEB3C}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G15" macroguid="{B6A5C255-A379-498D-AAD9-290F1EB43B98}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G15" macroguid="{B6A5C255-A379-498D-AAD9-290F1EB43B98}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G15" macroguid="{B6A5C255-A379-498D-AAD9-290F1EB43B98}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G16" macroguid="{474C3E34-3395-4059-93C8-3D4076673135}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G16" macroguid="{474C3E34-3395-4059-93C8-3D4076673135}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G16" macroguid="{474C3E34-3395-4059-93C8-3D4076673135}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G17" macroguid="{AEB183E0-9019-4392-896B-4DAC8330FA67}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G17" macroguid="{AEB183E0-9019-4392-896B-4DAC8330FA67}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G17" macroguid="{AEB183E0-9019-4392-896B-4DAC8330FA67}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G18" macroguid="{0BD1FF8D-B460-46A4-9866-EAFB2ECF3617}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G18" macroguid="{0BD1FF8D-B460-46A4-9866-EAFB2ECF3617}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G18" macroguid="{0BD1FF8D-B460-46A4-9866-EAFB2ECF3617}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G19" macroguid="{33F8DE88-FEAC-42ED-BA8A-3C4755FA6D67}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G19" macroguid="{33F8DE88-FEAC-42ED-BA8A-3C4755FA6D67}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G19" macroguid="{33F8DE88-FEAC-42ED-BA8A-3C4755FA6D67}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G2" macroguid="{244636E5-5C47-4982-8A76-E216A920F49F}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G2" macroguid="{244636E5-5C47-4982-8A76-E216A920F49F}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G2" macroguid="{244636E5-5C47-4982-8A76-E216A920F49F}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G20" macroguid="{6631B94C-725B-4541-B7FD-E0FEDA3156F3}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G20" macroguid="{6631B94C-725B-4541-B7FD-E0FEDA3156F3}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G20" macroguid="{6631B94C-725B-4541-B7FD-E0FEDA3156F3}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G21" macroguid="{93ECFD56-95ED-4B57-A385-8CF72DB5F6B6}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G21" macroguid="{93ECFD56-95ED-4B57-A385-8CF72DB5F6B6}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G21" macroguid="{93ECFD56-95ED-4B57-A385-8CF72DB5F6B6}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G22" macroguid="{012C64E4-210B-4199-97BC-F051CE3488E6}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G22" macroguid="{012C64E4-210B-4199-97BC-F051CE3488E6}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G22" macroguid="{012C64E4-210B-4199-97BC-F051CE3488E6}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G23" macroguid="{CB9CC75B-A8ED-444E-8EDB-B28802D714CF}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G23" macroguid="{CB9CC75B-A8ED-444E-8EDB-B28802D714CF}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G23" macroguid="{CB9CC75B-A8ED-444E-8EDB-B28802D714CF}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G24" macroguid="{D0AE6D96-FA68-44C3-9962-F25237E48823}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G24" macroguid="{D0AE6D96-FA68-44C3-9962-F25237E48823}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G24" macroguid="{D0AE6D96-FA68-44C3-9962-F25237E48823}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G25" macroguid="{6FDA729B-2DD1-4505-9693-A8D2CC88A956}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G25" macroguid="{6FDA729B-2DD1-4505-9693-A8D2CC88A956}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G25" macroguid="{6FDA729B-2DD1-4505-9693-A8D2CC88A956}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G26" macroguid="{D9ED5310-3F5A-42C8-803C-32CF24C0A3CE}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G26" macroguid="{D9ED5310-3F5A-42C8-803C-32CF24C0A3CE}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G26" macroguid="{D9ED5310-3F5A-42C8-803C-32CF24C0A3CE}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G27" macroguid="{438FEFE1-A4AC-40C2-9247-B31379391066}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G27" macroguid="{438FEFE1-A4AC-40C2-9247-B31379391066}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G27" macroguid="{438FEFE1-A4AC-40C2-9247-B31379391066}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G28" macroguid="{719E14B7-92C8-4231-AD72-C30450EBFC10}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G28" macroguid="{719E14B7-92C8-4231-AD72-C30450EBFC10}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G28" macroguid="{719E14B7-92C8-4231-AD72-C30450EBFC10}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G29" macroguid="{63BE7C7A-4937-4CC4-89A1-EA58900D686A}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G29" macroguid="{63BE7C7A-4937-4CC4-89A1-EA58900D686A}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G29" macroguid="{63BE7C7A-4937-4CC4-89A1-EA58900D686A}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G3" macroguid="{088F6952-C5AF-4CD9-8596-C1744B12501F}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G3" macroguid="{088F6952-C5AF-4CD9-8596-C1744B12501F}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G3" macroguid="{088F6952-C5AF-4CD9-8596-C1744B12501F}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G4" macroguid="{D9ED5310-3F5A-42C8-803C-32CF24C0A3CE}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G4" macroguid="{D9ED5310-3F5A-42C8-803C-32CF24C0A3CE}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G4" macroguid="{D9ED5310-3F5A-42C8-803C-32CF24C0A3CE}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G5" macroguid="{35060C60-D9F5-4F61-B7F0-351005026E00}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G5" macroguid="{35060C60-D9F5-4F61-B7F0-351005026E00}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G5" macroguid="{35060C60-D9F5-4F61-B7F0-351005026E00}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G6" macroguid="{CEBC90AE-8677-4F05-BA4F-A8436AC9EAB6}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G6" macroguid="{CEBC90AE-8677-4F05-BA4F-A8436AC9EAB6}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G6" macroguid="{CEBC90AE-8677-4F05-BA4F-A8436AC9EAB6}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G7" macroguid="{569B3CF7-7D76-4E72-94A3-D8B6DA43C6A2}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G7" macroguid="{569B3CF7-7D76-4E72-94A3-D8B6DA43C6A2}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G7" macroguid="{569B3CF7-7D76-4E72-94A3-D8B6DA43C6A2}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G8" macroguid="{7C5CEB62-4CC5-425F-A442-8ADB5C713D73}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G8" macroguid="{7C5CEB62-4CC5-425F-A442-8ADB5C713D73}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G8" macroguid="{7C5CEB62-4CC5-425F-A442-8ADB5C713D73}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G9" macroguid="{585D6928-6DA4-4865-A4CD-6E6A40687F75}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="G9" macroguid="{585D6928-6DA4-4865-A4CD-6E6A40687F75}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="G9" macroguid="{585D6928-6DA4-4865-A4CD-6E6A40687F75}"/>
+    </assignments>
+    <assignments devicecategory="Logitech.Gaming.Mouse">
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button1" macroguid="{5DAFA657-7E0B-4D37-9F7A-FA252ED551E6}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button2" macroguid="{9D0F4485-F6CE-49AF-B3FB-328DBF996F1E}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button3" macroguid="{8B615B23-6FDC-4430-9E57-E5CCBCAC4575}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button4" macroguid="{A0D817F6-1D5D-483B-ADD0-2634CD93D42A}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button5" macroguid="{8B13562D-60F2-460F-9588-8C84168C81BC}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button6" macroguid="{89F0C712-9AF7-4099-9C53-1868BF5B9A4E}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button7" macroguid="{68A1C0B2-2996-4992-9CC5-3285AC8E9740}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button8" macroguid="{12C9716B-4D7A-4F6F-AF20-A0369219119A}"/>
+    </assignments>
+    <assignments devicecategory="Logitech.Gaming.Mouse.G300">
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button1" macroguid="{5DAFA657-7E0B-4D37-9F7A-FA252ED551E6}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button2" macroguid="{9D0F4485-F6CE-49AF-B3FB-328DBF996F1E}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button3" macroguid="{8B615B23-6FDC-4430-9E57-E5CCBCAC4575}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button4" macroguid="{A0D817F6-1D5D-483B-ADD0-2634CD93D42A}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button5" macroguid="{8B13562D-60F2-460F-9588-8C84168C81BC}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button6" macroguid="{6631B94C-725B-4541-B7FD-E0FEDA3156F3}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button7" macroguid="{93ECFD56-95ED-4B57-A385-8CF72DB5F6B6}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button8" macroguid="{53E81537-5916-4AB3-B052-ABF88B5DD218}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="Button9" macroguid="{28F1F32A-678A-4CD8-A0F4-41283A737EFC}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="Button1" macroguid="{5DAFA657-7E0B-4D37-9F7A-FA252ED551E6}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="Button2" macroguid="{9D0F4485-F6CE-49AF-B3FB-328DBF996F1E}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="Button3" macroguid="{8B615B23-6FDC-4430-9E57-E5CCBCAC4575}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="Button4" macroguid="{A0D817F6-1D5D-483B-ADD0-2634CD93D42A}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="Button5" macroguid="{8B13562D-60F2-460F-9588-8C84168C81BC}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="Button6" macroguid="{12C9716B-4D7A-4F6F-AF20-A0369219119A}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="Button7" macroguid="{68A1C0B2-2996-4992-9CC5-3285AC8E9740}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="Button8" macroguid="{53E81537-5916-4AB3-B052-ABF88B5DD218}"/>
+      <assignment shiftstate="2" backup="false" original="true" contextid="Button9" macroguid="{A1FEC5BC-9A8A-49C5-B085-0E2EDCEF1F55}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="Button1" macroguid="{5DAFA657-7E0B-4D37-9F7A-FA252ED551E6}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="Button2" macroguid="{9D0F4485-F6CE-49AF-B3FB-328DBF996F1E}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="Button3" macroguid="{8B615B23-6FDC-4430-9E57-E5CCBCAC4575}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="Button4" macroguid="{A0D817F6-1D5D-483B-ADD0-2634CD93D42A}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="Button5" macroguid="{8B13562D-60F2-460F-9588-8C84168C81BC}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="Button6" macroguid="{F7899D9E-8B25-45CB-B4BC-AAF99E4C87D4}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="Button7" macroguid="{5638A489-F156-4122-A7DB-E0F880FACC0E}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="Button8" macroguid="{53E81537-5916-4AB3-B052-ABF88B5DD218}"/>
+      <assignment shiftstate="3" backup="false" original="true" contextid="Button9" macroguid="{2F5C8F56-C184-4143-8852-2EB924626DCC}"/>
+    </assignments>
+    <assignments devicecategory="Logitech.Gaming.Spectrum.Headset">
+      <assignment shiftstate="1" backup="false" original="true" contextid="G1" macroguid="{A59040D0-FFF8-4473-B81A-9336D00FDD20}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G2" macroguid="{9B9FA067-B061-4E91-9517-3BEFC003122C}"/>
+      <assignment shiftstate="1" backup="false" original="true" contextid="G3" macroguid="{A0F51DC5-83F0-4C6D-91F5-E4803E652B64}"/>
+    </assignments>
+    <pointers>
+      <pointer devicemodel="Logitech.Gaming.Mouse.G600">
+        <mode shiftstate="1">
+          <reportrate rate="500"/>
+          <powermode value="2"/>
+          <dpitable syncxy="1" defaultindex="0" shiftindex="0">
+            <dpi enabled="1" x="1200" y="1200"/>
+            <dpi enabled="0" x="2000" y="2000"/>
+            <dpi enabled="0" x="3200" y="3200"/>
+            <dpi enabled="0" x="5000" y="5000"/>
+            <dpi enabled="0" x="8200" y="8200"/>
+          </dpitable>
+          <movement acceleration="1" speed="-1"/>
+        </mode>
+        <mode shiftstate="2">
+          <reportrate rate="500"/>
+          <powermode value="2"/>
+          <dpitable syncxy="1" defaultindex="0" shiftindex="0">
+            <dpi enabled="1" x="1200" y="1200"/>
+            <dpi enabled="0" x="2000" y="2000"/>
+            <dpi enabled="0" x="3200" y="3200"/>
+            <dpi enabled="0" x="5000" y="5000"/>
+            <dpi enabled="0" x="8200" y="8200"/>
+          </dpitable>
+          <movement acceleration="1" speed="-1"/>
+        </mode>
+        <mode shiftstate="3">
+          <reportrate rate="500"/>
+          <powermode value="2"/>
+          <dpitable syncxy="1" defaultindex="1" shiftindex="0">
+            <dpi enabled="1" x="400" y="400"/>
+            <dpi enabled="1" x="1200" y="1200"/>
+            <dpi enabled="1" x="2000" y="2000"/>
+            <dpi enabled="1" x="3200" y="3200"/>
+            <dpi enabled="0" x="8200" y="8200"/>
+          </dpitable>
+          <movement acceleration="1" speed="-1"/>
+        </mode>
+      </pointer>
+    </pointers>
+    <backlight devicemodel="Logitech.Gaming.Mouse.G300">
+      <mode color="#ff0000" shiftstate="1"/>
+      <mode color="#00ff00" shiftstate="2"/>
+      <mode color="#0000ff" shiftstate="3"/>
+    </backlight>
+    <backlight devicemodel="Logitech.Gaming.Keyboard.G15.v1">
+      <mode color="#000000" shiftstate="1"/>
+      <mode color="#000000" shiftstate="2"/>
+      <mode color="#000000" shiftstate="3"/>
+    </backlight>
+    <backlight devicemodel="Logitech.Gaming.Spectrum.Headset.G633">
+      <mode color="#000000" shiftstate="1"/>
+      <mode color="#000000" shiftstate="2"/>
+      <mode color="#000000" shiftstate="3"/>
+    </backlight>
+    <script>function OnEvent(event, arg)
+	--OutputLogMessage("event = %s, arg = %s\n", event, arg);
+end</script>
+  </profile>
+</profiles>

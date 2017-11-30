@@ -1,7 +1,7 @@
 ﻿
-StringToSend = InstantExplorer("\",1)
+StringToSend = InstantExplorer("",1)
 Send_WM_COPYDATA(StringToSend)
-InstantExplorer("\",1)
+InstantExplorer("",1)
 Exitapp
 
 SetWorkingDir %A_ScriptDir%

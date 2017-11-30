@@ -1,4 +1,5 @@
 ﻿#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\point_to_gui.ahk
+#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\acc.ahk
 ;#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\filemover.ahk
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
