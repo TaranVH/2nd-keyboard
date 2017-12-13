@@ -66,12 +66,15 @@ if (panel = "effect controls")
 	return
 }
 Send ^!+7 ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
+sleep 7
 if (panel = "effects")
 	goto theEnd ;Send ^!+7 ;do nothing. the shortcut has already been pressed.
 else if (panel = "timeline")
 	Send ^!+3 ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
-else if (panel = "program")
+else if (panel = "program") ;program monitor
 	Send ^!+4
+else if (panel = "source") ;source monitor
+	Send ^!+2
 else if (panel = "project") ;AKA a "bin" or "folder"
 	Send ^!+1
 
@@ -87,26 +90,25 @@ theEnd:
 
 effectsPanelType(item := "lol")
 {
+
 ;Keyshower(item,"effectsPanelType")
-if IsFunc("Keyshower") {
-	Func := Func("Keyshower")
-	RetVal := Func.Call(item,"effectsPanelType") 
-	}
+; if IsFunc("Keyshower") {
+	; Func := Func("Keyshower")
+	; RetVal := Func.Call(item,"effectsPanelType") 
+	; }
 
 
 ;prFocus("effects") ;reliably brings focus to the effects panel
 Send ^+!7 ;CTRL SHIFT ALT 7 -- set in premiere to "effects" panel
-sleep 10
-Send ^b ;CTRL B --set in premiere to "select find box"
+sleep 20
+Send ^b ;CTRL B --set in premiere to "select find box." Makes a windows noise if you do it again.
 sleep 20
 Send +{backspace} ;shift backspace deletes any text that may be present.
 Sleep, 10
 Send %item%
 ;now this next part re-selects the field in case you want to type anything different
-sleep 5
-send {tab}
-sleep 5
-send +{tab}
+sleep 10
+send ^!b ;ctrl alt B is ALSO select find box, but doesn't have the annoying windows sound.
 }
 
 
@@ -246,7 +248,7 @@ send ^+x ;ctrl shift x -- shortcut in premiere for "remove in/out points.
 sleep 10
 send ^+6 ;ctrl shift 6 - source assignment preset 1. (sets it to A3.)
 sleep 10
-; Send ^!+` ;premiere shortcut to open the "project" panel, which is actually a bin. Only ONE bin is highlightable in this way.
+; Send ^!+1 ;premiere shortcut to open the "project" panel, which is actually a bin. Only ONE bin is highlightable in this way.
 ; ;Send F11
 ; sleep 100
 ;msgbox, you in the panel now?
@@ -870,7 +872,10 @@ IfWinExist, Keyboard Shortcuts ;if you are just typing a capital K, while NOT in
 ;shortcut to close the titler with ctrl w, which only closes panels otherwise...
 closeTitler()
 {
-Tippy("Close titler (ctrl w )", 1200)
+
+;Marker @
+
+
 coordmode, mouse, screen
 coordmode, pixel, screen
 MouseGetPos, xpos, ypos ;--------stores the cursor's current coordinates at X%xpos% Y%ypos%
@@ -878,16 +883,34 @@ coordmode, mouse, client
 coordmode, pixel, client
 WinGetActiveStats, Title, Width, Height, X, Y
 
-MouseMove, Width-40, -20, 0 ;-----moves the mouse onto the "x" at the top right of the titler window
+;msgbox, % Title
 
-tooltip, closing titler now!
-Click left
-sleep 50 ;-----------------------wait 1/20th of a second to ensure everything is done
+Title := """" . Title . """"
 
-coordmode, mouse, screen
-coordmode, pixel, screen
-MouseMove, %xpos%, %ypos%, 0 ;---moves the cursor back
-tooltip, 
+; if (Title = "Marker @"){
+IfInString, Title, "Marker @"
+	{
+	msgbox, you made it
+	Tippy("USE SHIFT TAB ENTER", 1200)
+	; ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted.png
+	send, +{tab}
+	sleep 10
+	send {enter}
+	}
+else
+	{
+	Tippy("Close titler (ctrl w )", 1200)
+	MouseMove, Width-40, -20, 0 ;-----moves the mouse onto the "x" at the top right of the titler window
+
+	tooltip, closing titler now!
+	Click left
+	sleep 50 ;-----------------------wait 1/20th of a second to ensure everything is done
+
+	coordmode, mouse, screen
+	coordmode, pixel, screen
+	MouseMove, %xpos%, %ypos%, 0 ;---moves the cursor back
+	tooltip, 
+	}
 }
 
 

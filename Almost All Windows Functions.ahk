@@ -1,5 +1,5 @@
 ﻿#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\point_to_gui.ahk
-#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\acc.ahk
+
 ;#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\filemover.ahk
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
@@ -111,11 +111,13 @@ if f_class in ExploreWClass,CabinetWClass ; if the window class is an Explorer w
 	FileDelete, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
 	FileAppend, %title% , C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
 	SavedExplorerAddress = %title%
-	msgbox, , , %title%`n`nwas saved as root, 1
+	msgbox, , , %title%`n`nwas saved as root, 0.3
 	}
 else
-	msgbox,,, this is not an explorer window you chump,1
+	msgbox,,, this is not an explorer window you chump,0.5
+;for some reason, after this script runs, it activates the last active window. It doesn't make any sense...
 }
+
 ;for further reading:
 ;https://autohotkey.com/board/topic/60985-get-paths-of-selected-items-in-an-explorer-window/
 ;end of savelocation2()
@@ -642,6 +644,159 @@ IfWinNotExist, %theClass%
 if not WinActive(theClass)
 	WinActivate %theClass%
 }
+
+
+
+
+
+; Script to activate any given firefox tab...
+;This requires the ACC library, which you have to install into AutoHotKey (it's pretty easy, just scroll to the top of this page and follow the instructions.)
+;https://autohotkey.com/boards/viewtopic.php?f=6&t=26947&p=139114#p139114
+; calling the funciton looks like this: 
+^!+numpad2::JEE_FirefoxFocusTabByName(hWnd, "Linus Media Group Inc. Mail")
+;==================================================
+
+JEE_FirefoxGetTabCount(hWnd)
+{
+oAcc := Acc_Get("Object", "4", 0, "ahk_id " hWnd)
+vRet := 0
+for each, oChild in Acc_Children(oAcc)
+	if (oChild.accName(0) == "Browser tabs")
+	{
+		oAcc := Acc_Children(oChild)[1], vRet := 1
+		break
+	}
+if !vRet
+{
+	oAcc := oChild := ""
+	return
+}
+
+vCount := 0
+for each, oChild in Acc_Children(oAcc)
+	if !(oChild.accName(0) == "")
+		vCount++
+oAcc := oChild := ""
+return vCount
+}
+
+;==================================================
+
+JEE_FirefoxGetTabNames(hWnd, vSep="`n")
+{
+oAcc := Acc_Get("Object", "4", 0, "ahk_id " hWnd)
+vRet := 0
+for each, oChild in Acc_Children(oAcc)
+	if (oChild.accName(0) == "Browser tabs")
+	{
+		oAcc := Acc_Children(oChild)[1], vRet := 1
+		break
+	}
+if !vRet
+{
+	oAcc := oChild := ""
+	return
+}
+
+vOutput := ""
+for each, oChild in Acc_Children(oAcc)
+{
+	vTabText := oChild.accName(0)
+	if !(vTabText == "")
+	;&& !(vTabText == "New Tab")
+	;&& !(vTabText == "Open a new tab")
+		vOutput .= vTabText vSep
+}
+vOutput := SubStr(vOutput, 1, -StrLen(vSep)) ;trim right
+oAcc := oChild := ""
+return vOutput
+}
+
+;==================================================
+
+JEE_FirefoxFocusTabByNum(hWnd, vNum)
+{
+oAcc := Acc_Get("Object", "4", 0, "ahk_id " hWnd)
+vRet := 0
+for each, oChild in Acc_Children(oAcc)
+	if (oChild.accName(0) == "Browser tabs")
+	{
+		oAcc := Acc_Children(oChild)[1], vRet := 1
+		break
+	}
+if !vRet || !Acc_Children(oAcc)[vNum]
+	vNum := ""
+else
+	Acc_Children(oAcc)[vNum].accDoDefaultAction(0)
+oAcc := oChild := ""
+return vNum
+}
+
+;==================================================
+
+
+gotofiretab(name,URL)
+{
+WinActivate ahk_exe firefox.exe
+sleep 10
+WinGet, the_current_id, ID, A
+vRet := JEE_FirefoxFocusTabByName(the_current_id, name)
+;tooltip, vret is %vRet%
+if (vRet = 0)
+	run, firefox.exe %URL%
+
+
+
+}
+
+ 
+JEE_FirefoxFocusTabByName(hWnd, vTitle, vNum=1)
+{
+oAcc := Acc_Get("Object", "4", 0, "ahk_id " hWnd)
+vRet := 0
+for each, oChild in Acc_Children(oAcc)
+	if (oChild.accName(0) == "Browser tabs")
+	{
+		oAcc := Acc_Children(oChild)[1], vRet := 1
+		break
+	}
+if !vRet
+{
+	oAcc := oChild := ""
+	return
+}
+
+vCount := 0, vRet := 0
+for each, oChild in Acc_Children(oAcc)
+{
+	vTabText := oChild.accName(0)
+	; if (vTabText = vTitle)
+		; vCount++
+	If InStr(vTabText, vTitle) ;TARAN NOTE: I changed this line so that only a PARTIAL tab title match is required.
+		vCount++
+	if (vCount = vNum)
+	{
+		oChild.accDoDefaultAction(0), vRet := A_Index
+		break
+	}
+}
+oAcc := oChild := ""
+return vRet
+}
+ 
+;==================================================
+
+
+
+
+
+
+
+
+
+
+
+
 
 ;;;;;;;scripts from this guy;;;;;;;;;;;;;;;;
 ;https://github.com/asvas/AsVas_AutoHotkey_Scripts/blob/master/ahk_Scripts.ahk

@@ -219,7 +219,7 @@ if superdim = 1
   ;;;;; below is where the magic happens!
   If keys<>
   {
-	Loop, read, premiere keys sept 2016 FOR VISUALIZER.txt
+	Loop, read, premiere keys FOR VISUALIZER.txt
 	{
 		index = %A_Index% ;this is the lin'es NUMBER you are currently looking at.
 		currentline = %A_LoopReadLine% ;this is the exact string of the line

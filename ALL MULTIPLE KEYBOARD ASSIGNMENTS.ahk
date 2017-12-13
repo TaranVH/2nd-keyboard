@@ -82,7 +82,6 @@ detecthiddenwindows, on
 ; alt 2                 toggle track targeting for VIDEO LAYER 2. And so on up to 8. I wish there were DEDICATED shortcuts to enable and disable ALL layers
 ; ctrl p                toggle "selection follows playhead"
 ; ctrl alt shift 3      Application > Window > Timeline (default is shift 3)
-; ctrl alt shift `      Application > Window > Project  (This sets the focus onto a BIN.) (default is SHIFT 1)
 ; ctrl alt shift 1      Application > Window > Project  (This sets the focus onto a BIN.) (default is SHIFT 1)
 ; ctrl alt shift 4      Application > Window > program monitor (Default is SHIFT 4)
 ; ctrl alt shift 7      Application > Window > Effects   (NOT the Effect Controls panel) (Default is SHIFT 7) --- The defaults are stupid. SHIFT 7 is an ampersand if you happen to be in a text box somewhere...
@@ -455,7 +454,152 @@ return
 ;3RD KEYBOARD CODE WAS HERE (was actually just a shitty numpad) - used F22 - but has been replaced with the stream deck.
 
 
+;https://autohotkey.com/boards/viewtopic.php?t=28304
 
+ExplorerViewChange_Window(explorerHwnd)
+{
+	if (!explorerHwnd)
+		return
+	;msgbox,,, % explorerHwnd, 0.5
+	Windows := ComObjCreate("Shell.Application").Windows
+	for window in Windows
+		if (window.hWnd == explorerHwnd)
+			sFolder := window.Document
+			
+	;sFolder.ShellView := 1
+	sFolder.CurrentViewMode := 4 ; Details
+	;tooltip % sFolder.CurrentViewMode
+	;sFolder.SORTCOLUMNS := PKEY_ItemNameDisplay, SORT_DESCENDING, bsssssss
+}
+
+;;;must look through that thread to find the direct "sort by name, sort by date" thingies.
+
+ExplorerViewChange_List(explorerHwnd)
+{
+	if (!explorerHwnd)
+		return
+	;msgbox,,, % explorerHwnd, 0.5
+	Windows := ComObjCreate("Shell.Application").Windows
+	for window in Windows
+		if (window.hWnd == explorerHwnd)
+			sFolder := window.Document
+	if (sFolder.CurrentViewMode == 8)
+		sFolder.CurrentViewMode := 6 ; Tiles
+	else if (sFolder.CurrentViewMode == 6)
+		sFolder.CurrentViewMode := 4 ; Details
+	else if (sFolder.CurrentViewMode == 4)
+		sFolder.CurrentViewMode := 3 ; List
+	else if (sFolder.CurrentViewMode == 3) {
+		sFolder.CurrentViewMode := 2 ; Small icons
+		sFolder.IconSize := 16 ; Actually make the icons small...
+	} else if (sFolder.CurrentViewMode == 2) {
+		sFolder.CurrentViewMode := 1 ; Icons
+		sFolder.IconSize := 48 ; Medium icon size
+	} else if (sFolder.CurrentViewMode == 1) {
+		if (sFolder.IconSize == 256)
+			sFolder.CurrentViewMode := 8 ; Go back to content view
+		else if (sFolder.IconSize == 48)
+			sFolder.IconSize := 96 ; Large icons
+		else
+			sFolder.IconSize := 256 ; Extra large icons
+	}
+	ObjRelease(Windows)
+	tooltip % sFolder.CurrentViewMode
+}
+
+
+
+ExplorerViewChange_ICONS(explorerHwnd)
+{
+
+	if (!explorerHwnd)
+	{
+		tooltip, exiting.
+		sleep 100
+		return
+	}
+	;msgbox,,, % explorerHwnd, 0.5
+	Windows := ComObjCreate("Shell.Application").Windows
+	for window in Windows
+		if (window.hWnd == explorerHwnd)
+			sFolder := window.Document
+	if (sFolder.CurrentViewMode >= 2) {
+		sFolder.CurrentViewMode := 1 ; icons
+		sFolder.IconSize := 256 ; make the icons big...
+		;tooltip, large 1
+	} else if (sFolder.CurrentViewMode == 1) {
+		if (sFolder.IconSize == 48){
+			sFolder.IconSize := 256
+			;tooltip, large
+			}
+		else if (sFolder.IconSize == 256){
+			sFolder.IconSize := 96
+			;tooltip, you are now at medium icons
+			}
+		else if (sFolder.IconSize == 96) {
+			sFolder.IconSize := 48 ; smallish icons
+			;tooltip, you are now at smallish icons
+			}
+		else {
+			sFolder.CurrentViewMode := 1
+			sFolder.IconSize := 256
+			;tooltip, reset
+		}
+	}
+	;tooltip % sFolder.IconSize
+	;tooltip, %explorerHwnd%
+	;sleep 100
+	;tooltip, % sFolder.CurrentViewMode
+}
+
+
+; ExplorerViewChange_ICONS(explorerHwnd)
+; {
+
+	; if (!explorerHwnd)
+	; {
+		; tooltip, exiting.
+		; sleep 100
+		; return
+	; }
+	; ;msgbox,,, % explorerHwnd, 0.5
+	; Windows := ComObjCreate("Shell.Application").Windows
+	; for window in Windows
+		; if (window.hWnd == explorerHwnd)
+			; sFolder := window.Document
+	; if (sFolder.CurrentViewMode >= 2) {
+		; sFolder.CurrentViewMode := 1 ; Small icons
+		; sFolder.IconSize := 48 ; Actually make the icons small...
+	; } else if (sFolder.CurrentViewMode == 1) {
+		; if (sFolder.IconSize == 256){
+			; sFolder.CurrentViewMode := 2 ; Go back to small icons
+			; sFolder.IconSize := 48
+			; }
+		; else if (sFolder.IconSize == 48)
+			; sFolder.IconSize := 96 ; Large icons
+		; else
+			; sFolder.IconSize := 256 ; Extra large icons
+	; }
+	; ;tooltip % sFolder.IconSize
+	; ;tooltip, %explorerHwnd%
+	; ;sleep 100
+	; ;tooltip, % sFolder.CurrentViewMode
+; }
+
+
+
+;testing someone else's script here...
+#If (exphWnd := WinActive("ahk_class CabinetWClass"))
+^+::
+^=::ExplorerViewChange_Window(exphWnd)
+#If
+
+
+
+;; https://autohotkey.com/board/topic/53346-explorer-view-mode/
+; GroupAdd, Explorer, ahk_class CabinetWClass
+; GroupAdd, Explorer, ahk_class ExploreWClass
+; #IfWinActive, ahk_group Explorer
 
 ;~~~~~~~~~JELLY COMB NUMPAD USING F21~~~~~~~~~~~
 ;#if (getKeyState("F21", "P") and If WinActive("ahk_exe Adobe Premiere Pro.exe"))
@@ -479,26 +623,33 @@ prFocus("timeline")
 return
 
 numpad3::
-;https://stackoverflow.com/questions/23028005/autohotkey-able-to-capture-firefox-tab
-;this is a terrible solution, I think i will look into AAC instead
-; https://autohotkey.com/boards/viewtopic.php?f=6&t=26947&p=126248#p126248
-SetTitleMatchMode 2
-
-needle := "Linus Media Group Inc. - Calendar"
-
-WinActivate, Firefox
-Loop {
-  WinGetTitle, title
-  IfWinNotActive, Firefox
-    break
-  if (InStr(title,needle))
-    Break
-  Else
-    send ^{PgUp}
-  sleep 50
-}
-
+tippy("numpad3 from jelly comb")
+IfWinActive, ahk_class CabinetWClass
+	{
+	send {alt}vo{enter} ;sort by name
+	tippy("sort Explorer by name")
+	}
 return
+; ; ; ;https://stackoverflow.com/questions/23028005/autohotkey-able-to-capture-firefox-tab
+; ; ; ;this is a terrible solution, I think i will look into AAC instead
+; ; ; ; https://autohotkey.com/boards/viewtopic.php?f=6&t=26947&p=126248#p126248
+; ; ; SetTitleMatchMode 2
+
+; ; ; needle := "Linus Media Group Inc. - Calendar"
+
+; ; ; WinActivate, Firefox
+; ; ; Loop {
+  ; ; ; WinGetTitle, title
+  ; ; ; IfWinNotActive, Firefox
+    ; ; ; break
+  ; ; ; if (InStr(title,needle))
+    ; ; ; Break
+  ; ; ; Else
+    ; ; ; send ^{PgUp}
+  ; ; ; sleep 50
+; ; ; }
+
+; ; ; return
 
 ;numpad4::tippy("sort Explorer by date")
 
@@ -512,17 +663,37 @@ IfWinActive, ahk_class CabinetWClass
 return
 
 numpad5::
-IfWinActive, ahk_class CabinetWClass
+If (exphWnd := WinActive("ahk_class CabinetWClass"))
 	{
-	send {alt}vo{enter} ;sort by name
-	tippy("sort Explorer by name")
+	ExplorerViewChange_ICONS(exphWnd)
+	
 	}
+; IfWinActive, ahk_class CabinetWClass
+	; {
+	
+	; ;tippy("numpad55 from jelly comb")
+	; ExplorerViewChange_ICONS(explorerHwnd)
+	; }
 return
 
+
+	; https://autohotkey.com/boards/viewtopic.php?t=28304
+	; WinGet, Win_pid, PID, A
+	; PostMessage, 0x111, 28717,0,, ahk_pid %Win_pid%      ;"Thumbnails" (h) (t)
+	;PostMessage, 0x111, 28713,0,, ahk_pid %Win_pid%      ;"Icons" (n) (i) (m = Medium icon view)
+	
+;WinGet, Win_pid, PID, A
+;PostMessage, 0x111, 28715,0,, ahk_pid %Win_pid%      ;"List" (l)
+
+
 numpad4::
-if WinActive("ahk_class CabinetWClass") ;an explorer window
+; if WinActive("ahk_class CabinetWClass") ;an explorer window
+	; {
+	; Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field in explorer
+	; }
+If (exphWnd := WinActive("ahk_class CabinetWClass"))
 	{
-	Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field in explorer
+	ExplorerViewChange_Window(exphWnd)
 	}
 return
 
@@ -556,7 +727,7 @@ send ^+1 ;set resolution to 1/1
 prFocus("timeline")
 return
 
-NumpadEnter::msgbox,,, numpad F21 enter,1
+NumpadEnter::msgbox,,, numpad F21 enter,0.3
 
 numpadMult::instantexplorer("C:\Users\TaranWORK\Videos\Base Profile")
 
@@ -794,7 +965,18 @@ backspace::tooltip, you pressed  %A_thishotkey%
 
 ;;;;;next line;;;;;;;;
 
-tab::msgbox,,, you pressed tab. :P,0.8
+; tab::msgbox,,, you pressed tab. :P,0.8
+;VIDEO TRACKER
+tab::
+gotofiretab("Video Tracker LTT - Google","https://docs.google.com/spreadsheets/d/1FmuWOCKHxZbxS5XbwpVDP4M27BjTAJJ67B0yoSXUN9k/edit#gid=0")
+; WinActivate ahk_exe firefox.exe
+; sleep 10
+; WinGet, the_current_id, ID, A
+; vRet := JEE_FirefoxFocusTabByName(the_current_id, "Video Tracker LTT - Google")
+; ;tooltip, vret is %vRet%
+; if (vRet = 0)
+	; run, firefox.exe https://docs.google.com/spreadsheets/d/1FmuWOCKHxZbxS5XbwpVDP4M27BjTAJJ67B0yoSXUN9k/edit#gid=0
+return
 
 q::return
 w::sendinput, +{F12}^w
@@ -807,9 +989,18 @@ i::
 o::
 p::
 [::
-]::
-\::tooltip, you pressed  %A_thishotkey%
-capslock::msgbox,,,i hate capslock!,0.5
+]::tooltip, you pressed  %A_thishotkey%
+\::run, C:\Program Files (x86)\Corsair\Corsair Utility Engine\CUE.exe
+
+
+;CAPSLOCK IS TRELLO
+capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOux8/ltt-production-planner")
+
+;remapped from left shift. CALENDAR
+SC060::gotofiretab("Linus Media Group Inc. - Calendar","https://calendar.google.com/calendar/b/0/render")
+
+;FROM LEFT CTRL. INBOX
+SC062::gotofiretab("Linus Media Group Inc. Mail","https://mail.google.com/mail/u/0/#inbox")
 
 a::
 s::
@@ -821,8 +1012,13 @@ j::
 k::
 l::
 `;::
-'::
-enter::tooltip, you pressed  %A_thishotkey%
+'::tooltip, you pressed  %A_thishotkey%
+enter::
+if WinActive("ahk_class Premiere Pro")
+	sendinput, ^!+n ;toggle audio names
+return
+
+
 ;;;;;next line;;;;;;;;
 
 Lshift::tooltip, you pressed  %A_thishotkey%
@@ -837,18 +1033,32 @@ m::
 .::
 /::tooltip, you pressed  %A_thishotkey%
 
+;l control    Linus Media Group Inc. Mail
+
 Lwin::msgbox, LEFT win
-Lalt::msgbox, LEFT alt
+
+;Lalt::
+SC064::
+IfWinNotExist, ahk_exe Adobe Media Encoder.exe
+	run, C:\Program Files\Adobe\Adobe Media Encoder CC 2017\Adobe Media Encoder.exe ;ahk_exe Adobe Media Encoder.exe
+if WinExist("ahk_exe Adobe Media Encoder.exe")
+	WinActivate ahk_exe Adobe Media Encoder.exe
+;tooltip, ran ME
+return
+
+
+
 space::tooltip,
 Ralt::msgbox, Ralt - doesnt work
 Rwin::msgbox, Right Win 
 Rshift::msgbox RIGHT SHIFT lol
 SC06E::msgbox,,,right WINkey,0.5
 SC06F::msgbox,,,SC06F,0.5
-SC062::msgbox,,,SC062 aka APPSKEY,0.5
-; SC063::msgbox,,,SC063 aka LWIN,0.5
+;SC062::msgbox,,,SC062 aka APPSKEY,0.5 ;for some reason, might open last active window...
+
+; SC063::msgbox,,,SC063 was previously LWIN,0.5
 SC063::
-Rctrl::
+;msgbox,,,sc063,0.5
 ;msgbox,,, trying to open VNC,0.5
 IfWinNotExist, ahk_class TvnWindowClass
 	Run, C:\Program Files\TightVNC\tvnviewer.exe
@@ -858,6 +1068,7 @@ return
 ;F14::msgbox,,, wtf is this doing here???,0.6
 appskey::msgbox, this is the appskey KEY maybe
 SC05A::msgbox,,, was remapped from ALT. now SC05A,0.5
+Rctrl::tooltip, rctrl
 PrintScreen::
 ScrollLock::return
 SC061::msgbox,,, scancode061,1
@@ -870,7 +1081,7 @@ end::
 delete::
 pgup::
 home:: 
-insert::
+insert::tooltip, you pressed  %A_thishotkey%
 
 up::
 tooltip, uppp
@@ -880,28 +1091,77 @@ return
 
 down::
 left::
-right::
+right::tooltip, you pressed  %A_thishotkey%
 
 ;;;;;next area;;;;;;;;
 
 numpad0::
+;tooltip, numpad 0
+if WinActive("ahk_class Premiere Pro")
+	sendinput, ^!+9 ;activate lumetri scopes
+return
 numpad1::
+if WinActive("ahk_class Premiere Pro")
+	;sendinput, ^!+4 ;Safe margins, source monitor
+	prFocus("source")
+	sendinput, ^!+[ ;Safe margins, source monitor
+	prFocus("timeline")
+return
 numpad2::
-numpad3::
-numpad4::
-numpad5::
-numpad6::
-numpad7::
-numpad8::
-numpad9::
+if WinActive("ahk_class Premiere Pro")
+	prFocus("program")
+	sendinput, ^!+] ;safe margins, program monitor
+	prFocus("timeline")
+return
 
-+numlock::
+;WE ARE STILL INSIDE THE AZIO KEYBOARD
+
+numpad3::return
+numpad4::
+prFocus("source")
+send ^{numpad1} ;res to 1/1
+prFocus("timeline")
+return
+
+numpad5::
+prFocus("program")
+send ^+1 ;res to 1/1
+prFocus("timeline")
+return
+
+numpad6::tooltip, you pressed  %A_thishotkey%
+numpad7::
+prFocus("source")
+send ^{numpad2} ;res to 1/2
+prFocus("timeline")
+return
+
+numpad8::
+prFocus("program")
+send ^+2 ;res to 1/2
+prFocus("timeline")
+return
+
+numpad9::tooltip, you pressed  %A_thishotkey%
+
+;+numlock::
 numlock::
+prFocus("source")
+send ^{numpad3} ;res to 1/4
+prFocus("timeline")
+return
+
 numpadDiv::
-numpadMult::
-numpadSub::
-numpadAdd::
-numpadEnter::
+prFocus("program")
+send ^+3 ;res to 1/4
+prFocus("timeline")
+return
+
+numpadMult::tooltip, you pressed  %A_thishotkey%
+numpadSub::tooltip, you pressed  %A_thishotkey%
+numpadAdd::sendinput, ^!{F10}
+numpadEnter::sendinput, ^!m ;mute/unmute mic - shadowplay
+
 numpadDot::tooltip, you pressed  %A_thishotkey%
 /*
 ;These are now unused - I realized that keeping them as modifiers (allowing them to pass through normally) is more valuable then as single keys.
@@ -930,7 +1190,8 @@ SC064::msgbox sc064, L ALT
 !,::msgbox, A_workingDir should be %A_WorkingDir%
 !.::msgbox, TaranDir should be %TaranDir%
 
-^numpad1:: ;EASE IN AND EASE OUT
+;^numpad1 is now "source monitor, 1/1 resolution.
+^numpad0:: ;EASE IN AND EASE OUT
 tooltip, yeah
 ;might be a hell of a lot easier with this kind of code:
 ; WinMenuSelectItem, Adobe Premiere Pro, , Edit, Ripple Delete 
@@ -1132,6 +1393,25 @@ return
 
 ;F16 is maybe available?
 
+;macro for moving GOOGLE SHEETS, B-roll matrix information into WORD
+#IfWinActive ahk_class MozillaWindowClass
+F17::
+send ^c
+sleep 10
+WinActivate ahk_exe firefox.exe
+send ^{F4} ;shortcut for activate word, and if active, move to next comment.
+sleep 10
+send ^v
+sleep 10
+send {enter}
+sleep 10
+send ^{F4}
+sleep 10
+;WinActivate ahk_class MozillaWindowClass
+
+return
+
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Macro key G7
 ~F17::
@@ -1283,7 +1563,7 @@ F9::
 F8::
 F10::
 F11::
-F12::return
+F12::tooltip, you pressed %A_thishotkey%
 
 `::
 1::
