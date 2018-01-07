@@ -6,8 +6,9 @@ local keyboardIdentifier = '0000AAA'
 
 
 
---You need to get the seven character code (four numbers and three letters eg 0000AAA) for the keyboard with name "MACROS"
---This appears after the third ampersand (&) in "SystemID"
+--You need to get the identifier code for the keyboard with name "MACROS"
+--This appears about halfway through the SystemID item and looks like 1BB382AF or some other alphanumeric combo. 
+-- It's usually 7 or 8 characters long.
 --Once you have this identifier, replace the value of keyboardIdentifier with it
 
 --Don't ask for keyboard assignment help if the user has manually entered a keyboard identifier
@@ -21,7 +22,7 @@ for key,value in pairs(dev) do
   print(key..':')
   for key2,value2 in pairs(value) do print('  '..key2..' = '..value2) end
 end   
-print('You need to get the seven character code (four numbers and three letters eg 0000AAA) for the keyboard with name "MACROS"')
+print('You need to get the identifier code for the keyboard with name "MACROS"')
 print('Then replace the first 0000AAA value in the code with it. This will prevent having to manually identify keyboard every time.')
 -- Hide window to tray to keep taskbar tidy  
 lmc.minimizeToTray = true
