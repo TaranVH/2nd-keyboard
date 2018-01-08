@@ -57,6 +57,10 @@ Return
 
 
 #IfWinActive ahk_class MozillaWindowClass ;or ahk_class Chrome_WidgetWin_1
+
+!F1::send ^+{pgup}
+!F2::send ^+{pgdn}
+; F2 & f20::send ^+{pgdn}
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^w ;control w, which closes a tab
@@ -105,7 +109,7 @@ Return
 
 #IfWinActive
 
-scrollLock::Sendinput ^+{printscreen} ;assigning 'capture region' straight to scrollLock in ShareX does not work, so i have to remap it here.
+;scrollLock::Sendinput ^+{printscreen} ;assigning 'capture region' straight to scrollLock in ShareX does not work, so i have to remap it here. UPDATE: Now it DOES work in ShareX, so this line is no longer needed.
 
 
 ; ;use scroll lock's status
@@ -161,6 +165,14 @@ Return
 ; msgbox,,, switching to `nsavedCLASS = %savedCLASS% `nEXE = %savedEXE%, 0.5
 switchToSavedApp(savedCLASS) ;Macro key G14
 return
+
+^F9::windowSwitcher("ahk_exe AfterFX.exe","C:\Program Files\Adobe\Adobe After Effects CC 2017\Support Files\AfterFX.exe") ;NOTE: was used for toggle all video tracks in premiere.
+^F10::windowSwitcher("ahk_exe StreamDeck.exe","C:\Program Files\Elgato\StreamDeck\StreamDeck.exe")
+
+; ^F11 is taken by filemover.ahk
+; ^F12 is also taken by filemover.ahk
+;NOTE: ^F12 (ctrl F12) is forbidden by Premiere, since it opens the Premiere CONSOLE. interesting.
+
 
 ;The optional script below allows you to use the TILDE to go DOWN one folder level in explorer
 #IfWinActive ahk_exe explorer.exe

@@ -4,7 +4,7 @@ Send_WM_COPYDATA(StringToSend)
 prFocus("Effect Controls") ;the following shortcut only works if the Effect Controls panel is in focus...
 send ^!p ;shortcut for pin to clip
 prFocus("timeline")
-
+Exitapp
 SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%/REDIRECTOR.ahk
 

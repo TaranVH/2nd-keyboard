@@ -5,7 +5,7 @@ effectsPanelType("")
 
 SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%/REDIRECTOR.ahk
-
+Exitapp
 
 ; sleep 100
 ; exitapp

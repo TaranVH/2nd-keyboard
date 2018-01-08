@@ -7,6 +7,12 @@ CoordMode, Pixel, screen
 
 Menu, Tray, Icon, shell32.dll, 17
 
+;VIDEO EXPLANATION:  https://youtu.be/O6ERELse_QY?t=23m40s
+
+
+;NOTE: I use the right mouse button for this because my current mouse does not have macro keys on it. I could use the middle mouse button, but it requires too much pressure to push down, and you have to be careful not to scroll it.
+;But if you want to use a button other than the right mouse button, the script becomes a lot simpler. Scroll down to the bottom for that script.
+
 
 ;NOTE: This does not, and cannot work on the timeline where there are no tracks visible.
 ;Explanation: https://twitter.com/boxrNathan/status/927371468371103745
@@ -16,7 +22,7 @@ Menu, Tray, Icon, shell32.dll, 17
 ;---------------------------------------------------------------------------------------
 
 ;Define all the timeline's DEFAULT possible colors.
-;Note that your colors will be different IF you changed the UI brightness inside preferences > appearance > brightness.
+;Note that your colors will be different IF you changed the UI brightness inside preferences > appeassssssssssrance > brightness.
 ;use Window Spy (it comes with AHK) to detect exact colors onscreen.
 timeline1 = 0x414141 ;timeline color inside the in/out points ON a targeted track
 timeline2 = 0x313131 ;timeline color of the separating LINES between targeted AND non targeted tracks inside the in/out points
@@ -26,21 +32,9 @@ timeline5 = 0xDFDFDF ;the color of a SELECTED blank space on the timeline, NOT i
 timeline6 = 0xE4E4E4 ;the color of a SELECTED blank space on the timeline, IN the in/out points, on a TARGETED track
 timeline7 = 0xBEBEBE ;the color of a SELECTED blank space on the timeline, IN the in/out points, on an UNTARGETED track
 
-Tippy(tipsHere, wait:=3000) ;will create and then delete a tooltip
-{
-ToolTip, %tipsHere%
-SetTimer, noTip, %wait% ;--in 1/3 seconds by default, remove the tooltip
-}
-noTip:
-	ToolTip,
-	;removes the tooltip
-return
-
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;exact name was gotten from windowspy
-;---------------------EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO!------------------------------------
-
-
+;--------EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO!----------
 
 Rbutton::
 ;<<<use right mouse button to move playhead in timeline>>>>>>
@@ -84,3 +78,34 @@ else
 	sendinput {Rbutton} ;this is to make up for the lack of a ~ in front of Rbutton. ... ~Rbutton. It allows the command to pass through, but only if the above conditions were NOT met.
 theEnd:
 Return
+
+
+;If you don't want to use Rbutton, then you don't need to check for colors and things. This simplifies the script siginificantly.
+;In the following script, You can change "Mbutton" to anything else. like "Xbutton1", or  even "F12" if you wanted.
+;So, assuming you've mapped "move playhead to cursor" to the \ key, the problem is that it fires once, waits 1 second, and only then does it continue to fire.
+;that's why I use a loop - to send constant keypresses, for a smooth experience.
+;SCRIPT HAS NOT YET BEEN TETED BY ME.
+
+
+; Mbutton::
+; if GetKeyState("Mbutton", "P") = 1 ;<----THIS is the only way to phrase this query.
+		; {
+		; ;tooltip, we are inside the IF now
+		; ;sleep 1000
+		; ;tooltip,
+		; loop
+			; {
+			; Send \ ;in premiere, this is set to "move playhead to cursor."
+			; Tooltip, Middle click playhead mod!
+			; sleep 16 ;this loop will repeat every 16 milliseconds.
+			; ; if GetKeyState("$Rbutton") = U ; again, this does not work at all.
+			; if GetKeyState("Mbutton", "P") = 0
+				; {
+				; ;msgbox,,,time to break,1
+				; tooltip,
+				; goto theEnd
+				; break
+				; }
+			; }
+; }
+; Return

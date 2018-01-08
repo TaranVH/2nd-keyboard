@@ -67,6 +67,8 @@ if (panel = "effect controls")
 }
 Send ^!+7 ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
 sleep 7
+Send ^!+7 ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
+sleep 7
 if (panel = "effects")
 	goto theEnd ;Send ^!+7 ;do nothing. the shortcut has already been pressed.
 else if (panel = "timeline")
@@ -611,8 +613,12 @@ else if (track = "left")
 	addPixels = 0
 	;msgbox, this is for the LEFT audio track
 }
-Send ^!+a ;control alt shift a --- ; audio channels shortcut, asigned in premiere - dont use this key combo anywhere else
+;Send ^!+a ;control alt shift a --- ; audio channels shortcut, asigned in premiere - dont use this key combo anywhere else. UPDATE: seems unreliable to send shortcuts that use modifier keys, inside a funciton that was triggered using modifier keys. switched to F3.
+sendinput, {F3} ;also the audio channels shortcut.
+; sleep 15
+; sendinput, {F3} ;again cause sometimes it fails?
 ;WARNING - this was cross-talking with !+a, causing a preset("blur with edges") macro to be executed. I dont know how to avoid. maybe change order...??
+;WARNING - still cross talks with RENDER AUDIO, which is CTRL SHIFT A, or CTRL ALT A.
 ; fun fact, if you send this keystroke AGAIN, it does NOT close the panel, which is great... that means you can press the button anytime, and it will always result in an open panel.
 sleep 15
 

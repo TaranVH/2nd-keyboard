@@ -7,13 +7,13 @@ Menu, Tray, Icon, shell32.dll, 156
 ^F11::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\Floatplane 4K\")
 ^F12::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\YT Publish 4K\")
 
-^F10::
-tooltip, nimdamover activated
-sleep 300
-tooltip,
-nimdaMOVER("Z:\Linus\1. Linus Tech Tips\")
-return
-#IfWinActive
+; ^F10::
+; tooltip, nimdamover activated
+; sleep 300
+; tooltip,
+; nimdaMOVER("Z:\Linus\1. Linus Tech Tips\")
+; return
+; #IfWinActive
 
 ;;trying to copy a file from one location to another, using the Windows progress bar.
 ;;holy crap, look at all these bullshit responses to such a simple request: https://autohotkey.com/board/topic/93904-copy-and-paste-large-files/

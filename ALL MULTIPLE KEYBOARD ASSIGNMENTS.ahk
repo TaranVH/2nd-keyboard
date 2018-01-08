@@ -26,18 +26,21 @@ Menu, Tray, Icon, shell32.dll, 283
 ; so that I can also directly launch those functions using means OTHER
 ; than a keyboard, like the Stream Deck's "open file" feature.
 ;------------------------------------------------------------------------
-
+;
+;THIS SCRIPT NO LONGER USES LUAMACROS TO REPROGRAM THE SECOND KEYBOARD. IF YOU WANT THAT CODE, PLEASE GO TO "2nd keyboard if using luamacros.ahk"
+;
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ; WATCH THESE VIDEOS TO UNDERSTAND YOUR OPTIONS FOR ADDING EXTRA KEYBOARDS:
 ; https://www.youtube.com/playlist?list=PLH1gH0v9E3ruYrNyRbHhDe6XDfw4sZdZr
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+; Lots of other explanatory videos other AHK scripts can be found on my youtube channel! https://www.youtube.com/user/TaranVH/videos 
+;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 #NoEnv
 SendMode Input
 #InstallKeybdHook ;danger, this is untested right now
 #UseHook On ;danger, also untested.
-
 
 
 #SingleInstance force ;only one instance of this script may run at a time!
@@ -48,12 +51,8 @@ SendMode Input
 
 detecthiddenwindows, on
 
-;THIS SCRIPT NO LONGER USES LUAMACROS TO REPROGRAM THE SECOND KEYBOARD. IF YOU WANT THAT CODE, PLEASE GO TO "2nd keyboard if using luamacros.ahk"
 
-;I currently use Intercept.exe: http://orbiter-forum.com/showthread.php?t=30829
-
-; Lots of other explanatory videos other AHK scripts can be found on my youtube channel! https://www.youtube.com/user/TaranVH/videos 
-;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;TO DO: merge this script with WINDOWS KEY ASSIGNMENTS.ahk
 
 
 ;____________________________________________________________________________________
@@ -400,13 +399,13 @@ SC0FF::msgbox sc0FF ...this does not register.
 
 #IfWinActive
 
-!F2::
-openApp("ahk_class ConsoleWindowClass", "C:\Users\TaranWORK\Downloads\Intercept - use this one\intercept.exe")
-openApp("ahk_class ConsoleWindowClass", "intercept.exe")
-;must have both of these or it wont work.
-sleep 100
-;send y
-return
+; !F2::
+; openApp("ahk_class ConsoleWindowClass", "C:\Users\TaranWORK\Downloads\Intercept - use this one\intercept.exe")
+; openApp("ahk_class ConsoleWindowClass", "intercept.exe")
+; ;must have both of these or it wont work.
+; sleep 100
+; ;send y
+; return
 
 
 ;experimenting with scan codes. here is a list of blank ones.
@@ -657,6 +656,7 @@ return
 numpad6::
 IfWinActive, ahk_class CabinetWClass
 	{
+	Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
 	send {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
 	tippy("sort Explorer by date")
 	}
@@ -700,7 +700,11 @@ return
 numpad7::instantexplorer("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard") 
 numpad8::instantexplorer("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
 Numpad9::instantexplorer("C:\Users\TaranWORK\Videos\Desktop") ;shadowplay folder opener
-NumpadDiv::msgbox,,, 4th keyboard %A_thishotkey%,0.6
+
+NumpadDiv::
+Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field in explorer
+;msgbox,,, 4th keyboard %A_thishotkey%,0.6
+return
 
 backspace::
 prFocus("program")
@@ -787,8 +791,8 @@ return
 F20::return 
 
 escape::msgbox,,, you pressed escape. this might cause like problems maybe, 0.9
-F1::
-F2::
+F1::send ^+{pgup}
+F2::send ^+{pgdn} ;for firefox tab moving
 F3::
 F4::
 F5::
@@ -997,11 +1001,12 @@ p::
 capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOux8/ltt-production-planner")
 
 ;remapped from left shift. CALENDAR
-SC060::gotofiretab("Linus Media Group Inc. - Calendar","https://calendar.google.com/calendar/b/0/render")
+; SC060::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r")
+SC060::gotofiretab("Calendar","https://calendar.google.com/calendar/b/0/r")
 
 ;FROM LEFT CTRL. INBOX
 SC062::gotofiretab("Linus Media Group Inc. Mail","https://mail.google.com/mail/u/0/#inbox")
-
+;or a tab that says "says..."
 a::
 s::
 d::
@@ -1076,12 +1081,12 @@ CtrlBreak::msgbox, CTRL BREAK?
 pause::msgbox, is this the PAUSE key?? IDK
 Break::msgbox, Maybe THIS is the pause/break key???
 
-pgdn::
-end::
-delete::
-pgup::
-home:: 
-insert::tooltip, you pressed  %A_thishotkey%
+pgdn::tooltip, you pressed  %A_thishotkey%
+end::tooltip, you pressed  %A_thishotkey%
+delete::sendinput, ^!+k ;lock/unlock all audio tracks
+pgup::tooltip, you pressed  %A_thishotkey%
+home::tooltip, you pressed  %A_thishotkey%
+insert::sendinput, ^!+l ;lock/unlock all video tracks
 
 up::
 tooltip, uppp
@@ -1189,6 +1194,10 @@ SC064::msgbox sc064, L ALT
 #ifWinActive
 !,::msgbox, A_workingDir should be %A_WorkingDir%
 !.::msgbox, TaranDir should be %TaranDir%
+Xbutton1::return
+Xbutton2::return ;these are both on the side of my mouse and I don't like accidentally hitting them.
+
+
 
 ;^numpad1 is now "source monitor, 1/1 resolution.
 ^numpad0:: ;EASE IN AND EASE OUT
@@ -1285,6 +1294,10 @@ return
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+#IfWinActive ahk_exe notepad++.exe
+F4::F2 ;this is to regain what I lost when I used F2 and F3 for tab navigation.
+
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 !]::preset("DeHummer Preset") ;This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.
 
@@ -1335,10 +1348,22 @@ sleep 10
 
 ;that is my shortcut for the Timeline.
 ;this is to ensure that it doesn't start playing something in the source monitor, or a bin somewhere.
+
+; ; ; sleep 10
+; ; ; ControlSend,DroverLord - Window Class14,{ctrl up}{shift up}{space down},ahk_exe Adobe Premiere Pro.exe
+; ; ; sleep 30
+; ; ; ControlSend,DroverLord - Window Class14,{space up},ahk_exe Adobe Premiere Pro.exe
+
+;now that we have a panel highlighted, we can send keystokes to premiere. But the panel itself is sometimes random. so it's best to use this to FORCE a specific panel that won't screw stuff up.
+
 sleep 10
-ControlSend,DroverLord - Window Class14,{ctrl up}{shift up}{space down},ahk_exe Adobe Premiere Pro.exe
+ControlSend,DroverLord - Window Class14, ^+!5,ahk_exe Adobe Premiere Pro.exe ;this will highlight the EFFECT CONTROLS, which will NOT also stop playback of the source monitor, if it is already playing.
 sleep 30
-ControlSend,DroverLord - Window Class14,{space up},ahk_exe Adobe Premiere Pro.exe
+
+ControlSend,DroverLord - Window Class1,{space},ahk_exe Adobe Premiere Pro.exe
+;even though we are sending the "SPACE" to a windowclass that (often) doesn't exist, because we already highlighted the effect controls, the space will go to the effect controls panel. (it hasb't failed to do so yet, at least.)
+
+
 ; ControlSend,,{space}, ahk_exe Adobe Premiere Pro.exe
 
 ;in case premiere was accidentally switched to, this will switch the user back to the original window.
@@ -1363,7 +1388,7 @@ return
 ;~F7::unused
 ;F8::unused
 ;F9::unused
-;^{F9}  ^F9 toggle all video tracks
+;^{F9}  ^F9 toggle all video tracks ;NOTE - NEED TO REASSIGN. USED FOR APP SWITCHING NOW.
 ;^!{F9} ^+F9 toggle all audio tracks
 ;F10::unused
 ;F11::unused
@@ -1372,8 +1397,13 @@ return
 
 ;Macro key G12 on my K95 keyboard is set to F14.
 #IfWinActive ahk_exe winword.exe
-~F14::F2 ;set to "go to previous comment" in Word.
-
+~F14::F2
+;;all the below code CANNOT work as long as there is ~VK7DSC065:: present. this needs to be done NO with the # thingies. will improve this code later.
+; tooltip, wat
+; sendinput, {F2} ;set to "go to previous comment" in Word.
+; ; IfWinExist, Microsoft Office Word, OK ;checks to see if the annoying "do you want to continue searching from the beginning of the document" dialouge box is present.
+	; ; sendinput, {escape}
+; return
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;I was having trouble with cross-talk on F14... so writing it this way allows me to use it.
@@ -1387,7 +1417,7 @@ return
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Macro key G11
 ~F15::
-global VFXkey = "F15"
+global VFXkey = "F15" ;the VFXkey variable has to be defined NOW. IDK why.
 instantVFX("anchor_point_vertical")
 return
 
@@ -1396,13 +1426,13 @@ return
 ;macro for moving GOOGLE SHEETS, B-roll matrix information into WORD
 #IfWinActive ahk_class MozillaWindowClass
 F17::
-send ^c
-sleep 10
-WinActivate ahk_exe firefox.exe
+sendinput, ^c
+sleep 100
+;WinActivate ahk_exe firefox.exe
 send ^{F4} ;shortcut for activate word, and if active, move to next comment.
-sleep 10
+sleep 100
 send ^v
-sleep 10
+sleep 100
 send {enter}
 sleep 10
 send ^{F4}

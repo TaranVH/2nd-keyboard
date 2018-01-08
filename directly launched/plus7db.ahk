@@ -2,7 +2,7 @@
 Send_WM_COPYDATA(StringToSend)
 
 Send {F2}7{enter}
-
+Exitapp
 SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%/REDIRECTOR.ahk
 

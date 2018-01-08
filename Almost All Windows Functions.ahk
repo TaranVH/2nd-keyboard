@@ -111,16 +111,51 @@ if f_class in ExploreWClass,CabinetWClass ; if the window class is an Explorer w
 	FileDelete, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
 	FileAppend, %title% , C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
 	SavedExplorerAddress = %title%
+	;checkForFile("Thumbnail","Template.psd")
 	msgbox, , , %title%`n`nwas saved as root, 0.3
 	}
 else
 	msgbox,,, this is not an explorer window you chump,0.5
-;for some reason, after this script runs, it activates the last active window. It doesn't make any sense...
+;for some reason, after this script runs, it sometimes activates the last active window. It doesn't make any sense...
 }
-
 ;for further reading:
 ;https://autohotkey.com/board/topic/60985-get-paths-of-selected-items-in-an-explorer-window/
 ;end of savelocation2()
+
+
+;in progress
+checkForFile(subDirectory, filename)
+{
+FileRead, SavedExplorerAddress, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
+;msgbox, current directory is`n%directory%
+directory = %SavedExplorerAddress%
+msgbox, new directory is`n%directory%
+
+;filetype := """" . filetype . """" ;this ADDS quotation marks around a string in case you need that.
+StringReplace, directory,directory,", , All ;" ; this REMOVES the quotation marks around the a string if they are present.
+
+finalDirectory = %directory% . %subDirectory%
+
+;msgbox, directory is %directory%`n and filetype is %filetype%
+Loop, Files,%finalDirectory%, F
+{
+
+If (A_LoopFileTimeModified>Rec)
+  {
+  IfNotInString, A_LoopFileFullPath, ~$
+	FPath=%A_LoopFileFullPath%
+  Rec=%A_LoopFileTimeModified%
+  }
+}
+MsgBox, 3,, Select YES to open the latest %filetype% at Fpath:`n`n%Fpath%
+IfMsgBox, Yes
+	{
+	Run %Fpath%
+	}
+}
+
+
+
 
 
 
@@ -305,6 +340,7 @@ f_path := """" . f_path . """" ;this adds quotation marks around everything so t
 ; These first few variables are set here and used by f_OpenFavorite:
 WinGet, f_window_id, ID, A
 WinGetClass, f_class, ahk_id %f_window_id%
+WinGetTitle, f_title, ahk_id %f_window_id% ;to be used later to see if this is the export dialouge window in Premiere...
 if f_class in #32770,ExploreWClass,CabinetWClass  ; if the window class is a save/load dialog, or an Explorer window of either kind.
 	ControlGetPos, f_Edit1Pos, f_Edit1PosY,,, Edit1, ahk_id %f_window_id%
 
@@ -339,6 +375,13 @@ if f_path =
 	return
 if f_class = #32770    ; It's a dialog.
 {
+	;msgbox, f_title is %f_title%
+	if f_title = Export Settings
+	{
+		;msgbox,,,you are in Premiere's export box. no bueno.,0.7
+		GOTO, ending2 
+		;return ;I don't want to return because i still want to open an explorer window.
+	}
 	if f_Edit1Pos <>   ; And it has an Edit1 control.
 	{
 		; IF window Title is NOT "export settings," with the exe "premiere pro.exe"
@@ -402,7 +445,7 @@ else if f_class = ConsoleWindowClass ; In a console window, CD to that directory
 	Send, cd %f_path%{Enter}
 	return
 }
-
+ending2:
 ; Since the above didn't return, one of the following is true:
 ; 1) It's an unsupported window type but f_AlwaysShowMenu is y (yes).
 ; 2) It's a supported type but it lacks an Edit1 control to facilitate the custom
@@ -586,7 +629,9 @@ Process, Exist, WINWORD.EXE
 		Run, WINWORD.EXE
 	else
 	{
-	if WinActive("ahk_class OpusApp")
+	IfWinExist, Microsoft Office Word, OK ;checks to see if the annoying "do you want to continue searching from the beginning of the document" dialouge box is present.
+		sendinput, {escape}
+	else if WinActive("ahk_class OpusApp")
 		sendinput, {F3} ;set to "go to next comment" in Word.
 	else
 		WinActivate ahk_class OpusApp
@@ -623,16 +668,16 @@ else
 	WinActivate ahk_exe chrome.exe
 }
 
-
-; #IfWinActive
-; ^F6::
-; IfWinNotExist, ahk_class Notepad++
-	; Run, notepad++.exe
-; if WinActive("ahk_class Notepad++")
-	; Send ^{tab}
-; WinActivate ahk_class Notepad++
-
-; return
+switchToStreamDeck(){
+IfWinNotExist, ahk_exe StreamDeck.exe
+	{
+	Run, C:\Program Files\Elgato\StreamDeck\StreamDeck.exe
+	}
+else
+	{
+	WinActivate ahk_exe StreamDeck.exe
+	}
+}
 
 
 #IfWinActive
@@ -714,8 +759,29 @@ return vOutput
 
 ;==================================================
 
+gotofiretab(name,URL)
+{
+;WinActivate ahk_exe firefox.exe ;I think this is unreilable because it only makes sure the applicaiton is RUNNING, not necessarily that it's ACTIVE.
+WinActivate ahk_class MozillaWindowClass ;so i use the CLASS instead.
+;tooltip, FIRETAB
+sleep 10
+WinGet, the_current_id, ID, A
+vRet := JEE_FirefoxFocusTabByName(the_current_id, name)
+;tooltip, vret is %vRet%
+if (vRet = 0)
+	run, firefox.exe %URL%
+sleep 100
+tooltip,
+}
+
+
+
 JEE_FirefoxFocusTabByNum(hWnd, vNum)
 {
+;TARAN NOTE: Using a tab NAME is somewhat unstable. Gmail for example will dynamically change the name to "Message from Nick Light" or whatever else. So really, I need to get the tab URL. will have to poke around ACC viewer to see where that information is...
+; for future URL getting: https://autohotkey.com/boards/viewtopic.php?t=3702
+
+
 oAcc := Acc_Get("Object", "4", 0, "ahk_id " hWnd)
 vRet := 0
 for each, oChild in Acc_Children(oAcc)
@@ -735,19 +801,6 @@ return vNum
 ;==================================================
 
 
-gotofiretab(name,URL)
-{
-WinActivate ahk_exe firefox.exe
-sleep 10
-WinGet, the_current_id, ID, A
-vRet := JEE_FirefoxFocusTabByName(the_current_id, name)
-;tooltip, vret is %vRet%
-if (vRet = 0)
-	run, firefox.exe %URL%
-
-
-
-}
 
  
 JEE_FirefoxFocusTabByName(hWnd, vTitle, vNum=1)

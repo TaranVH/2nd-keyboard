@@ -7,7 +7,7 @@ Some are stupid, like / and u.
 I'll change those later.
 This was initially created by using the "copy to clipboard" feature in Premiere's shortcuts panel.
 + (plus) characters have been removed and replaced with spaces.
-Keep in mind that a shortcut like CTRL + is actually CTRL =, since the "+" only happens if you hold shit.
+Keep in mind that a shortcut like CTRL + is actually CTRL = since the "+" only happens if you hold shift.
 The ampersand is important, it separates the key from the function.
 Tabs on the left have been removed, tabs in the middle were replaced with ampersands, and parsed out onto their own lines, if multiple keys lead to the same function.
 This will all make sense if you watch the explanatory video. 
