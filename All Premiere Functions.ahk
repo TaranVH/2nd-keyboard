@@ -1195,7 +1195,14 @@ else
 
 
 
-;how to use: https://www.youtube.com/watch?v=Bi3zBqO74ms
+;how to use instantVFX: https://www.youtube.com/watch?v=Bi3zBqO74ms
+
+;UPDATE:
+;I overwrote the high DPI scaling behaviour of Premiere, by following THESE instructions: https://forums.adobe.com/message/10081059#10081059 , which changes the look of text and other elements of Premiere.
+;Doing this totally BROKE the functionality of instantVFX() because now the pixel colors were different, and the images to be searched for would have had to have been updated.
+;THEREFORE, I switched back to Premiere's built-in UI scaling, and will just have to wait for adobe to fix the issues that come with it.
+
+
 instantVFX(foobar)
 {
 dontrestart = 0
@@ -1221,6 +1228,8 @@ ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_
 ;these pixel numbers will be DIFFERENT depending upon the RESOLUTION and UI SCALING of your monitor(s)
 YY := Ycorner+99 ;143??
 XX := Xcorner+19
+
+
 MouseMove, XX, YY, 0
 sleep 10
 

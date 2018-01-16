@@ -141,6 +141,23 @@ sleep 20 ;without this, the script will loop a bazillion times a second. It was 
 	; WinSet, TransColor, FEFEFE 254
 	; }
 
+
+;I do NOT want the key visualizer to appear if after effects is open -- it covers up important information. The following script will hide it.
+if WinActive("ahk_exe AfterFX.exe") ;;OR any other application i don't want the visualizer to appear on top of.
+	{
+	setTimer OFFAFTERRELOAD, -100
+	sleep 1000
+	;clear history:
+	keysH1 =
+	keysH2 =
+	activityH1 =
+	activityH2 =
+	; return ; i hope this just goes to the very end of the loop...?
+	;;nope. it cancels the loop. doing a goto instead.
+	goto, endOfLoop
+	}
+
+
 if superdim = 1
 	{
 	;TOOLTIP, make it dimmer, , , 4
@@ -335,9 +352,8 @@ if superdim = 1
       ; } 
     ; }
   ; }
+endOfLoop:
 
-
-  
 }
 
 downershower:
