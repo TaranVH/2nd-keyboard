@@ -513,7 +513,8 @@ windowSwitcher(savedCLASS, savedEXE)
 
 
 back(){
-; if WinActive("ahk_class MozillaWindowClass")
+;; if WinActive("ahk_class MozillaWindowClass")
+;tooltip, baaaack
 if WinActive("ahk_exe firefox.exe")
 	Send ^+{tab}
 if WinActive("ahk_class Chrome_WidgetWin_1")
@@ -691,6 +692,149 @@ if not WinActive(theClass)
 }
 
 
+
+
+ExplorerViewChange_Window(explorerHwnd)
+{
+;https://autohotkey.com/boards/viewtopic.php?t=28304
+	if (!explorerHwnd)
+		return
+	;msgbox,,, % explorerHwnd, 0.5
+	Windows := ComObjCreate("Shell.Application").Windows
+	for window in Windows
+		if (window.hWnd == explorerHwnd)
+			sFolder := window.Document
+			
+	;sFolder.ShellView := 1
+	sFolder.CurrentViewMode := 4 ; Details
+	;tooltip % sFolder.CurrentViewMode
+	;sFolder.SORTCOLUMNS := PKEY_ItemNameDisplay, SORT_DESCENDING, bsssssss
+}
+
+;;;must look through that thread to find the direct "sort by name, sort by date" thingies.
+
+ExplorerViewChange_List(explorerHwnd)
+{
+	if (!explorerHwnd)
+		return
+	;msgbox,,, % explorerHwnd, 0.5
+	Windows := ComObjCreate("Shell.Application").Windows
+	for window in Windows
+		if (window.hWnd == explorerHwnd)
+			sFolder := window.Document
+	if (sFolder.CurrentViewMode == 8)
+		sFolder.CurrentViewMode := 6 ; Tiles
+	else if (sFolder.CurrentViewMode == 6)
+		sFolder.CurrentViewMode := 4 ; Details
+	else if (sFolder.CurrentViewMode == 4)
+		sFolder.CurrentViewMode := 3 ; List
+	else if (sFolder.CurrentViewMode == 3) {
+		sFolder.CurrentViewMode := 2 ; Small icons
+		sFolder.IconSize := 16 ; Actually make the icons small...
+	} else if (sFolder.CurrentViewMode == 2) {
+		sFolder.CurrentViewMode := 1 ; Icons
+		sFolder.IconSize := 48 ; Medium icon size
+	} else if (sFolder.CurrentViewMode == 1) {
+		if (sFolder.IconSize == 256)
+			sFolder.CurrentViewMode := 8 ; Go back to content view
+		else if (sFolder.IconSize == 48)
+			sFolder.IconSize := 96 ; Large icons
+		else
+			sFolder.IconSize := 256 ; Extra large icons
+	}
+	ObjRelease(Windows)
+	tooltip % sFolder.CurrentViewMode
+}
+
+
+
+ExplorerViewChange_ICONS(explorerHwnd)
+{
+
+	if (!explorerHwnd)
+	{
+		tooltip, exiting.
+		sleep 100
+		return
+	}
+	;msgbox,,, % explorerHwnd, 0.5
+	Windows := ComObjCreate("Shell.Application").Windows
+	for window in Windows
+		if (window.hWnd == explorerHwnd)
+			sFolder := window.Document
+	if (sFolder.CurrentViewMode >= 2) {
+		sFolder.CurrentViewMode := 1 ; icons
+		sFolder.IconSize := 256 ; make the icons big...
+		;tooltip, large 1
+	} else if (sFolder.CurrentViewMode == 1) {
+		if (sFolder.IconSize == 48){
+			sFolder.IconSize := 256
+			;tooltip, large
+			}
+		else if (sFolder.IconSize == 256){
+			sFolder.IconSize := 96
+			;tooltip, you are now at medium icons
+			}
+		else if (sFolder.IconSize == 96) {
+			sFolder.IconSize := 48 ; smallish icons
+			;tooltip, you are now at smallish icons
+			}
+		else {
+			sFolder.CurrentViewMode := 1
+			sFolder.IconSize := 256
+			;tooltip, reset
+		}
+	}
+	;tooltip % sFolder.IconSize
+	;tooltip, %explorerHwnd%
+	;sleep 100
+	;tooltip, % sFolder.CurrentViewMode
+}
+
+
+; ExplorerViewChange_ICONS(explorerHwnd)
+; {
+
+	; if (!explorerHwnd)
+	; {
+		; tooltip, exiting.
+		; sleep 100
+		; return
+	; }
+	; ;msgbox,,, % explorerHwnd, 0.5
+	; Windows := ComObjCreate("Shell.Application").Windows
+	; for window in Windows
+		; if (window.hWnd == explorerHwnd)
+			; sFolder := window.Document
+	; if (sFolder.CurrentViewMode >= 2) {
+		; sFolder.CurrentViewMode := 1 ; Small icons
+		; sFolder.IconSize := 48 ; Actually make the icons small...
+	; } else if (sFolder.CurrentViewMode == 1) {
+		; if (sFolder.IconSize == 256){
+			; sFolder.CurrentViewMode := 2 ; Go back to small icons
+			; sFolder.IconSize := 48
+			; }
+		; else if (sFolder.IconSize == 48)
+			; sFolder.IconSize := 96 ; Large icons
+		; else
+			; sFolder.IconSize := 256 ; Extra large icons
+	; }
+	; ;tooltip % sFolder.IconSize
+	; ;tooltip, %explorerHwnd%
+	; ;sleep 100
+	; ;tooltip, % sFolder.CurrentViewMode
+; }
+
+
+
+; ; ;testing the script here...
+; ; #If (exphWnd := WinActive("ahk_class CabinetWClass"))
+; ; ^+::
+; ; ^=::
+; ; tooltip, waaaaaaaaat
+; ; ExplorerViewChange_Window(exphWnd)
+; ; return
+; ; #If
 
 
 

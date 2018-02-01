@@ -1,7 +1,13 @@
 SetWorkingDir, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files
-;the above will set A_WorkingDir. It must be done in the autoexecute area, BEFORE the code below.
+;the above will set A_WorkingDir. It must be done in the autoexecute area.
 
-Menu, Tray, Icon, shell32.dll, 283
+SetNumLockState, on ;you won't be able to change the state of numlock when this is used. I think I need admin for this though.
+SetScrollLockState, off
+
+Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece of paper or something
+
+;when you get to #include, it means the END of the autoexecute section.
+
 ;gui must be #included first, or it does not work, for some reason...
 ;YOU probably do NOT need the GUI at all. Delete the line below:
 #Include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\gui.ahk
@@ -45,16 +51,11 @@ SendMode Input
 #SingleInstance force ;only one instance may run at a time!
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm ;this may prevent taskbar flashing.
-
-
-
 detecthiddenwindows, on
 
 
-;TO DO: merge this script with WINDOWS KEY ASSIGNMENTS.ahk
 
-
-;____________________________________________________________________________________
+;____________________________________________________________________________
 ;                                                                                                                       
 ; NOTE: In autohotkey, the following special characters (usually) represent modifier keys:
 ; # is the WIN key. (it can mean other things though, as you can see above.)
@@ -65,8 +66,10 @@ detecthiddenwindows, on
 ; 
 ; 
 ;RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE'S BUILT IN KEYBOARD SHORTCUTS MENU
+
+
 ; KEYS                    PREMIERE FUNCTIONS
-;---------------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
 ; u                     select clip at playhead. Probably this should be moved to a different series of keystrokes, so that "u" is freed for something else.
 ; backspace             ripple delete --- but I don't use that in AutoHotKey because it's dangerous. This should be changed to something else; I use SHIFT C now.
 ; shift c               ripple delete --- very convenient for left handed use. Premiere's poor track targeting makes ripple delete less useful than it could be.
@@ -96,34 +99,201 @@ detecthiddenwindows, on
 ;_______________________________________________________________________________________________
 
 
+;____________________________________________________________________
+;                                                                    
+;        PRIMARY KEYBOARD, (Corsair K95 RGB) AHK KEY ASSIGNMENTS     
+;____________________________________________________________________
 
-;_____________________________________________________________________________
-;                                                                             
-;					   2ND KEYBOARD USING INTERCEPTOR   		   	  		  ;_____________________________________________________________________________
+
+;;;~~~~~~FUNCTION KEYS IN VARIOUS PROGRAMS~~~~
+
+#IfWinActive ahk_class MozillaWindowClass ;or ahk_class Chrome_WidgetWin_1
+!F1::send ^+{pgup}
+!F2::send ^+{pgdn}
+; F2 & f20::send ^+{pgdn}
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w ;control w, which closes a tab
+F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
+#IfWinActive
+
+#IfWinActive ahk_class Chrome_WidgetWin_1
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w ;control w, which closes a tab
+F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
+
+#IfWinActive ahk_exe notepad++.exe
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w 
+
+#IfWinActive ahk_exe Photoshop.exe
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w 
+
+;;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+; ;RIP Monty Oum https://youtu.be/qSuTnCFqMkw?t=1m21s
+; #IfWinActive ahk_exe Photoshop.exe
+; F1::sendinput {alt down}iac{alt up}
+
+
+#IfWinActive, ahk_group ExplorerGroup
+; ctrl L, alt D, or F4 will highlight the address bar. But in different ways..?
+;IDK if I need this script at all anymore.
+^+!d::
+sleep 10
+Sendinput !d
+sleep 10
+return
+
+
+#IfWinActive, ahk_class CabinetWClass
+`::Send !{up} ;This allows you to use the TILDE to go DOWN one folder level in explorer save boxes
++`::Send !{left} ;shift tilde will go "back" in explorer save boxes
+
+
+#IfWinActive ahk_exe explorer.exe ;IDK if there is any meaningful difference for using the ahk_exe rather than the ahk_CLASS
+
+F4::
+;this converts F4 into ALT F4, but only for explorer. this is just to save one more keypress, since i close explorer windows in this way quite a lot.
+;There is a deliberate delay added, since in SOME situations, ALT would be recognised, but not F4. Adding a delay takes care of that.
+Send {alt down}
+sleep 10
+Send {F4}
+sleep 10
+Send {alt up}
+Return
+
+`::Send !{up} ;This optional script allows you to use the TILDE to go DOWN one folder level in explorer
+
+F7::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;script to resize name field so the entire field is readable
+
+
+#IfWinActive
+
+;;shortcut to CLOSE FIREFOX with no bullshit or fanfare or annoying dialouge boxes that try to argue with you. Just completely nuke it from orbit so we can start over
+^!+f::Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
+
+
+;shortcut to forcefully CLOSE PREMIERE, WITH NO BULLSHIT. BULLDOZE IT FLAT, BURN IT, SALT THE EATH, NUKE IT FROM ORBIT. JUST FUCKING DIE!!!
+^!+p::
+Run, %comspec% /c "taskkill.exe /IM /Adobe Premiere Pro.exe /T /F" ;,, hide
+sleep 100
+;Run, %comspec% /c "taskkill.exe /F /PID 72536",, hide
+tooltip, killed premiere
+sleep 100
+tooltip,
+return
+
+
+#IfWinActive
+
+;F13::
+sc064::back()
+
+
+^F1::switchToFirefox()
++^F1::switchToOtherFirefoxWindow()
+^F2::switchToExplorer()
+!^F2::closeAllExplorers()
+
+^F3::switchToPremiere()
+
+^F4::switchToWord()
++^F4::switchWordWindow()
+^F5::switchToChrome()
+
++^F6::
+windowSaver()
+msgbox,,, savedCLASS = %savedCLASS% `nsavedEXE = %savedEXE%, 0.6
+Return
+
+^F6::
+;I had to learn just now to use the parameter to pass "savedCLASS" even though it's already a global variable. Just works better this way... but really IDK what i am doing.
+; msgbox,,, switching to `nsavedCLASS = %savedCLASS% `nEXE = %savedEXE%, 0.5
+switchToSavedApp(savedCLASS) ;Macro key G14
+return
+
+^F9::windowSwitcher("ahk_exe AfterFX.exe","C:\Program Files\Adobe\Adobe After Effects CC 2017\Support Files\AfterFX.exe") ;NOTE: was used for toggle all video tracks in premiere.
+^F10::windowSwitcher("ahk_exe StreamDeck.exe","C:\Program Files\Elgato\StreamDeck\StreamDeck.exe")
+
+; ^F11 is taken by filemover.ahk
+; ^F12 is also taken by filemover.ahk
+;NOTE: ^F12 (ctrl F12) is forbidden by Premiere, since it opens the Premiere CONSOLE. interesting.
+
+
+
+
+
+
+
+
+
+#IfWinActive
+;opens the CLOCK / CALENDAR. ;http://superuser.com/questions/290068/windows-keyboard-shortcut-to-view-calendar
+#z::
+Send #b{left}{left}{enter}
+Return
+
+
+#IfWinActive
+
+;control alt shift T -- click on the address bar for any youtube video, and this will link you to the thumbnail!
+^!+T::
+Send {end}{left 11}{backspace 40}https://i.ytimg.com/vi/{right 11}/sddefault.jpg{enter}
+; Send {end}{left 11}{backspace 40}https://i.ytimg.com/vi/{right 11}/maxresdefault.jpg{enter}
+
+;EXAMPLE: https://i.ytimg.com/vi/L-zDtBINvzk/hqdefault.jpg
+;http://img.youtube.com/vi/<insert-youtube-video-id-here>/maxresdefault.jpg
+return
+
+
+
+#IfWinActive
+Joy1::msgbox you hit Joy1
+Joy2::msgbox you hit Joy2
+Joy3::msgbox you hit Joy3
+
+Media_Next::
+msgbox hiiiee. testing stuff.
+return
+
+#ifwinactive
+
+
+
+;____________________________________________________________________
+;                                                                    
+;		  2ND KEYBOARD USING INTERCEPTOR (Logitech K120)  
+;____________________________________________________________________
 ;please watch https://www.youtube.com/watch?v=y3e_ri-vOIo if you need help.
-;DANGER: installing interception may cause your USB devices to stop working sometimes, because it is limited to supporting only 10 of each device class. You have to uninstall it to fix that. I will make a follow up video with new information, but it is currently in that video's description.
+;DANGER: installing interception may cause your USB devices to stop working sometimes, because it is limited to supporting only 10 of each device class. You have to uninstall it to fix that. Here is a follow up video with new information: https://www.youtube.com/watch?v=Hn18vv--sFY
 
 
 ;#if (getKeyState("F23", "P")) && IfWinActive ahk_exe Adobe Premiere Pro.exe ;have not tested this to see if it works
 ;#if (getKeyState("F23", "P")) && (uselayer = 0) ;;you can also use a varibable like so.
-#if (getKeyState("F23", "P"))
+
+;;;;;;;;;;;;;BEGIN K120 (2ND KEYBOARD) REMAPPED INTO ALL MACRO KEYS;;;;;;;;;;;;;;;;;
+#if (getKeyState("F23", "P")) ;THIS is the line that makes all the lines below, possible.
 
 F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," since it will ALWAYS be fired before any of the keystrokes below, any time you use the 2nd keyboard.
 
-;I converted the "numpad5" key on the 2nd keyboard into a CTRL, by using intercept.
-
-;~VK25::Keyshower(A_thishotkey, "nudge clip right 5 frames") ;----virtual keys are okay... scancodes might be better, if you want the physical KEY itself, unchanged by chift or numlock.
-;~VK27::Keyshower(A_thishotkey, "nudge clip left? 5 frames")
-
+;Keep in mind, these use the CTRL modifier, as indicated by the ^
 ~^numpad1::
 Keyshower("add marker color 1 (taran mod)")
 marker()
 send !{numpad1}
 return
 
-;this one does not work, probably because interceptor doesn't do multiple remappings...
+;I converted the "numpad5" key on the 2nd keyboard into a CTRL key, by using intercept. All my keyboard bindings can be found in: keyremap.ini
+
+;intercept converted this the numlock key into a harmless numpad5.
 ~^numpad5::
-Keyshower("add marker color 2 (taran mod)") ;intercept converted this one from numlock into a harmless numpad5.
+Keyshower("add marker color 2 (taran mod)")
 marker()
 send !{numpad2}
 return
@@ -196,7 +366,7 @@ F11::insertSFX("woosh1")
 0::insertSFX("pop")
 -::audioMonoMaker("left")
 =::audioMonoMaker("right")
-backspace::preset("2.4 limiter") ; msgbox, , ,back spayce!, 100
+backspace::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\cutting_room_floor")
 
 ;;;;;next line;;;;;;;;
 
@@ -218,14 +388,14 @@ t::recallClipboard(A_thishotkey)
 +r::
 +t::saveClipboard(A_thishotkey)
 
-y::preset("pop in transform")
-u::preset("pop out transform")
+y::preset("impact flash preset")
+u::preset("")
 i::preset("multiply")
 o::preset("flip vertical")
 p::preset("flip horizontal")
-[::preset("pop in motion")
-]::preset("pop out motion")
-\::return ; "full reset mod" that I still have not programmed....
+[::preset("Impact Pop for full-screen")
+]::preset("Impact Pop with undershoot")
+\::instantExplorer("Z:\Linus\9 - Tools\1-Sound Effects")
 
 ;;;;;next line;;;;;;;;
 
@@ -246,13 +416,14 @@ g::recallClipboard(A_thishotkey)
 +g::saveClipboard(A_thishotkey)
 
 
-h::preset("100 to 120 zoom")
+h::preset("invert preset")
 j::preset("anchor and position to 0") ;no panning involved here.
-k::preset("zoom motion 115")
+k::preset("100 to 120 zoom")
 l::preset("25% blur and darkener")
 `;::preset("blur with edges") ;lol, the syntax highlighting gets this one wrong.
 '::preset("Warp Stabilizer Preset")
-enter::Sendinput ^!e
+enter::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music")
+;enter WAS ;Sendinput ^!e
 
 ;;;;;next line;;;;;;;;
 
@@ -270,7 +441,7 @@ b::recallClipboard(A_thishotkey)
 +v::
 +b::saveClipboard(A_thishotkey)
 
-n::preset("pan left")
+n::preset("mosaic preset")
 ;m::preset("pan down")
 
 m::preset("a0p0 pan down")
@@ -315,7 +486,7 @@ space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
 appskey::msgbox, this is the right click appskey KEY I guess
 
 ;these were all formerly runExplorer()
-PrintScreen::InstantExplorer("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard")
+PrintScreen::InstantExplorer("Z:\Linus\Team_Documents\TARAN THINGS")
 ScrollLock::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;"   ;msgbox, , , this key is NO GOOD TO USE!`nmaybe, 0.7
 SC061::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;"   ;msgbox, , , this key is NO GOOD TO USE!`nmaybe, 0.7
 
@@ -388,12 +559,10 @@ SC07F::msgbox sc7F is as high as I could go, after 80 they become unusable for s
 SC080::msgbox sc080... this does not register.
 SC0FF::msgbox sc0FF ...this does not register.
 
-
 #if
 #IfWinActive
 
-
-;--------------END OF 2ND KEYBOARD IF USING INTERCEPTOR~~~~~~~~~~~~~~~~~~~~~
+;____________END OF K120 (2ND KEYBOARD) REMAPPED INTO ALL MACRO KEYS____________
 
 
 #IfWinActive
@@ -452,145 +621,7 @@ return
 ;3RD KEYBOARD CODE WAS HERE (was actually just a shitty numpad) - used F22 - but has been replaced with the stream deck.
 
 
-;https://autohotkey.com/boards/viewtopic.php?t=28304
 
-ExplorerViewChange_Window(explorerHwnd)
-{
-	if (!explorerHwnd)
-		return
-	;msgbox,,, % explorerHwnd, 0.5
-	Windows := ComObjCreate("Shell.Application").Windows
-	for window in Windows
-		if (window.hWnd == explorerHwnd)
-			sFolder := window.Document
-			
-	;sFolder.ShellView := 1
-	sFolder.CurrentViewMode := 4 ; Details
-	;tooltip % sFolder.CurrentViewMode
-	;sFolder.SORTCOLUMNS := PKEY_ItemNameDisplay, SORT_DESCENDING, bsssssss
-}
-
-;;;must look through that thread to find the direct "sort by name, sort by date" thingies.
-
-ExplorerViewChange_List(explorerHwnd)
-{
-	if (!explorerHwnd)
-		return
-	;msgbox,,, % explorerHwnd, 0.5
-	Windows := ComObjCreate("Shell.Application").Windows
-	for window in Windows
-		if (window.hWnd == explorerHwnd)
-			sFolder := window.Document
-	if (sFolder.CurrentViewMode == 8)
-		sFolder.CurrentViewMode := 6 ; Tiles
-	else if (sFolder.CurrentViewMode == 6)
-		sFolder.CurrentViewMode := 4 ; Details
-	else if (sFolder.CurrentViewMode == 4)
-		sFolder.CurrentViewMode := 3 ; List
-	else if (sFolder.CurrentViewMode == 3) {
-		sFolder.CurrentViewMode := 2 ; Small icons
-		sFolder.IconSize := 16 ; Actually make the icons small...
-	} else if (sFolder.CurrentViewMode == 2) {
-		sFolder.CurrentViewMode := 1 ; Icons
-		sFolder.IconSize := 48 ; Medium icon size
-	} else if (sFolder.CurrentViewMode == 1) {
-		if (sFolder.IconSize == 256)
-			sFolder.CurrentViewMode := 8 ; Go back to content view
-		else if (sFolder.IconSize == 48)
-			sFolder.IconSize := 96 ; Large icons
-		else
-			sFolder.IconSize := 256 ; Extra large icons
-	}
-	ObjRelease(Windows)
-	tooltip % sFolder.CurrentViewMode
-}
-
-
-
-ExplorerViewChange_ICONS(explorerHwnd)
-{
-
-	if (!explorerHwnd)
-	{
-		tooltip, exiting.
-		sleep 100
-		return
-	}
-	;msgbox,,, % explorerHwnd, 0.5
-	Windows := ComObjCreate("Shell.Application").Windows
-	for window in Windows
-		if (window.hWnd == explorerHwnd)
-			sFolder := window.Document
-	if (sFolder.CurrentViewMode >= 2) {
-		sFolder.CurrentViewMode := 1 ; icons
-		sFolder.IconSize := 256 ; make the icons big...
-		;tooltip, large 1
-	} else if (sFolder.CurrentViewMode == 1) {
-		if (sFolder.IconSize == 48){
-			sFolder.IconSize := 256
-			;tooltip, large
-			}
-		else if (sFolder.IconSize == 256){
-			sFolder.IconSize := 96
-			;tooltip, you are now at medium icons
-			}
-		else if (sFolder.IconSize == 96) {
-			sFolder.IconSize := 48 ; smallish icons
-			;tooltip, you are now at smallish icons
-			}
-		else {
-			sFolder.CurrentViewMode := 1
-			sFolder.IconSize := 256
-			;tooltip, reset
-		}
-	}
-	;tooltip % sFolder.IconSize
-	;tooltip, %explorerHwnd%
-	;sleep 100
-	;tooltip, % sFolder.CurrentViewMode
-}
-
-
-; ExplorerViewChange_ICONS(explorerHwnd)
-; {
-
-	; if (!explorerHwnd)
-	; {
-		; tooltip, exiting.
-		; sleep 100
-		; return
-	; }
-	; ;msgbox,,, % explorerHwnd, 0.5
-	; Windows := ComObjCreate("Shell.Application").Windows
-	; for window in Windows
-		; if (window.hWnd == explorerHwnd)
-			; sFolder := window.Document
-	; if (sFolder.CurrentViewMode >= 2) {
-		; sFolder.CurrentViewMode := 1 ; Small icons
-		; sFolder.IconSize := 48 ; Actually make the icons small...
-	; } else if (sFolder.CurrentViewMode == 1) {
-		; if (sFolder.IconSize == 256){
-			; sFolder.CurrentViewMode := 2 ; Go back to small icons
-			; sFolder.IconSize := 48
-			; }
-		; else if (sFolder.IconSize == 48)
-			; sFolder.IconSize := 96 ; Large icons
-		; else
-			; sFolder.IconSize := 256 ; Extra large icons
-	; }
-	; ;tooltip % sFolder.IconSize
-	; ;tooltip, %explorerHwnd%
-	; ;sleep 100
-	; ;tooltip, % sFolder.CurrentViewMode
-; }
-
-
-
-;testing someone else's script here...
-#If (exphWnd := WinActive("ahk_class CabinetWClass"))
-^+::
-^=::ExplorerViewChange_Window(exphWnd)
-#If
 
 
 
@@ -628,28 +659,6 @@ IfWinActive, ahk_class CabinetWClass
 	tippy("sort Explorer by name")
 	}
 return
-; ; ; ;https://stackoverflow.com/questions/23028005/autohotkey-able-to-capture-firefox-tab
-; ; ; ;this is a terrible solution, I think i will look into AAC instead
-; ; ; ; https://autohotkey.com/boards/viewtopic.php?f=6&t=26947&p=126248#p126248
-; ; ; SetTitleMatchMode 2
-
-; ; ; needle := "Linus Media Group Inc. - Calendar"
-
-; ; ; WinActivate, Firefox
-; ; ; Loop {
-  ; ; ; WinGetTitle, title
-  ; ; ; IfWinNotActive, Firefox
-    ; ; ; break
-  ; ; ; if (InStr(title,needle))
-    ; ; ; Break
-  ; ; ; Else
-    ; ; ; send ^{PgUp}
-  ; ; ; sleep 50
-; ; ; }
-
-; ; ; return
-
-;numpad4::tippy("sort Explorer by date")
 
 
 numpad6::
@@ -742,7 +751,6 @@ return
 
 #if
 ;~~~~END OF 4TH KEYBOARD (mechanical Jelly) USING INTERCEPTOR~~~~
-
 ; https://www.reddit.com/r/MechanicalKeyboards/comments/4kf2gk/review_jellycomb_mechanical_numpad/
 ; https://autohotkey.com/board/topic/29542-rebinding-alt-061/
 ; this is for the jellycomb numpad 4th keyboard's TOP ROW of keys:
@@ -780,12 +788,12 @@ HandleNum:
 Ascii_Unicode_Input .= SubStr( A_ThisHotkey, 0 )
 return
 #if
-;~~~~~~~~~~~~~END OF 4TH KEYBOARD OVERALL~~~~~~~~~~~~~~~~~~~~~~~~
+;________________END OF 4TH KEYBOARD OVERALL______________________
 
 
 	
 	
-;BEGIN secondary layer of main keyboard, with CAPSLOCK remapped to F20
+;BEGIN secondary layer of main keyboard, using CAPSLOCK remapped to F20
 #if (getKeyState("F20", "P"))
 F20::return 
 
@@ -923,7 +931,7 @@ SC063::msgbox sc063, L WIN
 SC064::msgbox sc064, L ALT
 */
 #if				
-; ;end 5th keyboard with F20
+;_________________end fake 5th keyboard with capslock remapped to F20__________________
 
 				
 		
@@ -1041,7 +1049,8 @@ m::
 
 Lwin::msgbox, LEFT win
 
-;Lalt::
+;Lalt has been remapped to SC064, which is F13.
+;NOTE that this can interfere with normal F13 keypresses elsewhere in this script...
 SC064::
 IfWinNotExist, ahk_exe Adobe Media Encoder.exe
 	run, C:\Program Files\Adobe\Adobe Media Encoder CC 2017\Adobe Media Encoder.exe ;ahk_exe Adobe Media Encoder.exe
@@ -1056,7 +1065,7 @@ space::tooltip,
 Ralt::msgbox, Ralt - doesnt work
 Rwin::msgbox, Right Win 
 Rshift::msgbox RIGHT SHIFT lol
-SC06E::msgbox,,,right WINkey,0.5
+
 SC06F::msgbox,,,SC06F,0.5
 ;SC062::msgbox,,,SC062 aka APPSKEY,0.5 ;for some reason, might open last active window...
 
@@ -1176,16 +1185,18 @@ SC063::msgbox sc063, L WIN
 SC064::msgbox sc064, L ALT
 */
 
-
-
 #if
 ;END OF FULL AZIO KEYBOARD
 
 
 
+
+
 ;---------------ALL NORMAL KEY ASSIGNMENTS---------------------
 ;---------------ALL NORMAL KEY ASSIGNMENTS---------------------
 ;---------------ALL NORMAL KEY ASSIGNMENTS---------------------
+
+
 
 
 ;okay, so these keys MUST be AFTER the intercept.exe launched keys, otherwise BOTH scripts will be called, which is bad. IDK why, but putting them down here fixes the problem.
@@ -1405,9 +1416,10 @@ return
 ; return
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
-;I was having trouble with cross-talk on F14... so writing it this way allows me to use it.
-;~F14:: ;the virtual key and scan code below refer to F14.
-~VK7DSC065::
+
+
+;~VK7DSC065:: ;I was having trouble with cross-talk on F14... so writing it this way allowed me to use it. But, this line no longer works in AHK 1.1.27.06... and now using "~F14::" works fine. 
+~F14::
 global VFXkey = "F14"
 instantVFX("scale")
 return
@@ -1428,16 +1440,22 @@ F17::
 sendinput, ^c
 sleep 100
 ;WinActivate ahk_exe firefox.exe
-send ^{F4} ;shortcut for activate word, and if active, move to next comment.
+
+; send ^{F4} ;shortcut for activate word, and if active, move to next comment.
+; msgbox, EXTREMELY WEIRD - the above code would CLOSE THE TAB. IDK what kind of cross-talk was going on... will look into that later.
+switchToWord()
 sleep 100
 send ^v
 sleep 100
 send {enter}
 sleep 10
-send ^{F4}
+; send ^{F4} ;only use this line if switchToWord() is not directly available.
+;;;;msgbox,,, just before,0.5
+switchToWord()
 sleep 10
+;;;;msgbox,,, thingy is over,0.5
 ;WinActivate ahk_class MozillaWindowClass
-
+;sometimes this code activates the paragraph thingy, which is CTRL SHIFT 8. will look for other cross talk.
 return
 
 
@@ -1575,7 +1593,9 @@ Return
 
 
 
-;saving this for future use
+
+
+;saving this blank keyboard for future use
 /*
 #if (getKeyState("F24", "P"))
 F24::return ;F24

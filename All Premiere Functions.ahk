@@ -379,13 +379,13 @@ recallClipboard(int, transition := 0) {
 	; ; sleep 15
 	WinActivate, Adobe Premiere Pro ;this is extremely important.... otherwise, it will try to paste into the command prompt or something. You must ensure the correct program is pasted into.
 	
-	if (transition = 0)
-	{
-		target("v1", "off", "all", 5) ;this will disable all video layers, and enable only layer 5.
-		tooltip, only layer 5 was turned on should be
-		sleep 150
+	; ; ; if (transition = 0)
+	; ; ; {
+		; ; ; target("v1", "off", "all", 5) ;this will disable all video layers, and enable only layer 5.
+		; ; ; tooltip, only layer 5 was turned on should be
+		; ; ; sleep 150
 		
-	}
+	; ; ; }
 	tooltip, now PASTING into premiere...
 	WinActivate, Adobe Premiere Pro
 	SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
@@ -423,7 +423,7 @@ recallClipboard(int, transition := 0) {
 	; send ^{F9} ;toggle video tracks (hopefully off)
 	; send ^+{F9} ;toggle audio tracks (hopefully off)
 	tooltip,
-	Send ^!d ;this is to deselect any clips that might be selected in the timeline.
+	Send, ^!{F11} ;this is to deselect any clips that might be selected in the timeline. WAS ctrl alt D. might be unreliable.
 	
 } ;end of recall Clipboard()
 
