@@ -1,5 +1,7 @@
+
 ;KeypressOSD.ahk
-;Author - Victor Uribe
+;Author - Victor Uribe (modified script originally written by VarunJhajharia)
+
 ;THIS IS A SIMPLER ALTERNATIVE TO KEYSTROKE VIZ.AHK. THE TWO SHOULD NOT BE USED AT THE SAME TIME.
 ;This visualizer does not show associated commands.
 

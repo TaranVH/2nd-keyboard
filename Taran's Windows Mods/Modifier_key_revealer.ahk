@@ -90,7 +90,7 @@ WinSet, TransColor, %backcolor% 200
 
 
 ;;;;;;
-setTimer STATUSOFF, -1000
+;setTimer STATUSOFF, -1000 ;for some reason, just having this line caused multiple modifier keys to NOT be shown if pressed down. I have no idea why. Negative means it hsould not repeat...
 ; settimer, STATUSOFF, %timetoshow%
 GuiControl,,text, (Modifier keys)
 Gui, Color, %backcolor%
@@ -102,7 +102,7 @@ Gui, Color, %backcolor%
 
 Loop
 {
-sleep 20 ; without a "sleep" of at least 1 millisecond, the script loops so much, it uses 4% of my CPU!
+sleep 15 ; without a "sleep" of at least 1 millisecond, the script loops so much, it uses 4% of my CPU!
 ;tooltip, currentline = %currentline% --- keyOnLine = %keyOnLine% --- index = %index% --- position = %position% --- keys=%keys%
   oldkeys=%keys%
   keys=
@@ -155,33 +155,33 @@ sleep 20 ; without a "sleep" of at least 1 millisecond, the script loops so much
 		Gui, Color, %backcolor%
 		GuiControl,,text, (%keys%) ;this is where the magic happens
 		previouskey = keys
-		SetTimer,DIMMER,-10
+		SetTimer,DIMMER,-1
+		;SetTimer,STATUSOFF,-11 ;for some reason i can't go straight to STATUSOFF. I have no idea how this works anymore.
   }
 ;msgbox, magic has happened
 
 }
 
-downershower:
-;;;;tooltip, downer = %downer%, , , 9
-; SetTimer downershower, 30 ; it is already set to repeat
-return
 
 DIMMER:
-
+;i dont remember what the point of this timer is, but I need it...
 if downer = 1
 {
-	settimer, DIMMER, -11
-	return
+	settimer, DIMMER, -21
+	;tooltip, this seems to never happen
+	return ;does this even work the way I think it does?? (skipping the next line?)
 }
+;tooltip, this still happened
 settimer, STATUSOFF, %timetoshow%
 Return
 
 
 STATUSOFF:
+;tooltip, status off
 if downer = 1
 {
-	settimer, STATUSOFF, -10
-	return
+	settimer, STATUSOFF, -21 ;i think this has to be GREATER than the loop sleep time, since otherwise it might turn off the text when it shoudln't.
+	return ;does this even work the way I think it does?? (skipping the next line?)
 }
 Gui, Color, %backcolor%
 GuiControl,,text,

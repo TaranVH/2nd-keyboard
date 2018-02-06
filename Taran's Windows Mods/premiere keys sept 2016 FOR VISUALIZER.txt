@@ -1,6 +1,11 @@
-(Most of) Taran's premiere shortcuts as of June 2017-ish
+LAST UPDATE: Dec 13 2017
+And yeah, this has to be manually updated.
+Need to learn Regex to make updating this a lot more automatic.
+
+(Most of) Taran's premiere shortcuts.
 Some are stupid, like / and u.
 I'll change those later.
+This was initially created by using the "copy to clipboard" feature in Premiere's shortcuts panel.
 + (plus) characters have been removed and replaced with spaces.
 Keep in mind that a shortcut like CTRL + is actually CTRL =, since the "+" only happens if you hold shit.
 The ampersand is important, it separates the key from the function.
@@ -11,13 +16,13 @@ https://www.youtube.com/watch?v=gF-f25dRbo8
 BEGIN!
 
 
-[G1]effectsPanelType("")					&ctrl shift 0
-[G2]preset("Warp Stabilizer preset")		&ctrl shift -
-[G3]effectsPanelType("presets")				&ctrl shift =
+[G1]effectsPanelType("")					&ctrl shift J
+[G2]preset("Warp Stabilizer preset")		&ctrl shift K
+[G3]play/pause Premiere						&ctrl shift L
 
 [G4]audioMonoMaker("left")					&ctrl shift ,
 [G5]audioMonomaker("right")					&ctrl shift .
-[G6]RE-SELECT CLIP (Taran mod)				&ctrl shift 9
+[G6]RE-SELECT CLIP (Taran mod)				&ctrl shift U
 ;that used to be ALT SHIFT F, but thats a terrible combo.
 
 [G7]instantVFX("rotation")					&F17
@@ -317,7 +322,7 @@ Flatten
 Sequence
 Sequence Settings...
 Render Effects in Work Area
-Render Entire Work Area&Ctrl Alt I
+Render in to out&Ctrl Alt I
 Render Selection&Ctrl Alt R
 Render Audio&Ctrl Shift A
 Render Audio&Ctrl Alt A
@@ -371,16 +376,14 @@ Audio Out
 Clear In&Ctrl Shift I
 Clear Out&Ctrl Shift O
 Clear In and Out&Ctrl Shift X
-Add Marker&Ctrl M
-Add Marker&Alt M
 Add Marker&\
 Go to Next Marker
 Go to Previous Marker
 Clear Selected Marker&Ctrl Alt M
 Clear All Markers&Ctrl Alt Shift M
 Edit Marker...
-Add Chapter Marker...
-Add Flash Cue Marker...
+Add Chapter Marker...	&/
+Add Flash Cue Marker...	&'
 Ripple Sequence Markers
 
 Title
@@ -401,10 +404,10 @@ Other...
 120
 156
 180
-Type Alignment
-Left&Ctrl Shift L
-Center
-Right&Ctrl Shift R
+
+Play/pause Premiere&Ctrl Shift L
+Effect find box select&Ctrl Shift J
+
 Orientation
 Horizontal
 Vertical
@@ -676,10 +679,10 @@ Shuttle Slow Right&Shift L
 Shuttle Stop&S
 Shuttle Stop&K
 
-Source Assignment Preset 1
-Source Assignment Preset 2
-Source Assignment Preset 3
-Source Assignment Preset 4
+Source Assignment Preset 1				&Ctrl Shift 6
+Source Assignment Preset 2				&Ctrl Shift 7
+Source Assignment Preset 3				&Ctrl Shift 8
+Source Assignment Preset 4				&Ctrl Shift 9
 Source Assignment Preset 5
 Source Assignment Preset 6
 Source Assignment Preset 7
@@ -688,8 +691,10 @@ Source Assignment Preset 9
 Source Assignment Preset 10
 
 Step Back 1 Frame&Left
+Step Back 1 Frame&3
 Step Back Many Frames - Units
 Step Forward 1 Frame&Right
+Step Forward 1 Frame&4
 Step Forward Many Frames - Units
 Stop
 Targets Follow Inserts and Overwrites
@@ -782,8 +787,8 @@ Scene Detect
 Collapse Window
 Eject&E
 Fast Forward
-Go to In point&Q
-Go to Out point&W
+Go to In point
+Go to Out point
 Log Clip
 Next Scene
 Pause
@@ -795,12 +800,13 @@ Set In point
 Set Out point
 Slow Play
 Slow Reverse
+
 Step Back&Left
 Step Back&A S
 Step Forward&Right
 Step Forward&D S
 Stop&S
-Lumetri Color Panel
+Lumetri Color Panel&Ctrl Alt Shift 0
 Lumetri Color Panel Menu
 Solo Mode
 Export .look...
@@ -892,11 +898,11 @@ Display First Field
 Display Second Field
 Display Both Fields
 Playback Resolution
-Full
-1/2
-1/4
-1/8
-1/16
+Full				&Ctrl Shift 1
+1/2					&Ctrl Shift 2
+1/4					&Ctrl Shift 3
+1/8					&Ctrl Shift 4
+1/16				&Ctrl Shift 5
 Paused Resolution
 Full
 1/2
@@ -990,7 +996,7 @@ Toggle View&Shift \
 View Hidden
 Zoom In&Ctrl =
 Zoom Out&Ctrl -
-Lumetri Scopes Panel
+Lumetri Scopes Panel&Ctrl Alt Shift 9
 Source Monitor Panel
 Source Monitor Panel Menu
 Gang Source and Program
@@ -1002,10 +1008,10 @@ Display First Field
 Display Second Field
 Display Both Fields
 Playback Resolution
-Full
-1/2
-1/4
-1/8
+Full			&Ctrl numpad1
+1/2				&Ctrl numpad2
+1/4				&Ctrl numpad3
+1/8				&Ctrl numpad4
 1/16
 Paused Resolution
 Full
@@ -1068,30 +1074,31 @@ Decrease Video Tracks Height&Ctrl -
 Increase Audio Tracks Height&Alt =
 Increase Video Tracks Height&Ctrl =
 Join All Through Edits
-Lock/Unlock All Audio Tracks
-Lock/Unlock All Video Tracks
-Move Playhead to Cursor&\
+Lock/Unlock All Audio Tracks			&Ctrl Alt Shift L
+Lock/Unlock All Video Tracks			&Ctrl Alt Shift K
+Move Playhead to Cursor					&\
 
-Nudge Clip Selection Down&Numpad2
-Nudge Clip Selection Up&Numpad8
+Nudge Clip Selection Down				&Numpad2
+Nudge Clip Selection Up					&Numpad8
 
-Nudge Clip Selection Left One Frame&Numpad4
-Nudge Clip Selection Right One Frame&Numpad6
+Nudge Clip Selection Left One Frame		&Numpad4
+Nudge Clip Selection Right One Frame	&Numpad6
 
-Nudge Clip Selection Left Five Frames&ctrl Numpad4
-Nudge Clip Selection Right Five Frames&ctrl Numpad6
+Nudge Clip Selection Left Five Frames	&shift Numpad4
+Nudge Clip Selection Right Five Frames	&shift Numpad6
 
-Reveal In Project&Alt X
-Ripple Delete&Alt Backspace&Backspace
-Set Work Area Bar In Point&Alt [
-Set Work Area Bar Out Point&Alt ]
+Reveal In Project					&Alt X
+Ripple Delete						&Backspace
+Ripple Delete						&Alt Backspace
+Set Work Area Bar In Point			&Alt [
+Set Work Area Bar Out Point			&Alt ]
 Show Audio Keyframes
-Show Audio Names
+Show Audio Names					&Ctrl Alt Shift N
 Show Audio Waveforms
 Show Clip Markers
 Show Duplicate Frame Markers
-Show Next Screen&Page Down
-Show Previous Screen&Page Up
+Show Next Screen					&Page Down
+Show Previous Screen				&Page Up
 Show Video Keyframes
 Show Video Names
 Show Video Thumbnails
@@ -1100,9 +1107,9 @@ Slide Clip Selection Left One Frame&Alt ,
 Slide Clip Selection Right Five Frames&Alt Shift .
 Slide Clip Selection Right One Frame&Alt .
 Slip Clip Selection Left Five Frames&Ctrl Alt Shift Left
-Slip Clip Selection Left One Frame&3
+Slip Clip Selection Left One Frame&5
 Slip Clip Selection Right Five Frames&Ctrl Alt Shift Right
-Slip Clip Selection Right One Frame&4
+Slip Clip Selection Right One Frame&6
 Titler Panel
 Add Anchor Point Tool
 

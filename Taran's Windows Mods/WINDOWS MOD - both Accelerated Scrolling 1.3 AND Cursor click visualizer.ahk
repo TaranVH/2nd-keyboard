@@ -93,24 +93,40 @@ vmax := 1
 
 
 ; Key bindings
+
+;These allow for the visualizer to work with modifier keys, but do NOT affect any sort of clicking at all.
+; ^ is CTRL
+; + is SHIFT
+; ! is ALT
+; ~ allows the key to also pass through normally
 ~^WheelUp::
 ~+WheelUp::
+~^+WheelUp::
 ~!WheelUp::
-WheelUp::
-Gui, hide
 Wup = 1
-Goto Scroll
 return
 
 ~^WheelDown::
 ~+WheelDown::
+~^+WheelDown::
 ~!WheelDown::
+Wdown = 1
+return
+
+
+WheelUp:: ;notice the deliberate lack of a ~
+Gui, hide
+Wup = 1
+Goto Scroll ;this is what does the acceleration
+return
+
 WheelDown::
 Gui, hide
 Wdown = 1
 Goto Scroll
 return
 
+;remember, in this case the # means the WIN KEY.
 #WheelUp::   Suspend
 
 #WheelDown:: ; this turns the click visualizer and fast scroll :( on or off.

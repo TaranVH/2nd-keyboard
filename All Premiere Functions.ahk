@@ -3,13 +3,30 @@
 
 #NoEnv
 Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyboard!
-
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
-
 #SingleInstance force ;only one instance of this script may run at a time!
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
+
+;-------------------------------------------------------------------------
+; HELLO PEOPLES
+; CHECK OUT MY BIG TUTORIAL FOR SOME EXPLANATION OF HOW THESE
+; AHK SCRIPTS WORK, AND HOW THEY COMMUNICATE WITH ONE ANOTHER.
+; https://youtu.be/O6ERELse_QY?t=20m7s
+;
+; IMPORTANT NOTE:
+; This script works in tandem with ALL MULTIPLE KEYBOARD ASSIGNMENTS.ahk
+; All the functions from HERE are actually CALLED from keyboard shortcuts
+; in THAT script. I had to do it this way because of the Stream Deck...
+; But you can put your key bindings and functions in the SAME script.
+;
+; Only copy the functions that you NEED. Don't try to use everything all
+; at once. You will need to know some basic scripting to custom tailor
+; most of these scripts to your own machine.
+; https://autohotkey.com/docs/Tutorial.htm
+;------------------------------------------------------------------------
+
 
 ;the variable below POSSIBLY exists for the purpose of communicaiton with gui.ahk if a script is launched from the Stream Deck.
 TargetScriptTitle = "C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\gui.ahk ahk_class AutoHotkey"
@@ -49,12 +66,17 @@ if (panel = "effect controls")
 	return
 }
 Send ^!+7 ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
+sleep 7
+Send ^!+7 ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
+sleep 7
 if (panel = "effects")
 	goto theEnd ;Send ^!+7 ;do nothing. the shortcut has already been pressed.
 else if (panel = "timeline")
 	Send ^!+3 ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
-else if (panel = "program")
+else if (panel = "program") ;program monitor
 	Send ^!+4
+else if (panel = "source") ;source monitor
+	Send ^!+2
 else if (panel = "project") ;AKA a "bin" or "folder"
 	Send ^!+1
 
@@ -70,26 +92,25 @@ theEnd:
 
 effectsPanelType(item := "lol")
 {
+
 ;Keyshower(item,"effectsPanelType")
-if IsFunc("Keyshower") {
-	Func := Func("Keyshower")
-	RetVal := Func.Call(item,"effectsPanelType") 
-}
+; if IsFunc("Keyshower") {
+	; Func := Func("Keyshower")
+	; RetVal := Func.Call(item,"effectsPanelType") 
+	; }
 
 
 ;prFocus("effects") ;reliably brings focus to the effects panel
 Send ^+!7 ;CTRL SHIFT ALT 7 -- set in premiere to "effects" panel
-sleep 10
-Send ^b ;CTRL B --set in premiere to "select find box"
+sleep 20
+Send ^b ;CTRL B --set in premiere to "select find box." Makes a windows noise if you do it again.
 sleep 20
 Send +{backspace} ;shift backspace deletes any text that may be present.
 Sleep, 10
 Send %item%
 ;now this next part re-selects the field in case you want to type anything different
-sleep 5
-send {tab}
-sleep 5
-send +{tab}
+sleep 10
+send ^!b ;ctrl alt B is ALSO select find box, but doesn't have the annoying windows sound.
 }
 
 
@@ -118,22 +139,24 @@ coordmode, Caret, Window
 
 ;This (temporarily) blocks the mouse and keyboard from sending any information, which could interfere with the funcitoning of the script.
 BlockInput, SendAndMouse
+BlockInput, MouseMove
 BlockInput, On
 
 SetKeyDelay, 0 ;this ensures that any text AutoHotKey "types in," will input instantly, rather than one letter at a time.
 MouseGetPos, xposP, yposP ;---stores the cursor's current coordinates at X%xposP% Y%yposP%
 
-;Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to "effects" panel
-prFocus("effects") ;more reliably uses the above shortcut to set focus to the effects panel.
+Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to "effects" panel
 
-sleep 5 ;"sleep 5" means the script will wait for 5 milliseconds before the next command. This is done to give Premiere some time to load its own things.
+sleep 15 ;"sleep 15" means the script will wait for 15 milliseconds before the next command. This is done to give Premiere some time to load its own things.
 Send ^b ;CTRL B -- set in premiere to "select find box"
-sleep 5
+sleep 15
 ;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret." 
 
 MouseMove, %A_CaretX%, %A_CaretY%, 0
+sleep 15
+MouseMove, %A_CaretX%, %A_CaretY%, 0
 ;and fortunately, AHK knows the exact X and Y position of this caret. So therefore, we can find the effects panel find box, no matter what monitor it is on, with 100% consistency.
-sleep 10
+sleep 15
 
 MouseGetPos, , , Window, classNN
 WinGetClass, class, ahk_id %Window%
@@ -169,15 +192,22 @@ sleep 35
 MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---drags this effect to the cursor's pervious coordinates, which should be above a clip.
 sleep 10
 MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great!
+blockinput, MouseMoveOff ;returning mouse movement ability
 BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL+ALT+DEL will still work if you get stuck!! Cool.
 
+;remove the following thingy if it makes no sense to you
 IfInString, item, CROP
 {
-	
-	sleep 160
-	cropClick()
-	;msgbox, that had "CROP" in it.
+	if IsFunc("cropClick") {
+		Func := Func("cropClick")
+		sleep 160
+		RetVal := Func.Call() 
+		}
+	; sleep 160
+	; cropClick()
+	; ;msgbox, that had "CROP" in it.
 }
+;remove the above thingy if it makes no sense to you
 
 theEnding:
 }
@@ -212,6 +242,7 @@ coordmode, Caret, screen
 
 
 BlockInput, mouse
+blockinput, MouseMove
 BlockInput, On
 SetKeyDelay, 0 ;for instant writing of text
 MouseGetPos, xpos, ypos
@@ -219,7 +250,7 @@ send ^+x ;ctrl shift x -- shortcut in premiere for "remove in/out points.
 sleep 10
 send ^+6 ;ctrl shift 6 - source assignment preset 1. (sets it to A3.)
 sleep 10
-; Send ^!+` ;premiere shortcut to open the "project" panel, which is actually a bin. Only ONE bin is highlightable in this way.
+; Send ^!+1 ;premiere shortcut to open the "project" panel, which is actually a bin. Only ONE bin is highlightable in this way.
 ; ;Send F11
 ; sleep 100
 ;msgbox, you in the panel now?
@@ -237,7 +268,7 @@ Send %leSound% ;types in the name of the sound effect you want - should do so in
 tooltip, waiting for premiere to load......
 send ^+6 ;source assignment preset 1, again.
 sleep 400 ;we are waiting for the search to complete....
-sleep 400 ;we are still waiting for the search to complete....
+;sleep 400 ;we are still waiting for the search to complete....
 
 MouseMove, -6000, 250, 0 ;moves the mouse to the expected location of the bin that becomes highlighted from the "project" keyboard shortcut command in Premiere.
 ;msgbox, wheres de mouse?
@@ -268,6 +299,8 @@ sleep 50
 Send ^/ ;CTRL FORWARD SLASH -- SET TO "OVERWRITE" in premiere. Premiere's default shortcut for "overwrite" is a period.  I use modifier keys for THIS, so that a period is never typed accidentally.
 sleep 30
 ; Send mbutton ;this will MIDDLE CLICK to reselect whatever panel your cursor was hovering over before you engaged this function.
+send ^!+7 ;highlight effects panel
+sleep 30
 send ^!+3 ;this is set in premiere to highlight/switch to the timeline. important so that you aren't still stuck in the bin. If this is used more than once, it will unfortunately cycle thorugh all available sequences...
 tooltip,
 BlockInput, off
@@ -346,13 +379,13 @@ recallClipboard(int, transition := 0) {
 	; ; sleep 15
 	WinActivate, Adobe Premiere Pro ;this is extremely important.... otherwise, it will try to paste into the command prompt or something. You must ensure the correct program is pasted into.
 	
-	if (transition = 0)
-	{
-		target("v1", "off", "all", 5) ;this will disable all video layers, and enable only layer 5.
-		tooltip, only layer 5 was turned on should be
-		sleep 150
+	; ; ; if (transition = 0)
+	; ; ; {
+		; ; ; target("v1", "off", "all", 5) ;this will disable all video layers, and enable only layer 5.
+		; ; ; tooltip, only layer 5 was turned on should be
+		; ; ; sleep 150
 		
-	}
+	; ; ; }
 	tooltip, now PASTING into premiere...
 	WinActivate, Adobe Premiere Pro
 	SendInput, {Shift Down}{Shift Up}{Ctrl Down}{v Down}
@@ -390,7 +423,7 @@ recallClipboard(int, transition := 0) {
 	; send ^{F9} ;toggle video tracks (hopefully off)
 	; send ^+{F9} ;toggle audio tracks (hopefully off)
 	tooltip,
-	Send ^!d ;this is to deselect any clips that might be selected in the timeline.
+	Send, ^!{F11} ;this is to deselect any clips that might be selected in the timeline. WAS ctrl alt D. might be unreliable.
 	
 } ;end of recall Clipboard()
 
@@ -487,7 +520,7 @@ if ErrorLevel = 0
 	
 	if (v1orA1 = "v1")
 		{
-		send +9 ;command in premiere to "toggle ALL video track targets." This should TARGET everything.
+		send ^{F9};send +9 ;command in premiere to "toggle ALL video track targets." This should TARGET everything.
 		sleep 10
 		if (onOff = "off")
 			send +9 ; do it again to UNTARGET everything.
@@ -497,7 +530,7 @@ if ErrorLevel = 0
 		}
 	if (v1orA1 = "a1")
 		{
-		send !9 ;command in premiere to "toggle ALL audio track targets." This should TARGET everything.
+		send ^+{F9} ;command in premiere to "toggle ALL audio track targets." This should TARGET everything. ;also ALT f9 but it's dangerous.
 		sleep 10
 		if (onOff = "off")
 			send !9 ; do it again to UNTARGET everything.
@@ -580,8 +613,12 @@ else if (track = "left")
 	addPixels = 0
 	;msgbox, this is for the LEFT audio track
 }
-Send ^!+a ;control alt shift a --- ; audio channels shortcut, asigned in premiere - dont use this key combo anywhere else
+;Send ^!+a ;control alt shift a --- ; audio channels shortcut, asigned in premiere - dont use this key combo anywhere else. UPDATE: seems unreliable to send shortcuts that use modifier keys, inside a funciton that was triggered using modifier keys. switched to F3.
+sendinput, {F3} ;also the audio channels shortcut.
+; sleep 15
+; sendinput, {F3} ;again cause sometimes it fails?
 ;WARNING - this was cross-talking with !+a, causing a preset("blur with edges") macro to be executed. I dont know how to avoid. maybe change order...??
+;WARNING - still cross talks with RENDER AUDIO, which is CTRL SHIFT A, or CTRL ALT A.
 ; fun fact, if you send this keystroke AGAIN, it does NOT close the panel, which is great... that means you can press the button anytime, and it will always result in an open panel.
 sleep 15
 
@@ -782,17 +819,18 @@ send {enter}
 ;VK25  SC04B  == numpad left
 ;VK64  SC04B  == numpad 4
 ;#if
+#if GetKeyState("F9") && winactive("ahk_exe notepad++.exe")
+p::msgbox lolhi
 
 
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-;these scripts WERE located in the "premiere mod - instant rescale button.ahk" script.
-
+#ifwinactive
 
 marker(){
-send ^{SC027} ;semicolon
+send ^{SC027} ;semicolon. ^;
 ;msgbox,,,hie,0.5
 ;should be hitting CTRL ; to make a marker. That's to a premiere shortcut.
 ;sleep 10
@@ -840,7 +878,10 @@ IfWinExist, Keyboard Shortcuts ;if you are just typing a capital K, while NOT in
 ;shortcut to close the titler with ctrl w, which only closes panels otherwise...
 closeTitler()
 {
-Tippy("Close titler (ctrl w )", 1200)
+
+;Marker @
+
+
 coordmode, mouse, screen
 coordmode, pixel, screen
 MouseGetPos, xpos, ypos ;--------stores the cursor's current coordinates at X%xpos% Y%ypos%
@@ -848,16 +889,34 @@ coordmode, mouse, client
 coordmode, pixel, client
 WinGetActiveStats, Title, Width, Height, X, Y
 
-MouseMove, Width-40, -20, 0 ;-----moves the mouse onto the "x" at the top right of the titler window
+;msgbox, % Title
 
-tooltip, closing titler now!
-Click left
-sleep 50 ;-----------------------wait 1/20th of a second to ensure everything is done
+Title := """" . Title . """"
 
-coordmode, mouse, screen
-coordmode, pixel, screen
-MouseMove, %xpos%, %ypos%, 0 ;---moves the cursor back
-tooltip, 
+; if (Title = "Marker @"){
+IfInString, Title, "Marker @"
+	{
+	msgbox, you made it
+	Tippy("USE SHIFT TAB ENTER", 1200)
+	; ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted.png
+	send, +{tab}
+	sleep 10
+	send {enter}
+	}
+else
+	{
+	Tippy("Close titler (ctrl w )", 1200)
+	MouseMove, Width-40, -20, 0 ;-----moves the mouse onto the "x" at the top right of the titler window
+
+	tooltip, closing titler now!
+	Click left
+	sleep 50 ;-----------------------wait 1/20th of a second to ensure everything is done
+
+	coordmode, mouse, screen
+	coordmode, pixel, screen
+	MouseMove, %xpos%, %ypos%, 0 ;---moves the cursor back
+	tooltip, 
+	}
 }
 
 
@@ -865,35 +924,52 @@ tooltip,
 ;EFFECT CONTROLS PANEL ---TRANSFORM ICON CLICKER
 clickTransformIcon2()
 {
-Tippy("transform icon - F5")
-BlockInput, On
+Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it causes problems.
+BlockInput, On ;blocks keyboard and mouse input... I think.
 SetKeyDelay, 0
+sendinput ^!+5 ;highlights the effect controls
+sleep 20
 MouseGetPos, xpos, ypos
-ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window
-X := X+85
-Y := Y+100
+ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window ;This is the Effect controls panel. Info gotten from Window Spy.
+X := X+85 ;change these variables to match the icon's position on your screen
+Y := Y+100 ;change these variables to match the icon's position on your screen
 MouseMove, X, Y, 0
-;MSGBOX, HELLO
 MouseClick, left
 MouseMove, %xpos%, %ypos%, 0
 BlockInput, Off
 }
 
 
-
-masterSelect()
+masterClipSelect()
 {
-Tippy("masterselect()")
+
+Tippy("masterClipSelect()")
 BlockInput, On
 SetKeyDelay, 0
+sendinput ^!+5 ;highlights the effect controls
+sleep 20
+
+;NEEDED - code that can tell if a clip is already selected or not. instantVFX uses that.
+;untwirl()
+Send {tab}
+if (A_CaretX = "")
+{
+	;No Caret (blinking vertical line) can be found. Therefore, no clip is selected.
+	Send ^p ;"selection follows playhead,"
+	sleep 10
+	Send ^p
+}
+
+
 MouseGetPos, xpos, ypos
 ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window
 X := X+85
-Y := Y+100
+Y := Y+44
 MouseMove, X, Y, 0
-MSGBOX, trying to select masterclip
+;MSGBOX, trying to select masterclip
 MouseClick, left
-MouseMove, %xpos%, %ypos%, 0
+;MouseMove, %xpos%, %ypos%, 0 ;moves back to original coordinates
+MouseMove, 250, 670, 0, R ;moves down and to the right to be inthe middle of the master clip controls.
 BlockInput, Off
 }
 
@@ -921,7 +997,7 @@ BlockInput, Off
 
 
 
-
+;i should delete or merge this but i think it is used SOMEWHERE....
 clickTransformIcon()
 {
 ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.
@@ -1119,6 +1195,14 @@ else
 
 
 
+;how to use instantVFX: https://www.youtube.com/watch?v=Bi3zBqO74ms
+
+;UPDATE:
+;I overwrote the high DPI scaling behaviour of Premiere, by following THESE instructions: https://forums.adobe.com/message/10081059#10081059 , which changes the look of text and other elements of Premiere.
+;Doing this totally BROKE the functionality of instantVFX() because now the pixel colors were different, and the images to be searched for would have had to have been updated.
+;THEREFORE, I switched back to Premiere's built-in UI scaling, and will just have to wait for adobe to fix the issues that come with it.
+
+
 instantVFX(foobar)
 {
 dontrestart = 0
@@ -1129,12 +1213,6 @@ blockinput, on
 ;-Sendinput ^!+5
 prFocus("effect controls") ;essentially just hits CTRL ALT SHIFT 5 to highlight the effect controls panel.
 sleep 10
-; send ^+d ;deselect anything that might be selected. We want to affect ONLY the clip the playhead is currently on top of - what we can see in the program monitor.
-; sleep 10
-; Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
-; sleep 10
-; Send ^p ;this now disables "selection follows playehad." I don't know if there is a way to CHECK if it is on or not.
-; sleep 10
 
 ;ToolTip, A, , , 2
 MouseGetPos Xbeginlol, Ybeginlol
@@ -1150,6 +1228,8 @@ ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_
 ;these pixel numbers will be DIFFERENT depending upon the RESOLUTION and UI SCALING of your monitor(s)
 YY := Ycorner+99 ;143??
 XX := Xcorner+19
+
+
 MouseMove, XX, YY, 0
 sleep 10
 
@@ -1309,20 +1389,22 @@ else
 			;I am going to take this an an indicaiton that the user just wants to RESET the value, rather than changing it.
 			Click up left
 			Sleep 10
-			if (foobar = "scale")
-			{
-				Send, 100
-				sleep 50
-				Send, {enter} ;"enter" can be a volatile and dangerous key, since it has so many other potential functions that might interfere somehow... in fact, I crashed the whole program once by using this and the anchor point script in rapid sucesssion.... but "ctrl enter" doesn't work... maybe numpad enter is a safer bet?
-				sleep 20
-			}
-			if (foobar = "rotation")
-			{
-				Send, 0
-				sleep 50
-				Send, {enter} ;"enter" can be a volatile and dangerous key, since it has so many other potential functions that might interfere somehow... in fact, I crashed the whole program once by using this and the anchor point script in rapid sucesssion.... but "ctrl enter" doesn't work... maybe numpad enter is a safer bet?
-				sleep 20
-			}
+			;I am removing the clode below, which acts to reset the whole thing. instead, now this allows me to type in my own custom value.
+			
+			; if (foobar = "scale")
+			; {
+				; Send, 100
+				; sleep 50
+				; Send, {enter} ;"enter" can be a volatile and dangerous key, since it has so many other potential functions that might interfere somehow... in fact, I crashed the whole program once by using this and the anchor point script in rapid sucesssion.... but "ctrl enter" doesn't work... maybe numpad enter is a safer bet?
+				; sleep 20
+			; }
+			; if (foobar = "rotation")
+			; {
+				; Send, 0
+				; sleep 50
+				; Send, {enter} ;"enter" can be a volatile and dangerous key, since it has so many other potential functions that might interfere somehow... in fact, I crashed the whole program once by using this and the anchor point script in rapid sucesssion.... but "ctrl enter" doesn't work... maybe numpad enter is a safer bet?
+				; sleep 20
+			; }
 			resetFromAutoVFX()
 			;return
 		}
