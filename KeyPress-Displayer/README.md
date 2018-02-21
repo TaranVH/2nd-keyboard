@@ -10,7 +10,7 @@ Challenge is to make a script that,
 <ol type="a">
 <li> <div color:#555555>Displays all the keyboard and mouse button presses on the screen - Done</div>
 </li>
-<li> The Display should be customisable ie; changes could be made to the <i>Font, Background Color, Font Color - Partial</i>
+<li> The Display should be customisable ie; changes could be made to the <i>Font, Background Color, Font Color - Done</i>
 </li>
 <li> The Display should decrase its transparency when the pressed key is released.
 </li>
