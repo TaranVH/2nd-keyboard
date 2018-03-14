@@ -1,5 +1,4 @@
 ﻿#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\point_to_gui.ahk
-
 ;#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\filemover.ahk
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
@@ -11,6 +10,10 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 global savedCLASS = "ahk_class Notepad++"
 global savedEXE = "notepad++.exe"
 
+; -------------------------------------------------------------------------
+; If this is your first time using AutoHotkey, you must take this tutorial:
+; https://autohotkey.com/docs/Tutorial.htm
+; -------------------------------------------------------------------------
 
 ;%A_ScriptDir%\Lib\  ; Local library - requires v1.0.90+.
 ;%A_MyDocuments%\AutoHotkey\Lib\  ; User library.
@@ -609,12 +612,14 @@ IfWinNotExist, ahk_class Premiere Pro
 	{
 	;Run, Adobe Premiere Pro.exe
 	;Adobe Premiere Pro CC 2017
-	Run, C:\Program Files\Adobe\Adobe Premiere Pro CC 2017\Adobe Premiere Pro.exe
+	; Run, C:\Program Files\Adobe\Adobe Premiere Pro CC 2017\Adobe Premiere Pro.exe ;if you have more than one version instlaled, you'll have to specify exactly which one you want to open.
+	Run, Adobe Premiere Pro.exe
 	}
 if WinActive("ahk_class Premiere Pro")
 	{
-	WinActivate ahk_exe notepad++.exe
+	WinActivate ahk_exe notepad++.exe ;so I have this here as a workaround to a bug. Sometimes Premire becomes unresponsive. switching to another applocation and back will solve this problem. So I just hit the premiere button again, in those cases. (Often, this lack of response is caused when scrolling through the timeline with the scroll wheel, especially when the video is playing.)
 	;msgbox,,,lol,0.1
+	sleep 10
 	WinActivate ahk_class Premiere Pro
 	}
 else
@@ -692,7 +697,34 @@ if not WinActive(theClass)
 }
 
 
+sortExplorerByName(){
+IfWinActive, ahk_class CabinetWClass
+	{
+	;Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
+	send {alt}vo{enter} ;sort by name
+	;tippy2("sort Explorer by name")
 
+	}
+
+}
+
+sortExplorerByDate(){
+IfWinActive, ahk_class CabinetWClass
+	{
+	;Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
+	send {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
+	;tippy2("sort Explorer by date")
+
+	}
+
+}
+
+
+
+
+
+
+;---------------------
 
 ExplorerViewChange_Window(explorerHwnd)
 {

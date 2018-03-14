@@ -60,13 +60,13 @@ return
 prFocus(panel) ;this function allows you to have ONE spot where you define your personal shortcuts that "focus" panels in premiere.
 {
 ;panel := """" . panel . """" ;this adds quotation marks around the parameter so that it works as a string, not a variable.
-if (panel = "effect controls")
-{
-	Send ^!+5
-	return
-}
+; ; ; if (panel = "effect controls")
+; ; ; {
+	; ; ; Send ^!+5
+	; ; ; return
+; ; ; }
 Send ^!+7 ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
-sleep 7
+sleep 12
 Send ^!+7 ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
 sleep 7
 if (panel = "effects")
@@ -76,9 +76,14 @@ else if (panel = "timeline")
 else if (panel = "program") ;program monitor
 	Send ^!+4
 else if (panel = "source") ;source monitor
+{
 	Send ^!+2
+	;tippy("send ^!+2")
+}
 else if (panel = "project") ;AKA a "bin" or "folder"
 	Send ^!+1
+else if (panel = "effect controls")
+	Send ^!+5
 
 theEnd:
 
@@ -122,7 +127,7 @@ send ^!b ;ctrl alt B is ALSO select find box, but doesn't have the annoying wind
 preset(item)
 {
 
-;Keyshower(item,"preset") ;YOU DO NOT NEED THIS LINE. -- it simply displays keystrokes on the screen for the sake of tutorials.
+;Keyshower(item,"preset") ;YOU DO NOT NEED THIS LINE. -- it simply displays keystrokes on the screen for the sake of tutorials... IF the function "keyshower" has been defined.
 if IsFunc("Keyshower") {
 	Func := Func("Keyshower")
 	RetVal := Func.Call(item,"preset") 
@@ -144,12 +149,15 @@ BlockInput, On
 
 SetKeyDelay, 0 ;this ensures that any text AutoHotKey "types in," will input instantly, rather than one letter at a time.
 MouseGetPos, xposP, yposP ;---stores the cursor's current coordinates at X%xposP% Y%yposP%
-
+send, {mButton} ;this will MIDDLE CLICK to bring focus to the panel underneath the cursor (the timeline). I forget exactly why, but if you create a nest, and immediately try to apply a preset to it, it doesn't work, because the timeline wasn't in focus...?
+;but i just tried that and it still didn't work...
+;;DAMN IT, i forgot the { } and it was sending those as letters, I am an idiot. Need better diagnostics tools...
 Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to "effects" panel
 
-sleep 15 ;"sleep 15" means the script will wait for 15 milliseconds before the next command. This is done to give Premiere some time to load its own things.
+sleep 15 ;"sleep" means the script will wait for 15 milliseconds before the next command. This is done to give Premiere some time to load its own things.
 Send ^b ;CTRL B -- set in premiere to "select find box"
-sleep 15
+sleep 20
+
 ;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret." 
 
 MouseMove, %A_CaretX%, %A_CaretY%, 0
@@ -157,7 +165,7 @@ sleep 15
 MouseMove, %A_CaretX%, %A_CaretY%, 0
 ;and fortunately, AHK knows the exact X and Y position of this caret. So therefore, we can find the effects panel find box, no matter what monitor it is on, with 100% consistency.
 sleep 15
-
+;msgbox, carat X Y is %A_CaretX%, %A_CaretY%
 MouseGetPos, , , Window, classNN
 WinGetClass, class, ahk_id %Window%
 ;msgbox, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
@@ -165,6 +173,7 @@ WinGetClass, class, ahk_id %Window%
 ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
 ;;my results:  59, 1229, 252, 21,      Edit1,    ahk_class Premiere Pro
 
+;msgbox, classNN = %classNN%
 ;now we have found a lot of useful informaiton about this find box. Turns out, we don't need most of it...
 ;we just need the X and Y coordinates of the "upper left" corner...
 
@@ -189,7 +198,7 @@ MouseClick, left, , , 1 ;-----------------------the actual click
 sleep 10
 MouseMove, iconX, iconY, 0 ;--------------------moves cursor BACK onto the effect's icon
 sleep 35
-MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---drags this effect to the cursor's pervious coordinates, which should be above a clip.
+MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---drags this effect to the cursor's pervious coordinates, which should be above a clip, on the TIMELINE panel.
 sleep 10
 MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great!
 blockinput, MouseMoveOff ;returning mouse movement ability
@@ -580,12 +589,13 @@ loadFromFile(name) {
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
 
+
 ;audioMonoMaker() will open the Audio Channels box, and use the cursor to put both tracks on [left/right], turning stereo sound into mono (with the [right/right] track as the source.
 audioMonoMaker(track)
 {
 ifWinNotActive ahk_exe Adobe Premiere Pro.exe
 	goto monoEnding
-sleep 10
+sleep 3
 ;msgbox,,, what the hell,0.6
 CoordMode,Mouse,Screen
 CoordMode,pixel,Screen
@@ -656,7 +666,7 @@ loop
 CoordMode, Mouse, Client
 CoordMode, Pixel, Client
 
-MouseMove, 160 + addPixels, 288, 0 ;this is relative to the audio channels window itself. Again, you should reduce these numbers by like 33%...?, since i use 150% UI scaling.
+MouseMove, 165 + addPixels, 295, 0 ;this is relative to the audio channels window itself. Again, you should reduce these numbers by like 33%...?, since i use 150% UI scaling.
 ;msgbox, now we should be on the first check box
 sleep 50
 
@@ -685,7 +695,7 @@ else if (kolor = "0xb9b9b9") ;We are now looking for CHECK MARKS. This coordinat
 	; Do nothing. There was a checkmark in this box already.
 }
 sleep 5
-MouseMove, 160 + addPixels, 321, 0
+MouseMove, 165 + addPixels, 329, 0
 sleep 30
 MouseGetPos, Xkolor2, Ykolor2
 sleep 10
@@ -748,13 +758,13 @@ effectControlsY = 200 ;the coordinates of roughly where my Effect Controls usual
 ; coordmode, Caret, Window
 
 ;you might need to take your own screenshot (look at mine to see what is needed) and save as .png. Mine are done with default UI brightness, plus 150% UI scaling in Windows.
-ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_WorkingDir%\CROP transform button.png
+ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_WorkingDir%\CROP transform button_D2018.png
 if ErrorLevel = 2
 	{
 	;msgbox,,, TaranDir is `n%TaranDir%,0.7
 	;ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %TaranDir%\CROP transform button.png
 	; ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files\CROP transform button.png
-	ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_workingDir%\CROP transform button.png
+	ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_workingDir%\CROP transform button_D2018.png
 	}
 if ErrorLevel = 1
 	{
@@ -764,7 +774,7 @@ if ErrorLevel = 1
 	}
 if ErrorLevel = 2
 	{
-    tippy("Could not conduct the search!")
+    tippy("Could not conduct the crop search!")
 	goto resetcropper
 	}
 if ErrorLevel = 0
@@ -1008,6 +1018,7 @@ MouseClick, left
 
 
 ;script to lock video and audio layers V1 and A1.
+;I don't recommend that anyone use this. It's really finnicky to set up. Requires a ton of very carefully taken screenshots in order to work...
 tracklocker()
 {
 BlockInput, on
@@ -1023,13 +1034,13 @@ CoordMode Mouse, screen
 ; coordmode, Caret, window
 ;you might need to take your own screenshot (look at mine to see what is needed) and save as .png. Mine are done with default UI brightness, plus 150% UI scaling in Wondows.
 ;msgbox, workingDir is %A_WorkingDir%
-ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted.png
+ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted_2018.png
 if ErrorLevel = 1
-	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_targeted.png
+	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_targeted_2018.png
 if ErrorLevel = 1
-	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_untargeted.png
+	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_untargeted_2018.png
 if ErrorLevel = 1
-	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_untargeted.png
+	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_untargeted_2018.png
 if ErrorLevel = 1
 	{
 	;msgbox, we made it to try 2
@@ -1055,18 +1066,18 @@ if ErrorLevel = 0
 	}
 	
 try2:
-ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_locked_targeted.png
+ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_locked_targeted_2018.png
 
 	
 if ErrorLevel = 1
 	{
     tippy("LOCKED TARGETED V1 could not be found")
-	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_locked_targeted.png
+	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_locked_targeted_2018.png
 	}
 if ErrorLevel = 1
 	{
     tippy("ALT LOCKED TARGETED V1 could not be found on the screen")
-	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_locked_untargeted.png
+	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_locked_untargeted_2018.png
 	}
 ; if ErrorLevel = 1
 	; {
@@ -1300,12 +1311,12 @@ else if foobar = "anchor_point"
 	ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+500, %A_WorkingDir%\anchor_point_D2017.png
 */
 
-ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+900, %A_WorkingDir%\%foobar%_D2017.png
+ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+900, %A_WorkingDir%\%foobar%_D2018.png
 ;within 0 shades of variation (this is much faster)
 ;obviously, you need to take your own screenshot (look at mine to see what is needed) save as .png, and link to it from the line above.
 ;Again, your UI brightness might be different from mine! I now use the DEFAULT brightness.
 if ErrorLevel = 1
-	ImageSearch, FoundX, FoundY, xPos-30, yPos, xPos+1200, yPos+1200, *10 %A_WorkingDir%\%foobar%_D2017.png ;within 30 shades of variation (in case SCALE is fully extended with bezier handles, in which case, the other images are real hard to find because the horizontal seperating lines look a BIT different. But if you crop in really closely, you don't have to worry about this. so this part of the code is not really necessary execpt to expand the range to look.
+	ImageSearch, FoundX, FoundY, xPos-30, yPos, xPos+1200, yPos+1200, *10 %A_WorkingDir%\%foobar%_D2018.png ;within 30 shades of variation (in case SCALE is fully extended with bezier handles, in which case, the other images are real hard to find because the horizontal seperating lines look a BIT different. But if you crop in really closely, you don't have to worry about this. so this part of the code is not really necessary execpt to expand the range to look.
 
 if ErrorLevel = 2
 	{
@@ -1347,7 +1358,7 @@ if (foobar = "scale" ||  foobar = "anchor_point" || foobar = "rotation")
 else if (foobar = "anchor_point_vertical")
 {
 	;msgbox, looking for 0.00
-	ImageSearch, Px, Py, xxx+100, yyy, xxx+800, yyy+100, %A_WorkingDir%\anti-flicker-filter_000.png ;because i never change this value, and it is always the same distance from the hot text that i WANT, it is a reliable landmark.
+	ImageSearch, Px, Py, xxx+100, yyy, xxx+800, yyy+100, %A_WorkingDir%\anti-flicker-filter_000_D2018.png ;because i never change the value of the anti-flicker filter, (0.00) and it is always the same distance from the actual hot text that i WANT, it is a reliable landmark. So this is a screenshot of THAT.
 }
 
 ; ImageSearch, FoundX, FoundY, xPos-70, yPos, xPos+800, yPos+500, %A_WorkingDir%\anchor_point_D2017.png

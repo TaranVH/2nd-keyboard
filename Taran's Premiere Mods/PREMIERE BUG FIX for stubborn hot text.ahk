@@ -10,7 +10,7 @@
 Menu, Tray, Icon, shell32.dll, 100 ;changes the icon to a little clicking hand
 
 #singleinstance force
-
+#MaxHotkeysPerInterval 2000
 #IfWinExist ahk_exe Adobe Premiere Pro.exe
 
 ;VERY IMPORTANT NOTE:
@@ -20,6 +20,7 @@ Menu, Tray, Icon, shell32.dll, 100 ;changes the icon to a little clicking hand
 ~F15::
 ~F18::
 ~F17::
+~^LButton::
 ~LButton::
 If WinActive("ahk_exe Adobe Premiere Pro.exe")
     DllCall("SystemParametersInfo", UInt, 0x71, UInt, 0, UInt, 11, UInt, 0) ; Slightly Faster then Windows default

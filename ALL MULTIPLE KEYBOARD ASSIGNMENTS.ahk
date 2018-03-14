@@ -1,19 +1,13 @@
 SetWorkingDir, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files
 ;the above will set A_WorkingDir. It must be done in the autoexecute area.
-
-SetNumLockState, on ;you won't be able to change the state of numlock when this is used. I think I need admin for this though.
-SetScrollLockState, off
-
+;SetNumLockState, on ;This doesn't work, needs to be done in admin mode.
+;SetScrollLockState, off
 Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece of paper or something
-
 ;when you get to #include, it means the END of the autoexecute section.
-
 ;gui must be #included first, or it does not work, for some reason...
 ;YOU probably do NOT need the GUI at all. Delete the line below:
 #Include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\gui.ahk
-
 #include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\All Premiere Functions.ahk
-
 #include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Almost All Windows Functions.ahk
 
 ;-------------------------------------------------------------------------
@@ -21,6 +15,9 @@ Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece
 ; CHECK OUT MY BIG TUTORIAL FOR SOME EXPLANATION OF HOW THESE
 ; AHK SCRIPTS WORK, AND HOW THEY COMMUNICATE WITH ONE ANOTHER.
 ; https://youtu.be/O6ERELse_QY?t=20m7s
+;
+; IF YOU HAVE NOT USED AHK BEFORE, YOU MUST TAKE THIS TUTORIAL:
+;  https://autohotkey.com/docs/Tutorial.htm
 ;
 ; IMPORTANT NOTE:
 ; Using #include is pretty much the same as pasting an entire script into 
@@ -42,6 +39,11 @@ Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece
 
 ; Lots of other explanatory videos other AHK scripts can be found on my youtube channel! https://www.youtube.com/user/TaranVH/videos 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+; Also, I will put shortcuts to all the AHK scripts that I use into my startup folder... which will be here:
+;  C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
+;  and\or here:
+;  C:\Users\[YOUR_USERNAME]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
 #NoEnv
 SendMode Input
@@ -70,7 +72,7 @@ detecthiddenwindows, on
 
 ; KEYS                    PREMIERE FUNCTIONS
 ;-----------------------------------------------------------------------------
-; u                     select clip at playhead. Probably this should be moved to a different series of keystrokes, so that "u" is freed for something else.
+; ctrl alt s                     select clip at playhead. Probably this should be moved to a different series of keystrokes, so that "u" is freed for something else.
 ; backspace             ripple delete --- but I don't use that in AutoHotKey because it's dangerous. This should be changed to something else; I use SHIFT C now.
 ; shift c               ripple delete --- very convenient for left handed use. Premiere's poor track targeting makes ripple delete less useful than it could be.
 ; ctrl alt shift d      ripple delete --- I never type this in manually - long shortcuts like this are great for using AHK or a macro to press them.
@@ -97,173 +99,6 @@ detecthiddenwindows, on
 ;                                                                                                                        
 ; Be aware that sometimes other programs like PUUSH can overlap/conflict with your customized shortcuts.                          
 ;_______________________________________________________________________________________________
-
-
-;____________________________________________________________________
-;                                                                    
-;        PRIMARY KEYBOARD, (Corsair K95 RGB) AHK KEY ASSIGNMENTS     
-;____________________________________________________________________
-
-
-;;;~~~~~~FUNCTION KEYS IN VARIOUS PROGRAMS~~~~
-
-#IfWinActive ahk_class MozillaWindowClass ;or ahk_class Chrome_WidgetWin_1
-!F1::send ^+{pgup}
-!F2::send ^+{pgdn}
-; F2 & f20::send ^+{pgdn}
-F1::send ^+{tab} ;control shift tab, which goes to the next tab
-F2::send ^{tab} ;control tab, which goes to the previous tab
-F3::send ^w ;control w, which closes a tab
-F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
-#IfWinActive
-
-#IfWinActive ahk_class Chrome_WidgetWin_1
-F1::send ^+{tab} ;control shift tab, which goes to the next tab
-F2::send ^{tab} ;control tab, which goes to the previous tab
-F3::send ^w ;control w, which closes a tab
-F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
-
-#IfWinActive ahk_exe notepad++.exe
-F1::send ^+{tab} ;control shift tab, which goes to the next tab
-F2::send ^{tab} ;control tab, which goes to the previous tab
-F3::send ^w 
-
-#IfWinActive ahk_exe Photoshop.exe
-F1::send ^+{tab} ;control shift tab, which goes to the next tab
-F2::send ^{tab} ;control tab, which goes to the previous tab
-F3::send ^w 
-
-;;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-; ;RIP Monty Oum https://youtu.be/qSuTnCFqMkw?t=1m21s
-; #IfWinActive ahk_exe Photoshop.exe
-; F1::sendinput {alt down}iac{alt up}
-
-
-#IfWinActive, ahk_group ExplorerGroup
-; ctrl L, alt D, or F4 will highlight the address bar. But in different ways..?
-;IDK if I need this script at all anymore.
-^+!d::
-sleep 10
-Sendinput !d
-sleep 10
-return
-
-
-#IfWinActive, ahk_class CabinetWClass
-`::Send !{up} ;This allows you to use the TILDE to go DOWN one folder level in explorer save boxes
-+`::Send !{left} ;shift tilde will go "back" in explorer save boxes
-
-
-#IfWinActive ahk_exe explorer.exe ;IDK if there is any meaningful difference for using the ahk_exe rather than the ahk_CLASS
-
-F4::
-;this converts F4 into ALT F4, but only for explorer. this is just to save one more keypress, since i close explorer windows in this way quite a lot.
-;There is a deliberate delay added, since in SOME situations, ALT would be recognised, but not F4. Adding a delay takes care of that.
-Send {alt down}
-sleep 10
-Send {F4}
-sleep 10
-Send {alt up}
-Return
-
-`::Send !{up} ;This optional script allows you to use the TILDE to go DOWN one folder level in explorer
-
-F7::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;script to resize name field so the entire field is readable
-
-
-#IfWinActive
-
-;;shortcut to CLOSE FIREFOX with no bullshit or fanfare or annoying dialouge boxes that try to argue with you. Just completely nuke it from orbit so we can start over
-^!+f::Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
-
-
-;shortcut to forcefully CLOSE PREMIERE, WITH NO BULLSHIT. BULLDOZE IT FLAT, BURN IT, SALT THE EATH, NUKE IT FROM ORBIT. JUST FUCKING DIE!!!
-^!+p::
-Run, %comspec% /c "taskkill.exe /IM /Adobe Premiere Pro.exe /T /F" ;,, hide
-sleep 100
-;Run, %comspec% /c "taskkill.exe /F /PID 72536",, hide
-tooltip, killed premiere
-sleep 100
-tooltip,
-return
-
-
-#IfWinActive
-
-;F13::
-sc064::back()
-
-
-^F1::switchToFirefox()
-+^F1::switchToOtherFirefoxWindow()
-^F2::switchToExplorer()
-!^F2::closeAllExplorers()
-
-^F3::switchToPremiere()
-
-^F4::switchToWord()
-+^F4::switchWordWindow()
-^F5::switchToChrome()
-
-+^F6::
-windowSaver()
-msgbox,,, savedCLASS = %savedCLASS% `nsavedEXE = %savedEXE%, 0.6
-Return
-
-^F6::
-;I had to learn just now to use the parameter to pass "savedCLASS" even though it's already a global variable. Just works better this way... but really IDK what i am doing.
-; msgbox,,, switching to `nsavedCLASS = %savedCLASS% `nEXE = %savedEXE%, 0.5
-switchToSavedApp(savedCLASS) ;Macro key G14
-return
-
-^F9::windowSwitcher("ahk_exe AfterFX.exe","C:\Program Files\Adobe\Adobe After Effects CC 2017\Support Files\AfterFX.exe") ;NOTE: was used for toggle all video tracks in premiere.
-^F10::windowSwitcher("ahk_exe StreamDeck.exe","C:\Program Files\Elgato\StreamDeck\StreamDeck.exe")
-
-; ^F11 is taken by filemover.ahk
-; ^F12 is also taken by filemover.ahk
-;NOTE: ^F12 (ctrl F12) is forbidden by Premiere, since it opens the Premiere CONSOLE. interesting.
-
-
-
-
-
-
-
-
-
-#IfWinActive
-;opens the CLOCK / CALENDAR. ;http://superuser.com/questions/290068/windows-keyboard-shortcut-to-view-calendar
-#z::
-Send #b{left}{left}{enter}
-Return
-
-
-#IfWinActive
-
-;control alt shift T -- click on the address bar for any youtube video, and this will link you to the thumbnail!
-^!+T::
-Send {end}{left 11}{backspace 40}https://i.ytimg.com/vi/{right 11}/sddefault.jpg{enter}
-; Send {end}{left 11}{backspace 40}https://i.ytimg.com/vi/{right 11}/maxresdefault.jpg{enter}
-
-;EXAMPLE: https://i.ytimg.com/vi/L-zDtBINvzk/hqdefault.jpg
-;http://img.youtube.com/vi/<insert-youtube-video-id-here>/maxresdefault.jpg
-return
-
-
-
-#IfWinActive
-Joy1::msgbox you hit Joy1
-Joy2::msgbox you hit Joy2
-Joy3::msgbox you hit Joy3
-
-Media_Next::
-msgbox hiiiee. testing stuff.
-return
-
-#ifwinactive
-
 
 
 ;____________________________________________________________________
@@ -349,7 +184,8 @@ F9::insertSFX("SimpleWhoosh3")
 F8::insertSFX("SimpleWhoosh8")
 F10::insertSFX("woosh2")
 F11::insertSFX("woosh1")
-; F12 is not used here if it is the keyboard's launching key. You MAY put it here if you used F13 to F24 as the launching key
+F12::search() ;"search" is also used on ^+j 
+; F12 must not used here IF it is the keyboard's launching key. You MAY put it here if you used F13 to F24 as the launching key
 
 ;;;;;next line;;;;;;;;
 
@@ -394,7 +230,7 @@ i::preset("multiply")
 o::preset("flip vertical")
 p::preset("flip horizontal")
 [::preset("Impact Pop for full-screen")
-]::preset("Impact Pop with undershoot")
+]::preset("Impact Pop Preset")
 \::instantExplorer("Z:\Linus\9 - Tools\1-Sound Effects")
 
 ;;;;;next line;;;;;;;;
@@ -485,9 +321,17 @@ space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
 ;SC065::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~ For Review") ;this is remapped from ALT. JK, SC065 is F14, do not use.
 appskey::msgbox, this is the right click appskey KEY I guess
 
-;these were all formerly runExplorer()
-PrintScreen::InstantExplorer("Z:\Linus\Team_Documents\TARAN THINGS")
+; PrintScreen::InstantExplorer("Z:\Linus\Team_Documents\TARAN THINGS")
+PrintScreen::
+IfWinNotExist, ahk_class TvnWindowClass
+	Run, C:\Program Files\TightVNC\tvnviewer.exe
+if WinExist("ahk_exe tvnviewer.exe")
+	WinActivate ahk_exe tvnviewer.exe
+return
+
 ScrollLock::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;"   ;msgbox, , , this key is NO GOOD TO USE!`nmaybe, 0.7
+;pause::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery")
+;numlock::msgbox, hello again
 SC061::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;"   ;msgbox, , , this key is NO GOOD TO USE!`nmaybe, 0.7
 
 CtrlBreak::msgbox, CTRL BREAK - maybe the default output of the pause/break key??
@@ -526,8 +370,17 @@ numpad7::SendKey(A_thishotkey, ,"purple")
 numpad8::SendKey(A_thishotkey, ,"nudge up")
 numpad9::SendKey(A_thishotkey, ,"dark green")
 
-+numlock::msgbox, "shift numpadlock"
-numlock::SendKey("numpad5", ,"red") ;msgbox, , , NUMLOCK - oh god... some keyboards behave very differently with this key! , 0.5
++numlock::msgbox, "shift numlock"
+numlock::
+IfWinActive, ahk_exe Adobe Premiere Pro.exe
+	{
+	tippy("numlock")
+	SendKey("numpad5", ,"red") ;msgbox, , , NUMLOCK - oh god... some keyboards behave very differently with this key! , 0.5
+	}
+else
+	search()
+return
+
 numpadDiv::SendKey("numpadDiv", ,"clip blue")
 numpadMult::SendKey("numpadmult", ,"pink")
 
@@ -651,54 +504,18 @@ send ^{numpadAdd} ;zoom in program monitor
 prFocus("timeline")
 return
 
-numpad3::
-tippy("numpad3 from jelly comb")
-IfWinActive, ahk_class CabinetWClass
-	{
-	send {alt}vo{enter} ;sort by name
-	tippy("sort Explorer by name")
-	}
-return
+numpad3::sortExplorerByName()
 
-
-numpad6::
-IfWinActive, ahk_class CabinetWClass
-	{
-	Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
-	send {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
-	tippy("sort Explorer by date")
-	}
-return
+numpad6::sortExplorerByDate()
 
 numpad5::
 If (exphWnd := WinActive("ahk_class CabinetWClass"))
 	{
 	ExplorerViewChange_ICONS(exphWnd)
-	
 	}
-; IfWinActive, ahk_class CabinetWClass
-	; {
-	
-	; ;tippy("numpad55 from jelly comb")
-	; ExplorerViewChange_ICONS(explorerHwnd)
-	; }
 return
 
-
-	; https://autohotkey.com/boards/viewtopic.php?t=28304
-	; WinGet, Win_pid, PID, A
-	; PostMessage, 0x111, 28717,0,, ahk_pid %Win_pid%      ;"Thumbnails" (h) (t)
-	;PostMessage, 0x111, 28713,0,, ahk_pid %Win_pid%      ;"Icons" (n) (i) (m = Medium icon view)
-	
-;WinGet, Win_pid, PID, A
-;PostMessage, 0x111, 28715,0,, ahk_pid %Win_pid%      ;"List" (l)
-
-
 numpad4::
-; if WinActive("ahk_class CabinetWClass") ;an explorer window
-	; {
-	; Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field in explorer
-	; }
 If (exphWnd := WinActive("ahk_class CabinetWClass"))
 	{
 	ExplorerViewChange_Window(exphWnd)
@@ -1027,7 +844,11 @@ l::
 '::tooltip, you pressed  %A_thishotkey%
 enter::
 if WinActive("ahk_class Premiere Pro")
+	{
+	prFocus("timeline")
+	sleep 10
 	sendinput, ^!+n ;toggle audio names
+	}
 return
 
 
@@ -1051,13 +872,13 @@ Lwin::msgbox, LEFT win
 
 ;Lalt has been remapped to SC064, which is F13.
 ;NOTE that this can interfere with normal F13 keypresses elsewhere in this script...
-SC064::
-IfWinNotExist, ahk_exe Adobe Media Encoder.exe
-	run, C:\Program Files\Adobe\Adobe Media Encoder CC 2017\Adobe Media Encoder.exe ;ahk_exe Adobe Media Encoder.exe
-if WinExist("ahk_exe Adobe Media Encoder.exe")
-	WinActivate ahk_exe Adobe Media Encoder.exe
-;tooltip, ran ME
-return
+; SC064::
+; IfWinNotExist, ahk_exe Adobe Media Encoder.exe
+	; run, C:\Program Files\Adobe\Adobe Media Encoder CC 2017\Adobe Media Encoder.exe ;ahk_exe Adobe Media Encoder.exe
+; if WinExist("ahk_exe Adobe Media Encoder.exe")
+	; WinActivate ahk_exe Adobe Media Encoder.exe
+; ;tooltip, ran ME
+; return
 
 
 
@@ -1138,6 +959,9 @@ return
 
 numpad5::
 prFocus("program")
+sleep 20
+send ^+1 ;res to 1/1
+sleep 30 ;Premiere 2018 is SLOOOWWW to react. So I gotta send this twice and WAIT AROUND
 send ^+1 ;res to 1/1
 prFocus("timeline")
 return
@@ -1145,12 +969,21 @@ return
 numpad6::tooltip, you pressed  %A_thishotkey%
 numpad7::
 prFocus("source")
-send ^{numpad2} ;res to 1/2
+sleep 20
+; send ^{numpad2} ;res to 1/2
+; sleep 30 
+; ; ; sendinput, {shift down}
+; ; ; sendinput, {shift up} ;this didn't help at all...
+sleep 20
+; sendinput, ^!{numpad2} ;; for some reason,, i have no idea why, this shortcut NEVER WORKS for this command, ever since upgrading to premiere 12.0.1
+sendinput, ^!l ;this is the shortcut for source monitor to 1/2 resolution.
+sleep 20
 prFocus("timeline")
 return
 
 numpad8::
 prFocus("program")
+sleep 20
 send ^+2 ;res to 1/2
 prFocus("timeline")
 return
@@ -1160,7 +993,9 @@ numpad9::tooltip, you pressed  %A_thishotkey%
 ;+numlock::
 numlock::
 prFocus("source")
-send ^{numpad3} ;res to 1/4
+send ^{numpad3} ;source res to 1/4
+sleep 30 ;Premiere 2018 is SLOOOWWW to react. So I gotta send this twice and WAIT AROUND
+send ^{numpad3} ;source res to 1/4
 prFocus("timeline")
 return
 
@@ -1197,9 +1032,238 @@ SC064::msgbox sc064, L ALT
 ;---------------ALL NORMAL KEY ASSIGNMENTS---------------------
 
 
-
-
 ;okay, so these keys MUST be AFTER the intercept.exe launched keys, otherwise BOTH scripts will be called, which is bad. IDK why, but putting them down here fixes the problem.
+;addendum: if #IfWinActive ahk_exe explorer.exe is BEFORE the 2nd keybaord code, it executes all by itself. So yeah, the secondary keybaords must be before all else.
+
+
+;____________________________________________________________________
+;                                                                    
+;        PRIMARY KEYBOARD, (Corsair K95 RGB) AHK KEY ASSIGNMENTS     
+;____________________________________________________________________
+
+
+;;;~~~~~~FUNCTION KEYS IN VARIOUS PROGRAMS~~~~
+
+#IfWinActive ahk_class MozillaWindowClass ;or ahk_class Chrome_WidgetWin_1
+!F1::send ^+{pgup}
+!F2::send ^+{pgdn}
+; F2 & f20::send ^+{pgdn}
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w ;control w, which closes a tab
+F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
+#IfWinActive
+
+#IfWinActive ahk_class Chrome_WidgetWin_1
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w ;control w, which closes a tab
+F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
+
+#IfWinActive ahk_exe notepad++.exe
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w 
+
+#IfWinActive ahk_exe Photoshop.exe
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^w 
+
+;;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+; ;RIP Monty Oum https://youtu.be/qSuTnCFqMkw?t=1m21s
+; #IfWinActive ahk_exe Photoshop.exe
+; F1::sendinput {alt down}iac{alt up}
+
+
+#IfWinActive, ahk_group ExplorerGroup ;this does not work...
+; ctrl L, alt D, or F4 will highlight the address bar. But in different ways..?
+;IDK if I need this script at all anymore.
+^+!d::
+sleep 10
+Sendinput !d
+sleep 10
+return
+
+
+;;;;;;;;;;;;;;EXPLORER SHORTCUTS;;;;;;;;;;;;;;;;;
+; #IfWinActive, ahk_class #32770 ahk_exe Adobe Premiere Pro.exe ;this is specifically premiere's save/load dialoge.
+
+; left & right::msgbox, hello
+
+
+#if WinActive("ahk_class #32770") and WinActive("ahk_exe Adobe Premiere Pro.exe") and WinActive("Save As") ;this is very specifically premiere's save/load dialoge, and it is NOT the Export Settings window.
+
+`::Send !{up} ; go DOWN one folder level in explorer
++`::Send !{left} ;shift tilde will go "back" in explorer
+
+~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
+
+home::
+send {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
+tippy("sort Explorer by date")
+return
+
+#if
+
+;------------------------------------------
+
+#IfWinActive, ahk_class CabinetWClass ;this is also explorer
+
+
+
+#IfWinActive ahk_exe explorer.exe ;IDK if there is any meaningful difference for using the ahk_exe rather than the ahk_CLASS
+
+F3::
+;this converts F3 into ALT F4, but only for explorer. this is just to save one more keypress, since i close explorer windows in this way quite a lot.
+;There is a deliberate delay added, since in SOME situations, ALT would be recognised, but not F4. Adding a delay takes care of that.
+Send {alt down}
+sleep 10
+Send {F4}
+sleep 10
+Send {alt up}
+Return
+
+; `::Send !{up} ;This optional script allows you to use the TILDE to go DOWN one folder level in explorer
+; +`::Send !{left} ;shift tilde will go "back" in explorer
+
+~left & right::
+;msgbox,,, hellllllo,0.5
+Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
+return
+
+home::
+If (exphWnd := WinActive("ahk_class CabinetWClass"))
+	ExplorerViewChange_Window(exphWnd) ;list mode
+return
+
+
+end::
+If (exphWnd := WinActive("ahk_class CabinetWClass"))
+	ExplorerViewChange_ICONS(exphWnd)
+return
+
+
+
+
+; insert::
+
+; return
+
+pgup::send, {alt}vo{enter} ;sort by name
+pgdn::send, {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
+
+
+#IfWinActive
+
+;;shortcut to CLOSE FIREFOX with no bullshit or fanfare or annoying dialouge boxes that try to argue with you. Just completely nuke it from orbit so we can start over
+^!+f::Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
+
+
+;shortcut to forcefully CLOSE PREMIERE, WITH NO BULLSHIT. BULLDOZE IT FLAT, BURN IT, SALT THE EATH, NUKE IT FROM ORBIT. JUST FUCKING DIE!!!
+^!+p::
+Run, %comspec% /c "taskkill.exe /IM /Adobe Premiere Pro.exe /T /F" ;,, hide
+sleep 100
+;Run, %comspec% /c "taskkill.exe /F /PID 72536",, hide
+tooltip, killed premiere
+sleep 100
+tooltip,
+return
+
+
+#IfWinActive
+
+;These are mapped from the stream deck. Note that this actually includes a SHIFT keypress, due to the weird effects of numlock being on or off, which acts as if SHIFt is down... or up... whatever.
+; So, rather than ^+!numpad1:: ... instead, you have to do:
+^!numpadend::instantexplorer("C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard") 
+^!NumpadDown::instantexplorer("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
+^!numpadpgdn::instantexplorer("C:\Users\TaranWORK\Videos\Desktop") ;shadowplay folder opener
+
+
+
+
+#IfWinActive
+
+;F13::
+sc064::
+;tooltip, f13
+back()
+return
+
+^F1::switchToFirefox()
++^F1::switchToOtherFirefoxWindow()
+^F2::switchToExplorer()
+!^F2::closeAllExplorers()
+
+^F3::switchToPremiere()
+
+^F4::switchToWord()
++^F4::switchWordWindow()
+^F5::switchToChrome()
+
++^F6::
+windowSaver()
+msgbox,,, savedCLASS = %savedCLASS% `nsavedEXE = %savedEXE%, 0.6
+Return
+
+^F6::
+;I had to learn just now to use the parameter to pass "savedCLASS" even though it's already a global variable. Just works better this way... but really IDK what i am doing.
+; msgbox,,, switching to `nsavedCLASS = %savedCLASS% `nEXE = %savedEXE%, 0.5
+switchToSavedApp(savedCLASS) ;Macro key G14
+return
+
+^F9::windowSwitcher("ahk_exe AfterFX.exe","C:\Program Files\Adobe\Adobe After Effects CC 2017\Support Files\AfterFX.exe") ;NOTE: was used for toggle all video tracks in premiere.
+^F10::windowSwitcher("ahk_exe StreamDeck.exe","C:\Program Files\Elgato\StreamDeck\StreamDeck.exe")
+
+; ^F11 is taken by filemover.ahk
+; ^F12 is also taken by filemover.ahk
+;NOTE: ^F12 (ctrl F12) is forbidden by Premiere, since it opens the Premiere CONSOLE. interesting.
+
+
+
+
+
+
+
+
+
+#IfWinActive
+;opens the CLOCK / CALENDAR. ;http://superuser.com/questions/290068/windows-keyboard-shortcut-to-view-calendar
+#z::
+Send #b{left}{left}{enter}
+Return
+
+
+#IfWinActive
+
+;control alt shift T -- click on the address bar for any youtube video, and this will link you to the thumbnail!
+^!+T::
+Send {end}{left 11}{backspace 40}https://i.ytimg.com/vi/{right 11}/sddefault.jpg{enter}
+; Send {end}{left 11}{backspace 40}https://i.ytimg.com/vi/{right 11}/maxresdefault.jpg{enter}
+
+;EXAMPLE: https://i.ytimg.com/vi/L-zDtBINvzk/hqdefault.jpg
+;http://img.youtube.com/vi/<insert-youtube-video-id-here>/maxresdefault.jpg
+return
+
+
+
+#IfWinActive
+Joy1::msgbox you hit Joy1
+Joy2::msgbox you hit Joy2
+Joy3::msgbox you hit Joy3
+
+; Media_Next::
+; msgbox hiiiee. testing stuff.
+; return
+
+#ifwinactive
+
+
+
+
+;--------------------------------------------------------
 
 #ifWinActive
 !,::msgbox, A_workingDir should be %A_WorkingDir%
@@ -1218,6 +1282,7 @@ tooltip, yeah
 ; WinMenuSelectItem, Adobe Premiere Pro, , Temporal Interpolation, Ease In
 ; WinMenuSelectItem, Adobe Premiere Pro, , Temporal Interpolation, Ease Out
 ; WinMenuSelectItem, Adobe Premiere Pro, , Spatial Interpolation, Linear
+;well none of THOSE ever worked, derp.
 
 ; blockinput, sendandMouse
 blockinput, MouseMove
@@ -1264,7 +1329,9 @@ G18: Activate Premiere
 
 ;macro key G1 on K95. universal SEARCH EVERYTHINGER
 ; this used to have a ~ to let it pass through... not sure why. it was creating an ENTER keypress effect in notepad++ so i removed it.
-^+J::
+^+J::search()
+
+search(){
 if winactive("ahk_exe Adobe Premiere Pro.exe")
 	{
 	;Keyshower("effects Panel CLEAR",,1)
@@ -1279,16 +1346,32 @@ else if winactive("ahk_exe chrome.exe")
 	sendinput ^e
 else if winactive("ahk_class CabinetWClass")
 	sendinput ^e
-return
+}
+
+#IfWinActive 
+;Macro key G6
+~^+U::reSelect() ;formerly ^+9
+
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+#IfWinActive ahk_exe notepad++.exe
+F4::F2 ;this is to regain what I lost when I used F2 and F3 for tab navigation.
+
+
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
+
+;just an experiment
+F8::preset("T push up")
 
 ;macro key G2
 ~^+K::preset("Warp Stabilizer Preset") ;macro key G2. I wish it would also press "analyse..."
 ;;;~^+=::effectsPanelType("presets") ;set to macro key G3. ;Types in "presets," which reveals my own entire list of presets. ;;I have canceled this one in favor of a global pause/play.
 
 ;macro key G3
-~^+L::sendinput, {space} ;Macro key G3
+^+L::sendinput, {space} ;Macro key G3. Outside of premiere, it will STILL work to pause/play the timeline, due to some other code somewhere else...
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1298,15 +1381,6 @@ return
 ; macro key G5.
 ~^+.::audioMonoMaker("right")
 
-#IfWinActive 
-;Macro key G6
-~^+U::reSelect() ;formerly ^+9
-
-;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#IfWinActive ahk_exe notepad++.exe
-F4::F2 ;this is to regain what I lost when I used F2 and F3 for tab navigation.
-
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 !]::preset("DeHummer Preset") ;This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.
@@ -1314,30 +1388,11 @@ F4::F2 ;this is to regain what I lost when I used F2 and F3 for tab navigation.
 appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
 
 
-;dynamically reassignable preset funtions - now discontinued
-/*
-+F18::
-sendinput, ^a
-sleep 20
-SendInput, {Shift Down}{Shift Up}{Ctrl Down}{c Down}
-sleep 20
-SendInput, {c up}{Ctrl up}
-sleep 20
-;msgbox, text in clipboard = %clipboard%
-savedpreset1 = %clipboard%
-return
-
-; F18::preset(savedpreset1)
-*/
-
-;+++++++++++++++++++++++++++++++
-#IfWinActive
-
-
 ;Below is some code to pause/play the timeline in Premiere, when the application is NOT the active window (on top.) This means that I can be reading through the script, WHILE the video is playing, and play/pause as needed without having to switch back to premeire every single time.
 ;Maybe this code really shoudl be in ALL PREMIERE FUNCTIONS.ahk.
 #IfWinNotActive ahk_class Premiere Pro
 ;;macro key G3, when NOT in Premiere.
+;play/pause premiere even when not in focus
 ^+L::
 ;WinGet, lolexe, ProcessName, A
 WinGetClass, lolclass, A ; "A" refers to the currently active window
@@ -1346,8 +1401,11 @@ Keyshower("[WC1] pause/play Premiere when not active",,1,-400)
 
 ;Trying to bring focus to the TIMELINE itself is really dangerous and unpredictable, since its Class# is always changing, based upon how many sequences, and other panels, that might be open.
 ControlFocus, DroverLord - Window Class14,ahk_exe Adobe Premiere Pro.exe
-;If we don't use ControlFocus first, ControlSend experiences bizzare and erratic behaviour, only able to work when the video is PLAYING, but not otherwise, but also SOMETIMES working perfectly, in unknown circumstances. Huge thanks to Frank Drebin for figuring this one out; it had been driving me absolutely mad. https://www.youtube.com/watch?v=sC2SeGCTX4U
 ; Window Class14 is the Program monitor, at least on my machine.
+sleep 20
+ControlFocus, DroverLord - Window Class14,ahk_exe Adobe Premiere Pro.exe
+;If we don't use ControlFocus first, ControlSend experiences bizzare and erratic behaviour, only able to work when the video is PLAYING, but not otherwise, but also SOMETIMES working perfectly, in unknown circumstances. Huge thanks to Frank Drebin for figuring this one out; it had been driving me absolutely mad. https://www.youtube.com/watch?v=sC2SeGCTX4U
+
 ;I tried windowclass3, (the effect controls) but that does not work, possibly due to stuff in the bins, which would play instead sometimes.
 
 sleep 10
@@ -1366,22 +1424,27 @@ sleep 10
 
 ;now that we have a panel highlighted, we can send keystokes to premiere. But the panel itself is sometimes random. so it's best to use this to FORCE a specific panel that won't screw stuff up.
 
-sleep 10
-ControlSend,DroverLord - Window Class14, ^+!5,ahk_exe Adobe Premiere Pro.exe ;this will highlight the EFFECT CONTROLS, which will NOT also stop playback of the source monitor, if it is already playing.
+
+ControlSend,DroverLord - Window Class14, ^+!5,ahk_exe Adobe Premiere Pro.exe ;this shortcut will highlight the EFFECT CONTROLS, which will NOT also stop playback of the source monitor, if it is already playing.
+sleep 40
+ControlSend,DroverLord - Window Class14, ^+!5,ahk_exe Adobe Premiere Pro.exe
 sleep 30
 
-ControlSend,DroverLord - Window Class1,{space},ahk_exe Adobe Premiere Pro.exe
+
+ControlSend,,{space}, ahk_exe Adobe Premiere Pro.exe
+;;;use either the ABOVE line, or the line BELOW. Can't say right now which is better...
+;ControlSend,DroverLord - Window Class1,{space},ahk_exe Adobe Premiere Pro.exe
 ;even though we are sending the "SPACE" to a windowclass that (often) doesn't exist, because we already highlighted the effect controls, the space will go to the effect controls panel. (it hasb't failed to do so yet, at least.)
 
 
-; ControlSend,,{space}, ahk_exe Adobe Premiere Pro.exe
+
 
 ;in case premiere was accidentally switched to, this will switch the user back to the original window.
 if not WinActive(lolClass)
 	WinActivate, %lolclass%
 
 return
-
+;end of Premiere play/pause when not in focus.
 
 
 ;Here we have a mster list of all function key assignments
@@ -1389,7 +1452,11 @@ return
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
 
-~F1::Send u^+!d ;u is [select clip at playhead] and ctrl alt shift d is [ripple delete]
+~F1::
+Send ^!s
+Send ^+!d
+;ctrl alt s is [select clip at playhead] and ctrl alt shift d is [ripple delete]
+return
 ;F2 is set in premiere to the [GAIN] panel.
 ;F3 is set in premiere to the [MODIFY CLIP] panel. 
 ~F4::masterClipSelect() ;this has not been fully programmed yet
@@ -1404,6 +1471,14 @@ return
 ;F11::unused
 ;F12::unused
 ;F13 - from macro key G13, "back" in windows mods script.
+
+;;the top rightmost keys on my K95.
+Media_Stop::^numpad7
+Media_Prev::^numpad8
+Media_Play_Pause::^numpad9
+Media_Next::^numpadMult
+;These are bound to some of the new LABEL COLORS in premiere.
+
 
 ;Macro key G12 on my K95 keyboard is set to F14.
 #IfWinActive ahk_exe winword.exe
@@ -1435,7 +1510,7 @@ return
 ;F16 is maybe available?
 
 ;macro for moving GOOGLE SHEETS, B-roll matrix information into WORD
-#IfWinActive ahk_class MozillaWindowClass
+#IfWinActive ;ahk_class MozillaWindowClass
 F17::
 sendinput, ^c
 sleep 100
@@ -1447,7 +1522,7 @@ switchToWord()
 sleep 100
 send ^v
 sleep 100
-send {enter}
+;send {enter}
 sleep 10
 ; send ^{F4} ;only use this line if switchToWord() is not directly available.
 ;;;;msgbox,,, just before,0.5
@@ -1592,7 +1667,8 @@ Return
 #IfWinActive
 
 
-
+SC05E::msgbox, woah
+SC05E & w::msgbox, super woah
 
 
 ;saving this blank keyboard for future use

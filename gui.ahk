@@ -158,7 +158,7 @@ else if (alwaysshow = 2)
 	Gui, show, NA 
 	Gui, kb2: hide
 	;StringReplace, parameter,parameter,", , All ;" ; this REMOVES the quotation marks around the a string if they are present.
-	GuiControl,,textt, Stream Deck
+	GuiControl,,textt, Direct Launch
 	GuiControl,,namee, %parameter%
 	GuiControl,,keyb, 
 	;msgbox,,,it now should have happened using`n%parameter%,1

@@ -1,6 +1,6 @@
 ﻿#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Almost All Windows Functions.ahk
 
-#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\point_to_gui.ahk ;this is alreayd in almost all windows functions.ahk,,,, i dont know if you can double include something or not....
+;#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\point_to_gui.ahk ;this is already in almost all windows functions.ahk,,,, i dont know if you can double include something or not....
 
 #WinActivateForce ;this may prevent taskbar flashing, and force a window to open instead, as it should.
 
