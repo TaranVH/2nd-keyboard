@@ -35,4 +35,4 @@ A quickstart guide for using a second keyboard purely for macros on Windows.
 
 * [LuaMacros](https://github.com/stevedonovan/LuaMacro)
 
-* [AuthoHotkey](https://github.com/AutoHotkey/AutoHotkey)
+* [AutoHotkey](https://github.com/AutoHotkey/AutoHotkey)
