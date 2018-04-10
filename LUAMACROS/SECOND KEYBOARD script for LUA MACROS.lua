@@ -92,7 +92,7 @@ local config = {
 
 	[106] = "numMult",
     [107] = "numPlus",
-    [108] = "numEnter" --sometimes this is different, check your keyboard
+    [108] = "numEnter", --sometimes this is different, check your keyboard
 	[109] = "numMinus",
     [110] = "numDelete",
 	[111] = "numDiv",
