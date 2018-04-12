@@ -1,4 +1,4 @@
-.#NoEnv 
+#NoEnv 
 Menu, Tray, Icon, shell32.dll, 156
 ;SetWorkingDir %A_ScriptDir%
 #SingleInstance force ;only one instance of this script may run at a time!
