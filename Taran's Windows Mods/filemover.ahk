@@ -1,4 +1,4 @@
-﻿#NoEnv 
+#NoEnv 
 Menu, Tray, Icon, shell32.dll, 156
 ;SetWorkingDir %A_ScriptDir%
 #SingleInstance force ;only one instance of this script may run at a time!
@@ -29,22 +29,34 @@ return ComObjCreate("Shell.Application").Namespace(publishLOC).CopyHere(filetomo
 ;This is just a test function, I don;t actually use it.
 }
 
+;Takes care of handling paths;
+PathCombine(abs, rel) {
+    VarSetCapacity(dest, (A_IsUnicode ? 2 : 1) * 260, 1) ; MAX_PATH
+    DllCall("Shlwapi.dll\PathCombine", "UInt", &dest, "UInt", &abs, "UInt", &rel)
+    Return, dest
+}
+
 ;;;;FILE MOVER TO TRANSCODE FOLDERS
 ; YTpublish = "Z:\Linus\1. Linus Tech Tips\Transcode\YT Publish 4K\"
 ; VESpublish = "Z:\Linus\1. Linus Tech Tips\Transcode\Vessel Final 4K\"
 
 ;I did not write the code below, I forget where I got it from. Will look into it.
+
 Explorer_GetSelection(hwnd="") {
-	;msgbox, now in getselection
-    hwnd := hwnd ? hwnd : WinExist("A")
+    WinGet, process, processName, % "ahk_id" hwnd := hwnd? hwnd:WinExist("A")
     WinGetClass class, ahk_id %hwnd%
-    if (class="CabinetWClass" or class="ExploreWClass" or class="Progman")
-        for window in ComObjCreate("Shell.Application").Windows
-            if (window.hwnd==hwnd)
-    sel := window.Document.SelectedItems
-    for item in sel
-    ToReturn .= item.path "`n"
-	;msgbox, %ToReturn% is ToReturn
+    if (process = "explorer.exe")
+        if (class ~= "Progman|WorkerW") {
+            ControlGet, files, List, Selected Col1, SysListView321, ahk_class %class%
+            Loop, Parse, files, `n, `r
+                ToReturn .= A_Desktop "\" A_LoopField "`n"
+        } else if (class ~= "(Cabinet|Explore)WClass") {
+            for window in ComObjCreate("Shell.Application").Windows
+                if (window.hwnd==hwnd)
+                    sel := window.Document.SelectedItems
+            for item in sel
+                ToReturn .= item.path "`n"
+        }
     return Trim(ToReturn,"`n")
 }
 
@@ -59,7 +71,7 @@ nlines = 0
 
 
 ;BEGIN FUNCTION DEFINITION:
-FileMover(publishLOC){
+FileMover(publishLOC){    
 ;msgbox,,,filemover,1
 
 
@@ -83,8 +95,9 @@ file2move =
 filetomovePATH =  ;if you don't refresh these variables, they will retain data from previous run-throughs.
 FileListLocations =
 Fileposition =
-FileNotPresent = 0
+FilePresent = 0
 filetomovePATH := Explorer_GetSelection()
+;msgbox, %filetomovePATH%
 
 ;msgbox, the current file path is `n%filetomovePATH%
 SlashPosition := InStr(filetomovePATH, "\" ,false,-1,1) ;first occurance from the right to the left, supposedly.
@@ -93,9 +106,9 @@ StringTrimLeft,file2move,filetomovePATH, %slashposition%
 
 ;https://www.autohotkey.com/docs/commands/LoopFile.htm the following code does work to list files in a given directory!
 FileList =  ; Initialize to be blank.
-Loop, Files, %publishLOC%*.*, DFR
+Loop, Files, % PathCombine(publishLOC, "*.*"), DFR
     FileList = %FileList%%A_LoopFileName%`n
-Loop, Files, %publishLOC%*.*, DFR
+Loop, Files, % PathCombine(publishLOC, "*.*"), DFR
     FileListLocations = %FileListLocations%%A_LoopFileFullPath%`n ;A_LoopFileDir -or- A_LoopFileFullPath
 
 ;;msgbox, FileListLocations = `n%FileListLocations%
@@ -129,6 +142,7 @@ Loop, parse, FileList, `n
 		;;msgbox, existingfile = %existingfile%
 
         ;A match has been found in this folder system, meaning the file was ALREADY moved over here before!
+        FilePresent = 1 
         msgbox, 1, ,%A_LoopField%`nis already present at`n%existingfile%`n...Want to see?
         IfMsgBox, OK
         {
@@ -149,13 +163,12 @@ Loop, parse, FileList, `n
     if counter + 1 = nlines
 		{
         ;;msgbox, looked at all files, didn't find the one you are looking for. time to break.
-		FileNotPresent = 1
 		break
 		}
     ;tooltip, count: %counter%, , ,5
 }
 ;;msgbox, end of the loop
-if FileNotPresent = 1
+if FilePresent = 0
 {
 	msgbox, 3 , ,%filetomovePATH%`nIS NOT PRESENT AT OR ABOVE `n%publishLOC%`n...would you like to move it there?
 	IfMsgBox, Yes
@@ -163,9 +176,11 @@ if FileNotPresent = 1
 		;return 
 		ComObjCreate("Shell.Application").Namespace(publishLOC).CopyHere(filetomovePATH)
 		;FileCopy,%filetomovePATH%,%publishLOC% ;;this was the old code that does NOT give you a nice windows GUI thingy telling you the status.
-		Run %COMSPEC% /c explorer.exe /select`, "%publishLOC%%file2move%",, Hide
+        file = % PathCombine(publishLOC, file2move)
+        ;msgbox, %file%
+		Run %COMSPEC% /c explorer.exe /select`, "%file%",, Hide
 		;;Msgbox, did that work?
-		FileNotPresent = 0
+		FilePresent = 1
 	}
 }
 Goto, theEnd_FM
