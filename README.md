@@ -21,8 +21,12 @@ https://autohotkey.com/docs/Tutorial.htm
 
 Please note, I'm not a real programmer (in this lifetime.) My organization can be bad, and my code can be spaghetti-y. I have, however, done extensive commenting... so if you know how to code, it should be pretty easy to figure out what's going on.
 
-Help with this Repo is appreciated, but don't feel bad if I never oficially merge your scripts. I can't trust anything that I haven't fully tested myself, or something with code that I don't recognise or understand. These are my real day-to-day working scripts, so I can't compromise them for anybody. 
+Help with this Repo is appreciated, but don't feel bad if I never officially merge your scripts. I can't trust anything that I haven't fully tested myself, or something with code that I don't recognise or understand. These are my real day-to-day working scripts, so I can't compromise them for anybody. 
 
 Sometimes I put out tutorials on my personal channel: https://www.youtube.com/user/TaranVH/videos ...and sometimes I make "reverse tutorials" where I ask questions instead.
 
 Twitter is probably the most effective method for you to contact me: https://twitter.com/TaranVH
+
+You're free to use any of these scripts for yourself. Take what you need, modify it to your heart's content.
+
+My most used, most useful, simplest script is this one: https://www.youtube.com/watch?v=OqyQABySV8k
