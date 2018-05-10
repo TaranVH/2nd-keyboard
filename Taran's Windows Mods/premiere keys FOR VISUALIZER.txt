@@ -46,18 +46,18 @@ Shift [G14] Save variable app				&Ctrl Shift F6
 
 
 
-Ripple delete clips at playhead	(macro)		&F1
+Ripple delete clips at playhead	MACRO		&F1
 Audio Gain...								&F2
 Audio Channels...							&F3
-Taran mod-Motion Effect Untwirl				&F4
+Taran mod-add edit at cursor				&F4
 Taran mod-Transformation Icon auto select	&F5
 select crop icon							&F6
-extend name field in explorer				&F7
-Nothin' yet									&F8
-Nothin' yet									&F9
-Nothin' yet									&F10
-Nothin' yet									&F11
-"Go back"(in bin)							&F12
+Alt click disable MACRO						&F7
+Alt click delete MACRO						&F8
+Go to master clip MOD						&F9
+IDK											&F10
+IDK											&F11
+IDK											&F12
 
 [G6]RE-SELECT CLIP (Taran mod)		&ctrl shift 9		
 +7db								&ctrl shift 8		
@@ -290,8 +290,8 @@ Speed/Duration...&Ctrl R
 Capture Settings
 Set Capture Settings...
 Clear Capture Settings
-Insert&,
-Overwrite&.
+Insert
+Overwrite
 Replace Footage...
 
 Replace With Clip
@@ -308,7 +308,7 @@ Restore Unrendered
 Generate Audio Waveform
 Automate to Sequence...
 Enable&Shift E
-Enable&\
+Enable
 Link&0
 Group&Ctrl G
 Ungroup
@@ -341,8 +341,10 @@ Lift
 Extract&'
 Zoom In&G
 Zoom In&=
+Zoom In&+
 Zoom Out&F
 Zoom Out&-
+Zoom Out&_
 Go to Gap
 Next in Sequence&Shift ;
 Previous in Sequence&Ctrl Shift ;
@@ -376,10 +378,11 @@ Audio Out
 Clear In&Ctrl Shift I
 Clear Out&Ctrl Shift O
 Clear In and Out&Ctrl Shift X
-Add Marker&\
+Add Marker&;
 Go to Next Marker
 Go to Previous Marker
 Clear Selected Marker&Ctrl Alt M
+Clear Selected Marker&AppsKey
 Clear All Markers&Ctrl Alt Shift M
 Edit Marker...
 Add Chapter Marker...	&/
@@ -861,8 +864,8 @@ Marker Panel
 Markers Panel Menu
 Sequence Timecode
 Show all clip markers in sequence
-Next Marker
-Previous Marker
+Next Marker&.
+Previous Marker&,
 Media Browser Panel
 Media Browser Panel Menu
 Edit Columns...

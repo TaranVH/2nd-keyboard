@@ -48,6 +48,7 @@ Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece
 #NoEnv
 SendMode Input
 #InstallKeybdHook
+#InstallMouseHook
 #UseHook On
 
 #SingleInstance force ;only one instance may run at a time!
@@ -55,6 +56,7 @@ SendMode Input
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm ;this may prevent taskbar flashing.
 detecthiddenwindows, on
 
+SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 
 
 ;____________________________________________________________________________
@@ -258,7 +260,7 @@ k::preset("100 to 120 zoom")
 l::preset("25% blur and darkener")
 `;::preset("blur with edges") ;lol, the syntax highlighting gets this one wrong.
 '::preset("Warp Stabilizer Preset")
-enter::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music")
+enter::return
 ;enter WAS ;Sendinput ^!e
 
 ;;;;;next line;;;;;;;;
@@ -311,7 +313,9 @@ Lalt::msgbox LEFT alt
 
 ;Ralt::msgbox Ralt - doesnt work
 ;Rwin::msgbox Right Win - doesnt work
-;Rshift::msgbox RIGHT SHIFT lol
+Rshift::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music")
+;SC061::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music")
+;msgbox RIGHT SHIFT lol
 
 ;SC06E::msgbox,,,this was right WINkey,0.5
 SC06F::msgbox,,,testing scan codes,0.5
@@ -475,14 +479,15 @@ return
 
 
 
-
-
-
 ;; https://autohotkey.com/board/topic/53346-explorer-view-mode/
 ; GroupAdd, Explorer, ahk_class CabinetWClass
 ; GroupAdd, Explorer, ahk_class ExploreWClass
 ; #IfWinActive, ahk_group Explorer
 
+
+
+
+/*
 ;~~~~~~~~~JELLY COMB NUMPAD USING F21~~~~~~~~~~~
 ;#if (getKeyState("F21", "P") and If WinActive("ahk_exe Adobe Premiere Pro.exe"))
 #if (getKeyState("F21", "P"))
@@ -570,6 +575,7 @@ return
 ;~~~~END OF 4TH KEYBOARD (mechanical Jelly) USING INTERCEPTOR~~~~
 ; https://www.reddit.com/r/MechanicalKeyboards/comments/4kf2gk/review_jellycomb_mechanical_numpad/
 ; https://autohotkey.com/board/topic/29542-rebinding-alt-061/
+
 ; this is for the jellycomb numpad 4th keyboard's TOP ROW of keys:
 $*~LAlt::
 Loop 10
@@ -605,6 +611,7 @@ HandleNum:
 Ascii_Unicode_Input .= SubStr( A_ThisHotkey, 0 )
 return
 #if
+*/
 ;________________END OF 4TH KEYBOARD OVERALL______________________
 
 
@@ -628,7 +635,7 @@ F10::
 F11::
 F12::return
 
-`::
+`::tooltip, llllll
 1::
 2::
 3::
@@ -756,15 +763,15 @@ SC064::msgbox sc064, L ALT
  
 
 ;BEGIN KEYBOARD 4, FULL AZIO KEYBOARD
-#if (getKeyState("F24", "P"))
+#if (getKeyState("F24", "P")) ;and WinActive("ahk_exe Adobe Premiere Pro.exe") ;; bad idea to have the "and [something]", this means the keyboard behaves normally, any time you are NOT in Premiere...
 F24::return ;F24
 
 escape::
 msgbox,,,you pressed escape. this might cause like problems maybe,0.9
 tooltip, 
 return
-F1::tooltip,
-F2::
+F1::tooltip, Yes hello
+F2::tooltip,
 F3::
 F4::
 F5::
@@ -776,7 +783,7 @@ F10::
 F11::
 F12::tooltip, you pressed  %A_thishotkey%
 
-`::
+`::tooltip, 22222
 1::
 2::
 3::
@@ -806,8 +813,8 @@ gotofiretab("Video Tracker LTT - Google","https://docs.google.com/spreadsheets/d
 	; run, firefox.exe https://docs.google.com/spreadsheets/d/1FmuWOCKHxZbxS5XbwpVDP4M27BjTAJJ67B0yoSXUN9k/edit#gid=0
 return
 
-q::return
-w::sendinput, +{F12}^w
+q::
+w:: ;sendinput, +{F12}^w
 e::
 r::
 t::
@@ -855,12 +862,31 @@ return
 ;;;;;next line;;;;;;;;
 
 Lshift::tooltip, you pressed  %A_thishotkey%
-z::send ^+6
-x::send ^+7
-c::send ^+8
-v::send ^+9
-b::send ^+0
-n::send ^+-
+z::
+if WinActive("ahk_class Premiere Pro")
+	send ^+6 ;track targeting presets in premiere.
+return
+x::
+if WinActive("ahk_class Premiere Pro")
+	send ^+7 ;track targeting presets in premiere.
+return
+c::
+if WinActive("ahk_class Premiere Pro")
+	send ^+8 ;track targeting presets in premiere.
+return
+v::
+if WinActive("ahk_class Premiere Pro")
+	send ^+9 ;track targeting presets in premiere.
+return
+b::
+if WinActive("ahk_class Premiere Pro")
+	send ^+0 ;IDK
+return
+n::
+if WinActive("ahk_class Premiere Pro")
+	send ^+- ;IDK
+return
+
 m::
 ,::
 .::
@@ -868,7 +894,7 @@ m::
 
 ;l control    Linus Media Group Inc. Mail
 
-Lwin::msgbox, LEFT win
+Lwin::msgbox, LEFT win. ;but this won't happen, it was swapped with another key...
 
 ;Lalt has been remapped to SC064, which is F13.
 ;NOTE that this can interfere with normal F13 keypresses elsewhere in this script...
@@ -912,7 +938,7 @@ Break::msgbox, Maybe THIS is the pause/break key???
 
 pgdn::tooltip, you pressed  %A_thishotkey%
 end::tooltip, you pressed  %A_thishotkey%
-delete::sendinput, ^!+k ;lock/unlock all audio tracks
+delete::sendinput, ^!+j ;lock/unlock all audio tracks
 pgup::tooltip, you pressed  %A_thishotkey%
 home::tooltip, you pressed  %A_thishotkey%
 insert::sendinput, ^!+l ;lock/unlock all video tracks
@@ -935,39 +961,46 @@ if WinActive("ahk_class Premiere Pro")
 	sendinput, ^!+9 ;activate lumetri scopes
 return
 numpad1::
-if WinActive("ahk_class Premiere Pro")
+if WinActive("ahk_class Premiere Pro"){
 	;sendinput, ^!+4 ;Safe margins, source monitor
 	prFocus("source")
 	sendinput, ^!+[ ;Safe margins, source monitor
 	prFocus("timeline")
+	}
 return
 numpad2::
-if WinActive("ahk_class Premiere Pro")
+if WinActive("ahk_class Premiere Pro"){
 	prFocus("program")
 	sendinput, ^!+] ;safe margins, program monitor
 	prFocus("timeline")
+}
 return
 
 ;WE ARE STILL INSIDE THE AZIO KEYBOARD
 
 numpad3::return
 numpad4::
-prFocus("source")
-send ^{numpad1} ;res to 1/1
-prFocus("timeline")
+if WinActive("ahk_class Premiere Pro"){
+	prFocus("source")
+	send ^{numpad1} ;res to 1/1
+	prFocus("timeline")
+}
 return
 
 numpad5::
+if WinActive("ahk_class Premiere Pro"){
 prFocus("program")
 sleep 20
 send ^+1 ;res to 1/1
 sleep 30 ;Premiere 2018 is SLOOOWWW to react. So I gotta send this twice and WAIT AROUND
 send ^+1 ;res to 1/1
 prFocus("timeline")
+}
 return
 
 numpad6::tooltip, you pressed  %A_thishotkey%
 numpad7::
+if WinActive("ahk_class Premiere Pro"){
 prFocus("source")
 sleep 20
 ; send ^{numpad2} ;res to 1/2
@@ -979,30 +1012,37 @@ sleep 20
 sendinput, ^!l ;this is the shortcut for source monitor to 1/2 resolution.
 sleep 20
 prFocus("timeline")
+}
 return
 
 numpad8::
+if WinActive("ahk_class Premiere Pro"){
 prFocus("program")
 sleep 20
 send ^+2 ;res to 1/2
 prFocus("timeline")
+}
 return
 
 numpad9::tooltip, you pressed  %A_thishotkey%
 
 ;+numlock::
 numlock::
+if WinActive("ahk_class Premiere Pro"){
 prFocus("source")
 send ^{numpad3} ;source res to 1/4
 sleep 30 ;Premiere 2018 is SLOOOWWW to react. So I gotta send this twice and WAIT AROUND
 send ^{numpad3} ;source res to 1/4
 prFocus("timeline")
+}
 return
 
 numpadDiv::
+if WinActive("ahk_class Premiere Pro"){
 prFocus("program")
 send ^+3 ;res to 1/4
 prFocus("timeline")
+}
 return
 
 numpadMult::tooltip, you pressed  %A_thishotkey%
@@ -1031,15 +1071,43 @@ SC064::msgbox sc064, L ALT
 ;---------------ALL NORMAL KEY ASSIGNMENTS---------------------
 ;---------------ALL NORMAL KEY ASSIGNMENTS---------------------
 
+;------------
+
+;------------
+
+;------------
+
+;------------
+
+;------------
+
+;------------
+
+;------------
+
+;------------
+
+;------------
+
+;------------
+
+;------------
+
+;------------
+
+;------------
+
+;------------
+
 
 ;okay, so these keys MUST be AFTER the intercept.exe launched keys, otherwise BOTH scripts will be called, which is bad. IDK why, but putting them down here fixes the problem.
 ;addendum: if #IfWinActive ahk_exe explorer.exe is BEFORE the 2nd keybaord code, it executes all by itself. So yeah, the secondary keybaords must be before all else.
 
 
-;____________________________________________________________________
-;                                                                    
-;        PRIMARY KEYBOARD, (Corsair K95 RGB) AHK KEY ASSIGNMENTS     
-;____________________________________________________________________
+; ____________________________________________________________________ 
+;|                                                                    |
+;|        PRIMARY KEYBOARD, (Corsair K95 RGB) AHK KEY ASSIGNMENTS     |
+;|____________________________________________________________________|
 
 
 ;;;~~~~~~FUNCTION KEYS IN VARIOUS PROGRAMS~~~~
@@ -1096,7 +1164,10 @@ return
 
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe Adobe Premiere Pro.exe") and WinActive("Save As") ;this is very specifically premiere's save/load dialoge, and it is NOT the Export Settings window.
 
-`::Send !{up} ; go DOWN one folder level in explorer
+`::
+;tooltip, why
+Send !{up} ; go DOWN one folder level in explorer
+return
 +`::Send !{left} ;shift tilde will go "back" in explorer
 
 ~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
@@ -1110,12 +1181,15 @@ return
 
 ;------------------------------------------
 
-#IfWinActive, ahk_class CabinetWClass ;this is also explorer
+
 
 
 
 #IfWinActive ahk_exe explorer.exe ;IDK if there is any meaningful difference for using the ahk_exe rather than the ahk_CLASS
 
+;Oh, if you are on the desktop, the EXE is the same, but the class is not. So if you hit ALT F4, you go into the shutdown menu. Not good. So i think the class is a better indicator that you are, specifically, in an Explorer WINDOW.
+
+#IfWinActive, ahk_class CabinetWClass ;this is also explorer
 F3::
 ;this converts F3 into ALT F4, but only for explorer. this is just to save one more keypress, since i close explorer windows in this way quite a lot.
 ;There is a deliberate delay added, since in SOME situations, ALT would be recognised, but not F4. Adding a delay takes care of that.
@@ -1126,8 +1200,8 @@ sleep 10
 Send {alt up}
 Return
 
-; `::Send !{up} ;This optional script allows you to use the TILDE to go DOWN one folder level in explorer
-; +`::Send !{left} ;shift tilde will go "back" in explorer
+`::Send !{up} ;This optional script allows you to use the TILDE to go DOWN one folder level in explorer
++`::Send !{left} ;shift tilde will go "back" in explorer
 
 ~left & right::
 ;msgbox,,, hellllllo,0.5
@@ -1150,6 +1224,17 @@ return
 
 ; insert::
 
+; return
+
+;;; https://autohotkey.com/board/topic/34696-explorer-post-message-sort-by-modified-size-name-etc/
+; pgup::
+; tooltip, sort by name?
+; PostMessage, 0x111, 30210,,, ahk_class CabinetWClass ; Name
+; return
+
+; pgdn::
+; PostMessage, 0x111, 28715,,, ahk_class CabinetWClass ; List
+; ;PostMessage, 0x111, 30213,,, ahk_class CabinetWClass ; Date modified
 ; return
 
 pgup::send, {alt}vo{enter} ;sort by name
@@ -1193,14 +1278,14 @@ back()
 return
 
 ^F1::switchToFirefox()
-+^F1::switchToOtherFirefoxWindow()
++^F1::switchToOtherFirefoxWindow() ;^+F1 ^+{F1}
 ^F2::switchToExplorer()
 !^F2::closeAllExplorers()
 
 ^F3::switchToPremiere()
 
 ^F4::switchToWord()
-+^F4::switchWordWindow()
++^F4::switchWordWindow() ; AKA, ^+F4 ^+{F4}
 ^F5::switchToChrome()
 
 +^F6::
@@ -1361,10 +1446,77 @@ F4::F2 ;this is to regain what I lost when I used F2 and F3 for tab navigation.
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+#IfWinActive
+
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
-;just an experiment
-F8::preset("T push up")
+;;i found the code here https://stackoverflow.com/questions/24001634/how-can-i-bind-my-mouse-wheel-to-scroll-down-with-a-key-and-this-key-is-ahk
+; *F11::
+; While GetKeyState("F11", "p")
+; {
+    ; SendInput, {WheelDown}
+    ; Sleep, 10 ; Add a delay if you want to increase the interval between keystokes.
+; }
+; return
+
+; F12::
+; ;msgbox,,,you pressed F9,0.6
+; While GetKeyState("F12", "p")
+; {
+    ; SendInput, {Wheelup}
+    ; Sleep, 10 ; Add a delay if you want to increase the interval between keystokes.
+; }
+; return
+
+
+
+;might make these all take effect upon the UP stroke. Make them display an indicator on the DOWN stroke.
+
+;delete single clip at cursor
+~F8::
+send, ^!d ;ctrl alt d is DESELECT
+send, v ;selection tool
+send, {alt down}
+send, {lbutton}
+send, {alt up}
+send, c ;delete
+return
+
+;disable single clip at cursor
+~F7::
+send, ^!d ;ctrl alt d is DESELECT
+send, v ;selection tool
+send, {alt down}
+send, {lbutton}
+send, {alt up}
+send, 7 ;disable
+return
+
+
+;; instant cut at cursor (UPON KEY RELEASE)
+~F4::
+;keywait, F4
+;tooltip, |
+send, b ;blade tool
+send, {shift down}
+keywait, F4 ;waits for the key to go UP.
+;tooltip, was released
+send, {lbutton}
+send, {shift up}
+sleep 10
+send, v ;selection tool
+return
+
+; F4 Up::
+; ;tooltip, 
+; send, {lbutton}
+; send, {shift up}
+; sleep 10
+; send, v ;selection tool
+; return
+
+tab::7 ;"7" is set to enable/disable for now. just testing stuff
 
 ;macro key G2
 ~^+K::preset("Warp Stabilizer Preset") ;macro key G2. I wish it would also press "analyse..."
@@ -1459,7 +1611,7 @@ Send ^+!d
 return
 ;F2 is set in premiere to the [GAIN] panel.
 ;F3 is set in premiere to the [MODIFY CLIP] panel. 
-~F4::masterClipSelect() ;this has not been fully programmed yet
+~F9::masterClipSelect() ;this has not been fully programmed yet
 ~F5::clickTransformIcon2()
 ~F6::cropClick()
 ;~F7::unused
@@ -1477,6 +1629,7 @@ Media_Stop::^numpad7
 Media_Prev::^numpad8
 Media_Play_Pause::^numpad9
 Media_Next::^numpadMult
+Volume_Mute::^numpadDiv
 ;These are bound to some of the new LABEL COLORS in premiere.
 
 
@@ -1522,7 +1675,7 @@ switchToWord()
 sleep 100
 send ^v
 sleep 100
-;send {enter}
+send {enter}
 sleep 10
 ; send ^{F4} ;only use this line if switchToWord() is not directly available.
 ;;;;msgbox,,, just before,0.5
@@ -1557,31 +1710,136 @@ return
 +F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
 capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
 
+
+
 ;F20 is triggered by capslock, and adds a 2nd layer to keyboard #1.
 ;F21 - Jelly comb 22 key numpad. will free this up later by using some other scan code
 ;F22 - FREE
 ;F23 is for the 2nd keyboard, the Logitech K120. Will maintain for sake of tutorials.
-;F24 (SC076) is the FULL AZIO KEYBOARD. Not yet configured. ;F24 used to be used for LuaMacros.
+;F24 (SC076) is the FULL AZIO KEYBOARD. ;F24 used to be used for LuaMacros.
 
-SC075::msgbox, SC075 is just before SC076 which is F24
-SC077::msgbox, I can call this F25 
-SC078::msgbox, I can call this F26
+;Below here is a bunch of potentialy useful stuff. Some of it can be tirggered by my Corsair keyboard, and some of it cannot.
+
+SC05C::tooltip, SC05C - "Keyboard Intl' 6"
+SC05D::tooltip, SC05D - cannot find trigger
+SC05E::tooltip, SC05E - cannot find trigger
+SC05F::tooltip, SC05F - cannot find trigger
+
+SC060::tooltip, SC060 - cannot find trigger
+SC061::tooltip, SC061 - cannot find trigger
+SC062::tooltip, SC062 - cannot find trigger
+SC063::tooltip, SC063 - cannot find trigger - Labeled as "Help"
+
+; SC064 - F13
+; SC065 - F14
+; SC066
+; SC067
+; SC068
+; SC069
+; SC06A
+; SC06B
+; SC06C
+; SC06D - F22
+; SC06E - F23
+
+SC06F::tooltip,  SC06F - cannot find trigger
+
+SC070::msgbox,,, SC070 - "Keyboard intl 2", 0.5
+
+VKE9::msgbox,,, VKE9 ??? - "Keyboard Lang 2", 0.5 ;does not work from Corsair keyboard
+;VKE9SC071::msgbox,,, VKE9 SC071 ??? - Keyboard Lang 2, 0.5 ;;this will not register as an allowed hotkey
+SC071::msgbox,,, SC071 - "Keyboard Lang 2", 0.5 ;does not work from Corsair keyboard
+SC072::msgbox,,, SC072 - "Keyboard Lang 1", 0.5 ;also does not work from Corsair keyboard
+SC073::msgbox,,, SC073 - "Keyboard Intl' 1", 0.5 ; "Keyboard Intl' 1"
+
+SC074::msgbox,,, SC074 - cannot find trigger, 0.5
+SC075::msgbox,,, SC075 - cannot find trigger - this is just before SC076 which is F24, 0.5
+;SC076::tooltip, this is F24
+SC077::msgbox,,, SC077 - "Keyboard Lang 4", 0.5
+SC078::msgbox,,, SC078 - "Keyboard Lang 3", 0.5
+SC079::msgbox,,, SC079 - "Keyboard Intl' 4", 0.5
+
+SC07A::tooltip, SC07A - cannot find trigger
+SC07B::tooltip, SC07B - cannot find trigger
+SC07C::tooltip, SC07C - cannot find trigger
+
+SC07D::msgbox,,, SC07D - "Keyboard Intl' 3", 0.5
+SC07E::tooltip, SC07E - "Brazillian `,"
+
+SC07F::tooltip, SC07F - cannot find trigger
+
+;VKEASC05C::tooltip, VK:EA SC:05C
+
+
+;VKFF::tooltip, supertest
+;VK7DSC065::
+/*
+Corsair has that is useful:
+WheelLeft
+WheelRight
+
+
+AHK DETECTION		CORSAIR's NAME
+
+FF  072				;Keyboard Lang 1
+E9  071				;Keyboard Lang 2
+FF  078    “F26”    ;Keyboard Lang 3
+FF  077    “F25”    ;Keyboard Lang 4
+87  076	    F24??	;Keyboard lang 5
+not detected		;Keyboard lang 6
+not detected		;Keyboard lang 7
+not detected		;Keyboard lang 8
+not detected		;Keyboard lang 9
+
+C1  073 			;Keyboard Intl' 1
+FF  070    			;Keyboard Intl' 2
+FF  07D    			;Keyboard Intl' 3
+FF  079				;Keyboard Intl' 4
+EB  07B				;Keyboard Intl' 5
+EA  05C				;Keyboard Intl' 6
+not detected		;Keyboard Intl' 7
+not detected		;Keyboard Intl' 8
+not detected		;Keyboard Intl' 9
+
+DC  02B				;Keyboard Non-US # and ~
+E2  056				;Keyboard Non-US \ and |
+C2  07E				;Keypad , (Brazilian Keypad)
+
+
+B1  110				Media_Prev 
+B0  119				Media_Next    
+B3  122				Media_Play_Pause
+B2  124				Media_Stop   
+
+AD  120				Volume_Mute    
+AE  12E				Volume_Down    	
+AF  130				Volume_Up   
+
+
+05  000				XButton1  
+06  000				XButton2       	
+9C  001	 			WheelLeft      
+9D  001				WheelRight  
+
+*/
+
+
 
 ;;---------------------------------------------------
 
 
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
+#IfWinActive ahK_exe Adobe Premiere Pro.exe
 
 ^w::closeTitler()
 
-~+k::kbShortcutsFindBox()
+~+K::KbShortcutsFindBox()
 
-; control g = make 200% speed
+; control g = maKe 200% speed
 ;^g::
 ;Send ^r200{Enter}
 ;return
 
-; control h = make 50% speed
+; control h = maKe 50% speed
 ;^h::
 ;Send ^r50{Enter}
 ;return
@@ -1591,10 +1849,10 @@ SC078::msgbox, I can call this F26
 
 
 ;;MACRO KEY G9;;
-#IfWinActive ahk_exe WINWORD.EXE
+#IfWinActive ahK_exe WINWORD.EXE
 ;^+]::Send {F2} ;set to "go to previous comment" in Word.
-;this and the other one does NOT show up in the key visualizer? look into that...
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
+;this and the other one does NOT show up in the Key visualizer? looK into that...
+#IfWinActive ahK_exe Adobe Premiere Pro.exe
 
 ~^+]::Send {F2}7{enter} ;adds 7 gain.
 
@@ -1604,14 +1862,14 @@ SC078::msgbox, I can call this F26
 
 
 
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
+#IfWinActive ahK_exe Adobe Premiere Pro.exe
 ;This disables a menu accelerator in premiere, ignoring the pressing of ALT along with SPACE. Otherwise it will open a dumb menu on the top bar, which I never use.
 ; !space::
 ; Send {space}
 ; Return
 
-;Just kidding, I want to use alt space to rewind and then play. Premiere's version of this SUCKS because it brings you back to where you started
-; the ~ is only there so that the keystroke visualizer can see this keypress. Otherwise, it should not be used.
+;Just Kidding, I want to use alt space to rewind and then play. Premiere's version of this SUCKS because it brings you bacK to where you started
+; the ~ is only there so that the KeystroKe visualizer can see this Keypress. Otherwise, it should not be used.
 ;Lwin::
 ; ~!space::
 Rwin::
@@ -1626,14 +1884,20 @@ return
 
 ; ;~sc11C::
 ; ~numpadEnter::
-; ;this is the scancode for the numpad enter key.
-; ;keystroke viz.ahk does not properly notice this key (always combining it the regular Enter) so I am making a visualizer for it here.
+; ;this is the scancode for the numpad enter Key.
+; ;KeystroKe viz.ahK does not properly notice this Key (always combining it the regular Enter) so I am maKing a visualizer for it here.
 ; Keyshower("program monitor zoom to fit - taran mod",,1)
 ; return
 
 
+; #IfWinActive
+
+; volume_down::tooltip, yeah
+
+
+
 #IfWinActive
-;experiemntal thing to super duper check window IDs...
+;experiemntal thing to super duper checK window IDs...
 !`::
 WinGet, ActiveId, ID, A
 msgbox, %ActiveId%
@@ -1643,8 +1907,8 @@ msgbox, %OutputVar%
 return
 
 
-;script reloader, but it only works on this one :(
-#ifwinactive ahk_class Notepad++
+;script reloader, but it only worKs on this one :(
+#ifwinactive ahK_class Notepad++
 ^r::
 send ^s
 sleep 10
@@ -1653,10 +1917,10 @@ reload
 return
 
 
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
+#IfWinActive ahK_exe Adobe Premiere Pro.exe
 ;TITLE BAR REMOVER
-;;ctrl backslash is a nice shortcut in MACINTOSH Premiere for hiding the title bar. There is no Windows equivalent... unless you use autohotkey!
-;;https://jacksautohotkeyblog.wordpress.com/2016/05/27/autohotkey-toggles-and-the-ternary-operator-beginning-hotkeys-part-18/
+;;ctrl bacKslash is a nice shortcut in MACINTOSH Premiere for hiding the title bar. There is no Windows equivalent... unless you use autohotKey!
+;;https://jacKsautohotKeyblog.wordpress.com/2016/05/27/autohotKey-toggles-and-the-ternary-operator-beginning-hotKeys-part-18/
 ^\::
   If (toggle := !toggle)
     WinSet, Style, -0xC00000, A
@@ -1667,16 +1931,13 @@ Return
 #IfWinActive
 
 
-SC05E::msgbox, woah
-SC05E & w::msgbox, super woah
 
-
-;saving this blank keyboard for future use
+;saving this blanK Keyboard for future use
 /*
 #if (getKeyState("F24", "P"))
 F24::return ;F24
 
-escape::msgbox,,, you pressed escape. this might cause like problems maybe, 0.9
+escape::msgbox,,, you pressed escape. this might cause liKe problems maybe, 0.9
 F1::
 F2::
 F3::
@@ -1688,7 +1949,7 @@ F9::
 F8::
 F10::
 F11::
-F12::tooltip, you pressed %A_thishotkey%
+F12::tooltip, you pressed %A_thishotKey%
 
 `::
 1::
@@ -1703,7 +1964,7 @@ F12::tooltip, you pressed %A_thishotkey%
 0::
 -::
 =::
-backspace::return
+bacKspace::return
 
 ;;;;;next line;;;;;;;;
 
@@ -1722,7 +1983,7 @@ p::
 [::
 ]::
 \::return
-capslock::msgbox, , ,i hate capslock!, 1000
+capslocK::msgbox, , ,i hate capslocK!, 1000
 
 a::
 s::
@@ -1731,7 +1992,7 @@ f::
 g::
 h::
 j::
-k::
+K::
 l::
 `;::
 '::
@@ -1751,22 +2012,22 @@ m::
 Lwin::msgbox, LEFT win
 Lalt::msgbox, LEFT alt
 space::tippy("3rd space")
-Ralt::msgbox, Ralt - doesnt work
+Ralt::msgbox, Ralt - doesnt worK
 Rwin::msgbox, Right Win 
 Rshift::msgbox RIGHT SHIFT lol
-SC06E::msgbox,,,right WINkey,0.5
+SC06E::msgbox,,,right WINKey,0.5
 SC06F::msgbox,,,SC06F,0.5
 SC062::msgbox,,,SC062,0.5
 Rctrl::msgbox,,,Rctrl,0.5
-appskey::msgbox, this is the appskey KEY I guess
+appsKey::msgbox, this is the appsKey KEY I guess
 
 
 PrintScreen::
-ScrollLock::return
+ScrollLocK::return
 SC061::msgbox, scancode061
-CtrlBreak::msgbox, CTRL BREAK?
-pause::msgbox, is this the PAUSE key?? IDK
-Break::msgbox, Maybe THIS is the pause/break key???
+CtrlBreaK::msgbox, CTRL BREAK?
+pause::msgbox, is this the PAUSE Key?? IDK
+BreaK::msgbox, Maybe THIS is the pause/breaK Key???
 
 pgdn::
 end::
@@ -1793,8 +2054,8 @@ numpad7::
 numpad8::
 numpad9::
 
-+numlock::
-numlock::
++numlocK::
+numlocK::
 numpadDiv::
 numpadMult::
 numpadSub::
@@ -1802,7 +2063,7 @@ numpadAdd::
 numpadEnter::return
 numpadDot::
 /*
-;These are now unused - I realized that keeping them as modifiers (allowing them to pass through normally) is more valuable then as single keys.
+;These are now unused - I realized that Keeping them as modifiers (allowing them to pass through normally) is more valuable then as single Keys.
 SC060::msgbox sc060, which I have assigned from LEFT SHIFT using intercept.exe
 SC061::msgbox sc061, right shift
 SC062::msgbox sc062, L CTRL

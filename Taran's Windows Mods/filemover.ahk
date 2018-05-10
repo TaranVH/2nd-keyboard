@@ -17,6 +17,9 @@ Menu, Tray, Icon, shell32.dll, 156
 ; return
 ; #IfWinActive
 
+; need to add this to it https://autohotkey.com/docs/commands/FileExist.htm
+
+
 ;;trying to copy a file from one location to another, using the Windows progress bar.
 ;;holy crap, look at all these bullshit responses to such a simple request: https://autohotkey.com/board/topic/93904-copy-and-paste-large-files/
 ;All of them wrong, or misunderstanding the question.
@@ -89,13 +92,14 @@ filetomovePATH := Explorer_GetSelection()
 ;msgbox, the current file path is `n%filetomovePATH%
 SlashPosition := InStr(filetomovePATH, "\" ,false,-1,1) ;first occurance from the right to the left, supposedly.
 StringTrimLeft,file2move,filetomovePATH, %slashposition%
-;;msgbox, file2move = `n%file2move% `n`nfiletomovePATH =`n%filetomovePATH%
+
+;msgbox, file2move = `n%file2move% `n`nfiletomovePATH =`n%filetomovePATH%
 
 ;https://www.autohotkey.com/docs/commands/LoopFile.htm the following code does work to list files in a given directory!
 FileList =  ; Initialize to be blank.
-Loop, Files, %publishLOC%*.*, DFR
+Loop, Files, %publishLOC%\*.*, DFR
     FileList = %FileList%%A_LoopFileName%`n
-Loop, Files, %publishLOC%*.*, DFR
+Loop, Files, %publishLOC%\*.*, DFR
     FileListLocations = %FileListLocations%%A_LoopFileFullPath%`n ;A_LoopFileDir -or- A_LoopFileFullPath
 
 ;;msgbox, FileListLocations = `n%FileListLocations%
@@ -163,7 +167,8 @@ if FileNotPresent = 1
 		;return 
 		ComObjCreate("Shell.Application").Namespace(publishLOC).CopyHere(filetomovePATH)
 		;FileCopy,%filetomovePATH%,%publishLOC% ;;this was the old code that does NOT give you a nice windows GUI thingy telling you the status.
-		Run %COMSPEC% /c explorer.exe /select`, "%publishLOC%%file2move%",, Hide
+		
+		;Run %COMSPEC% /c explorer.exe /select`, "%publishLOC%%file2move%",, Hide
 		;;Msgbox, did that work?
 		FileNotPresent = 0
 	}

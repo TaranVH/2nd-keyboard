@@ -102,7 +102,7 @@ Gui, Color, %backcolor%
 
 Loop
 {
-sleep 15 ; without a "sleep" of at least 1 millisecond, the script loops so much, it uses 4% of my CPU!
+sleep 5 ; without a "sleep" of at least 1 millisecond, the script loops so much, it uses 4% of my CPU!
 ;tooltip, currentline = %currentline% --- keyOnLine = %keyOnLine% --- index = %index% --- position = %position% --- keys=%keys%
   oldkeys=%keys%
   keys=

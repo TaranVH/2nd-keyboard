@@ -1,5 +1,10 @@
 ﻿#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\point_to_gui.ahk
 ;#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\filemover.ahk
+
+global savedCLASS = "ahk_class Notepad++"
+global savedEXE = "notepad++.exe"
+
+
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
@@ -7,8 +12,6 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance force
 #WinActivateForce
 
-global savedCLASS = "ahk_class Notepad++"
-global savedEXE = "notepad++.exe"
 
 ; -------------------------------------------------------------------------
 ; If this is your first time using AutoHotkey, you must take this tutorial:
@@ -21,6 +24,9 @@ global savedEXE = "notepad++.exe"
 ;C:\Users\TaranVanHemert\AppData\Local\GitHub\TutorialRepository_a66c3719071da6d865a984bb8d6bfb5bcd775ec8\new-repo\Taran's Windows Mods\WINDOWS MOD - Various functions.ahk\Lib\
 
 Menu, Tray, Icon, shell32.dll, 16 ;this changes the icon into a little laptop thingy. just useful for making it distinct from the others.
+
+global savedCLASS = "ahk_class Notepad++"
+global savedEXE = "notepad++.exe"
 
 
 GroupAdd, ExplorerGroup, ahk_class #32770 ;This is for all the Explorer-based "save" and "load" boxes, from any program!
@@ -321,6 +327,13 @@ NavRun(Path) {
 ;I got MOST of this code from https://autohotkey.com/docs/scripts/FavoriteFolders.htm
 ;and modified it to work with any given keypress, rather than middle mouse click as it had before.
 
+;NEED to include this too: file locator modified Explorer window with shitty edit2 control
+;Locate File '\\?\Z:\Linus\1. Linus Tech Tips\Pending\Maxine Settings Computer\Delivery\Maxine Settings Computer rc3.mov'
+;ahk_class #32770
+;ahk_exe Adobe Premiere Pro.exe
+;
+
+
 InstantExplorer(f_path,pleasePrepend := 0)
 {
 send {SC0E8} ;scan code of an unassigned key. This is needed to prevent the item from merely FLASHING on the task bar, rather than opening the folder. Don't ask me why, but this works.
@@ -497,10 +510,11 @@ global savedEXE = lolexe ;is this the way to do it? IDK.
 
 switchToSavedApp(savedCLASS)
 {
-;msgbox, savedCLASS is %savedCLASS%
+;msgbox,,, savedCLASS is %savedCLASS%,0.5
+;msgbox,,, savedexe is %savedEXE%,0.5
 if savedCLASS = ahk_class Notepad++
 	{
-	;msgbox, is notepad++
+	;msgbox,,, is notepad++,0.5
 	if WinActive("ahk_class Notepad++")
 		{
 		sleep 5

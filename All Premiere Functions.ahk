@@ -136,6 +136,9 @@ if IsFunc("Keyshower") {
 ifWinNotActive ahk_exe Adobe Premiere Pro.exe
 	goto theEnding ;and this line is here just in case the function is called while not inside premiere.
 
+Send ^!+k ; another shortcut for Shuttle Stop. CTRL ALT SHIFT K. Set this in Premiere's shortcuts panel.
+;so if the video is playing, this will stop it. Othewise, it messes up the script.
+sleep 5
 ;Setting the coordinate mode is really important. This ensures that pixel distances are consistant for everything, everywhere.
 coordmode, pixel, Window
 coordmode, mouse, Window
@@ -152,9 +155,9 @@ MouseGetPos, xposP, yposP ;---stores the cursor's current coordinates at X%xposP
 send, {mButton} ;this will MIDDLE CLICK to bring focus to the panel underneath the cursor (the timeline). I forget exactly why, but if you create a nest, and immediately try to apply a preset to it, it doesn't work, because the timeline wasn't in focus...?
 ;but i just tried that and it still didn't work...
 ;;DAMN IT, i forgot the { } and it was sending those as letters, I am an idiot. Need better diagnostics tools...
-Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to "effects" panel
+Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to the "effects" panel
 
-sleep 15 ;"sleep" means the script will wait for 15 milliseconds before the next command. This is done to give Premiere some time to load its own things.
+sleep 20 ;"sleep" means the script will wait for 20 milliseconds before the next command. This is done to give Premiere some time to load its own things.
 Send ^b ;CTRL B -- set in premiere to "select find box"
 sleep 20
 
@@ -257,7 +260,7 @@ SetKeyDelay, 0 ;for instant writing of text
 MouseGetPos, xpos, ypos
 send ^+x ;ctrl shift x -- shortcut in premiere for "remove in/out points.
 sleep 10
-send ^+6 ;ctrl shift 6 - source assignment preset 1. (sets it to A3.)
+send ^+9 ;ctrl shift 6 - source assignment preset 4. (sets it to A3.)
 sleep 10
 ; Send ^!+1 ;premiere shortcut to open the "project" panel, which is actually a bin. Only ONE bin is highlightable in this way.
 ; ;Send F11
@@ -275,7 +278,7 @@ Send ^b ;CTRL B -- set this in premiere's shortcuts panel to "select find box." 
 ; msgbox, okay now what
 Send %leSound% ;types in the name of the sound effect you want - should do so instantaneously.
 tooltip, waiting for premiere to load......
-send ^+6 ;source assignment preset 1, again.
+send ^+9 ;source assignment preset 4, again.
 sleep 400 ;we are waiting for the search to complete....
 ;sleep 400 ;we are still waiting for the search to complete....
 
@@ -287,7 +290,7 @@ MouseMove, -6000, 250, 0 ;moves the mouse to the expected location of the bin th
 MouseClick, left
 tooltip, CLICK!!!
 sleep 10
-send ^+6 ;source assignment preset 1, again.
+send ^+9 ;source assignment preset 4, again.
 sleep 5
 Send ^b ;CTRL B -- set this in premiere's shortcuts panel to "select find box."
 sleep 10
@@ -303,7 +306,7 @@ tooltip, so did that work?
 sleep 10
 ;send ^!+3 ;select timeline
 sleep 10
-send ^+6 ;my shortcut for "assign source assignment preset 1" in Premiere. The preset has V4 and A3 selected as sources. I may end up only using F18, since it does not use the CTRL and SHIFT keys, which can cause problems sometimes.
+send ^+9 ;my shortcut for "assign source assignment preset 4" in Premiere. The preset has V3 and A4 selected as sources. I may end up only using F18, since it does not use the CTRL and SHIFT keys, which can cause problems sometimes.
 sleep 50
 Send ^/ ;CTRL FORWARD SLASH -- SET TO "OVERWRITE" in premiere. Premiere's default shortcut for "overwrite" is a period.  I use modifier keys for THIS, so that a period is never typed accidentally.
 sleep 30
@@ -800,8 +803,10 @@ return
 reselect()
 {
 ;alt k??
+Send ^!+k ; another shortcut for Shuttle Stop
+sleep 5
 Send ^!+7 ; shortcut for select Effects panel
-sleep 1
+sleep 5
 Send ^!+3 ; shortcut for select timeline
 sleep 5
 send ^!d ;deselect
@@ -830,7 +835,7 @@ send {enter}
 ;VK64  SC04B  == numpad 4
 ;#if
 #if GetKeyState("F9") && winactive("ahk_exe notepad++.exe")
-p::msgbox lolhi
+;p::msgbox lolhi
 
 
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1036,7 +1041,7 @@ CoordMode Mouse, screen
 ;msgbox, workingDir is %A_WorkingDir%
 ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted_2018.png
 if ErrorLevel = 1
-	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_targeted_2018.png
+	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_targeted_2018.1.png
 if ErrorLevel = 1
 	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_untargeted_2018.png
 if ErrorLevel = 1
@@ -1066,13 +1071,13 @@ if ErrorLevel = 0
 	}
 	
 try2:
-ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_locked_targeted_2018.png
+ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *2 %A_WorkingDir%\v1_ALT_locked_targeted_2018.1.png
 
 	
 if ErrorLevel = 1
 	{
     tippy("LOCKED TARGETED V1 could not be found")
-	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_locked_targeted_2018.png
+	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_locked_targeted_2018.png
 	}
 if ErrorLevel = 1
 	{
