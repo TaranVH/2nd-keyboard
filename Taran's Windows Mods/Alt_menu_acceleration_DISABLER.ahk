@@ -54,9 +54,9 @@ CoordMode, mouse, screen
 LAlt::
 sendinput, {LAlt down}
 sendinput, {SC0E8 down} ;this is the scan code of an unassgined key. As long as you nor the system ever use it for anything, it can be used in THIS way to nullify a pure ALT press.
-;;tooltip, Lalt is pressed
+;tooltip, Lalt is pressed
 KeyWait, LAlt
-;;tooltip, Lalt was released
+;tooltip, Lalt was released
 return
 
 LAlt up::
