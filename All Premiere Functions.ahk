@@ -327,20 +327,54 @@ sfxEnding:
 ;Keep in mind that you must RESTART your computer before the clipboard states become usable. IDK why.
 #ifwinactive ahk_exe Adobe Premiere Pro.exe
 saveClipboard(int) {
-	StringReplace, int, int, +, , All ;replace + with nothing. This is just in case A_thishotkey contains + if shift was used!
+
+
+;Creating a ini file to automatically store the clipsave number and to simultaneously apply this number to the name of your saved clip
+so that no other alterations need to be done as you continue saving clips.  
+
+SetWorkingDir %A_ScriptDir%
+SetTitleMatchMode 2
+
+;Create the ini file on first run:
+
+IfNotExist Clip.ini
+   FileAppend, [Section]`nKey=0, Clip.ini
+IniRead, Num, Clip.ini, Section, Key ; Get the value
+
+
+Num++
+
+IniWrite, %Num%, Clip.ini, Section, Key                                                      
+                                                
+                                                                                        
+                                               
+        
+    
+        
+
+
+        StringReplace, int, int, +, , All ;replace + with nothing. This is just in case A_thishotkey contains + if shift was used!
 	StringReplace, int, int, !, , All ;replace ! with nothing. This is just in case A_thishotkey contains ! if alt was used!
 	StringReplace, int, int, ^, , All ;replace ^ with nothing. This is just in case A_thishotkey contains ^ if ctrl was used!
 	;msgbox, , , saving as %int%, 0.6
-	tooltip, saving as`n"clip" . %int% . ".clp"
+	
+	tooltip, saving as`n"clip" . %int% . ".clp" ; can be changed to simply say: "saving" otherwise everytime you save it will say
+                                                    ;"saving as Clip1.Clp"
 	sleep 10
 	SendInput, {Shift Down}{Shift Up}{Ctrl Down}{c Down}
 	sleep 20
 	ClipWait, 0.25 ; this line might not be needed.
 	SendInput, {c up}{Ctrl up}
 	sleep 20
-	saveToFile("clip" . int . ".clp")
+	
+	IniRead, Num, Clip.ini, Section, Key   ;now retrieving the number from the ini file
+
+        a := Num                               ; and storing this number into the variable: a
+	
+	saveToFile(a ".clp" )                  ; a as parameter inside the function saveToFile will place the latest number into the filename
+                                               ; ".clp" most always be included so that insideclipboard knows that you want to save it as a .clp file
+					       ; otherwise insideclipboard will appear and you'll have to save manually.
 	sleep 1000
-	saveToFile("clip" . int . ".clp")
 	tooltip,
 }
 
@@ -357,7 +391,7 @@ recallClipboard(int, transition := 0) {
 	prFocus("timeline")
 	;Send ^!d ;this is to deselect any clips that might be selected in the timeline.
 	;tooltip, "now loading random text into the clipboard."
-	loadFromFile("clipTEXT.clp") ;to create this file, just highlight some plain text, copy it, and use insideclipboard.exe to save it as clipTEXT.clp. The clipboard MUST have some text inside; it CANNOT be completely empty. This has the effect of DELETING all the aspects of the clipboard, EXCEPT for text.
+	loadtextFromFile("clipTEXT.clp") ;to create this file, just highlight some plain text, copy it, and use insideclipboard.exe to save it as clipTEXT.clp. The clipboard MUST have some text inside; it CANNOT be completely empty. This has the effect of DELETING all the aspects of the clipboard, EXCEPT for text.
 	sleep 15
 	; ; WinActivate, Adobe Premiere Pro ;IDK if this is needed here.
 	; ; loadFromFile("clipTEXT.clp") ;The clipboard must be loaded twice, or it won't work about 70% of the time! I don't know why...
@@ -583,9 +617,30 @@ saveToFile(name) {
 	
 }
 
-loadFromFile(name) {
-	; You'll need to change these paths too!
+
+
+loadtextFromFile(name) ; this function is to automatically load the random piece of information into the clipboard such that all other instances are removed.
+                       ; obviously one must correspondingly also change the first instance of loadFromFile(name) to loadtextFromFile(name) within recallclipboard().
+{
+       ; You'll need to change these paths too!
 	RunWait, %comspec% /c C:\Users\TaranWORK\Downloads\Taran_extra_keyboards\insideclipboard\InsideClipboard.exe /loadclp %name%, c:\Users\TaranWORK\Downloads\Taran_extra_keyboards\insideclipboard\clipboards\
+}
+
+
+;changes to loadFromFile() below: Assuming that one has multiple saved clipstates one will want to have the choice of selecting the right one.
+;Therefore the variable %name% within the function will expect a parameter value inside the parenthesis of the function that is equal to the name
+;of one particular .clp file.
+
+;However we'll take it out so that insideclipboard will appear and you can load any saved file from there.
+
+;Certainly one could otherwise just create multiple instances of the loadFromFile function with different parameter values corresponding to the
+;various saved clips - and then map those instances to arbitrary hotkeys (example: 1::loadfromfile(clip1) 2::loadfromfile(clip2) and so on.)
+
+
+
+loadFromFile() {
+	; You'll need to change these paths too!
+	RunWait, %comspec% /c C:\Users\TaranWORK\Downloads\Taran_extra_keyboards\insideclipboard\InsideClipboard.exe /loadclp , c:\Users\TaranWORK\Downloads\Taran_extra_keyboards\insideclipboard\clipboards\
 }
 
 ;i think the line below is probably useless buti am afraid to delete it
