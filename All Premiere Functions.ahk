@@ -1489,6 +1489,109 @@ tooltip,,,12
 ;end of sendkey()
 
 
+;#IfWinNotActive ahk_class Premiere Pro
+stopPlaying()
+{
+if WinActive("ahk_exe Adobe Premiere Pro.exe")
+	sendinput, {space}
+;then it will ekip this next part and go to the end.
+if !WinActive("ahk_exe Adobe Premiere Pro.exe")
+{
+;Below is some code to pause/play the timeline in Premiere, when the application is NOT the active window (on top.) This means that I can be reading through the script, WHILE the video is playing, and play/pause as needed without having to switch back to premeire every single time.
+;Maybe this code really shoudl be in ALL PREMIERE FUNCTIONS.ahk.
+
+;;macro key G3, when NOT in Premiere.
+;play/pause premiere even when not in focus
+
+;WinGet, lolexe, ProcessName, A
+WinGetClass, lolclass, A ; "A" refers to the currently active window
+
+Keyshower("[WC1] pause/play Premiere when not active",,1,-400)
+
+;Trying to bring focus to the TIMELINE itself is really dangerous and unpredictable, since its Class# is always changing, based upon how many sequences, and other panels, that might be open.
+ControlFocus, DroverLord - Window Class14,ahk_exe Adobe Premiere Pro.exe
+; Window Class14 is the Program monitor, at least on my machine.
+sleep 20
+ControlFocus, DroverLord - Window Class14,ahk_exe Adobe Premiere Pro.exe
+;If we don't use ControlFocus first, ControlSend experiences bizzare and erratic behaviour, only able to work when the video is PLAYING, but not otherwise, but also SOMETIMES working perfectly, in unknown circumstances. Huge thanks to Frank Drebin for figuring this one out; it had been driving me absolutely mad. https://www.youtube.com/watch?v=sC2SeGCTX4U
+
+;I tried windowclass3, (the effect controls) but that does not work, possibly due to stuff in the bins, which would play instead sometimes.
+
+sleep 10
+;ControlSend,DroverLord - Window Class3,^!+5,ahk_exe Adobe Premiere Pro.exe
+;that is my shortcut for the Effect Controls.
+sleep 10
+;ControlSend,DroverLord - Window Class3,^!+3,ahk_exe Adobe Premiere Pro.exe
+
+;that is my shortcut for the Timeline.
+;this is to ensure that it doesn't start playing something in the source monitor, or a bin somewhere.
+
+; ; ; sleep 10
+; ; ; ControlSend,DroverLord - Window Class14,{ctrl up}{shift up}{space down},ahk_exe Adobe Premiere Pro.exe
+; ; ; sleep 30
+; ; ; ControlSend,DroverLord - Window Class14,{space up},ahk_exe Adobe Premiere Pro.exe
+
+;now that we have a panel highlighted, we can send keystokes to premiere. But the panel itself is sometimes random. so it's best to use this to FORCE a specific panel that won't screw stuff up.
+
+
+ControlSend,DroverLord - Window Class14, ^+!5,ahk_exe Adobe Premiere Pro.exe ;this shortcut will highlight the EFFECT CONTROLS, which will NOT also stop playback of the source monitor, if it is already playing.
+sleep 40
+ControlSend,DroverLord - Window Class14, ^+!5,ahk_exe Adobe Premiere Pro.exe
+sleep 30
+
+
+ControlSend,,{space}, ahk_exe Adobe Premiere Pro.exe
+;;;use either the ABOVE line, or the line BELOW. Can't say right now which is better...
+;ControlSend,DroverLord - Window Class1,{space},ahk_exe Adobe Premiere Pro.exe
+;even though we are sending the "SPACE" to a windowclass that (often) doesn't exist, because we already highlighted the effect controls, the space will go to the effect controls panel. (it hasb't failed to do so yet, at least.)
+
+
+
+
+;in case premiere was accidentally switched to, this will switch the user back to the original window.
+if not WinActive(lolClass)
+	WinActivate, %lolclass%
+}
+
+;end of Premiere play/pause when not in focus.
+}
+
+easeInAndOut(){
+
+;EASE IN AND EASE OUT
+;This will click on the necessary menu items for you
+;all you have to do is hover the cursor over a keyframe (or selected keyframes) in the Effect Controls panel, and hit the button.
+tooltip, ease in and out
+; blockinput, sendandMouse
+blockinput, MouseMove
+; blockinput, on
+click right
+send T
+sleep 10
+send E
+send E
+sleep 10
+send {enter}
+sleep 10
+tooltip, 
+; click right
+click middle
+sendinput {click right}
+send T
+sleep 10
+send E
+sleep 10
+send {enter}
+blockinput, off
+blockinput, MouseMoveOff
+;sleep 100
+tooltip,
+
+}
+
+
+
+
 ;;;;;;;;;;begin WINDOWS REPLATED SHIT;;;;;;;;;;;;;;;;;;;
 
 

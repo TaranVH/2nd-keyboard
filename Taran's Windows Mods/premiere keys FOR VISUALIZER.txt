@@ -621,6 +621,9 @@ Rewind
 Ripple Trim Next Edit To Playhead&W
 Ripple Trim Previous Edit To Playhead&Q
 
+Trim Next Edit To Playhead (Taran redirect)&Alt W
+Trim Prev Edit To Playhead (Taran redirect)&Alt Q
+
 
 Save Source Assignment Preset
 Save Track Height Preset

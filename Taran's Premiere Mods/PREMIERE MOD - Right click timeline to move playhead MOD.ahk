@@ -5,7 +5,7 @@
 CoordMode, Mouse, screen
 CoordMode, Pixel, screen
 
-Menu, Tray, Icon, shell32.dll, 17
+Menu, Tray, Icon, imageres.dll, 90
 
 ;VIDEO EXPLANATION:  https://youtu.be/O6ERELse_QY?t=23m40s
 

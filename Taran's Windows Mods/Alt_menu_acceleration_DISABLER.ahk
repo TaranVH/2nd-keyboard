@@ -48,14 +48,17 @@ CoordMode, mouse, screen
 ;SC05A SC05B SC05C SC05D SC05E SC05F SC060 SC061 SC062 SC06F SC070 SC071 SC072 SC073 SC074 SC075 SC077 SC078 SC079 SC07A SC07B and so on...
 ; Furthermore, after some testing, I determined that we must address each alt key specifically, for both its down and up events.
 ;You can comment in the tooltips if you want to do any debugging, but this script should run just fine right out of the box.
+;ALT still works normally for everything else.
+;ALT I R and other key combos stil work, but now you must be holding ALT down the whole time.
 
 ; THE SOLUTION:
 
 LAlt::
 sendinput, {LAlt down}
-sendinput, {SC0E8 down} ;this is the scan code of an unassgined key. As long as you nor the system ever use it for anything, it can be used in THIS way to nullify a pure ALT press.
+sendinput, {SC0E8 down} ;this is the scan code of an unassigned key. As long as you nor the system never use it for anything else, it can be used in THIS way to cancel the menu acceleration.
 ;tooltip, Lalt is pressed
 KeyWait, LAlt
+; That line is important, so that ALT does not continuously fire as you are holding it down.
 ;tooltip, Lalt was released
 return
 

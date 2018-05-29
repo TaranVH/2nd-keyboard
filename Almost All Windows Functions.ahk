@@ -101,6 +101,31 @@ Return, xxOutputVar
 
 ;this is where filemover() used to be. I moved it to its own script, since using it would prevent all other scripts from running, until the file was completely moved.
 
+
+search(){
+if winactive("ahk_exe Adobe Premiere Pro.exe")
+	{
+	if IsFunc("effectsPanelType") {
+	Func := Func("effectsPanelType")
+	RetVal := Func.Call(directory,"") 
+	}
+	;effectsPanelType("") ;set to macro key G1 on my logitech G15 keyboard. 
+	
+	;This just CLEARS the effects panel search bar so that you can type something in.
+	;previously was ^+0
+	}
+else if winactive("ahk_exe notepad++.exe")
+	sendinput ^f
+else if winactive("ahk_exe firefox.exe")
+	sendinput ^e
+else if winactive("ahk_exe chrome.exe")
+	sendinput ^e
+else if winactive("ahk_class CabinetWClass")
+	sendinput ^e
+}
+
+
+
 #IfWinActive
 
 
@@ -250,7 +275,7 @@ if not WinActive(theClass)
 ;MOVED FROM PREMIERE SCRIPTS
 runexplorer(foo)
 {
-send {SC0E8} ;scan code of an unassigned key ;;sending even a single keystroke from the secondary keyboard will prevents the taskbar icon from sometimes flashing pointlessly rather than opening.
+send {SC0E8} ;the scan code of an unassigned key ;;sending even a single keystroke like this, which comes "from" the secondary keyboard, will prevent the taskbar icon from sometimes flashing pointlessly rather than opening.
 sleep 5
 Run, % foo
 sleep 10
@@ -259,6 +284,7 @@ sleep 10
 
 if IsFunc("Keyshower")
 	{
+	;you can ignore or delete this part. It's just for onscreen visualization. Not necessary.
 	Func := Func("Keyshower")
 	RetVal := Func.Call(foo, "runExplorer") 
 	}
@@ -337,6 +363,8 @@ NavRun(Path) {
 InstantExplorer(f_path,pleasePrepend := 0)
 {
 send {SC0E8} ;scan code of an unassigned key. This is needed to prevent the item from merely FLASHING on the task bar, rather than opening the folder. Don't ask me why, but this works.
+
+
 if pleasePrepend = 1
 	{
 	FileRead, SavedExplorerAddress, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
@@ -344,15 +372,28 @@ if pleasePrepend = 1
 	f_path = %SavedExplorerAddress%\%f_path% ;no need to use . to concatenate
 	;msgbox, new f_path is %f_path%
 	}
-;for Keyshower, put code here to find the first / and remove the string before it. otherwise you can't see the final folder name
+;NOTE TO FUTURE TARAN: for Keyshower, put code here to find the first / and remove the string before it. otherwise you can't see the final folder name
 ;Keyshower(f_path,"InstExplor")
 if IsFunc("Keyshower") {
 	Func := Func("Keyshower")
 	RetVal := Func.Call(f_path,"InstExplor") 
 }
+
+if !FileExist(f_path)
+{
+    MsgBox,,, No such path exists.,0.7
+	GOTO, instantExplorerEnd
+}
+
 f_path := """" . f_path . """" ;this adds quotation marks around everything so that it works as a string, not a variable.
 ;msgbox, f_path is now finally %f_path%
 ;SoundBeep, 900, 400
+
+
+
+
+
+
 ; These first few variables are set here and used by f_OpenFavorite:
 WinGet, f_window_id, ID, A
 WinGetClass, f_class, ahk_id %f_window_id%
@@ -481,6 +522,9 @@ Tippy2("end was reached.",333)
 	Run, %f_path%  ; I got rid of the "Explorer" part because it caused redundant windows to be opened, rather than just switching to the existing window
 ;else
 ;	msgbox,,,Directory does not exist,1
+
+instantExplorerEnd:
+
 }
 ;end of instantexplorer()
 
@@ -501,6 +545,8 @@ WinGet, lolexe, ProcessName, A
 WinGetClass, lolclass, A ; "A" refers to the currently active window
 global savedCLASS = "ahk_class "lolclass
 global savedEXE = lolexe ;is this the way to do it? IDK.
+;msgbox, %savedCLASS%
+;msgbox, %savedEXE%
 }
 
 ;SHIFT + macro key G14
@@ -1118,3 +1164,19 @@ Return
 ;;;;;;;;;;;;;;;;;;;;;;;;;;END OF FUNCTIONS;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+; insert::
+
+; return
+
+;;; https://autohotkey.com/board/topic/34696-explorer-post-message-sort-by-modified-size-name-etc/
+; pgup::
+; tooltip, sort by name?
+; PostMessage, 0x111, 30210,,, ahk_class CabinetWClass ; Name
+; return
+
+; pgdn::
+; PostMessage, 0x111, 28715,,, ahk_class CabinetWClass ; List
+; ;PostMessage, 0x111, 30213,,, ahk_class CabinetWClass ; Date modified
+; return
