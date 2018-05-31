@@ -273,6 +273,7 @@ if not WinActive(theClass)
 }
 
 ;MOVED FROM PREMIERE SCRIPTS
+;this should probably all be replaced with instantexplorer, since that will work to change any existing Save as dialouges or whatever.
 runexplorer(foo)
 {
 send {SC0E8} ;the scan code of an unassigned key ;;sending even a single keystroke like this, which comes "from" the secondary keyboard, will prevent the taskbar icon from sometimes flashing pointlessly rather than opening.
@@ -302,6 +303,7 @@ if IsFunc("Keyshower")
 	; }
 ; Return
 }
+
 
 ;-------The below script origninally from: https://autohotkey.com/board/topic/102127-navigating-explorer-directories/
 ; ; Hotkeys 1 & 2
@@ -359,17 +361,17 @@ NavRun(Path) {
 ;ahk_exe Adobe Premiere Pro.exe
 ;
 
-
+;;;NEEDED: must not get address by looking at title text, it is unreliable. if you search for a thing for example, it will open a new window. this may or may not be a bad thing... also i can have it clear the search - that WOULD be bad. must do more experiments with this one...
 InstantExplorer(f_path,pleasePrepend := 0)
 {
 send {SC0E8} ;scan code of an unassigned key. This is needed to prevent the item from merely FLASHING on the task bar, rather than opening the folder. Don't ask me why, but this works.
 
 
-if pleasePrepend = 1
+if pleasePrepend = 1 ;i forget what this is even for...
 	{
 	FileRead, SavedExplorerAddress, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
 	;msgbox, current f_path is %f_path%
-	f_path = %SavedExplorerAddress%\%f_path% ;no need to use . to concatenate
+	f_path = %SavedExplorerAddress%\%f_path% ;there is no need to use . to concatenate
 	;msgbox, new f_path is %f_path%
 	}
 ;NOTE TO FUTURE TARAN: for Keyshower, put code here to find the first / and remove the string before it. otherwise you can't see the final folder name
@@ -387,11 +389,7 @@ if !FileExist(f_path)
 
 f_path := """" . f_path . """" ;this adds quotation marks around everything so that it works as a string, not a variable.
 ;msgbox, f_path is now finally %f_path%
-;SoundBeep, 900, 400
-
-
-
-
+;SoundBeep, 900, 400 ;this is dumb because you cant change the volume, or tell it NOT to wait while the sound plays...
 
 
 ; These first few variables are set here and used by f_OpenFavorite:
@@ -401,6 +399,8 @@ WinGetTitle, f_title, ahk_id %f_window_id% ;to be used later to see if this is t
 if f_class in #32770,ExploreWClass,CabinetWClass  ; if the window class is a save/load dialog, or an Explorer window of either kind.
 	ControlGetPos, f_Edit1Pos, f_Edit1PosY,,, Edit1, ahk_id %f_window_id%
 
+
+	
 /*
 if f_AlwaysShowMenu = n  ; The menu should be shown only selectively.
 {
@@ -431,22 +431,58 @@ if f_AlwaysShowMenu = n  ; The menu should be shown only selectively.
 if f_path =
 	return
 if f_class = #32770    ; It's a dialog.
-{
+	{
 	;msgbox, f_title is %f_title%
 	if f_title = Export Settings
-	{
-		;msgbox,,,you are in Premiere's export box. no bueno.,0.7
+		{
+		;msgbox,,,you are in Premiere's export window, but NOT in the "Save as" inside of THAT window. no bueno.,0.7
 		GOTO, ending2 
-		;return ;I don't want to return because i still want to open an explorer window.
-	}
+		;return ;no, I don't want to return because i still want to open an explorer window.
+		}
+	if WinActive("ahk_exe Adobe Premiere Pro.exe")
+		{
+		msgbox,,,what is happening,0.5
+		if f_title = Save As or f_title = Save Project ;IDK if this OR is properly nested....
+			{
+			ControlFocus, Edit2, ahk_id %f_window_id% ;this is really important.... it doesn't work if you don't do this...
+			msgbox,,,you are here,0.5
+			tippy2("DIALOUGE WITH EDIT2`n`nLE controlfocus of edit2 for f_window_id was just engaged.", 1000)
+			; msgbox, is it in focus?
+			; MouseMove, f_Edit1Pos, f_Edit1PosY, 0
+			; sleep 10
+			; click
+			; sleep 10
+			; msgbox, how about now? x%f_Edit1Pos% y%f_Edit1PosY%
+			;msgbox, edit2 has been clicked maybe
+			
+			; Activate the window so that if the user is middle-clicking
+			; outside the dialog, subsequent clicks will also work:
+			WinActivate ahk_id %f_window_id%
+			; Retrieve any filename that might already be in the field so
+			; that it can be restored after the switch to the new folder:
+			ControlGetText, f_text, Edit2, ahk_id %f_window_id%
+			ControlSetText, Edit2, %f_path%, ahk_id %f_window_id%
+			ControlSend, Edit2, {Enter}, ahk_id %f_window_id%
+			Sleep, 100  ; It needs extra time on some dialogs or in some cases.
+			ControlSetText, Edit2, %f_text%, ahk_id %f_window_id%
+			;msgbox, AFTER:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
+			return
+			}
+		}
+	;if WinActive("ahk_exe Adobe Premiere Pro.exe") and f_title = Save Project
+	; Save As
+	;OR Save Project
+; ahk_class #32770
+; ahk_exe Adobe Premiere Pro.exe
+	
 	if f_Edit1Pos <>   ; And it has an Edit1 control.
-	{
+		{
 		; IF window Title is NOT "export settings," with the exe "premiere pro.exe"
 			;go to the end or do something else, since you are in Premiere's export media dialouge box... which has the same #23770 classNN for some reason...
-		
+		;msgbox,,,test code E1,0.5
 
 		ControlFocus, Edit1, ahk_id %f_window_id% ;this is really important.... it doesn't work if you don't do this...
-		tippy2("DIALOUGE WITH EDIT1`n`nLE controlfocus of edit1 for f_window_id was just engaged.", 1000)
+		tippy2("DIALOUGE WITH EDIT1`n`nwait really?`n`nLE controlfocus of edit1 for f_window_id was just engaged.", 1000)
 		; msgbox, is it in focus?
 		; MouseMove, f_Edit1Pos, f_Edit1PosY, 0
 		; sleep 10
@@ -467,9 +503,10 @@ if f_class = #32770    ; It's a dialog.
 		ControlSetText, Edit1, %f_text%, ahk_id %f_window_id%
 		;msgbox, AFTER:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
 		return
-	}
+		}
 	; else fall through to the bottom of the subroutine to take standard action.
-}
+	}
+
 ;for some reason, the following code just doesn't work well at all.
 /*
 else if f_class in ExploreWClass,CabinetWClass  ; In Explorer, switch folders.
@@ -491,17 +528,17 @@ else if f_class in ExploreWClass,CabinetWClass  ; In Explorer, switch folders.
 */
 
 else if f_class = ConsoleWindowClass ; In a console window, CD to that directory
-{
+	{
 	WinActivate, ahk_id %f_window_id% ; Because sometimes the mclick deactivates it.
 	SetKeyDelay, 0  ; This will be in effect only for the duration of this thread.
 	IfInString, f_path, :  ; It contains a drive letter
-	{
+		{
 		StringLeft, f_path_drive, f_path, 1
 		Send %f_path_drive%:{enter}
-	}
+		}
 	Send, cd %f_path%{Enter}
 	return
-}
+	}
 ending2:
 ; Since the above didn't return, one of the following is true:
 ; 1) It's an unsupported window type but f_AlwaysShowMenu is y (yes).

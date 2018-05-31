@@ -1,6 +1,6 @@
-﻿StringToSend = runexplorer("C:\Users\TaranWORK\Videos\") 
+﻿StringToSend = InstantExplorer() OBS vids
 Send_WM_COPYDATA(StringToSend)
-runexplorer("C:\Users\TaranWORK\Videos\") 
+InstantExplorer("C:\Users\TaranWORK\Videos\") 
 Exitapp
 SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%/REDIRECTOR Windows.ahk

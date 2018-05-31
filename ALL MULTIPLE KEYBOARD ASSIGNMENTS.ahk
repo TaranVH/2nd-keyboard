@@ -1073,6 +1073,8 @@ SC063::msgbox sc063, L WIN
 SC064::msgbox sc064, L ALT
 */
 
+SC070::msgbox,,, SC070 - "Keyboard intl 2 INSIDE OF F24", 0.5
+
 #if
 ;END OF FULL AZIO KEYBOARD
 
@@ -1174,14 +1176,15 @@ return
 ; #IfWinActive, ahk_class #32770 ahk_exe Adobe Premiere Pro.exe ;this is specifically premiere's save/load dialoge.
 
 ; left & right::msgbox, hello
+#if WinActive("ahk_class #32770") and WinActive("ahk_exe Adobe Premiere Pro.exe") and WinActive("Save Project") ;this is very specifically premiere's save/load dialoge, and it is NOT the Export Settings window.
+
+`::Send !{up} ; go DOWN one folder level in explorer
 
 
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe Adobe Premiere Pro.exe") and WinActive("Save As") ;this is very specifically premiere's save/load dialoge, and it is NOT the Export Settings window.
 
-`::
-;tooltip, why
-Send !{up} ; go DOWN one folder level in explorer
-return
+`::Send !{up} ; go DOWN one folder level in explorer
+
 
 +`::Send !{left} ;shift tilde will go "back" in explorer
 
@@ -1194,6 +1197,15 @@ return
 
 #if
 
+
+#if WinActive("ahk_class #32770") and WinActive("ahk_exe chrome.exe") ;An Explorer window as launched by Chrome
+`::Send !{up} ;DOWN one folder level in explorer
+
+#if WinActive("ahk_class #32770") and WinActive("ahk_exe firefox.exe") ;An Explorer window as launched by Firefox
+`::Send !{up} ;DOWN one folder level in explorer
+
+
+
 ;------------------------------------------
 
 
@@ -1203,6 +1215,9 @@ return
 #IfWinActive ahk_exe explorer.exe ;IDK if there is any meaningful difference for using the ahk_exe rather than the ahk_CLASS
 
 ;Oh, if you are on the desktop, the EXE is the same, but the class is not. So if you hit ALT F4, you go into the shutdown menu. Not good. So i think the class is a better indicator that you are, specifically, in an Explorer WINDOW.
+
+
+
 
 
 
@@ -1531,7 +1546,7 @@ return
 
 ~F9::masterClipSelect() ;this has not been fully programmed yet
 
-;F10:: ;unused for now
+;F10:: ;unused for now. Acts as a menu accelerator in Windows applications!! why the heck do they think they also need ALT, then???
 ;F11:: ;unused. "Full screen" in Firefox and chrome.
 ;F12:: ;unused. "Inspector" in Firefox and chrome.
 
