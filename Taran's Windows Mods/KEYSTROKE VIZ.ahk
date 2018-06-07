@@ -7,6 +7,9 @@ Menu, Tray, Icon, shell32.dll, 190
 ; Menu, Tray, Icon, shell32.dll, 209 ; sideways star
 ; Menu, Tray, Icon, shell32.dll, 216 ; red thingy
 
+;;HERE IS THE ASSOCIATED VIDEO: https://www.youtube.com/watch?v=gF-f25dRbo8
+;;It shows this script without the history states. But you should get a good idea of how this works.
+
 #SingleInstance,Force
 CoordMode,Mouse,Screen
 
