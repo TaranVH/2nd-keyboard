@@ -1,15 +1,22 @@
-﻿;msgbox, this is the original place I tested the Send_WM_COPYDATA function.
+﻿#NoEnv
+SendMode Input
+#SingleInstance force
 
-StringToSend = Firefox direct
-result := Send_WM_COPYDATA(StringToSend, TargetScriptTitle)
-
-switchToFirefox()
-
+sendinput, {SC0E8} ;scan code of an unassigned key
+IfWinNotExist, ahk_class MozillaWindowClass
+	Run, firefox.exe
+if WinActive("ahk_exe firefox.exe")
+	Send ^{tab}
+else
+	{
+	;WinRestore ahk_exe firefox.exe
+	WinActivate ahk_exe firefox.exe
+	;sometimes winactivate is not enough. the window is brought to the foreground, but not put into FOCUS.
+	;the below code should fix that.
+	WinGet, hWnd, ID, ahk_class MozillaWindowClass
+	DllCall("SetForegroundWindow", UInt, hWnd) 
+	}
 Exitapp
-
-
-SetWorkingDir %A_ScriptDir%
-#Include %A_ScriptDir%/REDIRECTOR Windows.ahk
-
-;filetype := """" . filetype . """" ;this ADDS quotation marks around a string in case you need that.
-;StringReplace, directory,directory,", , All ;" ; this REMOVES the quotation marks around the a string if they are present.
+tooltip, you should never see this tooltip from switchToFirefox.ahk
+sleep 200
+Exitapp

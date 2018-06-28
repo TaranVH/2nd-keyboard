@@ -1,8 +1,8 @@
-﻿#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\point_to_gui.ahk
-;#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\filemover.ahk
+﻿; global savedCLASS = "ahk_class Notepad++"
+; global savedEXE = "notepad++.exe" ;BEFORE the #include is apparently the only place these can go.
 
-global savedCLASS = "ahk_class Notepad++"
-global savedEXE = "notepad++.exe"
+#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\point_to_gui.ahk
+;#include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Taran's Windows Mods\filemover.ahk
 
 
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
@@ -12,6 +12,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance force
 #WinActivateForce
 
+; global savedCLASS = "ahk_class Notepad++"
+; global savedEXE = "notepad++.exe"
 
 ; -------------------------------------------------------------------------
 ; If this is your first time using AutoHotkey, you must take this tutorial:
@@ -25,8 +27,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 Menu, Tray, Icon, shell32.dll, 16 ;this changes the icon into a little laptop thingy. just useful for making it distinct from the others.
 
-global savedCLASS = "ahk_class Notepad++"
-global savedEXE = "notepad++.exe"
+
 
 
 GroupAdd, ExplorerGroup, ahk_class #32770 ;This is for all the Explorer-based "save" and "load" boxes, from any program!
@@ -435,36 +436,36 @@ if f_class = #32770    ; It's a dialog.
 	;msgbox, f_title is %f_title%
 	if f_title = Export Settings
 		{
-		;msgbox,,,you are in Premiere's export window, but NOT in the "Save as" inside of THAT window. no bueno.,0.7
+		msgbox,,,you are in Premiere's export window, but NOT in the "Save as" inside of THAT window. no bueno ,0.7
 		GOTO, ending2 
 		;return ;no, I don't want to return because i still want to open an explorer window.
 		}
 	if WinActive("ahk_exe Adobe Premiere Pro.exe")
 		{
-		msgbox,,,what is happening,0.5
+		msgbox,,,you are inside of premieres save as thingy,0.5
 		if f_title = Save As or f_title = Save Project ;IDK if this OR is properly nested....
 			{
-			ControlFocus, Edit2, ahk_id %f_window_id% ;this is really important.... it doesn't work if you don't do this...
+			ControlFocus, Edit1, ahk_id %f_window_id% ;this is really important.... it doesn't work if you don't do this...
 			msgbox,,,you are here,0.5
-			tippy2("DIALOUGE WITH EDIT2`n`nLE controlfocus of edit2 for f_window_id was just engaged.", 1000)
+			tippy2("DIALOUGE WITH Edit1`n`nLE controlfocus of Edit1 for f_window_id was just engaged.", 1000)
 			; msgbox, is it in focus?
 			; MouseMove, f_Edit1Pos, f_Edit1PosY, 0
 			; sleep 10
 			; click
 			; sleep 10
 			; msgbox, how about now? x%f_Edit1Pos% y%f_Edit1PosY%
-			;msgbox, edit2 has been clicked maybe
+			;msgbox, Edit1 has been clicked maybe
 			
 			; Activate the window so that if the user is middle-clicking
 			; outside the dialog, subsequent clicks will also work:
 			WinActivate ahk_id %f_window_id%
 			; Retrieve any filename that might already be in the field so
 			; that it can be restored after the switch to the new folder:
-			ControlGetText, f_text, Edit2, ahk_id %f_window_id%
-			ControlSetText, Edit2, %f_path%, ahk_id %f_window_id%
-			ControlSend, Edit2, {Enter}, ahk_id %f_window_id%
+			ControlGetText, f_text, Edit1, ahk_id %f_window_id%
+			ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
+			ControlSend, Edit1, {Enter}, ahk_id %f_window_id%
 			Sleep, 100  ; It needs extra time on some dialogs or in some cases.
-			ControlSetText, Edit2, %f_text%, ahk_id %f_window_id%
+			ControlSetText, Edit1, %f_text%, ahk_id %f_window_id%
 			;msgbox, AFTER:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
 			return
 			}
@@ -502,6 +503,8 @@ if f_class = #32770    ; It's a dialog.
 		Sleep, 100  ; It needs extra time on some dialogs or in some cases.
 		ControlSetText, Edit1, %f_text%, ahk_id %f_window_id%
 		;msgbox, AFTER:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
+		
+		ControlFocus, DirectUIHWND2, ahk_id %f_window_id% ;to try to get the focus back into the center area, so you can now type letters and have it go to a file or fodler, rather than try to SEARCH or try to change the FILE NAME by default.
 		return
 		}
 	; else fall through to the bottom of the subroutine to take standard action.
@@ -589,7 +592,8 @@ global savedEXE = lolexe ;is this the way to do it? IDK.
 ;SHIFT + macro key G14
 
 
-
+global savedCLASS = "ahk_class Notepad++"
+global savedEXE = "notepad++.exe"
 
 switchToSavedApp(savedCLASS)
 {
@@ -714,8 +718,12 @@ IfWinNotExist, ahk_class Premiere Pro
 	}
 if WinActive("ahk_class Premiere Pro")
 	{
-	WinActivate ahk_exe notepad++.exe ;so I have this here as a workaround to a bug. Sometimes Premire becomes unresponsive. switching to another applocation and back will solve this problem. So I just hit the premiere button again, in those cases. (Often, this lack of response is caused when scrolling through the timeline with the scroll wheel, especially when the video is playing.)
-	;msgbox,,,lol,0.1
+	IfWinNotExist, ahk_exe notepad++.exe
+		{
+		Run, notepad++.exe
+		sleep 200
+		}
+	WinActivate ahk_exe notepad++.exe ;so I have this here as a workaround to a bug. Sometimes Premeire becomes unresponsive to keyboard input. (especially after timeline scrolling, especially with a playing video.) Switching to any other application and back will solve this problem. So I just hit the premiere button again, in those cases.g
 	sleep 10
 	WinActivate ahk_class Premiere Pro
 	}
@@ -1037,7 +1045,7 @@ gotofiretab(name,URL)
 ;WinActivate ahk_exe firefox.exe ;I think this is unreilable because it only makes sure the applicaiton is RUNNING, not necessarily that it's ACTIVE.
 WinActivate ahk_class MozillaWindowClass ;so i use the CLASS instead.
 ;tooltip, FIRETAB
-sleep 10
+sleep 15
 WinGet, the_current_id, ID, A
 vRet := JEE_FirefoxFocusTabByName(the_current_id, name)
 ;tooltip, vret is %vRet%

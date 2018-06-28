@@ -56,6 +56,92 @@ return
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO! (until canceled with a lone "#IfWinActive")
 
+;is the above line really necessary? i dont think so, but i am afraid to touch it.
+
+
+monitorKeys(whichMonitor,shortcut,useSpace := 1)
+{
+;msgbox,,, useSpace is %useSpace%,1
+if WinActive("ahk_class Premiere Pro")
+{
+
+;IDK if I need to set a coordmode here?
+
+if (whichMonitor = "source")
+	{
+	x := "1800"
+	y := "500"
+	;;tooltip, source here
+	;coordinates that are very likely to be within my Source Monitor's usual area
+	}
+else
+	{
+	x := "3300"
+	y := "500"
+	;;tooltip, program here
+	whichMonitor = "program" ;just in case it was not defined properly, it becomes "program" by default.
+	;coordinates that are very likely to be within my Program Monitor's usual area
+	}
+; tooltip, x y is %x% %y%
+; sleep, 500
+
+ActiveHwnd := WinExist("A")
+windowWidth := CoordGetControl(x,y, ActiveHwnd)
+
+; tooltip, ActiveHwnd is %ActiveHwnd%
+; sleep, 500
+; tooltip, windowWidth is %windowWidth%
+; sleep, 500
+
+
+if (windowWidth < 2000) ;this means that the monitor is NOT maximized
+	{
+	; tooltip, we in here now
+	; sleep 500
+	if (whichMonitor = "source"){
+		prFocus("source") ;keep in mind, this FIRST brings focus to the Effects panel
+		; tooltip, u in SOURCE LAND
+		; sleep 500
+		}
+	else
+		prFocus("program") ;keep in mind, this FIRST brings focus to the Effects panel
+	sleep 20
+	}
+
+sendinput, %shortcut%
+;so, the above would be translated to   sendinput, ^+2   or something like that.
+
+if (shortcut = "^{numpad3}") or if (shortcut = "^+1")
+{
+sleep 30
+sendinput, %shortcut%
+;Premiere 2018 is SLOOOWWW to react to these shortcuts in particular. (Source monitor resolution to 1/4) and (program monitor res to 1/1) So I gotta WAIT AROUND and send this TWICE.
+}
+
+if (windowWidth < 2000) ;again, if the monitor in qustion is NOT already maximized...
+	prFocus("timeline")
+
+;if (useSpace = "0")
+	;tooltip, we are NOT NOT NOT spacing
+;;optional:
+if (useSpace = "1")
+	{
+	;tooltip, we are spacing
+	sendinput, {space} ;if playing/paused, pause/play the video.
+	sleep 50
+	sendinput, {space} ;if playing/paused, pause/play the video.
+	;;this allows the new playback resolution to take effect.
+	}
+}
+;if you are not in Premiere Pro, the function is skipped
+
+; if not WinActive("ahk_class Premiere Pro")
+	; msgbox,,, pr is not active,1
+	; ;wow so that is weird. if I have Premiere active in my 1st or 3rd monitor (not the main, 2nd monitor,) premiere is NOT considered to be "active." I have no idea how to resolve this,, will need to look further into it later.
+}
+;end of monitorKeys()
+
+
 
 prFocus(panel) ;this function allows you to have ONE spot where you define your personal shortcuts that "focus" panels in premiere.
 {
@@ -192,16 +278,19 @@ Send %item%
 sleep 30
 MouseMove, 62, 95, 0, R ;----------------------relative to the position of the magnifying glass (established earlier,) this moves the cursor down and directly onto the preset's icon. In my case, it is inside the "presets" folder, then inside of another folder, and the written name sohuld be compeltely unique so that it is the first and only item.
 ;msgbox, The cursor should be directly on top of the preset's icon. `n If not, the script needs modification.
+sleep 5
 MouseGetPos, iconX, iconY, Window, classNN ;---now we have to figure out the ahk_class of the current panel we are on. It used to be DroverLord - Window Class14, but the number changes anytime you move panels around... so i must always obtain the information anew.
+sleep 5
 WinGetClass, class, ahk_id %Window% ;----------"ahk_id %Window%" is important for SOME REASON. if you delete it, this doesnt work.
 ;msgbox, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
 ControlGetPos, xxx, yyy, www, hhh, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
 MouseMove, www/4, hhh/2, 0, R ;-----------------clicks in about the CENTER of the Effects panel. This clears the displayed presets from any duplication errors. VERY important. without this, the script fails 20% of the time.
+sleep 5
 MouseClick, left, , , 1 ;-----------------------the actual click
 sleep 10
 MouseMove, iconX, iconY, 0 ;--------------------moves cursor BACK onto the effect's icon
 sleep 35
-MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---drags this effect to the cursor's pervious coordinates, which should be above a clip, on the TIMELINE panel.
+MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---clicks the left button down, drags this effect to the cursor's pervious coordinates and releases the left mouse button, which should be above a clip, on the TIMELINE panel.
 sleep 10
 MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great!
 blockinput, MouseMoveOff ;returning mouse movement ability
@@ -1489,6 +1578,8 @@ tooltip,,,12
 ;end of sendkey()
 
 
+;;;;note to self: this highlights the find box of the bin it highlights, i have no idea why. must fix
+
 ;#IfWinNotActive ahk_class Premiere Pro
 stopPlaying()
 {
@@ -1555,6 +1646,48 @@ if not WinActive(lolClass)
 
 ;end of Premiere play/pause when not in focus.
 }
+
+
+
+CoordGetControl(xCoord, yCoord, _hWin) ; _hWin should be the ID of the active window
+{
+
+	;this overly complicated funciton will get information about a window without having to move the cursor to those coordinates first. the AHK people really should have a command for this already....
+	;Keep in mind, Premiere has LOTS of small windows within it. Open window Spy and move your cursor around Premiere, to see what i mean.
+
+	;script originally from Coco
+	; https://autohotkey.com/board/topic/84144-find-classnn-of-control-by-posxy-without-moving-mouse/
+	
+	
+	CtrlArray := Object() 
+	WinGet, ControlList, ControlList, ahk_id %_hWin%
+	Loop, Parse, ControlList, `n
+	{
+		Control := A_LoopField
+		ControlGetPos, left, top, right, bottom, %Control%, ahk_id %_hWin%
+      right += left, bottom += top
+		if (xCoord >= left && xCoord <= right && yCoord >= top && yCoord <= bottom)
+			MatchList .= Control "|"
+	}
+	StringTrimRight, MatchList, MatchList, 1
+	Loop, Parse, MatchList, |
+	{
+		ControlGetPos,,, w, h, %A_LoopField%, ahk_id %_hWin%
+		Area := w * h
+		CtrlArray[Area] := A_LoopField
+	}
+	for Area, Ctrl in CtrlArray
+	{
+		Control := Ctrl
+		if A_Index = 1
+			break
+	}
+	return w
+}
+
+
+
+
 
 easeInAndOut(){
 

@@ -146,7 +146,7 @@ sleep 20 ;without this, the script will loop a bazillion times a second. It was 
 
 
 ;I do NOT want the key visualizer to appear if after effects is open -- it covers up important information. The following script will hide it.
-if WinActive("ahk_exe AfterFX.exe") OR WinActive("ahk_exe firefox.exe") OR WinActive("ahk_exe chrome.exe") ;;OR any other application i don't want the visualizer to appear on top of.
+if WinActive("ahk_exe AfterFX.exe") OR WinActive("ahk_exe firefox.exe") OR WinActive("ahk_exe chrome.exe") OR WinActive("ahk_exe vlc.exe") ;;OR any other application i don't want the visualizer to appear on top of.
 	{
 	setTimer OFFAFTERRELOAD, -100
 	sleep 1000

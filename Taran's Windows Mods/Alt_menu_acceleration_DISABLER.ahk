@@ -53,34 +53,35 @@ CoordMode, mouse, screen
 
 ; THE SOLUTION:
 
-LAlt::
-sendinput, {LAlt down}
-sendinput, {SC0E8 down} ;this is the scan code of an unassigned key. As long as you nor the system never use it for anything else, it can be used in THIS way to cancel the menu acceleration.
+~LAlt::
+;sendinput, {LAlt down} ;now that I added the ~, this line is no longer necessary.
+sendinput, {SC0E9 down} ;this is the scan code of an unassigned key. As long as you nor the system never use it for anything else, it can be used in THIS way to cancel the menu acceleration.
 ;tooltip, Lalt is pressed
 KeyWait, LAlt
-; That line is important, so that ALT does not continuously fire as you are holding it down.
+; That line is (was) important, so that ALT does not continuously fire as you are holding it down.
+; update, i am no longer sure if it is important or not...
 ;tooltip, Lalt was released
 return
 
-LAlt up::
-sendinput, {LAlt up}
-sendinput, {SC0E8 up}
+~LAlt up::
+;sendinput, {LAlt up}
+sendinput, {SC0E9 up}
 ;;;Unlike my 2nd keyboard, this method does not use the scan code as a strict "wrapper."
 ;;tooltip, 
 return
 
 
-RAlt::
-sendinput, {RAlt down}
-sendinput, {SC0E8 down}
+~RAlt::
+;sendinput, {RAlt down}
+sendinput, {SC0E9 down}
 ;;tooltip, Ralt is pressed
-KeyWait, RAlt
+;KeyWait, RAlt
 ;;tooltip, Ralt was released
 return
 
-RAlt up::
-sendinput, {RAlt up}
-sendinput, {SC0E8 up}
+~RAlt up::
+;sendinput, {RAlt up}
+sendinput, {SC0E9 up}
 ;;tooltip, 
 return
 

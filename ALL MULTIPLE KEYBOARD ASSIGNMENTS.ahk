@@ -1,3 +1,5 @@
+
+
 SetWorkingDir, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files
 ;the above will set A_WorkingDir. It must be done in the autoexecute area.
 ;SetNumLockState, on ;This doesn't work, needs to be done in admin mode.
@@ -6,6 +8,11 @@ Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece
 ;when you get to #include, it means the END of the autoexecute section.
 ;gui must be #included first, or it does not work, for some reason...
 ;YOU probably do NOT need the GUI at all. Delete the line below:
+
+global savedCLASS = "ahk_class Notepad++"
+global savedEXE = "notepad++.exe" ;BEFORE the #include is apparently the only place these can go.
+
+
 #Include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\gui.ahk
 #include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\All Premiere Functions.ahk
 #include C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\Almost All Windows Functions.ahk
@@ -28,6 +35,11 @@ Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece
 ; #included scripts have all the functions. I had to split it up this way 
 ; so that I can also directly launch those functions using means OTHER
 ; than a keyboard, like the Stream Deck's "open file" feature.
+;
+; ANOTHER NOTE:
+; If you have CUE (Corsair Utility Engine) open, and your keyboard selected 
+; (in all its RGB glory,) it will take a lot longer to switch between applications. 
+; to fix this lag, simply close CUE, or select some other "demo" peripheral.
 ;------------------------------------------------------------------------
 ;
 ;THIS SCRIPT NO LONGER USES LUAMACROS TO REPROGRAM THE SECOND KEYBOARD. IF YOU WANT THAT CODE, PLEASE GO TO "2nd keyboard if using luamacros.ahk"
@@ -45,6 +57,7 @@ Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece
 ;  and\or here:
 ;  C:\Users\[YOUR_USERNAME]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
+
 #NoEnv
 SendMode Input
 #InstallKeybdHook
@@ -57,6 +70,7 @@ SendMode Input
 detecthiddenwindows, on
 
 SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
+
 
 
 ;____________________________________________________________________________
@@ -220,25 +234,33 @@ tab::msgbox,,, you pressed tab. :P,0.8
 ; q::recallClipboard("q")
 ; w::recallClipboard("w")
 ; e::recallClipboard("e")
-q::
-w::
-e::
-r::
-t::recallClipboard(A_thishotkey)
+q::preset("T wipe straight 135")
+w::preset("T wipe straight 225")
 
-+q::
-+w::
-+e::
-+r::
-+t::saveClipboard(A_thishotkey)
+e::preset("T wipe soft 135")
+r::preset("T wipe soft 225")
 
-y::preset("impact flash preset")
-u::preset("")
++q::preset("T wipe WHITE LINE 135")
++w::preset("T wipe WHITE LINE 225")
+
++e::preset("T wipe exposure 135")
++r::preset("T wipe exposure 225")
+
+;t::preset("T wipe WHITE LINE 315")
+t::recallClipboard("t")
++t::saveClipboard("t")
+
+;;;still need to improve and fix the clipboard scriptypoo
+;;t::recallClipboard(A_thishotkey)
+;;+t::saveClipboard(A_thishotkey)
+
+y::preset("autogate -25")
+u::preset("red red red")
 i::preset("multiply")
 o::preset("flip vertical")
 p::preset("flip horizontal")
-[::preset("Impact Pop for full-screen")
-]::preset("Impact Pop Preset")
+[::preset("T impact flash MED")
+]::preset("T Impact Pop")
 \::
 instantExplorer("Z:\Linus\9 - Tools\1-Sound Effects")
 sleep 20
@@ -252,76 +274,56 @@ return
 ; capslock::msgbox, , ,i hate capslock!, 1000
 capslock::capslock
 
+a::preset("T wipe straight 45")
+s::preset("T wipe straight 315")
 
-a::
-s::
-d::
-f::
-g::recallClipboard(A_thishotkey)
+d::preset("T wipe soft 45")
+f::preset("T wipe soft 315")
 
-+a::
-+s::
-+d::
-+f::
-+g::saveClipboard(A_thishotkey)
++a::preset("T wipe WHITE LINE 45")
++s::preset("T wipe WHITE LINE 315")
+
++d::preset("T wipe exposure 45")
++f::preset("T wipe exposure 315")
 
 
+
+;g::recallClipboard(A_thishotkey)
+;+g::saveClipboard(A_thishotkey)
+
+g::preset("mosaic preset")
 h::preset("invert preset")
-j::preset("anchor and position to 0") ;no panning involved here.
+j::preset("fast zoom")
 k::preset("100 to 120 zoom")
 l::preset("25% blur and darkener")
-`;::preset("blur with edges") ;lol, the syntax highlighting gets this one wrong.
+`;::preset("blur with edges") ;lol, it's not a comment until here -- the syntax highlighting gets this one wrong.
 '::preset("Warp Stabilizer Preset")
-enter::return
-;enter WAS ;Sendinput ^!e
+enter::enter
 
 ;;;;;next line;;;;;;;;
 
-Lshift::return ;msgbox, , ,you pressed Left shift - you should never see this message if you let it pass normally, 5
+Lshift::Lshift
+;;msgbox, , ,you pressed Left shift - you should never see this message if you let it pass normally, 5
 ;now I use it as a modifier for some of the other numpad keys.
-z::
-x::
-c::
-v::
-b::recallClipboard(A_thishotkey)
+z::preset("T wipe soft down")
+x::preset("T wipe soft up")
+c::preset("T wipe soft left")
+v::preset("T wipe soft right")
+b::preset("Drop Shadow Preset")
 
-+z::
-+x::
-+c::
-+v::
-+b::saveClipboard(A_thishotkey)
 
-n::preset("mosaic preset")
-;m::preset("pan down")
-
+n::preset("anchor and position to 0") ;no panning involved here.
 m::preset("a0p0 pan down")
-
-,::
-preset("crop 50 LEFT")
-;sleep 200
-;cropClick()
-return
-
-.::
-preset("crop 50 RIGHT")
-;sleep 200
-;cropClick()
-return
-
-/::
-preset("crop full")
-;sleep 150
-;cropClick()
-return
+,::preset("crop 50 LEFT")
+.::preset("crop 50 RIGHT")
+/::preset("crop full")
 
 ;;;;;next area;;;;;;;;
 
 ;;Lctrl::msgbox LEFT ctrl ;this must be commented out for the sake of numpad5, which was converted into left ctrl.
 ;None of these modifiers should even happen, I have allowed modifiers to pass through normally.
-Lwin::msgbox LEFT win
-Lalt::msgbox LEFT alt
-
-;space::tippy("2nd space") ;change this to EXCLUSIVE "play" only?
+Lwin::msgbox,,, LEFT win,0.5
+Lalt::msgbox,,, LEFT alt,0.5
 
 ;Ralt::msgbox Ralt - doesnt work
 ;Rwin::msgbox Right Win - doesnt work
@@ -332,6 +334,7 @@ Rshift::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music")
 ;SC06E::msgbox,,,this was right WINkey,0.5 ;;NEVER use super modifier keys in this way! bad idea!!! cross talk!!!!!
 SC06F::msgbox,,,testing scan codes,0.5
 SC062::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations\~CANNED PRE ROLLS") ;remapped away from appskey, it seemed to cause problems.
+
 Rctrl::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations\~INTEGRATIONS")
 space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
 ;SC065::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~ For Review") ;this is remapped from ALT. JK, SC065 is F14, do not use.
@@ -681,9 +684,9 @@ p::
 \::return
 capslock::msgbox, , ,you should not ever see this text, 1000
 
-a::
-s::
-d::
+a::tooltip,fancy A
+s::tooltip,fancy S
+d::tooltip,fancy D
 f::
 g::
 h::
@@ -707,7 +710,7 @@ m::
 /::return
 Lwin::msgbox, LEFT win
 Lalt::msgbox, LEFT alt
-space::tippy("3rd space")
+space::tooltip,
 Ralt::msgbox, Ralt - doesnt work
 Rwin::msgbox, Right Win 
 Rshift::msgbox RIGHT SHIFT lol
@@ -797,19 +800,19 @@ F11::
 F12::tooltip, you pressed  %A_thishotkey%
 
 `::tooltip, 22222
-1::
-2::
+1::gotofiretab("AHK needed","https://docs.google.com/document/d/1xsjjKYggXYig_4lfBMJ6LDGRZ9VOvDd7SCSTSi7GwN8/edit")
+2::gotofiretab("LTT note","https://docs.google.com/document/d/1CWjC7DWyXGIFDaSwXzUsdHmdktvgV0kdgNOFEK7wf7U/edit")
 3::
 4::
 5::
-6::
+6::tooltip, you pressed  %A_thishotkey%
 7::
 8::
 9::
 0::
 -::
-=::
-backspace::tooltip, you pressed  %A_thishotkey%
+=::tooltip, you pressed  %A_thishotkey%
+backspace::send, ^+!r
 
 ;;;;;next line;;;;;;;;
 
@@ -859,9 +862,9 @@ g::
 h::
 j::
 k::
-l::
+l::tooltip, you pressed  %A_thishotkey%
 `;::
-'::tooltip, you pressed  %A_thishotkey%
+'::send, ^+!, ;this is the premiere shortcut for "show audio keyframes" (on timeline)
 enter::
 if WinActive("ahk_class Premiere Pro")
 	{
@@ -969,96 +972,36 @@ right::tooltip, you pressed  %A_thishotkey%
 ;;;;;next area;;;;;;;;
 
 numpad0::
-;tooltip, numpad 0
 if WinActive("ahk_class Premiere Pro")
 	sendinput, ^!+9 ;activate lumetri scopes
 return
-numpad1::
-if WinActive("ahk_class Premiere Pro"){
-	;sendinput, ^!+4 ;Safe margins, source monitor
-	prFocus("source")
-	sendinput, ^!+[ ;Safe margins, source monitor
-	prFocus("timeline")
-	}
-return
-numpad2::
-if WinActive("ahk_class Premiere Pro"){
-	prFocus("program")
-	sendinput, ^!+] ;safe margins, program monitor
-	prFocus("timeline")
-}
-return
+
+numpad1::monitorKeys("source","^!+[",0) ;Safe margins (source monitor)
+
+numpad2::monitorKeys("program","^!+]",0)  ;safe margins (program monitor)
 
 ;WE ARE STILL INSIDE THE AZIO KEYBOARD
 
 numpad3::return
-numpad4::
-if WinActive("ahk_class Premiere Pro"){
-	prFocus("source")
-	send ^{numpad1} ;res to 1/1
-	prFocus("timeline")
-}
-return
 
-numpad5::
-if WinActive("ahk_class Premiere Pro"){
-prFocus("program")
-sleep 20
-send ^+1 ;res to 1/1
-sleep 30 ;Premiere 2018 is SLOOOWWW to react. So I gotta send this twice and WAIT AROUND
-send ^+1 ;res to 1/1
-prFocus("timeline")
-}
-return
+numpad4::monitorKeys("source","^{numpad1}") ;source monitor res to 1/1
+
+numpad5::monitorKeys("program","^+1") ;program monitor resolution to 1/1
 
 numpad6::tooltip, you pressed  %A_thishotkey%
-numpad7::
-if WinActive("ahk_class Premiere Pro"){
-prFocus("source")
-sleep 20
-; send ^{numpad2} ;res to 1/2
-; sleep 30 
-; ; ; sendinput, {shift down}
-; ; ; sendinput, {shift up} ;this didn't help at all...
-sleep 20
-; sendinput, ^!{numpad2} ;; for some reason,, i have no idea why, this shortcut NEVER WORKS for this command, ever since upgrading to premiere 12.0.1
-sendinput, ^!l ;this is the shortcut for source monitor to 1/2 resolution.
-sleep 20
-prFocus("timeline")
-}
-return
 
-numpad8::
-if WinActive("ahk_class Premiere Pro"){
-prFocus("program")
-sleep 20
-send ^+2 ;res to 1/2
-prFocus("timeline")
-}
-return
+numpad7::monitorKeys("source","^!l") ;source monitor res to 1/2 
+
+numpad8::monitorKeys("program","^+2") ;program monitor res to 1/2
 
 numpad9::tooltip, you pressed  %A_thishotkey%
 
 ;+numlock::
-numlock::
-if WinActive("ahk_class Premiere Pro"){
-prFocus("source")
-send ^{numpad3} ;source res to 1/4
-sleep 30 ;Premiere 2018 is SLOOOWWW to react. So I gotta send this twice and WAIT AROUND
-send ^{numpad3} ;source res to 1/4
-prFocus("timeline")
-}
-return
+numlock::monitorKeys("source","^{numpad3}") ;source monitor res to 1/4
 
-numpadDiv::
-if WinActive("ahk_class Premiere Pro"){
-prFocus("program")
-send ^+3 ;res to 1/4
-prFocus("timeline")
-}
-return
+numpadDiv::monitorKeys("program","^+3") ;program monitor res to 1/4
 
-numpadMult::tooltip, you pressed  %A_thishotkey%
+numpadMult::send, +`` ;premiere shortcut for "Maximize (program?) Monitor"
 numpadSub::tooltip, you pressed  %A_thishotkey%
 numpadAdd::sendinput, ^!{F10}
 numpadEnter::sendinput, ^!m ;mute/unmute mic - shadowplay ;unfortunately ctrl alt m is also NEW COMMENT in google sheets... i might wish to change it
@@ -1131,10 +1074,16 @@ SC070::msgbox,,, SC070 - "Keyboard intl 2 INSIDE OF F24", 0.5
 !F1::send ^+{pgup}
 !F2::send ^+{pgdn}
 ; F2 & f20::send ^+{pgdn}
+
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
+
+
 F3::send ^w ;control w, which closes a tab
 F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
+
+
+
 #IfWinActive
 
 #IfWinActive ahk_class Chrome_WidgetWin_1
@@ -1178,7 +1127,7 @@ return
 ; left & right::msgbox, hello
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe Adobe Premiere Pro.exe") and WinActive("Save Project") ;this is very specifically premiere's save/load dialoge, and it is NOT the Export Settings window.
 
-`::Send !{up} ; go DOWN one folder level in explorer
+`::Sendinput, !{up} ; go DOWN one folder level in explorer
 
 
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe Adobe Premiere Pro.exe") and WinActive("Save As") ;this is very specifically premiere's save/load dialoge, and it is NOT the Export Settings window.
@@ -1233,7 +1182,20 @@ Return
 ;There is a deliberate delay added, since in SOME situations, ALT would be recognised, but not F4. Adding a delay takes care of that.
 
 
-`::Send !{up} ;This optional script allows you to use the TILDE to go DOWN one folder level in explorer
+;The script below worked fine 99% of the time. But if you have a FILE selected, and that file has a preview thingy showing, it would NOT work -- instead, it would highlight the menu accleration. Sad!! Manually hitting ALT UP  would still work in that situation, though.
+;After some experimentation, I discovered that adding a small delay between virtual keystrokes is essential for this to work in those situations.
+
+;`::Send !{up} ;go DOWN one folder level in explorer. Discontinued.
+
+`::
+Sendinput, {alt Down}
+sleep 5
+sendinput, {up} ; this is the up arrow key ; ALT+UP will go down(or "up?") one folder level in explorer
+sleep 5
+Sendinput, {alt Up} ;this is just the virtual ALT keystroke going up.
+return
+
+
 +`::Send !{left} ;shift tilde will go "back" in explorer
 
 ~left & right::
@@ -1313,7 +1275,7 @@ Return
 ;Macro key G14
 ^F6::
 ;I had to learn just now to use the parameter to pass "savedCLASS" even though it's already a global variable. Just works better this way... but really IDK what i am doing.
-; msgbox,,, switching to `nsavedCLASS = %savedCLASS% `nEXE = %savedEXE%, 0.5
+;msgbox,,, switching to `nsavedCLASS = %savedCLASS% `nsavedEXE = %savedEXE%,0.3
 switchToSavedApp(savedCLASS) 
 return
 
@@ -1410,6 +1372,31 @@ G12: F14 - Scale
 	; ; sendinput, {escape}
 ; return
 
+;put selected text into a lengthend comment in premiere.
+F12::
+sendinput, ^c
+sleep 15
+WinActivate ahk_class Premiere Pro
+sleep 10
+send, ^!d ;ctrl alt D is  "deselect all" (clips on the timeline)
+sleep 10
+send, ^!+k ;ctrl alt shift K is  "shuttle stop"
+sleep 10
+send, ^`; ;CTRL SEMICOLON is my premiere shortcut for "(add) marker."
+sleep 10
+send, ^`; ;if you press it again, it opens that comment.
+sleep 50
+send, {left}
+send, ^v ;pastes the text into the title area
+sleep 10
+;sleep 500
+send, +{tab} ;shift tab will make it highlight the "duration" field
+sleep 10
+send, 00:00:04:00
+sleep 10
+send, {enter}
+return
+
 #IfWinActive
 /*
 See "Windows Mod - various functions.ahk" for a much more complete explanation of the following macro key assignments
@@ -1436,7 +1423,7 @@ Return
 
 
 #IfWinActive ahK_exe Adobe Premiere Pro.exe
-tab::7 ;"7" is set to enable/disable for now. just testing stuff
+;tab::7 ;"7" is set to enable/disable for now. just testing stuff
 appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
 ^w::closeTitler()
 ~+K::KbShortcutsFindBox()
@@ -1530,7 +1517,7 @@ send, v ;selection tool
 send, {alt down}
 send, {lbutton}
 send, {alt up}
-send, 7 ;disable
+send, {home} ;disable
 return
 
 #IfWinActive ahK_exe Adobe Premiere Pro.exe
