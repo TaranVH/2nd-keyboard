@@ -1,9 +1,11 @@
+; NOTE THIS ONLY WORKS WITH AutoHotkey v1.1.26.00 and below
 
 ;KeypressOSD.ahk
-;Author - Victor Uribe (modified script originally written by VarunJhajharia)
-
+;Author - Victor Uribe
+;This script shows all keypresses on the main screen.
 ;THIS IS A SIMPLER ALTERNATIVE TO KEYSTROKE VIZ.AHK. THE TWO SHOULD NOT BE USED AT THE SAME TIME.
 ;This visualizer does not show associated commands.
+;Toggle this script using the Pause key.
 
 #SingleInstance force
 #NoEnv
@@ -12,9 +14,9 @@ ListLines, Off
 
 ; Settings
 	;gui
-		guiHeight := 60      ; Changes the height of the text window (max is 500)
+		guiHeight := 60         ; Changes the height of the text window (max is 500)
 		maxOnScreenChars := 60  ; Maximum number of characters that will be displayed
-		bgColor = Black         ; background color of the gui
+		bgColor = Black         ; background color of the gui, use hexadecimal values (884488) or 'simple' colors defined in AHK
 		fontColor = White       ; changes the font color
 		guiX = 20               ; the horizontal position of the gui screen px from the left = 0
 		guiY = 120              ; the vertical position of the gui screen px from the bottom
@@ -27,27 +29,31 @@ ListLines, Off
 	;Settings for the gui string
 		bufr := " "                 ; String to add before and after each popup
 		cntPrefix := " x"           ; prefix for the counter otherwise it is right next to the previous key
-		modSpaceKey := " "          ; This is the string that will appear when pressing the space key for example '<space>' vs ' '
+		modSpaceKey := "SPACE!"          ; This is the string that will appear when pressing the space key for example '<space>' vs ' '
 		modSeperator := "+"         ; This is the string that will be shown to seperate modifiers from single keys
-		modKeySeperator := " "      ; This is te seperator between keypresses, will not show between letters
+		modKeySeperator := " "      ; This is the seperator between keypresses, will not show between letters
 		modNumPrefix := ""          ; This is the prefix to the keys pressed on the numpad (ex: "Numpad+" will display "Numpad+1")
-		modShift := "Shift+"        ; This is the prefix for any keys modified with the shift key
-		onlyCaps = True             ; Only show UpperCase letters regardless of the Caps Lock or Shift state
+		modShift := "Shift+"              ; This is the prefix for any keys modified with the shift key
+		shiftmodSeperator := ""     ; allows you do choose whether you want a space/symbol or nothing bewteen a 'Shifted' key and the next key
+		onlyCaps := false             ; Only show UpperCase letters regardless of the Caps Lock or Shift state
 		
 	;timers
-		transN        := 100    ; 0=transparent, 255=opaque
+		transN        := 200    ; 0=transparent, 255=opaque
 		DisplayTime   := 1000   ; time before fade, in milliseconds
 		DisplayTime2  := 3000   ; time before hiding gui
 
 	;functionality
 		#MaxHotkeysPerInterval 200              ; This value will set how many hotkeys are allowed to be pressed per 2000 milliseconds; autohotkey default=71
 		startCounterAt := 2                     ; Only display counter if key is pressed more than this many times (default;1)
-		mods := "Ctrl|Shift|Alt|LWin|RWin|Esc"	; Declare modifiers, any key can be a modifier
-
-;internal vars (do not change)
-PreviousKeys := ""
-counter = 1
-lastKeyPress := ""
+		mods := "Ctrl|Shift|Alt|LWin|RWin"	; Declare modifiers, any key can be a modifier
+		showMouseBtnPress := True				;if set to true will show mouse key presses, if false will only show keyboard presses
+		showWheelMovement := False             ;if set to true will show the mouse wheel movements
+		
+;=====================================================================================================================		
+;internal vars (do not change anything below this line)
+PreviousKeys := ""							; Used to keep track of all keys pressed in this popup
+counter = 1									; Used to count the number of times each key is pressed in succession
+lastKeyPress := ""							; Used to determine if the last key pressed is the same as the current key (increments counter)
 
 ; Create GUI
 Gui, +AlwaysOnTop -Caption +Owner +LastFound +E0x20
@@ -59,30 +65,48 @@ WinSet, Transparent, %transN%
 Winset, AlwaysOnTop, On
 SetTimer, ShowHotkey, 1
 
-; Create hotkey
-
-;get //
+; Create hotkeys
 Loop, 95 ; letters and symbols
     Hotkey, % "~*" Chr(A_Index + 31), Display
-Loop, 24 ; F1 - F24
+Loop, 24 ; F1 - 
     Hotkey, % "~*F" A_Index, Display
 Loop, 10 ; Numpad0 - Numpad9
     Hotkey, % "~*Numpad" A_Index - 1, Display
-	
-Otherkeys := "NumpadDiv|NumpadMult|NumpadAdd|NumpadSub|Tab|Enter|Esc|BackSpace|Del|Insert|Home|End|PgUp|PgDn|Up|Down|Left|Right|ScrollLock|CapsLock|NumLock|Pause|Space|NumpadDot|NumpadEnter|Media_Play_Pause|Launch_Mail|Launch_Media|Launch_App1|Launch_App2|Volume_Mute|Volume_Up|Volume_Down|Browser_Home|AppsKey|PrintScreen|Sleep"   ;|LButton|RButton|MButton|XButton1|XButton2|WheelDown|WheelUp|WheelLeft|WheelRight"
-sym := "!|@|#|$|%|^|&|*|(|)|_|+|<|>|?|:|""|{|}|`|"
+
+; Create hotkeys for other keyboard buttons
+Otherkeys :=  "NumpadDiv|NumpadMult|NumpadAdd|NumpadSub|Tab|Enter|Esc|Backspace|Del|Insert|Home|End|PgUp|PgDn|Up|Down|Left|Right|ScrollLock|CapsLock|NumLock|Space|NumpadDot|NumpadEnter|Media_Play_Pause|Launch_Mail|Launch_Media|Launch_App1|Launch_App2|Volume_Mute|Volume_Up|Volume_Down|Browser_Home|AppsKey|PrintScreen|Sleep"  ;|Pause
 
 Loop, parse, Otherkeys, |
     Hotkey, % "~*" A_LoopField, Display
+
+mouseBtns := "LButton|RButton|MButton|XButton1|XButton2"
+mouseWheel := "WheelDown|WheelUp|WheelLeft|WheelRight"
+
+If (showMouseBtnPress){
+	Loop, parse, mouseBtns, |
+  	Hotkey, % "~*" A_LoopField, Display
+}
+
+If (showWheelMovement){
+	Loop, parse, mouseWheel, |
+  	Hotkey, % "~*" A_LoopField, Display
+}
+	
+;declare special symbols
+sym := "!|@|#|$|%|^|&|*|(|)|_|+|<|>|?|:|""|{|}|`|"
+
+Pause::Suspend
+Pause,,1
+   
 return
 
 ; Display
-Display:
+Display:	
 	actualkey := SubStr(A_ThisHotkey, 3)
 
 	if (StrLen(PreviousKeys) > maxOnScreenChars){
 		PreviousKeys := lastKeyPress
-		counter=1
+		counter = 1
 	}
     
 	;declare/clear prefix for mod keys
@@ -92,7 +116,7 @@ Display:
 	Loop, Parse, mods, |
         if GetKeyState(A_LoopField){
 			if (A_LoopField = "Shift"){
-				prefix .= modShift
+				prefix .= modShift shiftmodSeperator
 			}else{
 				prefix .= A_LoopField modSeperator
 			}
@@ -106,9 +130,9 @@ Display:
     
 		
 	actualkey := StrReplace(actualkey, "Numpad", modNumPrefix)
-	actualkey := StrReplace(actualkey, "&", "&&")                      ;necessary for proper use of '&', limitation of autohotkey gui
+	actualkey := StrReplace(actualkey, "&", "&&")                      ;necessary for proper use of '&', limitation of autohotkey gui title bars
 
-	if (lastKeyPress = prefix actualkey and ((StrLen(prefix)>1) or StrLen(actualkey)>1)){                  ; or StrLen(actualkey)>1 for counting backspace and enter
+	if (lastKeyPress = prefix actualkey and (StrLen(actualkey)>1)){   ; or StrLen(actualkey)>1 for counting backspace and enter ;; StrLen(prefix)>1 or 
 		counter += 1
 		dprefix := ""
 		keyDown := ""
@@ -118,7 +142,6 @@ Display:
 		}else{
 			dprefix := modKeySeperator prefix
 		}
-		;keyDown := actualkey
 		
 		if (StrLen(actualkey)=1){
 			if (onlyCaps or ((GetKeyState("CapsLock","T") and GetKeyState("Shift") <> True) or (GetKeyState("Shift") AND GetKeyState("CapsLock","T") <> True))){
@@ -132,7 +155,9 @@ Display:
 		counter = 1
 	}
 	
-	dkeyDown := StrReplace(dkeyDown, " ", modSpaceKey)
+	if !(keyDown = "Backspace"){
+		keyDown := StrReplace(keyDown, "space", modSpaceKey)
+	}
 	
 	if (counter < startCounterAt){
 		dcntPrefix := ""
@@ -143,6 +168,7 @@ Display:
 	}
 	
 	key := bufr PreviousKeys dprefix keyDown dcntPrefix dcounter bufr
+	key := StrReplace(key, "   ", " ")
 	
 	lastKeyPress := prefix actualkey
 	PreviousKeys := PreviousKeys dprefix keyDown
