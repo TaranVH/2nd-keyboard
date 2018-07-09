@@ -1,33 +1,21 @@
 # KeyPress-Displayer
+
 THIS IS A SIMPLER ALTERNATIVE TO KEYSTROKE VIZ.AHK. THE TWO SHOULD NOT BE USED AT THE SAME TIME.
 
 Creates an On Screen Display of all the keypresses from the keyboard and mouse buttons
 
-This is a AutoHotKey(.ahk) Script and requires Autohotkey software to run this script,<br>which can be obtained for free <a href="https://autohotkey.com/download/ahk-install.exe">here</a> (Size: 2.96 MB)
-
+This is an AutoHotKey(.ahk) Script and requires AutoHotkey software to run this script, which can be [obtained for free here](https://autohotkey.com/download/ahk-install.exe) (Size: 2.96 MB)
 
 Challenge is to make a script that,
-<ol type="a">
-<li> <div color:#555555>Displays all the keyboard and mouse button presses on the screen - Done</div>
-</li>
-<li> The Display should be customisable ie; changes could be made to the <i>Font, Background Color, Font Color - Done</i>
-</li>
-<li> The Display should decrase its transparency when the pressed key is released.
-</li>
-<li> The Display should disappear after a while if no further keys are pressed. - Done
-</li>
-<li>Should display "<b>234.56</b>" as a whole group like "<b>234.56</b>" and not individual keystrokes like "<b>2</b>" then "<b>3</b>" then "<b>4</b>" then "<b>.</b>" then "<b>5</b>" then "<b>6</b>". Same is applicable to words "<b>HELLO</b>" not "<b>H</b>" "<b>E</b>" "<b>L</b>" "<b>L</b>" "<b>O</b> - Done"
-</li>
-<li> Should display "<b>Numpad0</b>" as "<b>0</b>" "<b>Numpad1</b>" as "<b>1</b>" etc. - Done
-</li>
-<li> Should display "<b>(</b>" as "<b>(</b>" and not "<b>Shift+0</b>" or "<b>Shift+)</b>" likewise for all symbols. - Done
-</li>
-<li> Multiple keypresses like "<b>Backspace Backspace Backspace Backspace Backspace</b>" as "<b>Backspace(x5)</b>", the number in the brackets is to increase with the increase in keypresses. - Done
-</li>
-<li> Should not treat "<b>Hello</b>" as "<b>Hel(x2)o</b>" - Done
-</li>
-<li> Should refresh the display after a certain number of keypresses are made. - Done<br>
-For example, with a breakpoint of 15 characters the typed string "<b>I went to the zoo yesterday had lots of fun</b>" should be displayed as,<br>
-"<b>I went to the z</b>" then<br>
-"<b>oo yesterday ha</b>" and finally<br>
-"<b>d lots of fun</b>" </li>
+
+1. [x] Displays all the keyboard and mouse button presses on the screen - Done
+1. [x] The Display should be customizable ie; changes could be made to the *Font, Background Color, Font Color - Done*
+1. [ ] The Display should decrease its transparency when the pressed key is released.
+1. [x] The Display should disappear after a while if no further keys are pressed. - Done
+1. [x] Should display "**234.56**" as a whole group like "**234.56**" and not individual keystrokes like "**2**" then "**3**" then "**4**" then "**.**" then "**5**" then "**6**". Same is applicable to words "**HELLO**" not "**H**" "**E**" "**L**" "**L**" "**O** - Done"
+1. [x] Should display "**Numpad0**" as "**0**" "**Numpad1**" as "**1**" etc. - Done
+1. [x] Should display "**(**" as "**(**" and not "**Shift+0**" or "**Shift+)**" likewise for all symbols. - Done
+1. [x] Multiple keypresses like "**Backspace Backspace Backspace Backspace Backspace**" as "**Backspace(x5)**", the number in the brackets is to increase with the increase in keypresses. - Done
+1. [x] Should not treat "**Hello**" as "**Hel(x2)o**" - Done
+1. [x] Should refresh the display after a certain number of keypresses are made. - Done
+    1. For example, with a breakpoint of 15 characters the typed string "**I went to the zoo yesterday had lots of fun**" should be displayed as,<br>"**I went to the z**" then<br>"**oo yesterday ha**" and finally<br>"**d lots of fun**"
