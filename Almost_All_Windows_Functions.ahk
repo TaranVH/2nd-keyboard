@@ -137,8 +137,8 @@ if f_class in ExploreWClass,CabinetWClass ; if the window class is an Explorer w
 	WinGetTitle, title, ahk_id %f_window_id% ;super lame way to do this, does not always work.
 	;msgbox, address is `n%title%
 	;sorry, I tried to NOT have to refer to these folder paths directly, but it always failed spectacularly:
-	FileDelete, C:\AHK\2nd-keyboard\Taran_Windows_mods\SavedExplorerAddress.txt
-	FileAppend, %title% , C:\AHK\2nd-keyboard\Taran_Windows_mods\SavedExplorerAddress.txt
+	FileDelete, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
+	FileAppend, %title% , C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
 	SavedExplorerAddress = %title%
 	;checkForFile("Thumbnail","Template.psd")
 	msgbox, , , %title%`n`nwas saved as root, 0.3
@@ -155,7 +155,7 @@ else
 ;in progress
 checkForFile(subDirectory, filename)
 {
-FileRead, SavedExplorerAddress, C:\AHK\2nd-keyboard\Taran_Windows_mods\SavedExplorerAddress.txt
+FileRead, SavedExplorerAddress, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
 ;msgbox, current directory is`n%directory%
 directory = %SavedExplorerAddress%
 msgbox, new directory is`n%directory%
@@ -195,7 +195,7 @@ openlatestfile(directory, filetype)
 {
 if directory = 1
 	{
-	FileRead, SavedExplorerAddress, C:\AHK\2nd-keyboard\Taran_Windows_mods\SavedExplorerAddress.txt
+	FileRead, SavedExplorerAddress, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
 	;msgbox, current directory is`n%directory%
 	directory = %SavedExplorerAddress%
 	;msgbox, new directory is`n%directory%
@@ -364,7 +364,7 @@ send {SC0E8} ;scan code of an unassigned key. This is needed to prevent the item
 
 if pleasePrepend = 1 ;i forget what this is even for...
 	{
-	FileRead, SavedExplorerAddress, C:\AHK\2nd-keyboard\Taran_Windows_mods\SavedExplorerAddress.txt
+	FileRead, SavedExplorerAddress, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
 	;msgbox, current f_path is %f_path%
 	f_path = %SavedExplorerAddress%\%f_path% ;there is no need to use . to concatenate
 	;msgbox, new f_path is %f_path%
