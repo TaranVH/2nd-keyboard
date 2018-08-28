@@ -34,9 +34,13 @@ My most used, most useful, simplest script is this one: https://www.youtube.com/
 -----
 
 As of August 2018, I've changed the root directory from
-C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard
+
+*C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard*
+
 to this:
-C:\AHK\2nd-keyboard
+
+*C:\AHK\2nd-keyboard*
+
 which is an enormous improvement, since users no longer have to change all the scattered instances of "TaranWORK" to their own username. Now, a huge amount of the scripts are turn-key, as long as you don't move anything or change any file paths.
 
 This also means that the Corsair K95 and Stream Deck direct-launch scripts are ready to go immediately.
