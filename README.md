@@ -21,7 +21,7 @@ https://autohotkey.com/docs/Tutorial.htm
 
 Please note, I'm not a real programmer (in this lifetime.) My organization can be bad, and my code can be spaghetti-y. I have, however, done extensive commenting... so if you know how to code, it should be pretty easy to figure out what's going on.
 
-Help with this Repo is appreciated, but don't feel bad if I never officially merge your scripts. I can't trust anything that I haven't fully tested myself, or something with code that I don't recognise or understand. These are my real day-to-day working scripts, so I can't compromise them for anybody. 
+Help with this repo is appreciated, but don't feel bad if I never officially merge your scripts. I can't trust anything that I haven't fully tested myself, or something with code that I don't recognise or understand. These are my real day-to-day working scripts, so I can't compromise them for anybody. 
 
 Sometimes I put out tutorials on my personal channel: https://www.youtube.com/user/TaranVH/videos ...and sometimes I make "reverse tutorials" where I ask questions instead.
 
@@ -33,13 +33,13 @@ My most used, most useful, simplest script is this one: https://www.youtube.com/
 
 -----
 
-As of August 2018, I've changed the root directory from
+As of August 2018, I've changed the root directory from this:
 
-*C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard*
+**C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard**
 
 to this:
 
-*C:\AHK\2nd-keyboard*
+**C:\AHK\2nd-keyboard**
 
 which is an enormous improvement, since users no longer have to change all the scattered instances of "TaranWORK" to their own username. Now, a huge amount of the scripts are turn-key, as long as you don't move anything or change any file paths.
 
@@ -47,7 +47,7 @@ This also means that the Corsair K95 and Stream Deck direct-launch scripts are r
 
 The only disadvantage is that these AHK scripts will be available to ALL users on a machine. If you share a computer, you may wish to move them under your user account after all.
 
-Make sure to populate your startup folder with shortcuts, to launch all the scripts you want as soon as the computer boots up. KEEP IN MIND that there are TWO startup folders - one for your user account, and one for ALL users. Here they are:
+Make sure to populate your startup folder with file shortcuts, to launch all the scripts you want as soon as the computer boots up. KEEP IN MIND that there are TWO startup folders - one for your user account, and one for ALL users. Here they are:
 C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
 C:\Users\TaranWORK\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
