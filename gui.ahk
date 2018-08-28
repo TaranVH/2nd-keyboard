@@ -1,6 +1,6 @@
 #NoEnv
 ; SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-;SetWorkingDir C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files
+;SetWorkingDir C:\AHK\2nd-keyboard\2nd_keyboard_support_files
 ; the above is what the variable %A_WorkingDir% refers to.
 
 ;Menu, Tray, Icon, shell32.dll, 284

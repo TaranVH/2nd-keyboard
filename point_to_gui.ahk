@@ -8,7 +8,7 @@ SendMode Input
 
 
 ;;https://www.autohotkey.com/docs/commands/OnMessage.htm
-Send_WM_COPYDATA(ByRef StringToSend, ByRef TargetScriptTitle := "C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\gui.ahk ahk_class AutoHotkey") ;ByRef saves a little memory in this case.
+Send_WM_COPYDATA(ByRef StringToSend, ByRef TargetScriptTitle := "C:\AHK\2nd-keyboard\gui.ahk ahk_class AutoHotkey") ;ByRef saves a little memory in this case.
 ; This function sends the specified string to the specified window and returns the reply.
 ; The reply is 1 if the target window processed the message, or 0 if it ignored it.
 {
