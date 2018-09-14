@@ -1,6 +1,6 @@
 #NoEnv
 ; SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
-;SetWorkingDir C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files
+;SetWorkingDir C:\AHK\2nd-keyboard\2nd_keyboard_support_files
 ; the above is what the variable %A_WorkingDir% refers to.
 
 ;Menu, Tray, Icon, shell32.dll, 284
@@ -158,7 +158,7 @@ else if (alwaysshow = 2)
 	Gui, show, NA 
 	Gui, kb2: hide
 	;StringReplace, parameter,parameter,", , All ;" ; this REMOVES the quotation marks around the a string if they are present.
-	GuiControl,,textt, Stream Deck
+	GuiControl,,textt, Direct Launch
 	GuiControl,,namee, %parameter%
 	GuiControl,,keyb, 
 	;msgbox,,,it now should have happened using`n%parameter%,1

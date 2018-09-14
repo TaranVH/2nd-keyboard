@@ -1,13 +1,37 @@
 -- get luamacros HERE: http://www.hidmacros.eu/forum/viewtopic.php?f=10&t=241#p794
 -- plug in your 2nd keyboard, load this script into LUAmacros, and press the triangle PLAY button.
 -- Then, press any key on that keyboard to assign logical name ('MACROS') to macro keyboard
--- When done this way, you have to reassign the name to your 2nd keyboard every time you open LUAmacros, using the play button located above.
--- There may be a better, more permanent solution, but I don't know it.
-lmc_assign_keyboard('MACROS');
+clear() --clear the console from last run
+local keyboardIdentifier = '0000AAA'
 
+
+
+--You need to get the identifier code for the keyboard with name "MACROS"
+--This appears about halfway through the SystemID item and looks like 1BB382AF or some other alphanumeric combo. 
+-- It's usually 7 or 8 characters long.
+--Once you have this identifier, replace the value of keyboardIdentifier with it
+
+--Don't ask for keyboard assignment help if the user has manually entered a keyboard identifier
+if keyboardIdentifier == '0000AAA' then
+	lmc_assign_keyboard('MACROS');
+else lmc_device_set_name('MACROS', keyboardIdentifier);
+end
+--This lists connected keyboards
+dev = lmc_get_devices()
+for key,value in pairs(dev) do
+  print(key..':')
+  for key2,value2 in pairs(value) do print('  '..key2..' = '..value2) end
+end   
+print('You need to get the identifier code for the keyboard with name "MACROS"')
+print('Then replace the first 0000AAA value in the code with it. This will prevent having to manually identify keyboard every time.')
+-- Hide window to tray to keep taskbar tidy  
+lmc.minimizeToTray = true
+--lmc_minimize()
+
+--Start Script
 sendToAHK = function (key)
       --print('It was assigned string:    ' .. key)
-      local file = io.open("C:\\Users\\TaranWORK\\Documents\\GitHub\\2nd-keyboard\\2nd keyboard support files\\keypressed.txt", "w") -- writing this string to a text file on disk is probably NOT the best method. Feel free to program something better!
+      local file = io.open("C:\\Users\\TaranWORK\\Documents\\GitHub\\2nd-keyboard-master\\LUAMACROS\\keypressed.txt", "w") -- writing this string to a text file on disk is probably NOT the best method. Feel free to program something better!
       --Make sure to substitute the path that leads to your own "keypressed.txt" file, using the double backslashes.
 	  --print("we are inside the text file")
       file:write(key)
@@ -67,13 +91,13 @@ local config = {
 	[105] = "num9",
 
 	[106] = "numMult",
-    [107] = "numDelete",
-    -- 108 is unknown...?
-	[109] = "numMult",
+    [107] = "numPlus",
+    [108] = "numEnter", --sometimes this is different, check your keyboard
+	[109] = "numMinus",
     [110] = "numDelete",
 	[111] = "numDiv",
     [144] = "numLock", --probably it is best to avoid this key. I keep numlock ON, or it has unexpected effects
-
+      
     [192] = "`",  --this is the tilde key just before the number row
     [9]   = "tab",
     [20]  = "capslock",
@@ -123,8 +147,8 @@ local config = {
 
 -- define callback for whole device
 lmc_set_handler('MACROS', function(button, direction)
-	if (direction == 1) then return end  -- "ignore down." -- I believe this also has the effect of neutralizing the modifier keys, unfortunately. Not optimal.
-
+	--Ignoring upstrokes ensures keystrokes are not registered twice, but activates faster than ignoring downstrokes. It also allows press and hold behaviour
+        if (direction == 0) then return end -- ignore key upstrokes. 
 	if type(config[button]) == "string" then
                 print(' ')
                 print('Your key ID number is:   ' .. button)
