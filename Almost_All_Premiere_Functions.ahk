@@ -300,7 +300,7 @@ send ^!b ;ctrl alt B is ALSO select find box, but doesn't have the annoying wind
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 preset(item)
 {
-
+Sendinput, ^!+k ;shuttle STOP
 ;Keyshower(item,"preset") ;YOU DO NOT NEED THIS LINE. -- it simply displays keystrokes on the screen for the sake of tutorials... IF the function "keyshower" has been defined.
 if IsFunc("Keyshower") {
 	Func := Func("Keyshower")
@@ -309,10 +309,10 @@ if IsFunc("Keyshower") {
 
 ifWinNotActive ahk_exe Adobe Premiere Pro.exe
 	goto theEnding ;and this line is here just in case the function is called while not inside premiere.
-Sendinput, ^!+k 
+
 sleep 10
 Send ^!+k ; another shortcut for Shuttle Stop. CTRL ALT SHIFT K. Set this in Premiere's shortcuts panel.
-;so if the video is playing, this will stop it. Othewise, it messes up the script.
+;so if the video is playing, this will stop it. Othewise, it can mess up the script.
 sleep 5
 ;Setting the coordinate mode is really important. This ensures that pixel distances are consistant for everything, everywhere.
 coordmode, pixel, Window
@@ -1217,9 +1217,9 @@ CoordMode Mouse, screen
 ; coordmode, Caret, window
 ;you might need to take your own screenshot (look at mine to see what is needed) and save as .png. Mine are done with default UI brightness, plus 150% UI scaling in Wondows.
 ;msgbox, workingDir is %A_WorkingDir%
-ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted_2018.png
-; if ErrorLevel = 1
-	; ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_targeted_2018.1.png
+ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_targeted_2018.1.png
+if ErrorLevel = 1
+	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted_2018.png
 ; if ErrorLevel = 1
 	; ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_untargeted_2018.png
 ; if ErrorLevel = 1

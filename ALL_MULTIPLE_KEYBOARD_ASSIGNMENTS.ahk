@@ -136,7 +136,6 @@ F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it
 
 ;SC06E::return ;;This is F23's scan code. Using this line acts as some insurance against cross-talk. comment this in if you have issues.
 
-
 ;Keep in mind, these use the CTRL modifier, as indicated by the ^
 ~^numpad1::
 Keyshower("add marker color 1 (taran mod)")
@@ -208,6 +207,7 @@ F12::search() ;"search" is also used on ^+j
 ; F12 must not used here IF it is the keyboard's launching key. You MAY put it here if you used F13 to F24 as the launching key
 
 ;;;;;next line;;;;;;;;
+;;;;K120 keyboard;;;;;
 
 `::msgbox tilde or weird quote thing??
 1::insertSFX("bleep")
@@ -268,6 +268,7 @@ search()
 return
 
 ;;;;;next line;;;;;;;;
+;;;;K120 keyboard;;;;;
 
 ; capslock::msgbox, , ,i hate capslock!, 1000
 capslock::capslock
@@ -317,6 +318,7 @@ m::preset("a0p0 pan down")
 /::preset("crop full")
 
 ;;;;;next area;;;;;;;;
+;;;;K120 keyboard;;;;;
 
 ;;Lctrl::msgbox LEFT ctrl ;this must be commented out for the sake of numpad5, which was converted into left ctrl.
 ;None of these modifiers should even happen, I have allowed modifiers to pass through normally.
@@ -333,7 +335,8 @@ Rshift::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music")
 SC06F::msgbox,,,testing scan codes,0.5
 SC062::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations\~CANNED PRE ROLLS") ;remapped away from appskey, it seemed to cause problems.
 
-Rctrl::preset("50% stereo")
+; Rctrl::preset("50% stereo")
+SC078::preset("50% stereo") ;this was a remapped rightctrl
 space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
 ;SC065::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~ For Review") ;this is remapped from ALT. JK, SC065 is F14, do not use.
 appskey::msgbox, this is the right click appskey KEY I guess
@@ -346,10 +349,10 @@ if WinExist("ahk_exe tvnviewer.exe")
 	WinActivate ahk_exe tvnviewer.exe
 return
 
-ScrollLock::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;"   ;msgbox, , , this key is NO GOOD TO USE!`nmaybe, 0.7
+ScrollLock::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;just in case
 ;pause::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery")
 ;numlock::msgbox, hello again
-SC061::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;"   ;msgbox, , , this key is NO GOOD TO USE!`nmaybe, 0.7
+SC061::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;from scroll lock - K120
 
 CtrlBreak::msgbox, CTRL BREAK - maybe the default output of the pause/break key??
 pause::msgbox, is this the PAUSE key?? IDK
@@ -369,6 +372,7 @@ left::preset("push left")
 right::preset("push right")
 
 ;;;;;next area;;;;;;;;
+;;;;K120 keyboard;;;;;
 
 numpad0::SendKey("numpad0", , "sky blue")
 numpad1::SendKey(A_thishotkey, ,"blue-green")
@@ -388,6 +392,7 @@ numpad8::SendKey(A_thishotkey, ,"nudge up")
 numpad9::SendKey(A_thishotkey, ,"dark green")
 
 +numlock::msgbox, "shift numlock"
+;on the K120
 numlock::
 IfWinActive, ahk_exe Adobe Premiere Pro.exe
 	{
@@ -408,18 +413,6 @@ numpadEnter::switchToChrome()
 
 
 numpadDot::openApp("ahk_class Photoshop", "Photoshop.exe") ;msgbox, , , num dot, 0.5
-
-/*
-;These are now unused - I realized that keeping them as modifiers (allowing them to pass through normally) is more valuable then as single keys.
-SC060::msgbox sc060, which I have assigned from LEFT SHIFT using intercept.exe
-SC061::msgbox sc061, right shift
-SC062::msgbox sc062, L CTRL
-SC063::msgbox sc063, L WIN
-SC064::msgbox sc064, L ALT
-*/
-; SC065::msgbox sc065, R ALT ;;;of is this F14? IDK
-; SC066::msgbox sc066, R WIN
-; SC067::msgbox sc067, R CTRL
 
 
 SC045::msgbox sc045... pause/break, but MAYBE numlock???
@@ -454,27 +447,6 @@ SC0FF::msgbox sc0FF ...this does not register.
 ;IN HERE, WE ARE SENDING THE FIRST SCANCODE KEYSTOKES. win key assignemtns will recieve.
 
 #ifwinactive
-
-; F10::sendinput, {F14} ;scancode 065 but firefox says 9C - maybe is in hex.
-; F11::
-; tooltip, yeah 05A
-; sleep 500
-; sendinput, {SC05A} ;just after F23, but is not F24.
-; tooltip,
-; return
-; 2::sendinput {SC05B} ;just before F13
-; 3::send {SC05E}
-; 4::send {SC05F}
-; 5::send {SC060}
-; 6::sendinput {SC061}
-; 7::sendinput {SC037} ;numpadmultiply
-; 8::sendinput {SC038} ;alt left (lol)
-; 9::sendinput {SC06A}
-; 0::sendinput {SC06B}
-;***************
-;{SC0E8} is taken by one of my own scripts.*****
-
-
 
 #if
 
@@ -664,6 +636,7 @@ F12::return
 backspace::return
 
 ;;;;;next line;;;;;;;;
+;;;this is the fake F20 capslock layer;;;
 
 tab::msgbox,,, you pressed tab. :P,0.8
 
@@ -694,7 +667,7 @@ l::
 `;::
 '::
 ;;;;;next line;;;;;;;;
-
+;;;this is the fake F20 capslock layer;;;
 Lshift::return
 z::
 x::
@@ -719,6 +692,8 @@ SC062::msgbox,,,SC062,0.5
 Rctrl::msgbox,,,Rctrlll,0.5
 appskey::msgbox, this is the appskey KEY I guess
 
+;;;F20 capslock keyboard;;;
+
 ;these were all formerly runExplorer()
 PrintScreen::
 ScrollLock::return
@@ -726,6 +701,8 @@ SC061::msgbox, scancode061
 CtrlBreak::msgbox, CTRL BREAK?
 pause::msgbox, is this the PAUSE key?? IDK
 Break::msgbox, Maybe THIS is the pause/break key???
+
+;;;this is the fake F20 capslock layer;;;
 
 pgdn::
 end::
@@ -740,6 +717,7 @@ left::
 right::
 
 ;;;;;next area;;;;;;;;
+;;;this is the fake F20 capslock layer;;;
 
 numpad0::
 numpad1::
@@ -760,14 +738,7 @@ numpadSub::
 numpadAdd::
 numpadEnter::return
 numpadDot::
-/*
-;These are now unused - I realized that keeping them as modifiers (allowing them to pass through normally) is more valuable then as single keys.
-SC060::msgbox sc060, which I have assigned from LEFT SHIFT using intercept.exe
-SC061::msgbox sc061, right shift
-SC062::msgbox sc062, L CTRL
-SC063::msgbox sc063, L WIN
-SC064::msgbox sc064, L ALT
-*/
+
 #if				
 ;_________________end fake 5th keyboard with capslock remapped to F20__________________
 
@@ -827,7 +798,12 @@ gotofiretab("Video Tracker LTT - Google","https://docs.google.com/spreadsheets/d
 	; run, firefox.exe https://docs.google.com/spreadsheets/d/1FmuWOCKHxZbxS5XbwpVDP4M27BjTAJJ67B0yoSXUN9k/edit#gid=0
 return
 
+;;;this is the azio F24 keyboard;;;
+
 q::
+;controlsend, Qt5QWindowIcon2, ^!+r, ahk_exe obs64.exe
+;tooltip, did that work?6
+;return
 w:: ;sendinput, +{F12}^w
 e::
 r::
@@ -841,19 +817,21 @@ p::
 ]::tooltip, you pressed  %A_thishotkey%
 \::run, C:\Program Files (x86)\Corsair\Corsair Utility Engine\CUE.exe
 
+;;;this is the azio F24 keyboard;;;
 
 ;CAPSLOCK IS TRELLO
 capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOux8/ltt-production-planner")
 
-;remapped from left shift. CALENDAR
-; SC060::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r")
-SC060::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
+;LEFTSHIFT > SC070 / International2 > Firefox calendar open
+; SC00::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r")
+SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 
 ;; ask about URLs: https://autohotkey.com/boards/viewtopic.php?f=6&t=26947&p=139114#p139114
 
+;;;this is still the azio F24 keyboard;;;
 
-;FROM LEFT CTRL. INBOX
-SC062::gotofiretab("Linus Media Group Inc. Mail","https://mail.google.com/mail/u/0/#inbox")
+;LEFTCTRL > SC071 / Lang2 > GMAIL INBOX
+SC071::gotofiretab("Linus Media Group Inc. Mail","https://mail.google.com/mail/u/0/#inbox")
 ;or a tab that says "says..."
 a::recallClipboard("a")
 +a::saveClipboard("a")
@@ -865,10 +843,10 @@ f::recallClipboard("f")
 +f::saveClipboard("f")
 g::
 h::
-j::
-k::
-l::tooltip, you pressed  %A_thishotkey%
-`;::
+j::tooltip, ^!o ;render audio
+k::sendinput, ^!i ;render entire work area (in to out)
+l::return
+`;::tooltip, you pressed  %A_thishotkey% ;fun fact, the syntax highlighting gets this wrong. ";" is escaped, and therefore is not actually a comment.
 '::send, ^+!, ;this is the premiere shortcut for "show audio keyframes" (on timeline)
 enter::
 if WinActive("ahk_class Premiere Pro")
@@ -881,6 +859,7 @@ return
 
 
 ;;;;;next line;;;;;;;;
+;;;this is the azio F24 keyboard;;;
 
 Lshift::tooltip, you pressed  %A_thishotkey%
 z::
@@ -928,7 +907,7 @@ Lwin::msgbox, LEFT win. ;but this won't happen, it was swapped with another key.
 ; ;tooltip, ran ME
 ; return
 
-
+;;;this is the azio F24 keyboard;;;
 
 space::tooltip,
 Ralt::msgbox, Ralt - doesnt work
@@ -938,20 +917,34 @@ Rshift::msgbox RIGHT SHIFT lol
 SC06F::msgbox,,,SC06F,0.5
 ;SC062::msgbox,,,SC062 aka APPSKEY,0.5 ;for some reason, might open last active window...
 
-; SC063::msgbox,,,SC063 was previously LWIN,0.5
-SC063::
-;msgbox,,,sc063,0.5
+; DELETE THE LINE BELOW, LATER
+; SC063::msgbox,,,SC063 was previously LWIN,0.5. it is not SC072
+SC072::
+;msgbox,,,sc072,0.5
 ;msgbox,,, trying to open VNC,0.5
 IfWinNotExist, ahk_class TvnWindowClass
 	Run, C:\Program Files\TightVNC\tvnviewer.exe
 if WinExist("ahk_exe tvnviewer.exe")
 	WinActivate ahk_exe tvnviewer.exe
 return
-;F14::msgbox,,, wtf is this doing here???,0.6
-appskey::msgbox, this is the appskey KEY maybe
-SC05A::msgbox,,, was remapped from ALT. now SC05A,0.5
-Rctrl::tooltip, rctrl
-PrintScreen::
+
+appskey::msgbox, this is the appskey KEY maybe. U should never see this message.
+
+;SC05A::msgbox,,, was remapped from ALT. now SC05A,0.5 ;NO LONGER TRUE, DELETE THIS LINE LATER
+
+SC07B::send, ^!p ;Ralt was remapped to SC07B, AKA NONCONVERT‡, AKA Corsair's International5. ;then, my premiere shortcut for pin to clip is ctrl alt P
+;Rctrl::tooltip, rctrl
+
+;rightcontrol > SC078 / Lang3 > OBS
+SC078::
+tooltip, rightcontrol > SC078 / Lang3 > OBS
+IfWinNotExist, ahk_class Qt5QWindowIcon ;this is broken, plz fix
+	Run, C:\Program Files (x86)\obs-studio\bin\64bit\obs64.exe
+if WinExist("ahk_exe tvnviewer.exe")
+	WinActivate ahk_exe obs64.exe
+return ;Rctrl remapped to SC078, AKA Lang3
+
+PrintScreen::return
 ScrollLock::return
 SC061::msgbox,,, scancode061,1
 CtrlBreak::msgbox, CTRL BREAK?
@@ -976,6 +969,7 @@ left::
 right::tooltip, you pressed  %A_thishotkey%
 
 ;;;;;next area;;;;;;;;
+;;;this is the azio F24 keyboard;;;
 
 numpad0::
 if WinActive("ahk_class Premiere Pro")
@@ -1003,7 +997,7 @@ numpad8::monitorKeys("program","^+2") ;program monitor res to 1/2
 numpad9::tooltip, you pressed  %A_thishotkey%
 
 ;+numlock::
-numlock::monitorKeys("source","^{numpad3}") ;source monitor res to 1/4
+SC05C::monitorKeys("source","^{numpad3}") ;source monitor res to 1/4
 
 numpadDiv::monitorKeys("program","^+3") ;program monitor res to 1/4
 
@@ -1013,19 +1007,12 @@ numpadAdd::sendinput, ^!{F10}
 numpadEnter::sendinput, ^!m ;mute/unmute mic - shadowplay ;unfortunately ctrl alt m is also NEW COMMENT in google sheets... i might wish to change it
 
 numpadDot::tooltip, you pressed  %A_thishotkey%
-/*
-;These are now unused - I realized that keeping them as modifiers (allowing them to pass through normally) is more valuable then as single keys.
-SC060::msgbox sc060, which I have assigned from LEFT SHIFT using intercept.exe
-SC061::msgbox sc061, right shift
-SC062::msgbox sc062, L CTRL
-SC063::msgbox sc063, L WIN
-SC064::msgbox sc064, L ALT
-*/
 
-SC070::msgbox,,, SC070 - "Keyboard intl 2 INSIDE OF F24", 0.5
+
+;SC070::msgbox,,, SC070 - "Keyboard intl 2 INSIDE OF F24", 0.5
 
 #if
-;END OF FULL AZIO KEYBOARD
+;END OF FULL F24 AZIO KEYBOARD
 
 
 
@@ -1622,14 +1609,14 @@ capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
 
 #IfWinActive
 ;VKEASC05C::tooltip, VirtualKey:EA ScanCode:05C
-SC05C::tooltip, SC05C - "Keyboard Intl' 6"
+;SC05C::tooltip, SC05C - "Keyboard Intl' 6"
 SC05D::tooltip, SC05D - cannot find a corsair trigger
 SC05E::tooltip, SC05E - cannot find a corsair trigger
 SC05F::tooltip, SC05F - cannot find a corsair trigger
 
-;SC060::tooltip, SC060 - cannot find a corsair trigger. Sub for Left shift??
+SC060::tooltip, SC060 - cannot find a corsair trigger.
 SC061::tooltip, SC061 - cannot find a corsair trigger
-;SC062::tooltip, SC062 - cannot find trigger ;but this is used from intercept.exe
+SC062::tooltip, SC062 - cannot find trigger but this is used from intercept.exe
 SC063::tooltip, SC063 - cannot find a corsair trigger - Labeled as "Help"
 
 ; SC064 - F13
@@ -1646,7 +1633,7 @@ SC063::tooltip, SC063 - cannot find a corsair trigger - Labeled as "Help"
 
 SC06F::tooltip,  SC06F - cannot find trigger
 
-SC070::msgbox,,, SC070 - "Keyboard intl 2", 0.5
+;SC070::msgbox,,, SC070 - "Keyboard intl 2", 0.5
 
 VKE9::msgbox,,, VKE9 ??? - "Keyboard Lang 2", 0.5 ;does not work from Corsair keyboard
 ;VKE9SC071::msgbox,,, VKE9 SC071 ??? - Keyboard Lang 2, 0.5 ;;this will not register as an allowed hotkey
@@ -1864,15 +1851,6 @@ numpadSub::
 numpadAdd::
 numpadEnter::return
 numpadDot::
-/*
-;These are now unused - I realized that Keeping them as modifiers (allowing them to pass through normally) is more valuable then as single Keys.
-SC060::msgbox sc060, which I have assigned from LEFT SHIFT using intercept.exe
-SC061::msgbox sc061, right shift
-SC062::msgbox sc062, L CTRL
-SC063::msgbox sc063, L WIN
-SC064::msgbox sc064, L ALT
-*/
-
 
 
 #if
