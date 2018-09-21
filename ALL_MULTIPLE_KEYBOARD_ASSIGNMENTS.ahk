@@ -14,6 +14,7 @@ global savedEXE = "notepad++.exe" ;BEFORE the #include is apparently the only pl
 #Include C:\AHK\2nd-keyboard\gui.ahk
 #include C:\AHK\2nd-keyboard\Almost_All_Premiere_Functions.ahk
 #include C:\AHK\2nd-keyboard\Almost_All_Windows_Functions.ahk
+#include C:\AHK\2nd-keyboard\After_Effects_Functions.ahk
 
 ;-------------------------------------------------------------------------
 ; HELLO PEOPLES 
@@ -1077,7 +1078,9 @@ F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
 
 
 
-#IfWinActive
+#IfWinActive ahk_exe AfterFX.exe
+F1::twirlAE(1)
+F2::twirlAE(0)
 
 #IfWinActive ahk_class Chrome_WidgetWin_1
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
