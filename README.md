@@ -53,8 +53,11 @@ C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
 C:\Users\TaranWORK\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
 **If you're ready to kick it up a notch, check out these interesting related repositories**
+
 https://github.com/TaranVH/2nd-keyboard/pull/27
+
 https://github.com/sebinside/AHK2PremiereCEP
+
 https://github.com/evilC/AutoHotInterception
 
 
