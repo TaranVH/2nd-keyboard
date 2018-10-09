@@ -57,10 +57,16 @@ Make sure to populate your startup folder with file shortcuts, to launch all the
 
 **If you're ready to kick it up a notch, check out these interesting related repositories**
 
-https://github.com/TaranVH/2nd-keyboard/pull/27
+https://github.com/TaranVH/2nd-keyboard/pull/27 (easier install of Interception)
+
+https://github.com/evilC/AutoHotInterception
 
 https://github.com/sebinside/AHK2PremiereCEP
 
-https://github.com/evilC/AutoHotInterception
+More info on how to use Adobe CEP:
+
+https://www.youtube.com/channel/UCmq_t_-4GLFu_nYaEDDModw/videos
+
+https://github.com/Adobe-CEP/Samples/blob/master/PProPanel/jsx/PPRO/Premiere.jsx
 
 
