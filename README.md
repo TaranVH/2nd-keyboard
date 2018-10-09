@@ -48,9 +48,12 @@ This also means that the Corsair K95 and Stream Deck direct-launch scripts are r
 The only disadvantage is that these AHK scripts will be available to ALL users on a machine. If you share a computer, you may wish to move them under your user account after all.
 
 Make sure to populate your startup folder with file shortcuts, to launch all the scripts you want as soon as the computer boots up. KEEP IN MIND that there are TWO startup folders - one for your user account, and one for ALL users. Here they are:
-C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
 
-C:\Users\TaranWORK\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+*C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp*
+
+*C:\Users\TaranWORK\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup*
+
+---
 
 **If you're ready to kick it up a notch, check out these interesting related repositories**
 
