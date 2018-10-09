@@ -49,6 +49,12 @@ The only disadvantage is that these AHK scripts will be available to ALL users o
 
 Make sure to populate your startup folder with file shortcuts, to launch all the scripts you want as soon as the computer boots up. KEEP IN MIND that there are TWO startup folders - one for your user account, and one for ALL users. Here they are:
 C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
+
 C:\Users\TaranWORK\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+
+**If you're ready to kick it up a notch, check out these interesting related repositories**
+https://github.com/TaranVH/2nd-keyboard/pull/27
+https://github.com/sebinside/AHK2PremiereCEP
+https://github.com/evilC/AutoHotInterception
 
 
