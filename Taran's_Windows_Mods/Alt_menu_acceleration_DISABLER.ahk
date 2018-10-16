@@ -1,7 +1,7 @@
-
 Menu, Tray, Icon, shell32.dll, 110 ; changes the icon to a (\) thingy
 
-SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+;SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+#InstallKeybdHook
 #NoEnv
 ;#NoTrayIcon ;comment this in if you do not want a tray icon.
 #SingleInstance
@@ -9,7 +9,12 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 Process, Priority, , H
 SendMode Input
 #SingleInstance force
-CoordMode, mouse, screen
+
+;These next two lines are EXTREMELY IMPORTANT. You have to change the "menu mask key" away from being CTRL, to something that won't result in cross-talk. Read this thread to learn the details: https://autohotkey.com/boards/viewtopic.php?f=76&t=57683
+#MenuMaskKey vk07  ; vk07 is unassigned.
+#UseHook
+
+; INFO: you can hold down both ALT keys if you want to easily toggle this script on and off.
 
 
 ; THEY ALL SAID IT COULD NOT BE DONE
@@ -54,20 +59,12 @@ CoordMode, mouse, screen
 ; THE SOLUTION:
 
 ~LAlt::
-;sendinput, {LAlt down} ;now that I added the ~, this line is no longer necessary.
 sendinput, {SC0E9 down} ;this is the scan code of an unassigned key. As long as you nor the system never use it for anything else, it can be used in THIS way to cancel the menu acceleration.
-;tooltip, Lalt is pressed
 KeyWait, LAlt
-; That line is (was) important, so that ALT does not continuously fire as you are holding it down.
-; update, i am no longer sure if it is important or not...
-;tooltip, Lalt was released
 return
 
 ~LAlt up::
-;sendinput, {LAlt up}
 sendinput, {SC0E9 up}
-;;;Unlike my 2nd keyboard, this method does not use the scan code as a strict "wrapper."
-;;tooltip, 
 return
 
 
@@ -75,7 +72,7 @@ return
 ;sendinput, {RAlt down}
 sendinput, {SC0E9 down}
 ;;tooltip, Ralt is pressed
-;KeyWait, RAlt
+KeyWait, RAlt
 ;;tooltip, Ralt was released
 return
 
@@ -84,6 +81,10 @@ return
 sendinput, {SC0E9 up}
 ;;tooltip, 
 return
+
+
+Lalt & Ralt::suspend ;hit both ALT keys simultaneously to toggle the functonality of this script. The tray icon will also change visually, so you will always know.
+
 
 ;;comment in the code below if you wish to reassign alt modifier combinations:
 

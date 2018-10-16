@@ -100,6 +100,7 @@ nothin?&numpadAdd
 
 
 Select Label Group&Media_Stop
+Select Label Group&ctrl numpad7
 
 testing things ugh&Ctrl numpad5
 asdasd&Ctrl numpad8
@@ -242,7 +243,7 @@ Label Purple&Numpad7
 Label super yellow&Numpad9
 Label super orange&Numpaddot
 
-Label Super Red&pgup
+Label Super Green&pgup
 Label Super Purple&pgdn
 
 Remove Unused
@@ -306,8 +307,8 @@ Speed/Duration...&Ctrl R
 Capture Settings
 Set Capture Settings...
 Clear Capture Settings
-Insert
-Overwrite
+Insert						&8
+Overwrite					&9
 Replace Footage...
 
 Replace With Clip
@@ -351,7 +352,7 @@ Add Edit to All Tracks&E
 Trim Edit&9
 Extend Selected Edit to Playhead&Ctrl Alt Shift P
 Apply Video Transition&Ctrl T
-Apply Audio Transition&Ctrl Shift D
+Apply Audio Transition&Ctrl G
 Apply Default Transitions to Selection
 Lift
 Extract&'
@@ -728,7 +729,7 @@ Toggle All Video Targets&Shift 9
 Toggle All Video Targets&Shift `
 Toggle Audio During Scrubbing
 Toggle Control Surface Clip Mixer Mode
-Toggle Full Screen
+Toggle Full Screen		&F10
 Toggle Maintain Pitch During Shuttling
 Toggle Multi-Camera View
 Toggle Proxies
@@ -988,15 +989,15 @@ Extend Selection Down&Shift Down
 Extend Selection Left&Shift Left
 Extend Selection Right&Shift Right
 Extend Selection Up&Shift Up
-Go Back
+Go Back					&End
 Hide
 Icon View Ascending Sort
 Icon View Column List Sort
 Icon View Descending Sort
 Icon View User Order Sort
 Move Selection Down&Down
-Move Selection End&End
-Move Selection Home&Home
+Move Selection End		
+Move Selection Home
 Move Selection Left&Left
 Move Selection Page Down&Page Down
 Move Selection Page Up&Page Up
@@ -1004,7 +1005,7 @@ Move Selection Right&Right
 Move Selection Up&Up
 Next Column Field&Tab
 
-Open in Source Monitor&Y
+Open in Source Monitor	&Y
 Open in Timeline
 Previous Column Field&Shift Tab
 Previous Row Field&Shift Enter
@@ -1119,8 +1120,8 @@ Show Audio Names					&Ctrl Alt Shift N
 Show Audio Waveforms
 Show Clip Markers
 Show Duplicate Frame Markers
-Show Next Screen					&Page Down
-Show Previous Screen				&Page Up
+Show Next Screen					
+Show Previous Screen				
 Show Video Keyframes
 Show Video Names
 Show Video Thumbnails

@@ -70,7 +70,8 @@ detecthiddenwindows, on
 
 SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 
-
+;Avoid using stupid CTRL when alt is released https://autohotkey.com/boards/viewtopic.php?f=76&t=57683
+#MenuMaskKey vk07  ; vk07 is unassigned.
 
 ;____________________________________________________________________________
 ;                                                                                                                       
@@ -204,7 +205,9 @@ F9::insertSFX("SimpleWhoosh3")
 F8::insertSFX("SimpleWhoosh8")
 F10::insertSFX("woosh2")
 F11::insertSFX("woosh1")
-F12::search() ;"search" is also used on ^+j 
+F12::InstantExplorer("Z:\Linus\5. Fast As Possible\000 Transcoding\Delivery")
+
+;F12::search() ;"search" is also used on ^+j 
 ; F12 must not used here IF it is the keyboard's launching key. You MAY put it here if you used F13 to F24 as the launching key
 
 ;;;;;next line;;;;;;;;
@@ -226,8 +229,9 @@ F12::search() ;"search" is also used on ^+j
 backspace::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\cutting_room_floor")
 
 ;;;;;next line;;;;;;;;
+;;;;;K120 keyb;;;;;;;;
 
-tab::msgbox,,, you pressed tab. :P,0.8
+tab::msgbox,,,K120 - you pressed tab. :P,0.8
 
 ;This was the old code, before I realized I can just use A_thishotkey and assign all of them at once!!
 ; q::recallClipboard("q")
@@ -321,23 +325,26 @@ m::preset("a0p0 pan down")
 ;;;;;next area;;;;;;;;
 ;;;;K120 keyboard;;;;;
 
-;;Lctrl::msgbox LEFT ctrl ;this must be commented out for the sake of numpad5, which was converted into left ctrl.
-;None of these modifiers should even happen, I have allowed modifiers to pass through normally.
+
+;;Lctrl::msgbox,,, LEFT ctrl,0.5 ;this must be commented out for the sake of numpad5, which was converted into left ctrl.
+
+;None of these modifiers should ever be triggered. I have blocked them and replaced with something else. What is below is just here for diagnostic purposes.
 Lwin::msgbox,,, LEFT win,0.5
 Lalt::msgbox,,, LEFT alt,0.5
+Rshift::msgbox,,, RIGHT shift,0.5 
 
-;Ralt::msgbox Ralt - doesnt work
-;Rwin::msgbox Right Win - doesnt work
-Rshift::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music")
-;SC061::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music")
-;msgbox RIGHT SHIFT lol
 
-;SC06E::msgbox,,,this was right WINkey,0.5 ;;NEVER use super modifier keys in this way! bad idea!!! cross talk!!!!!
-SC06F::msgbox,,,testing scan codes,0.5
-SC062::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations\~CANNED PRE ROLLS") ;remapped away from appskey, it seemed to cause problems.
 
-; Rctrl::preset("50% stereo")
-SC078::preset("50% stereo") ;this was a remapped rightctrl
+capslock::msgbox,,, K120 capslock,0.5
+
+;;SC062 was once the remap of appskey, but it seemed to cause problems.
+
+SC072::msgbox,,, K120 - SC072 - "Lang 1", 0.5 ;Lwin to SC072 - Lang1
+SC073::msgbox,,, K120 - SC073 - "International1", 0.5 ;LAlt to SC073 - International1
+
+SC078::preset("50% stereo") ;rightCtrl (Rctrl) to sc078 - Lang3
+SC077::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music") ;rightShift to SC077 - Lang4
+
 space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
 ;SC065::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~ For Review") ;this is remapped from ALT. JK, SC065 is F14, do not use.
 appskey::msgbox, this is the right click appskey KEY I guess
@@ -639,7 +646,7 @@ backspace::return
 ;;;;;next line;;;;;;;;
 ;;;this is the fake F20 capslock layer;;;
 
-tab::msgbox,,, you pressed tab. :P,0.8
+tab::msgbox,,,within F20 - you pressed tab. :P,0.8
 
 q::
 w::
@@ -686,10 +693,7 @@ space::tooltip,
 Ralt::msgbox, Ralt - doesnt work
 Rwin::msgbox, Right Win 
 Rshift::msgbox RIGHT SHIFT lol
-; SC06E::msgbox,,,right WINkey,0.5
-;;terrible idea to use F23 for that. Must never use super function keys for modifier key remapping. (super = F23 and up)
-SC06F::msgbox,,,SC06F,0.5
-SC062::msgbox,,,SC062,0.5
+
 Rctrl::msgbox,,,Rctrlll,0.5
 appskey::msgbox, this is the appskey KEY I guess
 
@@ -915,11 +919,7 @@ Ralt::msgbox, Ralt - doesnt work
 Rwin::msgbox, Right Win 
 Rshift::msgbox RIGHT SHIFT lol
 
-SC06F::msgbox,,,SC06F,0.5
-;SC062::msgbox,,,SC062 aka APPSKEY,0.5 ;for some reason, might open last active window...
-
-; DELETE THE LINE BELOW, LATER
-; SC063::msgbox,,,SC063 was previously LWIN,0.5. it is not SC072
+;Lwin to SC072 - Lang1
 SC072::
 ;msgbox,,,sc072,0.5
 ;msgbox,,, trying to open VNC,0.5
@@ -929,14 +929,18 @@ if WinExist("ahk_exe tvnviewer.exe")
 	WinActivate ahk_exe tvnviewer.exe
 return
 
-appskey::msgbox, this is the appskey KEY maybe. U should never see this message.
+appskey::msgbox, "this is the appskey KEY maybe. You should never see this message."
 
-;SC05A::msgbox,,, was remapped from ALT. now SC05A,0.5 ;NO LONGER TRUE, DELETE THIS LINE LATER
+;Ralt was remapped to SC07B, AKA NONCONVERT‡, AKA Corsair's International5. 
+SC07B::
+tippy("pin to clip")
+prFocus("effect controls")
+send, ^!p ;my premiere shortcut for pin to clip is ctrl alt P
+sleep 20
+return
 
-SC07B::send, ^!p ;Ralt was remapped to SC07B, AKA NONCONVERT‡, AKA Corsair's International5. ;then, my premiere shortcut for pin to clip is ctrl alt P
-;Rctrl::tooltip, rctrl
 
-;rightcontrol > SC078 / Lang3 > OBS
+;RCtrl to sc078 - Lang3 -->> OBS
 SC078::
 tooltip, rightcontrol > SC078 / Lang3 > OBS
 IfWinNotExist, ahk_class Qt5QWindowIcon ;this is broken, plz fix
@@ -1056,11 +1060,13 @@ numpadDot::tooltip, you pressed  %A_thishotkey%
 ;addendum: if #IfWinActive ahk_exe explorer.exe is BEFORE the 2nd keybaord code, it executes all by itself. So yeah, the secondary keybaords must be before all else.
 
 
-; ____________________________________________________________________ 
-;|                                                                    |
-;|        PRIMARY KEYBOARD, (Corsair K95 RGB) AHK KEY ASSIGNMENTS     |
-;|____________________________________________________________________|
-
+; __________________________________________________________ 
+;|                                                          |
+;| PRIMARY KEYBOARD, (Corsair K95 RGB) AHK KEY ASSIGNMENTS  |
+;|__________________________________________________________|
+;(\__/)||
+;(•ㅅ•) ||
+;/ 　 \づ|| 
 
 ;;;~~~~~~FUNCTION KEYS IN VARIOUS PROGRAMS~~~~
 
@@ -1380,6 +1386,8 @@ sleep 80
 sendinput, ^c
 sleep 15
 WinActivate ahk_class Premiere Pro
+sleep 20
+prFocus("timeline")
 sleep 10
 send, ^!d ;ctrl alt D is  "deselect all" (clips on the timeline)
 sleep 20
@@ -1641,8 +1649,8 @@ SC06F::tooltip,  SC06F - cannot find trigger
 VKE9::msgbox,,, VKE9 ??? - "Keyboard Lang 2", 0.5 ;does not work from Corsair keyboard
 ;VKE9SC071::msgbox,,, VKE9 SC071 ??? - Keyboard Lang 2, 0.5 ;;this will not register as an allowed hotkey
 SC071::msgbox,,, SC071 - "Keyboard Lang 2", 0.5 ;does not work from Corsair keyboard
-SC072::msgbox,,, SC072 - "Keyboard Lang 1", 0.5 ;also does not work from Corsair keyboard
-SC073::msgbox,,, SC073 - "Keyboard Intl' 1", 0.5 ; "Keyboard Intl' 1"
+SC072::msgbox,,, SC072 - "Keyboard Lang 1", 0.5 ;Lwin to SC072 - Lang1
+SC073::msgbox,,, SC073 - "Keyboard Intl' 1", 0.5 ;LAlt to SC073 - International1
 
 SC074::msgbox,,, SC074 - cannot find trigger, 0.5
 SC075::msgbox,,, SC075 - cannot find trigger - this is just before SC076 which is F24, 0.5

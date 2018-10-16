@@ -9,6 +9,7 @@ Menu, Tray, Icon, imageres.dll, 90
 
 ;VIDEO EXPLANATION:  https://youtu.be/O6ERELse_QY?t=23m40s
 
+;NOTE THAT YOU MUST REMAP \ (backslash) TO "Move playhead to cursor" in Premiere's keyboard shortcuts panel!
 
 ;NOTE: I use the right mouse button for this because my current mouse does not have macro keys on it. I could use the middle mouse button, but it requires too much pressure to push down, and you have to be careful not to scroll it.
 ;But if you want to use a button other than the right mouse button, the script becomes a lot simpler. Scroll down to the bottom for that script.
@@ -57,7 +58,7 @@ if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = t
 		;tooltip,
 		loop
 			{
-			Send \ ;in premiere, this is set to "move playhead to cursor."
+			Send \ ;in premiere, this must be set to "move playhead to cursor."
 			Tooltip, Right click playhead mod!
 			sleep 16 ;this loop will repeat every 16 milliseconds.
 			; if GetKeyState("$Rbutton") = U ; again, this does not work at all.
@@ -84,7 +85,7 @@ Return
 ;In the following script, You can change "Mbutton" to anything else. like "Xbutton1", or  even "F12" if you wanted.
 ;So, assuming you've mapped "move playhead to cursor" to the \ key, the problem is that it fires once, waits 1 second, and only then does it continue to fire.
 ;that's why I use a loop - to send constant keypresses, for a smooth experience.
-;SCRIPT HAS NOT YET BEEN TETED BY ME.
+;SCRIPT HAS NOT YET BEEN TESTED BY ME.
 
 
 ; Mbutton::
@@ -95,17 +96,18 @@ Return
 		; ;tooltip,
 		; loop
 			; {
-			; Send \ ;in premiere, this is set to "move playhead to cursor."
+			; Send \ ;in premiere, this must be set to "move playhead to cursor."
 			; Tooltip, Middle click playhead mod!
 			; sleep 16 ;this loop will repeat every 16 milliseconds.
-			; ; if GetKeyState("$Rbutton") = U ; again, this does not work at all.
 			; if GetKeyState("Mbutton", "P") = 0
 				; {
 				; ;msgbox,,,time to break,1
 				; tooltip,
-				; goto theEnd
+				; goto theEnd2
 				; break
 				; }
 			; }
 ; }
+; theEnd2:
 ; Return
+
