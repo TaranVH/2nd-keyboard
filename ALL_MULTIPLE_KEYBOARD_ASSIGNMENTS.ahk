@@ -1335,7 +1335,7 @@ return
 
 
 ;~^+K::preset("Warp Stabilizer Preset") ;macro key G2 used to be the stabilizer preset.
-;~^+=::effectsPanelType("presets") ;this WAS macro key G3. ;Types in "presets," which reveals my own entire list of presets. ;;I have canceled this one in favor of a global pause/play.
+;~^+=::effectsPanelType("presets") ;this WAS macro key G3. ;Types in "presets," which reveals my own entire list of presets. ;;I have canceled this one in favor of a global pause/play. 
 
 #ifWinActive
 ;macro key G3

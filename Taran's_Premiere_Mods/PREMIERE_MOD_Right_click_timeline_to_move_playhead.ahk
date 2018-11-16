@@ -12,7 +12,7 @@ Menu, Tray, Icon, imageres.dll, 90
 
 ; +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ; NOTE THAT YOU MUST ASSIGN \ (backslash) to "Move playhead to cursor" in Premiere's keyboard shortcuts panel!
-; YOU SHOULD ALSO ASSIGN CTRL ALT D to "DESELECT ALL"
+; YOU SHOULD ALSO ASSIGN CTRL ALT D to "DESELECT ALL" 
 ; +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 ;NOTE: I use the right mouse button for this because my current mouse does not have macro keys on it. I could use the middle mouse button, but it requires too much pressure to push down so often, and you have to be careful not to accidentally scroll it.

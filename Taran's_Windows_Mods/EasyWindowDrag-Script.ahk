@@ -14,7 +14,7 @@ Menu, Tray, Icon, imageres.dll, 262
 ; capslock & LButton::
 ; F20 & LButton::
 
-#ifWinNotActive ahk_exe Adobe Premiere Pro.exe ;because I always have Premiere fullscreened
+#ifWinNotActive ahk_exe Adobe Premiere Pro.exe ;because I always have Premiere fullscreened 
 
 F20::
 CoordMode, Mouse  ; Switch to screen/absolute coordinates.

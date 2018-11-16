@@ -11,7 +11,7 @@ SendMode Input
 #SingleInstance force
 
 ;These next two lines are EXTREMELY IMPORTANT. You have to change the "menu mask key" away from being CTRL, to something that won't result in cross-talk. Read this thread to learn the details: https://autohotkey.com/boards/viewtopic.php?f=76&t=57683
-#MenuMaskKey vk07  ; vk07 is unassigned.
+#MenuMaskKey vk07  ; vk07 is unassigned. 
 #UseHook
 
 ; INFO: you can hold down both ALT keys if you want to easily toggle this script on and off.

@@ -335,8 +335,8 @@ Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcu
 sleep 20 ;"sleep" means the script will wait for 20 milliseconds before the next command. This is done to give Premiere some time to load its own things.
 Send ^b ;CTRL B -- set in premiere to "select find box"
 sleep 20
-; sleep 206
-;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret." 
+; sleep 20 
+;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret."  
 
 MouseMove, %A_CaretX%, %A_CaretY%, 0
 sleep 15
