@@ -7,7 +7,7 @@ CoordMode, Pixel, screen
 
 Menu, Tray, Icon, imageres.dll, 90
 
-;THIS IS A GREAT FIRST SCRIPT FOR AHK NOOBS! IT WORKS WITH VERY LITTLE SETUP. JUST READ THE STUFF BELOW! YAY!
+;THIS IS A GREAT FIRST SCRIPT FOR AHK NOOBS! IT WORKS WITH VERY LITTLE SETUP. JUST READ THE STUFF BELOW! YAY! 
 ;VIDEO EXPLANATION:  https://youtu.be/O6ERELse_QY?t=23m40s
 
 ; +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
