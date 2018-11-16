@@ -1349,7 +1349,9 @@ return
 ; macro key G5.
 ~^+.::audioMonoMaker("right")
 
-~F20::home
+;note that i have capslock remapped to F20
+F20::home
+;note that I also use "F20" for moving windows around without having to click the taskbar.
 
 
 #ifWinNotActive ahk_exe Adobe Premiere Pro.exe

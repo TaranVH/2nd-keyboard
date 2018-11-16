@@ -1,6 +1,5 @@
 ﻿#SingleInstance force 
 
-
 IfWinNotExist, ahk_class Premiere Pro
 	{
 	;Run, Adobe Premiere Pro.exe
