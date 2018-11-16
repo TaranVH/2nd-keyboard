@@ -609,7 +609,7 @@ return
 
 
 	
-	
+/*
 ;BEGIN secondary layer of main keyboard, using CAPSLOCK remapped to F20
 #if (getKeyState("F20", "P"))
 F20::return 
@@ -747,6 +747,7 @@ numpadDot::
 #if				
 ;_________________end fake 5th keyboard with capslock remapped to F20__________________
 
+*/
 				
 		
 #IfWinActive
@@ -1260,7 +1261,7 @@ SC064::back()
 
 ;macro key G17
 ^F2::switchToExplorer()
-!^F2::closeAllExplorers()
+!^F2::closeAllExplorers() ;aaah, this doesn't work from premiere because I swapped it out with a direct launch on that key. riiight.
 
 ;macro key G18
 ^F3::switchToPremiere()
@@ -1347,6 +1348,9 @@ return
 ~^+,::audioMonoMaker("left")
 ; macro key G5.
 ~^+.::audioMonoMaker("right")
+
+~F20::home
+
 
 #ifWinNotActive ahk_exe Adobe Premiere Pro.exe
 ;macro key G4.
@@ -1496,15 +1500,15 @@ return
 ;F3 is set in premiere to the [MODIFY CLIP] panel. 
 
 #IfWinActive ahK_exe Adobe Premiere Pro.exe
-;; instant cut at cursor (UPON KEY RELEASE)
+;; instant cut at cursor (UPON KEY RELEASE) -- super useful! even respects snapping!
 ~F4::
 ;keywait, F4
 ;tooltip, |
-send, b ;blade tool
-send, {shift down}
+send, b ;selects the blade tool
+send, {shift down} ;makes the blade tool affect all (unlocked) tracks
 keywait, F4 ;waits for the key to go UP.
 ;tooltip, was released
-send, {lbutton}
+send, {lbutton} ;makes a CUT
 send, {shift up}
 sleep 10
 send, v ;selection tool
@@ -1600,6 +1604,22 @@ return
 ~+F19::tracklocker()
 
 #IfWinActive
+
+;::---::— ;this one just results in â€” being typed.
+:*:--- ::{Asc 0151}
+;convert three dashes into an EM dash. https://superuser.com/questions/857338/how-to-add-the-em-dash-to-my-keyboard
+; ^-:: ;en dash (150/x96)
+; Send –
+; Return
+
+; !-:: ;em dash (151/x97)
+; Send —
+; Return
+
+; !^-:: ;bullet (149/x95)
+; Send •
+; Return
+;;https://www.experts-exchange.com/questions/29046416/Favorite-way-to-make-an-em-dash.html
 
 +capslock::capslock ;only SHIFT CAPSLOCK will now turn on capslock, freeing the real capslock key to be used as a MODIFIER KEY, just like CTRL.
 +F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
@@ -1719,7 +1739,7 @@ return
 
 
 ;script reloader, but it only worKs on this one :(
-#ifwinactive ahK_class Notepad++
+#ifwinactive ahk_class Notepad++
 ^r::
 send ^s
 sleep 10
@@ -1728,7 +1748,45 @@ reload
 return
 
 
-#IfWinActive
+;#IfWinActive
+;;;https://autohotkey.com/board/topic/24431-convert-text-uppercase-lowercase-capitalized-or-inverted/
+
+
+
+F9::ConvertSentence()
+; F9::Convert_Cap()
+
+; Convert_Cap()
+; {
+ ; Clip_Save:= ClipboardAll                                                 ; save original contents of clipboard
+ ; Clipboard:= ""                                                           ; empty clipboard
+ ; Send ^c{delete}                                                          ; copy highlighted text to clipboard
+ ; StringLower Clipboard, Clipboard                                         ; convert clipboard to desired case
+ ; Send %Clipboard%                                                         ; send desired text
+ ; Len:= Strlen(Clipboard)
+ ; Send +{left %Len%}                                                       ; highlight text
+ ; Clipboard:= Clip_Save                                                    ; restore clipboard
+; }
+
+ConvertSentence()
+{
+	click left
+	click left
+	clipSave := Clipboard
+	Clipboard = ; Empty the clipboard so that ClipWait has something to detect
+	SendInput, ^c ;copies selected text
+	ClipWait
+	StringReplace, Clipboard, Clipboard, `r`n, `n, All ;Fix for SendInput sending Windows linebreaks 
+	StringLower, Clipboard, Clipboard
+	Clipboard := RegExReplace(Clipboard, "(((^|([.!?]+\s+))[a-z])| i | i')", "$u1")
+	Len:= Strlen(Clipboard)
+    SendInput, ^v ;pastes new text
+	Send +{left %Len%}
+    VarSetCapacity(OutputText, 0) ;free memory
+	Clipboard := clipSave
+}
+
+
 
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -1911,3 +1969,100 @@ numpadDot::
 ; ;EXAMPLE: https://i.ytimg.com/vi/L-zDtBINvzk/hqdefault.jpg
 ; ;http://img.youtube.com/vi/<insert-youtube-video-id-here>/maxresdefault.jpg
 ; return
+
+*/
+
+;;;;--------------------------------------
+;;;;-------------------------------------
+;wooooah google docs is crazy - it actually notices high scan codes. here are my notes about that - will transfer this info into my spreadsheet if possible.
+
+;google docs ;autohotkey
+; 1::send {SC052} ;- 				;NumpadIns
+; 2::send {SC053} ;NumpadDel		;NumpadDel
+; 3::send {SC054} ;PrintScreen		;PrintScreen
+; 4::send {SC055} ;not found		;(nothing)
+; 5::send {SC056} ;\				;\
+; 6::send {SC057} ;F11				;F11 which is also z
+; 7::send {SC058} ;F12				;F12 which is also {
+; 8::send {SC059} ;NumpadClear		;(nothing)
+
+; 9::send {SC05a} ;not found		;î
+; ;-\z{î
+
+
+
+; F9::send {SC05B} ;ñ
+; F10::send {SC05C} ;ê
+; F11::send {SC05D} ;ù
+; F12::send {SC05E} ;õ
+
+; 1::send {SC05F} ;ó
+; 2::send {SC060} ;(nothing)
+; 3::send {SC061} ;(nothing)
+; 4::send {SC062} ;û
+; 5::send {SC063} ;(nothing)
+; 6::send {SC064} ;|
+; 7::send {SC065} ;}
+; 8::send {SC066} ;~
+; 9::send {SC067} ;
+; ;óû|}~
+
+
+; Lshift & Rshift::suspend
+
+; 1::send {SC068} ;
+; 2::send {SC069} ;
+; 3::send {SC06A} ;
+; 4::send {SC06b} ;
+; 5::send {SC06c} ;
+; 6::send {SC06d} ;
+; 7::send {SC06e} ; ;0086
+; 8::send {SC06f} ;í ;;should be ESA
+; 9::send {SC070} ; 
+;í
+; https://notepad-plus-plus.org/community/topic/14812/how-to-search-for-unknown-3-digit-characters-with-black-background/2
+
+; 1::send {SC071} ;é
+; 2::send {SC072} ;
+; 3::send {SC073} ;
+; 4::send {SC074} ;
+; 5::send {SC075} ;
+; 6::send {SC076} ;
+; 7::send {SC077} ;
+; 8::send {SC078} ;
+; 9::send {SC089} ;
+                 
+; 1::send {SC08a} ;
+; 2::send {SC08b} ;
+; 3::send {SC08c} ;
+; 4::send {SC08d} ;
+; 5::send {SC08e} ;
+; 6::send {SC08f} ;
+; 7::send {SC090} ;
+; 8::send {SC091} ;
+; 9::send {SC092} ;
+
+
+
+
+
+; ; kill me beyond here
+; dasd
+; 1::send {SC068} 
+   ; send {SC069} 
+; 3::send {SC06A} 
+; 4::send {SC06b} 
+; 5::send {SC06c} 
+; 6::send {SC06d} 
+; 7::send {SC06e}  ;0086
+; 8::send {SC06f} í ;;should be ESA
+; 9::send {SC070}  
+; í
+; https://notepad-plus-plus.org/community/topic/14812/how-to-search-for-unknown-3-digit-characters-with-black-background/2
+
+; 1::send {SC071} ;é
+; 2::send {SC072} ;
+; 3::send {SC073} ;
+; 4::send {SC074} ;
+; 5::send {SC075} ;
+ ; 6::send {SC076} 

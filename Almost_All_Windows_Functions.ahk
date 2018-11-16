@@ -38,6 +38,48 @@ notip2:
 	;removes the tooltip
 return
 
+;alt escape does ssomething.
+
+;;;oh heck yes - a case changer.
+;;;http://www.computoredge.com/AutoHotkey/Free_AutoHotkey_Scripts_and_Apps_for_Learning_and_Generating_Ideas.html#ChangeCase
+
+;;;aslo i can give myself a ---damn it i forgot it AS i was wriiting it. —a thing to always paste as SIMPLE, unformatted test. YEAH.
+
+;;;clipboard stuff.
+;https://ditto-cp.sourceforge.io/
+
+;;https://cedeq.com/enterpad/en/autohotkey/useful-ahk-scripts/multiple-clipboards
+;;https://jacksautohotkeyblog.wordpress.com/2016/06/09/autohotkey-solutions-for-windows-clipboard-limitations-autohotkey-clipboard-tips/
+
+; GetFromClipboard()
+; { 
+  ; ClipSaved := ClipboardAll ;Save the clipboard
+  ; Clipboard = ;Empty the clipboard
+  ; SendInput, ^c
+  ; ClipWait, 2
+  ; if ErrorLevel
+  ; {
+    ;;; MsgBox % "Failed attempt to copy text to clipboard."
+    ; MsgBox,,,"Failed attempt to copy text to clipboard.",0.7
+    ; return
+  ; }
+  ; NewClipboard := Trim(Clipboard)
+  ;; StringReplace, NewClipboard, NewClipBoard, `r`n, `n, All ;comment this in to remove whitespace automaticaly
+  ; Clipboard := ClipSaved ;Restore the clipboard
+  ; ClipSaved = ;Free the memory in case the clipboard was very large.
+  ; return NewClipboard
+; }
+
+; F20::
+; ClipBoard_2 := GetFromClipboard()
+; return
+
+; ;woah, it uses this instead of ctrl v.
+; F21::
+; SendInput {Raw}%ClipBoard_2%
+; return
+
+
 
 /*
 MsgBox, % GetAhkStats("lines")
@@ -359,6 +401,8 @@ NavRun(Path) {
 ;;;NEEDED: must not get address by looking at title text, it is unreliable. if you search for a thing for example, it will open a new window. this may or may not be a bad thing... also i can have it clear the search - that WOULD be bad. must do more experiments with this one...
 InstantExplorer(f_path,pleasePrepend := 0)
 {
+;this has been heavily modified from https://autohotkey.com/docs/scripts/FavoriteFolders.htm
+
 send {SC0E8} ;scan code of an unassigned key. This is needed to prevent the item from merely FLASHING on the task bar, rather than opening the folder. Don't ask me why, but this works.
 
 
@@ -395,7 +439,7 @@ if f_class in #32770,ExploreWClass,CabinetWClass  ; if the window class is a sav
 	ControlGetPos, f_Edit1Pos, f_Edit1PosY,,, Edit1, ahk_id %f_window_id%
 
 
-	
+	;edit2
 /*
 if f_AlwaysShowMenu = n  ; The menu should be shown only selectively.
 {
@@ -428,20 +472,23 @@ if f_path =
 if f_class = #32770    ; It's a dialog.
 	{
 	;msgbox, f_title is %f_title%
+	; IF f_title is NOT "export settings," with the exe "premiere pro.exe"
+	;go to the end or do something else, since you are in Premiere's export media dialouge box... which has the same #23770 classNN for some reason...
+	;msgbox,,,test code E1,0.5
 	if f_title = Export Settings
 		{
-		msgbox,,,you are in Premiere's export window, but NOT in the "Save as" inside of THAT window. no bueno ,0.7
-		GOTO, ending2 
+		msgbox,,,you are in Premiere's export window, but NOT in the "Save as" inside of THAT window. no bueno, 1
+		GOTO, instantExplorerEnd 
 		;return ;no, I don't want to return because i still want to open an explorer window.
 		}
 	if WinActive("ahk_exe Adobe Premiere Pro.exe")
 		{
-		msgbox,,,you are inside of premieres save as thingy,0.5
+		tooltip,you are inside of premieres save as thingy
 		if f_title = Save As or f_title = Save Project ;IDK if this OR is properly nested....
 			{
 			ControlFocus, Edit1, ahk_id %f_window_id% ;this is really important.... it doesn't work if you don't do this...
 			msgbox,,,you are here,0.5
-			tippy2("DIALOUGE WITH Edit1`n`nLE controlfocus of Edit1 for f_window_id was just engaged.", 1000)
+			tippy2("DIALOUGE WITH PREMIERE'S Edit1`n`nLE controlfocus of Edit1 for f_window_id was just engaged.", 2000)
 			; msgbox, is it in focus?
 			; MouseMove, f_Edit1Pos, f_Edit1PosY, 0
 			; sleep 10
@@ -456,11 +503,14 @@ if f_class = #32770    ; It's a dialog.
 			; Retrieve any filename that might already be in the field so
 			; that it can be restored after the switch to the new folder:
 			ControlGetText, f_text, Edit1, ahk_id %f_window_id%
+			
 			ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
 			ControlSend, Edit1, {Enter}, ahk_id %f_window_id%
 			Sleep, 100  ; It needs extra time on some dialogs or in some cases.
 			ControlSetText, Edit1, %f_text%, ahk_id %f_window_id%
 			;msgbox, AFTER:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
+			
+			tooltip,
 			return
 			}
 		}
@@ -472,9 +522,6 @@ if f_class = #32770    ; It's a dialog.
 	
 	if f_Edit1Pos <>   ; And it has an Edit1 control.
 		{
-		; IF window Title is NOT "export settings," with the exe "premiere pro.exe"
-			;go to the end or do something else, since you are in Premiere's export media dialouge box... which has the same #23770 classNN for some reason...
-		;msgbox,,,test code E1,0.5
 
 		ControlFocus, Edit1, ahk_id %f_window_id% ;this is really important.... it doesn't work if you don't do this...
 		tippy2("DIALOUGE WITH EDIT1`n`nwait really?`n`nLE controlfocus of edit1 for f_window_id was just engaged.", 1000)
@@ -489,12 +536,16 @@ if f_class = #32770    ; It's a dialog.
 		; Activate the window so that if the user is middle-clicking
 		; outside the dialog, subsequent clicks will also work:
 		WinActivate ahk_id %f_window_id%
+		
 		; Retrieve any filename that might already be in the field so
 		; that it can be restored after the switch to the new folder:
 		ControlGetText, f_text, Edit1, ahk_id %f_window_id%
+		
 		ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
 		ControlSend, Edit1, {Enter}, ahk_id %f_window_id%
 		Sleep, 100  ; It needs extra time on some dialogs or in some cases.
+		
+		;now RESTORE the filename in that text field. I don't like doing it this way...
 		ControlSetText, Edit1, %f_text%, ahk_id %f_window_id%
 		;msgbox, AFTER:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
 		
@@ -644,7 +695,8 @@ if WinActive("ahk_exe firefox.exe")
 else
 	{
 	;WinRestore ahk_exe firefox.exe
-	WinActivatebottom ahk_exe firefox.exe
+	;WinActivate ahk_exe firefox.exe ;was winactivatebottom before...
+	WinActivatebottom ahk_class MozillaWindowClass ;was winactivatebottom before...
 	;sometimes winactivate is not enough. the window is brought to the foreground, but not put into FOCUS.
 	;the below code should fix that.
 	WinGet, hWnd, ID, ahk_class MozillaWindowClass

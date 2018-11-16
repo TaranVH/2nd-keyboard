@@ -49,8 +49,9 @@ SendMode Input
 ; "F24" is just the name that we give to the scan code 76, also known as SC076. But the scan codes go much higher than this.
 ; How high? I have a list. I made it myself, since nobody else on the internet seems to have done so:
 ; https://github.com/TaranVH/2nd-keyboard/blob/master/FYI/Table_of_all_scan_codes.xlsx
-; There are hundreds of unused ones to choose from. Here's a small sample:
-;SC05A SC05B SC05C SC05D SC05E SC05F SC060 SC061 SC062 SC06F SC070 SC071 SC072 SC073 SC074 SC075 SC077 SC078 SC079 SC07A SC07B and so on...
+; There are hundreds of unused ones to choose from. However, although the following scan codes might APPEAR to be unused...:
+;SC05A SC05B SC05C SC05D SC05E SC05F SC060 SC061 SC062 SC06F SC070 SC071 SC072 SC073 SC074 SC075 SC077 SC078 SC079 SC07A SC07B SC07C SC07D SC07E SC07F
+;You should probably only use scan codes above SC080. This is because diffreent software will treat each code differently. Google docs, for example, changes some of those scan codes into accented characters. Again, see my spreadsheet for the full, gory details.
 ; Furthermore, after some testing, I determined that we must address each alt key specifically, for both its down and up events.
 ;You can comment in the tooltips if you want to do any debugging, but this script should run just fine right out of the box.
 ;ALT still works normally for everything else.

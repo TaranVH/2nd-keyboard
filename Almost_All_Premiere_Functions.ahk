@@ -335,23 +335,27 @@ Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcu
 sleep 20 ;"sleep" means the script will wait for 20 milliseconds before the next command. This is done to give Premiere some time to load its own things.
 Send ^b ;CTRL B -- set in premiere to "select find box"
 sleep 20
-
+; sleep 206
 ;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret." 
 
 MouseMove, %A_CaretX%, %A_CaretY%, 0
 sleep 15
+sleep 15 ;sometimes, premiere takes some time to notice that the text box has been highlighted. in that case, it will not return any value for the position of the Caret. Tehrefore, you have to wait.
 MouseMove, %A_CaretX%, %A_CaretY%, 0
 ;and fortunately, AHK knows the exact X and Y position of this caret. So therefore, we can find the effects panel find box, no matter what monitor it is on, with 100% consistency.
+;tooltip, 1 - mouse should be on the karat X= %A_CaretX% Y= %A_CaretY% now
 sleep 15
 ;msgbox, carat X Y is %A_CaretX%, %A_CaretY%
 MouseGetPos, , , Window, classNN
 WinGetClass, class, ahk_id %Window%
-;msgbox, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
+;tooltip, 2 - ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
+sleep 50
 ;;;I think ControlGetPos is not affected by coordmode??  Or at least, it gave me the wrong coordinates if premiere is not fullscreened... https://autohotkey.com/docs/commands/ControlGetPos.htm 
 ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
 ;;my results:  59, 1229, 252, 21,      Edit1,    ahk_class Premiere Pro
 
-;msgbox, classNN = %classNN%
+;tooltip, classNN = %classNN%
+;sleep 50
 ;now we have found a lot of useful informaiton about this find box. Turns out, we don't need most of it...
 ;we just need the X and Y coordinates of the "upper left" corner...
 
@@ -359,7 +363,8 @@ ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, S
 ;MsgBox, xx=%XX% yy=%YY%
 
 MouseMove, XX-25, YY+10, 0 ;-----------------------moves cursor onto the magnifying glass
-;msgbox, should be in the center of the magnifying glass now.
+;tooltip, should be in the center of the magnifying glass now.
+;sleep 50
 sleep 5
 ;This types in the text you wanted to search for. Like "pop in." We can do this because the entire find box text was already selected by Premiere. Otherwise, we could click the magnifying glass if we wanted to , in order to select that find box.
 Send %item%
@@ -371,13 +376,16 @@ sleep 5
 MouseGetPos, iconX, iconY, Window, classNN ;---now we have to figure out the ahk_class of the current panel we are on. It used to be DroverLord - Window Class14, but the number changes anytime you move panels around... so i must always obtain the information anew.
 sleep 5
 WinGetClass, class, ahk_id %Window% ;----------"ahk_id %Window%" is important for SOME REASON. if you delete it, this doesnt work.
-;msgbox, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
+;tooltip, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
+;sleep 50
 ControlGetPos, xxx, yyy, www, hhh, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
 MouseMove, www/4, hhh/2, 0, R ;-----------------clicks in about the CENTER of the Effects panel. This clears the displayed presets from any duplication errors. VERY important. without this, the script fails 20% of the time.
 sleep 5
 MouseClick, left, , , 1 ;-----------------------the actual click
 sleep 10
 MouseMove, iconX, iconY, 0 ;--------------------moves cursor BACK onto the effect's icon
+;tooltip, should be back on the effect's icon
+;sleep 50
 sleep 35
 MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---clicks the left button down, drags this effect to the cursor's pervious coordinates and releases the left mouse button, which should be above a clip, on the TIMELINE panel.
 sleep 10
@@ -939,13 +947,13 @@ effectControlsY = 200 ;the coordinates of roughly where my Effect Controls usual
 ; coordmode, Caret, Window
 
 ;you might need to take your own screenshot (look at mine to see what is needed) and save as .png. Mine are done with default UI brightness, plus 150% UI scaling in Windows.
-ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_WorkingDir%\CROP transform button_D2018.png
+ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+200, effectControlsY+800, %A_WorkingDir%\CROP_transform_button_D2019.png
 if ErrorLevel = 2
 	{
 	;msgbox,,, TaranDir is `n%TaranDir%,0.7
 	;ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %TaranDir%\CROP transform button.png
 	; ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, C:\AHK\2nd-keyboard\2nd keyboard support files\CROP transform button.png
-	ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_workingDir%\CROP transform button_D2018.png
+	ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_workingDir%\CROP_transform_button_D2019.png
 	}
 if ErrorLevel = 1
 	{
@@ -1217,9 +1225,9 @@ CoordMode Mouse, screen
 ; coordmode, Caret, window
 ;you might need to take your own screenshot (look at mine to see what is needed) and save as .png. Mine are done with default UI brightness, plus 150% UI scaling in Wondows.
 ;msgbox, workingDir is %A_WorkingDir%
-ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_targeted_2018.1.png
+ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_targeted_2019.png
 if ErrorLevel = 1
-	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted_2018.png
+	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted_2019.png
 ; if ErrorLevel = 1
 	; ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_untargeted_2018.png
 ; if ErrorLevel = 1
@@ -1256,7 +1264,7 @@ tippy("we are now on try 2")
 if ErrorLevel = 1
 	{
     tippy("try 2 part 1")
-	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_locked_targeted_2018.png
+	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_locked_targeted_2019.png
 	}
 ; if ErrorLevel = 1
 	; {
@@ -1499,12 +1507,12 @@ else if foobar = "anchor_point"
 
 ;something was wrong with using %A_WorkingDir% here. now fixed.
 
-ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+900, %A_WorkingDir%\%foobar%_D2018.png
+ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+900, %A_WorkingDir%\%foobar%_D2019.png
 ;within 0 shades of variation (this is much faster)
 ;obviously, you need to take your own screenshot (look at mine to see what is needed) save as .png, and link to it from the line above.
 ;Again, your UI brightness might be different from mine! I now use the DEFAULT brightness.
 if ErrorLevel = 1
-	ImageSearch, FoundX, FoundY, xPos-30, yPos, xPos+1200, yPos+1200, *10 %A_WorkingDir%\%foobar%_D2018.png ;within 30 shades of variation (in case SCALE is fully extended with bezier handles, in which case, the other images are real hard to find because the horizontal seperating lines look a BIT different. But if you crop in really closely, you don't have to worry about this. so this part of the code is not really necessary execpt to expand the range to look.
+	ImageSearch, FoundX, FoundY, xPos-30, yPos, xPos+1200, yPos+1200, *10 %A_WorkingDir%\%foobar%_D2019.png ;within 30 shades of variation (in case SCALE is fully extended with bezier handles, in which case, the other images are real hard to find because the horizontal seperating lines look a BIT different. But if you crop in really closely, you don't have to worry about this. so this part of the code is not really necessary execpt to expand the range to look.
 
 if ErrorLevel = 2
 	{
@@ -1545,8 +1553,9 @@ if (foobar = "scale" ||  foobar = "anchor_point" || foobar = "rotation")
 }
 else if (foobar = "anchor_point_vertical")
 {
-	;msgbox, looking for 0.00
-	ImageSearch, Px, Py, xxx+100, yyy, xxx+800, yyy+100, %A_WorkingDir%\anti-flicker-filter_000_D2018.png ;because i never change the value of the anti-flicker filter, (0.00) and it is always the same distance from the actual hot text that i WANT, it is a reliable landmark. So this is a screenshot of THAT.
+	tooltip, looking for 0.00
+	;msgbox,,, looking for 0.00,0.5
+	ImageSearch, Px, Py, xxx+50, yyy, xxx+800, yyy+100, %A_WorkingDir%\anti-flicker-filter_000_D2019.png ;because i never change the value of the anti-flicker filter, (0.00) and it is always the same distance from the actual hot text that i WANT, it is a reliable landmark. So this is a screenshot of THAT.
 }
 
 ; ImageSearch, FoundX, FoundY, xPos-70, yPos, xPos+800, yPos+500, %A_WorkingDir%\anchor_point_D2017.png
@@ -1567,13 +1576,14 @@ else
     ;MsgBox, A color within 30 shades of variation was found at X%Px% Y%Py%.
 	if (foobar <> "anchor_point_vertical")
 	{
-		;msgbox, about to move
+		
 		MouseMove, Px+10, Py+5, 0 ;moves the cursor onto the scrubbable hot text
 		;msgbox, anything but anchor point vertical
 		;sleep 1000
 	}
 	else if (foobar = "anchor_point_vertical")
 	{
+		;msgbox,,,, about to move,0.5
 		MouseMove, Px+80, Py-20, 0 ;relative to the unrelated 0.00 text (which I've never changed,) this moves the cursor onto the SECOND variable for the anchor point... the VERTICAL number, rather than horizontal.
 		tooltip, where am I?
 		;sleep 1000
