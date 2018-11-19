@@ -51,33 +51,27 @@ return
 ;;https://cedeq.com/enterpad/en/autohotkey/useful-ahk-scripts/multiple-clipboards
 ;;https://jacksautohotkeyblog.wordpress.com/2016/06/09/autohotkey-solutions-for-windows-clipboard-limitations-autohotkey-clipboard-tips/
 
-; GetFromClipboard()
-; { 
-  ; ClipSaved := ClipboardAll ;Save the clipboard
-  ; Clipboard = ;Empty the clipboard
-  ; SendInput, ^c
-  ; ClipWait, 2
-  ; if ErrorLevel
-  ; {
-    ;;; MsgBox % "Failed attempt to copy text to clipboard."
-    ; MsgBox,,,"Failed attempt to copy text to clipboard.",0.7
-    ; return
-  ; }
-  ; NewClipboard := Trim(Clipboard)
-  ;; StringReplace, NewClipboard, NewClipBoard, `r`n, `n, All ;comment this in to remove whitespace automaticaly
-  ; Clipboard := ClipSaved ;Restore the clipboard
-  ; ClipSaved = ;Free the memory in case the clipboard was very large.
-  ; return NewClipboard
-; }
+GetFromClipboard()
+{ 
+  ClipSaved := ClipboardAll ;Save the clipboard
+  Clipboard = ;Empty the clipboard
+  SendInput, ^c
+  ClipWait, 2
+  if ErrorLevel
+  {
+    ;; MsgBox % "Failed attempt to copy text to clipboard."
+    MsgBox,,,"Failed attempt to copy text to clipboard.",0.7
+    return
+  }
+  NewClipboard := Trim(Clipboard)
+  ; StringReplace, NewClipboard, NewClipBoard, `r`n, `n, All ;comment this in to remove whitespace automaticaly
+  Clipboard := ClipSaved ;Restore the clipboard
+  ClipSaved = ;Free the memory in case the clipboard was very large.
+  return NewClipboard
+}
 
-; F20::
-; ClipBoard_2 := GetFromClipboard()
-; return
 
-; ;woah, it uses this instead of ctrl v.
-; F21::
-; SendInput {Raw}%ClipBoard_2%
-; return
+
 
 
 

@@ -15,6 +15,7 @@ global savedEXE = "notepad++.exe" ;BEFORE the #include is apparently the only pl
 #include C:\AHK\2nd-keyboard\Almost_All_Premiere_Functions.ahk
 #include C:\AHK\2nd-keyboard\Almost_All_Windows_Functions.ahk
 #include C:\AHK\2nd-keyboard\After_Effects_Functions.ahk
+SetKeyDelay, 0 ;warning ---this was absent for some reason. i just added it back in. IDK if I removed it for a reason or not...
 
 ;-------------------------------------------------------------------------
 ; HELLO PEOPLES 
@@ -116,6 +117,17 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; Be aware that sometimes other programs like PUUSH can overlap/conflict with your customized shortcuts.                          
 ;_______________________________________________________________________________________________
 
+;these are sent from the stream deck.
+;I didn't use CTRL and SHIFT and stuff because I wanted NO CROSS TALK!!
+;COPY 1 2 and 3
+SC062::ClipBoard_1 := GetFromClipboard() ;zoom
+vk2A::ClipBoard_2 := GetFromClipboard()	 ;Printer
+SC16B::ClipBoard_3 := GetFromClipboard() ;launch (0)
+
+;PASTE 1 2 and 3
+SC16D::SendInput {Raw}%ClipBoard_1%		;launch_media
+vk2B::SendInput {Raw}%ClipBoard_2%		;Execute
+SC121::SendInput {Raw}%ClipBoard_3% 	;launch (1)
 
 ;____________________________________________________________________
 ;                                                                    
@@ -1586,7 +1598,7 @@ global VFXkey = "F15" ;the VFXkey variable has to be defined NOW. IDK why.
 instantVFX("anchor_point_vertical")
 return
 
-;F16 is still available
+;F16 aka SC067 is still available
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Macro key G7
@@ -1643,13 +1655,13 @@ capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
 #IfWinActive
 ;VKEASC05C::tooltip, VirtualKey:EA ScanCode:05C
 ;SC05C::tooltip, SC05C - "Keyboard Intl' 6"
-SC05D::tooltip, SC05D - cannot find a corsair trigger
+;SC05D::tooltip, SC05D - this is ALSO the appskey apparently??
 SC05E::tooltip, SC05E - cannot find a corsair trigger
 SC05F::tooltip, SC05F - cannot find a corsair trigger
 
 SC060::tooltip, SC060 - cannot find a corsair trigger.
 SC061::tooltip, SC061 - cannot find a corsair trigger
-SC062::tooltip, SC062 - cannot find trigger but this is used from intercept.exe
+;;SC062::tooltip, SC062 - cannot find trigger but this is used from intercept.exe
 SC063::tooltip, SC063 - cannot find a corsair trigger - Labeled as "Help"
 
 ; SC064 - F13
