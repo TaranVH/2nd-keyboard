@@ -67,6 +67,8 @@ SendMode Input
 #SingleInstance force ;only one instance may run at a time!
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm ;this may prevent taskbar flashing.
+#HotkeyModifierTimeout 60 ; https://autohotkey.com/docs/commands/_HotkeyModifierTimeout.htm
+
 detecthiddenwindows, on
 
 SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
@@ -74,7 +76,7 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ;Avoid using stupid CTRL when alt is released https://autohotkey.com/boards/viewtopic.php?f=76&t=57683
 #MenuMaskKey vk07  ; vk07 is unassigned.
 
-;____________________________________________________________________________
+;_________________________________________________________________________________________
 ;                                                                                                                       
 ; NOTE: In autohotkey, the following special characters (usually) represent modifier keys:
 ; # is the WIN key. (it can mean other things though, as you can see above.)
@@ -82,19 +84,19 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; ! is ALT
 ; + is SHIFT
 ; list of other keys: http://www.autohotkey.com/docs/Hotkeys.htm
+;__________________________________________________________________________________________
 ; 
-; 
-;RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE'S BUILT IN KEYBOARD SHORTCUTS MENU
-
-
-; KEYS                    PREMIERE FUNCTIONS
-;-----------------------------------------------------------------------------
-; ctrl alt s                     select clip at playhead. Probably this should be moved to a different series of keystrokes, so that "u" is freed for something else.
+;----------------------------------------------------------------------------------
+; RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE'S BUILT IN KEYBOARD SHORTCUTS MENU
+;----------------------------------------------------------------------------------
+; KEYS                  PREMIERE FUNCTIONS
+;----------------------------------------------------------------------------------
+; ctrl alt s            select clip at playhead. Probably this should be moved to a different series of keystrokes, so that "u" is freed for something else.
 ; backspace             ripple delete --- but I don't use that in AutoHotKey because it's dangerous. This should be changed to something else; I use SHIFT C now.
 ; shift c               ripple delete --- very convenient for left handed use. Premiere's poor track targeting makes ripple delete less useful than it could be.
 ; ctrl alt shift d      ripple delete --- I never type this in manually - long shortcuts like this are great for using AHK or a macro to press them.
 ; delete                delete
-; c                     delete --- I also have this on "C" because it puts it directly under my left hand. Very quick to press without having to move my hand.
+; c                     delete --- I also have this on "C" because it puts it directly under my left hand. Very quick.
 ; ctrl r                speed/duration panel
 ; shift 1               toggle track targeting for AUDIO LAYER 1
 ; shift 2               toggle track targeting for AUDIO LAYER 2. And so on up to 8.
@@ -113,6 +115,7 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; ctrl b                select find box --- This is such a useful function when you pair it the the effects panel!!
 ; ctrl alt F            select find box 
 ; ctrl shift 6			Apply source assignment preset 1 (set to V5 and A3)
+; ctrl ; (semicolon)	Add Marker
 ;                                                                                                                        
 ; Be aware that sometimes other programs like PUUSH can overlap/conflict with your customized shortcuts.                          
 ;_______________________________________________________________________________________________
@@ -142,7 +145,7 @@ SC121::SendInput {Raw}%ClipBoard_3% 	;launch (1)
 
 
 ;;;;;;;;;;;;;BEGIN K120 (2ND KEYBOARD) REMAPPED INTO ALL MACRO KEYS;;;;;;;;;;;;;;;;;
-#if (getKeyState("F23", "P")) ;THIS is the line that makes all the lines below, possible.
+#if (getKeyState("F23", "P")) ;THIS is the line that makes all the lines below possible.
 
 
 F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," since it will ALWAYS be fired before any of the keystrokes below, any time you use the 2nd keyboard.
@@ -217,7 +220,7 @@ F9::insertSFX("SimpleWhoosh3")
 F8::insertSFX("SimpleWhoosh8")
 F10::insertSFX("woosh2")
 F11::insertSFX("woosh1")
-F12::InstantExplorer("Z:\Linus\5. Fast As Possible\000 Transcoding\Delivery")
+F12::InstantExplorer("Z:\Linus\5. Fast As Possible\_FAP Transcoding\_FAP Delivery")
 
 ;F12::search() ;"search" is also used on ^+j 
 ; F12 must not used here IF it is the keyboard's launching key. You MAY put it here if you used F13 to F24 as the launching key
@@ -351,11 +354,12 @@ capslock::msgbox,,, K120 capslock,0.5
 
 ;;SC062 was once the remap of appskey, but it seemed to cause problems.
 
-SC072::msgbox,,, K120 - SC072 - "Lang 1", 0.5 ;Lwin to SC072 - Lang1
-SC073::msgbox,,, K120 - SC073 - "International1", 0.5 ;LAlt to SC073 - International1
+SC072::msgbox,,, K120 Lwin -to-> SC072:"Lang 1", 0.5 ;Lwin to SC072 - Lang1
+SC073::msgbox,,, K120 Lalt -to-> SC073:"International1", 0.5 ;LAlt to SC073 - International1
 
-SC078::preset("50% stereo") ;rightCtrl (Rctrl) to sc078 - Lang3
-SC077::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music") ;rightShift to SC077 - Lang4
+
+SC07D::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music") ;K120 rightShift -to- SC07D: International3
+SC07B::preset("50% stereo") ;K120 rCTRL -to-> SC07B:International5 -to-> Premiere 50% stereo
 
 space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
 ;SC065::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~ For Review") ;this is remapped from ALT. JK, SC065 is F14, do not use.
@@ -369,10 +373,10 @@ if WinExist("ahk_exe tvnviewer.exe")
 	WinActivate ahk_exe tvnviewer.exe
 return
 
-ScrollLock::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;just in case
+ScrollLock::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\_LTT DELIVERY") ;just in case
 ;pause::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery")
 ;numlock::msgbox, hello again
-SC061::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery") ;from scroll lock - K120
+SC061::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\_LTT DELIVERY") ;from scroll lock - K120
 
 CtrlBreak::msgbox, CTRL BREAK - maybe the default output of the pause/break key??
 pause::msgbox, is this the PAUSE key?? IDK
@@ -944,8 +948,8 @@ return
 
 appskey::msgbox, "this is the appskey KEY maybe. You should never see this message."
 
-;Ralt was remapped to SC07B, AKA NONCONVERT‡, AKA Corsair's International5. 
-SC07B::
+;AZIO Ralt -to-> SC077:Lang4 -to-> pin to clip
+SC077::
 tippy("pin to clip")
 prFocus("effect controls")
 send, ^!p ;my premiere shortcut for pin to clip is ctrl alt P
@@ -953,14 +957,14 @@ sleep 20
 return
 
 
-;RCtrl to sc078 - Lang3 -->> OBS
+;RWin -to->> sc078:Lang3 -to->> OBS
 SC078::
-tooltip, rightcontrol > SC078 / Lang3 > OBS
+tooltip, rightWin -> SC078:Lang3 -> OBS
 IfWinNotExist, ahk_class Qt5QWindowIcon ;this is broken, plz fix
 	Run, C:\Program Files (x86)\obs-studio\bin\64bit\obs64.exe
 if WinExist("ahk_exe tvnviewer.exe")
 	WinActivate ahk_exe obs64.exe
-return ;Rctrl remapped to SC078, AKA Lang3
+return
 
 PrintScreen::return
 ScrollLock::return
@@ -1656,6 +1660,7 @@ capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
 ;VKEASC05C::tooltip, VirtualKey:EA ScanCode:05C
 ;SC05C::tooltip, SC05C - "Keyboard Intl' 6"
 ;SC05D::tooltip, SC05D - this is ALSO the appskey apparently??
+;;SC15D::tooltip, SC15D - this is ALSO the appskey apparently?? ;must keep commented out because i use this in premiere lol
 SC05E::tooltip, SC05E - cannot find a corsair trigger
 SC05F::tooltip, SC05F - cannot find a corsair trigger
 
@@ -1682,23 +1687,23 @@ SC06F::tooltip,  SC06F - cannot find trigger
 
 VKE9::msgbox,,, VKE9 ??? - "Keyboard Lang 2", 0.5 ;does not work from Corsair keyboard
 ;VKE9SC071::msgbox,,, VKE9 SC071 ??? - Keyboard Lang 2, 0.5 ;;this will not register as an allowed hotkey
-SC071::msgbox,,, SC071 - "Keyboard Lang 2", 0.5 ;does not work from Corsair keyboard
-SC072::msgbox,,, SC072 - "Keyboard Lang 1", 0.5 ;Lwin to SC072 - Lang1
-SC073::msgbox,,, SC073 - "Keyboard Intl' 1", 0.5 ;LAlt to SC073 - International1
+SC071::msgbox,,, SC071:"Keyboard Lang 2", 0.5 ;does not work from Corsair keyboard
+SC072::msgbox,,, SC072:"Keyboard Lang 1", 0.5 ;Lwin to SC072 - Lang1
+SC073::msgbox,,, SC073:"Keyboard Intl' 1", 0.5 ;LAlt to SC073 - International1
 
-SC074::msgbox,,, SC074 - cannot find trigger, 0.5
-SC075::msgbox,,, SC075 - cannot find trigger - this is just before SC076 which is F24, 0.5
+SC074::msgbox,,, SC074: cannot find trigger, 0.5
+SC075::msgbox,,, SC075: cannot find trigger - this is just before SC076 which is F24, 0.5
 ;SC076::tooltip, this is F24
-SC077::msgbox,,, SC077 - "Keyboard Lang 4", 0.5
-SC078::msgbox,,, SC078 - "Keyboard Lang 3", 0.5
-SC079::msgbox,,, SC079 - "Keyboard Intl' 4", 0.5
+SC077::msgbox,,, rALT -to-> SC077:"Keyboard Lang 4", 0.5
+SC078::msgbox,,, rWin -to-> SC078:"Keyboard Lang 3", 0.5
+SC079::msgbox,,, no keyboard yet uses Appskey -to- SC079: "Keyboard Intl' 4", 0.5
 
-SC07A::tooltip, SC07A - cannot find trigger
-SC07B::tooltip, SC07B - cannot find trigger
-SC07C::tooltip, SC07C - cannot find trigger
+SC07A::tooltip, SC07A: cannot find trigger
+;SC07B::tooltip, rCTRL -to-> SC07B:International5
+SC07C::tooltip, SC07C: cannot find trigger
 
-SC07D::msgbox,,, SC07D - "Keyboard Intl' 3", 0.5
-SC07E::tooltip, SC07E - "Brazillian `,"
+;SC07D::msgbox,,, rshift -to-> SC07D:"Keyboard Intl' 3", 0.5
+SC07E::tooltip, SC07E:"Brazillian `,"
 
 SC07F::tooltip, SC07F - cannot find trigger
 

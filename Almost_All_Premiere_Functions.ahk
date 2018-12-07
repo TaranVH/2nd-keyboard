@@ -29,6 +29,9 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 ; But you can put your key bindings and functions in the same script if
 ; you want.
 ;
+; You also need to read from around line 90 of ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk.
+; to see which keybaord shortcut assignements are necessary to make these scripts work.
+;
 ; I reccomend that you only copy the functions that you need.
 ; Add one at a time or it will be overwhelming!
 ;
@@ -340,6 +343,7 @@ sleep 20
 
 MouseMove, %A_CaretX%, %A_CaretY%, 0
 sleep 15
+sleep 25
 sleep 15 ;sometimes, premiere takes some time to notice that the text box has been highlighted. in that case, it will not return any value for the position of the Caret. Tehrefore, you have to wait.
 MouseMove, %A_CaretX%, %A_CaretY%, 0
 ;and fortunately, AHK knows the exact X and Y position of this caret. So therefore, we can find the effects panel find box, no matter what monitor it is on, with 100% consistency.
@@ -362,15 +366,17 @@ ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, S
 ;comment in the following line to get a message box of your current variable values. The script will not advance until you dismiss the message box.
 ;MsgBox, xx=%XX% yy=%YY%
 
-MouseMove, XX-25, YY+10, 0 ;-----------------------moves cursor onto the magnifying glass
-;tooltip, should be in the center of the magnifying glass now.
+;MouseMove, XX-25, YY+10, 0 ;--------------------for 150% UI scaling, this moves the cursor onto the magnifying glass
+MouseMove, XX-15, YY+10, 0 ;--------------------for 100% UI scaling, this moves the cursor onto the magnifying glass
+;msgbox, should be in the center of the magnifying glass now.
 ;sleep 50
 sleep 5
 ;This types in the text you wanted to search for. Like "pop in." We can do this because the entire find box text was already selected by Premiere. Otherwise, we could click the magnifying glass if we wanted to , in order to select that find box.
 Send %item%
 
 sleep 30
-MouseMove, 62, 95, 0, R ;----------------------relative to the position of the magnifying glass (established earlier,) this moves the cursor down and directly onto the preset's icon. In my case, it is inside the "presets" folder, then inside of another folder, and the written name sohuld be compeltely unique so that it is the first and only item.
+;MouseMove, 62, 95, 0, R ;----------------------(for 150% UI) relative to the position of the magnifying glass (established earlier,) this moves the cursor down and directly onto the preset's icon. In my case, it is inside the "presets" folder, then inside of another folder, and the written name sohuld be compeltely unique so that it is the first and only item.
+MouseMove, 41, 63, 0, R ;----------------------(for 100% UI) 
 ;msgbox, The cursor should be directly on top of the preset's icon. `n If not, the script needs modification.
 sleep 5
 MouseGetPos, iconX, iconY, Window, classNN ;---now we have to figure out the ahk_class of the current panel we are on. It used to be DroverLord - Window Class14, but the number changes anytime you move panels around... so i must always obtain the information anew.
@@ -629,7 +635,8 @@ recallClipboard(int, transition := 0) {
 
 
 
-;;target() is a script to TARGET or UNTARGET any arbitrary track
+;;target() is a script to TARGET or UNTARGET any arbitrary track.
+;it doesn't work well, and I don't really use it.
 Target(v1orA1, onOff, allNoneSolo := 0, numberr := 0)
 {
 ;tooltip, now in TARGET function
@@ -946,14 +953,16 @@ effectControlsY = 200 ;the coordinates of roughly where my Effect Controls usual
 ; coordmode, mouse, Window
 ; coordmode, Caret, Window
 
-;you might need to take your own screenshot (look at mine to see what is needed) and save as .png. Mine are done with default UI brightness, plus 150% UI scaling in Windows.
-ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+200, effectControlsY+800, %A_WorkingDir%\CROP_transform_button_D2019.png
+;you might need to take your own screenshot (look at mine to see what is needed) and save as .png. Mine are(were) done with default UI brightness, plus 150% UI scaling in Windows.
+
+;ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+200, effectControlsY+800, %A_WorkingDir%\CROP_transform_button_D2019.png ;
+
+ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+200, effectControlsY+800, %A_WorkingDir%\CROP_transform_button_D2019_ui100.png
 if ErrorLevel = 2
 	{
 	;msgbox,,, TaranDir is `n%TaranDir%,0.7
-	;ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %TaranDir%\CROP transform button.png
-	; ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, C:\AHK\2nd-keyboard\2nd keyboard support files\CROP transform button.png
 	ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_workingDir%\CROP_transform_button_D2019.png
+	ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_workingDir%\CROP_transform_button_D2019_ui100.png
 	}
 if ErrorLevel = 1
 	{
@@ -1031,9 +1040,9 @@ send {enter}
 #ifwinactive
 
 marker(){
-send ^{SC027} ;semicolon. ^;
+send ^{SC027} ;this is the scan code for a semicolon.  ^;  CTRL SEMICOLON.
 ;msgbox,,,hie,0.5
-;should be hitting CTRL ; to make a marker. That's to a premiere shortcut.
+;should be hitting CTRL ; to make a marker. That's a premiere shortcut u gotta set up.
 ;sleep 10
 }
 
@@ -1131,9 +1140,14 @@ SetKeyDelay, 0
 sendinput ^!+5 ;highlights the effect controls
 sleep 20
 MouseGetPos, xpos, ypos
-ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window ;This is the Effect controls panel. Info gotten from Window Spy.
-X := X+85 ;change these variables to match the icon's position on your screen
-Y := Y+100 ;change these variables to match the icon's position on your screen
+ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window ;This is the Effect controls panel. Info gotten from Window Spy. Your might be different. Be sure to check!!
+
+;X := X+85 ;150% ui. change these variables to match the icon's position on your screen
+;Y := Y+100 ;150% ui. change these variables to match the icon's position on your screen
+
+X := X+56 ;100% ui
+Y := Y+66 ;100% ui
+
 MouseMove, X, Y, 0
 MouseClick, left
 MouseMove, %xpos%, %ypos%, 0
@@ -1143,7 +1157,6 @@ BlockInput, Off
 
 masterClipSelect()
 {
-
 Tippy("masterClipSelect()")
 BlockInput, On
 SetKeyDelay, 0
@@ -1156,11 +1169,11 @@ Send {tab}
 if (A_CaretX = "")
 {
 	;No Caret (blinking vertical line) can be found. Therefore, no clip is selected.
+	;Therefore, we try to select the TOP clip at the playhead, using the code below.
 	Send ^p ;"selection follows playhead,"
 	sleep 10
 	Send ^p
 }
-
 
 MouseGetPos, xpos, ypos
 ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window
@@ -1202,8 +1215,16 @@ BlockInput, Off
 clickTransformIcon()
 {
 ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.
-MouseMove, Xcorner+83, Ycorner+98, 0 ;these numbers should move the cursor to the location of the transform icon. Use the message box below to debug this.
-;msgbox, the cursor should now be positioned directly over the transform icon.
+
+; Xcorner := Xcorner+83 ;150% ui
+; Ycorner := Ycorner+98 ;150% ui
+Xcorner := Xcorner+56 ;100% ui
+Ycorner := Ycorner+66 ;100% ui
+
+MouseMove, Xcorner, Ycorner, 0 ;these numbers should move the cursor to the location of the transform icon. Use the message box below to debug this.
+sleep 10 ; just to make sure it gets there, this is done twice.
+MouseMove, Xcorner, Ycorner, 0 ;these numbers should move the cursor to the location of the transform icon. Use the message box below to debug this.
+;msgbox, the cursor should now be positioned directly over the transform icon. `n Xcorner = %Xcorner% `n Ycorner = %Ycorner%
 MouseClick, left
 }
 
@@ -1217,17 +1238,17 @@ BlockInput, MouseMove
 MouseGetPos xPosCursor, yPosCursor
 
 xPos = 400
-yPos = 1050 ;the coordinates of roughly where my timeline usually is located on the screen
-CoordMode Pixel ;, screen  ; IDK why but it works like this...
+yPos = 1050 ;the coordinates of roughly where my timeline usually is located on the screen (a 4k screen.)
+CoordMode Pixel ;, screen  ; IDK why, but it works like this...
 CoordMode Mouse, screen
 ; CoordMode, mouse, window
 ; CoordMode, pixel, window
 ; coordmode, Caret, window
 ;you might need to take your own screenshot (look at mine to see what is needed) and save as .png. Mine are done with default UI brightness, plus 150% UI scaling in Wondows.
 ;msgbox, workingDir is %A_WorkingDir%
-ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_targeted_2019.png
+ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_unlocked_targeted_2019_ui100.png
 if ErrorLevel = 1
-	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted_2019.png
+	ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted_2019_ui100.png
 ; if ErrorLevel = 1
 	; ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_untargeted_2018.png
 ; if ErrorLevel = 1
@@ -1264,13 +1285,13 @@ tippy("we are now on try 2")
 if ErrorLevel = 1
 	{
     tippy("try 2 part 1")
-	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_locked_targeted_2019.png
+	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_ALT_locked_targeted_2019_ui100.png
 	}
-; if ErrorLevel = 1
-	; {
-    ; tippy("ALT LOCKED TARGETED V1 could not be found on the screen")
-	; ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_locked_untargeted_2018.png
-	; }
+if ErrorLevel = 1
+	{
+    tippy("ALT LOCKED TARGETED V1 could not be found on the screen")
+	ImageSearch, FoundX_LOCK, FoundY_LOCK, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\IDK_2.png
+	}
 ; if ErrorLevel = 1
 	; {
     ; tippy("ALT LOCKED TARGETED V1 could not be found on the screen")
@@ -1315,6 +1336,7 @@ Send {tab}
 if (A_CaretX = "")
 {
 	;No Caret (blinking vertical line) can be found. Therefore, no clip is selected.
+	;therefore, we will select the top clip at playhead using the code below:
 	Send ^p ;"selection follows playhead,"
 	sleep 10
 	Send ^p
@@ -1336,14 +1358,17 @@ ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_
 ;move mouse to expected triangle location. this is a VERY SPECIFIC PIXEL which will be right on the EDGE of the triangle when it is OPEN.
 ;This takes advantage of the anti-aliasing between the color of the triangle, and that of the background behind it.
 ;these pixel numbers will be DIFFERENT depending upon the RESOLUTION and UI SCALING of your monitor(s)
-YY := Ycorner+99 ;143??
-XX := Xcorner+19
+; YY := Ycorner+99 ;ui 150%
+; XX := Xcorner+19 ;ui 150%
+YY := Ycorner+66 ;ui 100%
+XX := Xcorner+13 ;ui 100%
 MouseMove, XX, YY, 0
 sleep 10
 
 PixelGetColor, colorr, XX, YY
 
-if (colorr = "0x353535")
+; if (colorr = "0x353535") ;for 150% ui
+if (colorr = "0x222222") ;for 100% ui
 {
 	tooltip, color %colorr% means closed triangle. Will click and then SCALE SEARCH
 	blockinput, Mouse
@@ -1353,7 +1378,8 @@ if (colorr = "0x353535")
 	;clickTransformIcon()
 	;findVFX(foobar)
 }
-else if (colorr = "0x757575") ;again, this values will be different for everyone. check with window spy. This color simply needs to be different from the color when the triangle is closed
+;else if (colorr = "0x757575") ;for 150% ui. again, this values could be different for everyone. check with window spy. This color simply needs to be different from the color when the triangle is closed. it also cannot be the same as a normal panel color (1d1d1d or 232323)
+else if (colorr = "0x7A7A7A") ;for 100% ui
 {
 	;tooltip, %colorr% means OPENED triangle. SEARCHING FOR SCALE
 	blockinput, Mouse
@@ -1429,16 +1455,18 @@ ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_
 ;move mouse to expected triangle location. this is a VERY SPECIFIC PIXEL which will be right on the EDGE of the triangle when it is OPEN.
 ;This takes advantage of the anti-aliasing between the color of the triangle, and that of the background behind it.
 ;these pixel numbers will be DIFFERENT depending upon the RESOLUTION and UI SCALING of your monitor(s)
-YY := Ycorner+99 ;143??
-XX := Xcorner+19
-
+; YY := Ycorner+99 ;ui 150%
+; XX := Xcorner+19 ;ui 150%
+YY := Ycorner+66 ;ui 100%
+XX := Xcorner+13 ;ui 100%
 
 MouseMove, XX, YY, 0
 sleep 10
 
 PixelGetColor, colorr, XX, YY
 
-if (colorr = "0x353535")
+; if (colorr = "0x353535") ;for 150% ui
+if (colorr = "0x222222") ;for 100% ui
 {
 	tooltip, color %colorr% means closed triangle. Will click and then SCALE SEARCH
 	blockinput, Mouse
@@ -1448,7 +1476,8 @@ if (colorr = "0x353535")
 	findVFX(foobar)
 	Return
 }
-else if (colorr = "0x757575") ;again, this values will be different for everyone. check with window spy. This color simply needs to be different from the color when the triangle is closed
+;else if (colorr = "0x757575") ;for 150% ui. again, this values could be different for everyone. check with window spy. This color simply needs to be different from the color when the triangle is closed. it also cannot be the same as a normal panel color (1d1d1d or 232323)
+else if (colorr = "0x7A7A7A") ;for 100% ui
 {
 	;tooltip, %colorr% means OPENED triangle. SEARCHING FOR SCALE
 	blockinput, Mouse
@@ -1507,13 +1536,19 @@ else if foobar = "anchor_point"
 
 ;something was wrong with using %A_WorkingDir% here. now fixed.
 
-ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+900, %A_WorkingDir%\%foobar%_D2019.png
+;ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+900, %A_WorkingDir%\%foobar%_D2019.png
+ImageSearch, FoundX, FoundY, xPos-90, yPos, xPos+800, yPos+900, %A_WorkingDir%\%foobar%_D2019_ui100.png
 ;within 0 shades of variation (this is much faster)
 ;obviously, you need to take your own screenshot (look at mine to see what is needed) save as .png, and link to it from the line above.
 ;Again, your UI brightness might be different from mine! I now use the DEFAULT brightness.
+; if ErrorLevel = 0
+	; msgbox, error 0
 if ErrorLevel = 1
-	ImageSearch, FoundX, FoundY, xPos-30, yPos, xPos+1200, yPos+1200, *10 %A_WorkingDir%\%foobar%_D2019.png ;within 30 shades of variation (in case SCALE is fully extended with bezier handles, in which case, the other images are real hard to find because the horizontal seperating lines look a BIT different. But if you crop in really closely, you don't have to worry about this. so this part of the code is not really necessary execpt to expand the range to look.
-
+	{
+	;ImageSearch, FoundX, FoundY, xPos-30, yPos, xPos+1200, yPos+1200, *10 %A_WorkingDir%\%foobar%_D2019.png ;within 10 shades of variation (in case SCALE is fully extended with bezier handles, in which case, the other images are real hard to find because the horizontal seperating lines look a BIT different. But if you crop in really closely, you don't have to worry about this. so this part of the code is not really necessary execpt to expand the range to look.
+	msgbox, whwhwuhuat
+	ImageSearch, FoundX, FoundY, xPos-30, yPos, xPos+1200, yPos+1200, *10 %A_WorkingDir%\%foobar%_D2019_ui100.png
+	}
 if ErrorLevel = 2
 	{
     msgbox,,, ERROR LEVEL 2`nCould not conduct the search,1
@@ -1530,14 +1565,14 @@ else
 	;tooltip, The %foobar% icon was found at %FoundX%x%FoundY%.
 	;msgbox, The %foobar% icon was found at %FoundX%x%FoundY%.
 	MouseMove, FoundX, FoundY, 0
-	;msgbox,,,moved to located "scale",1
+	;msgbox,,,moved to located text,1
 	sleep 5
 	findHotText(foobar)
 	}
 }
 
 
-
+;2d8ceb
 findHotText(foobar)
 {
 tooltip, ; removes any tooltips that might be in the way of the searcher.
@@ -1549,13 +1584,18 @@ MouseGetPos, xxx, yyy
 if (foobar = "scale" ||  foobar = "anchor_point" || foobar = "rotation")
 {
 	;msgbox,,,scale or the other 3,1
-	PixelSearch, Px, Py, xxx+50, yyy+10, xxx+350, yyy+11, 0x3398EE, 30, Fast RGB ;this is searching to the RIGHT, looking the blueness of the scrubbable hot text. Unfortunately, it sees to start looking from right to left, so if your window is sized too small, it'll possibly latch onto the blue of the playhead/CTI.
+	;PixelSearch, Px, Py, xxx+50, yyy, xxx+350, yyy+11, 0x3398EE, 30, Fast RGB ;this is searching to the RIGHT, looking the blueness of the scrubbable hot text. Unfortunately, it sees to start looking from right to left, so if your window is sized too small, it'll possibly latch onto the blue of the playhead/CTI.
+	PixelSearch, Px, Py, xxx+50, yyy, xxx+350, yyy+11, 0x2d8ceb, 30, Fast RGB ;this is searching to the RIGHT, looking the blueness of the scrubbable hot text. Unfortunately, it sees to start looking from right to left, so if your window is sized too small, it'll possibly latch onto the blue of the playhead/CTI.
 }
 else if (foobar = "anchor_point_vertical")
 {
 	tooltip, looking for 0.00
 	;msgbox,,, looking for 0.00,0.5
-	ImageSearch, Px, Py, xxx+50, yyy, xxx+800, yyy+100, %A_WorkingDir%\anti-flicker-filter_000_D2019.png ;because i never change the value of the anti-flicker filter, (0.00) and it is always the same distance from the actual hot text that i WANT, it is a reliable landmark. So this is a screenshot of THAT.
+	;ImageSearch, Px, Py, xxx+50, yyy, xxx+800, yyy+100, *3 %A_WorkingDir%\anti-flicker-filter_000_D2019.png ;because i never change the value of the anti-flicker filter, (0.00) and it is always the same distance from the actual hot text that i WANT, it is a reliable landmark. So this is a screenshot of THAT.
+	ImageSearch, Px, Py, xxx+50, yyy, xxx+800, yyy+100, *3 %A_WorkingDir%\anti-flicker-filter_000_D2019_ui100.png ;for a user interface at 100%...
+	;the *3 allows some minor variation in the searched image.
+	if ErrorLevel = 1
+		ImageSearch, Px, Py, xxx+50, yyy, xxx+800, yyy+100, *3 %A_WorkingDir%\anti-flicker-filter_000_D2019_2.png
 }
 
 ; ImageSearch, FoundX, FoundY, xPos-70, yPos, xPos+800, yPos+500, %A_WorkingDir%\anchor_point_D2017.png
@@ -1564,14 +1604,14 @@ else if (foobar = "anchor_point_vertical")
 
 if ErrorLevel
 	{
-    ;tooltip, thing not Found
+    ;tooltip, blue not Found
 	sleep 100
 	resetFromAutoVFX()
 	;return ;i am not sure if this is needed.
 	}
 else
 	{
-	;tooltip, A color within 30 shades of variation was found at X%Px% Y%Py%
+	tooltip, A color within 30 shades of variation was found at X%Px% Y%Py%
 	;sleep 1000
     ;MsgBox, A color within 30 shades of variation was found at X%Px% Y%Py%.
 	if (foobar <> "anchor_point_vertical")
@@ -1701,7 +1741,11 @@ if !WinActive("ahk_exe Adobe Premiere Pro.exe")
 ;WinGet, lolexe, ProcessName, A
 WinGetClass, lolclass, A ; "A" refers to the currently active window
 
-Keyshower("[WC1] pause/play Premiere when not active",,1,-400)
+;Keyshower("[WC1] pause/play Premiere when not active",,1,-400)
+if IsFunc("Keyshower") {
+	Func := Func("Keyshower")
+	RetVal := Func.Call("[WC1] pause/play Premiere when not active",,1,-400) 
+}
 
 ;Trying to bring focus to the TIMELINE itself is really dangerous and unpredictable, since its Class# is always changing, based upon how many sequences, and other panels, that might be open.
 ControlFocus, DroverLord - Window Class3,ahk_exe Adobe Premiere Pro.exe

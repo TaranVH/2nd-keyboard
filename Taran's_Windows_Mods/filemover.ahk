@@ -4,10 +4,10 @@ Menu, Tray, Icon, shell32.dll, 156
 #SingleInstance force ;only one instance of this script may run at a time!
 
 #IfWinActive ahk_exe explorer.exe
-^F11::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\Floatplane 1080p")
-^F12::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\YT Publish 4K\")
-^+F11::Filemover("Z:\Linus\5. Fast As Possible\000 Transcoding\Floatplane")
-^+F12::Filemover("Z:\Linus\5. Fast As Possible\000 Transcoding\Youtube")
+^F11::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\LTT 1920 x 960")
+^F12::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\LTT Match Source")
+^+F11::Filemover("Z:\Linus\5. Fast As Possible\_FAP Transcoding\FAP 1920 x 960")
+^+F12::Filemover("Z:\Linus\5. Fast As Possible\_FAP Transcoding\FAP Match Source")
 
 ; ^F10::
 ; tooltip, nimdamover activated

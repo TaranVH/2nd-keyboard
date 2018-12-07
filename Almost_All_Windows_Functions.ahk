@@ -17,7 +17,10 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; If this is your first time using AutoHotkey, you must take this tutorial:
 ; https://autohotkey.com/docs/Tutorial.htm
 ; -------------------------------------------------------------------------
-
+; Also, please note that some of the code in this script requires that the
+; ACC LIBRARY be installed. I don't remember where I got it, or how to install it.
+; Sooooo, you can just delete those functions that use it.
+; -------------------------------------------------------------------------
 
 Menu, Tray, Icon, shell32.dll, 16 ;this changes the icon into a little laptop thingy. just useful for making it distinct from the others.
 
@@ -46,7 +49,7 @@ return
 ;;;aslo i can give myself a ---damn it i forgot it AS i was wriiting it. —a thing to always paste as SIMPLE, unformatted test. YEAH.
 
 ;;;clipboard stuff.
-;https://ditto-cp.sourceforge.io/
+;;https://ditto-cp.sourceforge.io/
 
 ;;https://cedeq.com/enterpad/en/autohotkey/useful-ahk-scripts/multiple-clipboards
 ;;https://jacksautohotkeyblog.wordpress.com/2016/06/09/autohotkey-solutions-for-windows-clipboard-limitations-autohotkey-clipboard-tips/

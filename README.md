@@ -7,7 +7,8 @@ These AutoHotKey scripts speed up my workflow significantly. (Mostly for Premier
 I pioneered the use of a 2nd keyboard purely for macros, and later, the concept of "wrapping" keystrokes inside of other keystrokes, (ideally, the super-function keys (F13-F24)) as a means of massively multiplying the number of unique available keys. Watch this whole video series here, before you attempt to use those fancy scripts:
 https://www.youtube.com/playlist?list=PLH1gH0v9E3ruYrNyRbHhDe6XDfw4sZdZr
 
-To see most of these scripts in action during a real workday, check out my "World's Most Advanced Editing Tutorial" https://www.youtube.com/watch?v=O6ERELse_QY
+IF YOU ARE NEW TO AUTOHOTKEY, start here:
+https://autohotkey.com/docs/Tutorial.htm
 
 I know there's a lot of scripts in this repository. Look here to see what launches when I start my computer:
 https://github.com/TaranVH/2nd-keyboard/blob/master/INFO_and_PROFILES/startup_folder_TARAN_Aug_2018.png
@@ -16,8 +17,7 @@ Some of the scripts are #include-d in other scripts. The MAIN script from which 
 
 Some scripts can stand entirely on their own, like this one: https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/Both_Accelerated_Scrolling_1.3_AND_Cursor_click_visualizer.ahk
 
-IF YOU ARE NEW TO AUTOHOTKEY, start here:
-https://autohotkey.com/docs/Tutorial.htm
+To see most of these scripts in action during a real workday, check out my "World's Most Advanced Editing Tutorial" https://www.youtube.com/watch?v=O6ERELse_QY
 
 Please note, I'm not a real programmer (in this lifetime.) My organization can be bad, and my code can be spaghetti-y. I have, however, done extensive commenting... so if you know how to code, it should be pretty easy to figure out what's going on.
 
@@ -30,6 +30,12 @@ Twitter is probably the most effective method for you to contact me: https://twi
 You're free to use any of these scripts for yourself. Take what you need, modify it to your heart's content.
 
 My most used, most useful, simplest script is this one: https://www.youtube.com/watch?v=OqyQABySV8k
+
+-----
+NOTE:
+By the time you need to add a 2nd keyboard, you should already be fairly familiar with how AutoHotKey works. You should also have already used up all your function keys, and macro keys (if your main keyboard has them.)
+You do not really need to add a 2nd keyboard until you've already used up all of the macro keys on your normal keyboard.
+You can also use up all the function keys, using AutoHotkey. Most programs don't really use them for anything.
 
 -----
 
