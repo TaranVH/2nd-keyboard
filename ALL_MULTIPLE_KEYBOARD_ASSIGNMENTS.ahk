@@ -132,6 +132,9 @@ SC16D::SendInput {Raw}%ClipBoard_1%		;launch_media
 vk2B::SendInput {Raw}%ClipBoard_2%		;Execute
 SC121::SendInput {Raw}%ClipBoard_3% 	;launch (1)
 
+;note to self, this is where to go for tap dance stuff
+; https://autohotkey.com/board/topic/35566-rapidhotkey/
+
 ;____________________________________________________________________
 ;                                                                    
 ;		  2ND KEYBOARD USING INTERCEPTOR (Logitech K120)  
@@ -1545,6 +1548,7 @@ return
 
 #IfWinActive ahK_exe Adobe Premiere Pro.exe
 ;Disable single clip at cursor
+Xbutton2::
 ~F7::
 send, ^!d ;ctrl alt d is DESELECT
 send, v ;selection tool
