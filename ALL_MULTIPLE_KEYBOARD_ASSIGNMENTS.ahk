@@ -68,13 +68,16 @@ SendMode Input
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm ;this may prevent taskbar flashing.
 #HotkeyModifierTimeout 60 ; https://autohotkey.com/docs/commands/_HotkeyModifierTimeout.htm
+#KeyHistory 500 ; https://autohotkey.com/docs/commands/_KeyHistory.htm ; useful for debugging.
+; https://www.autohotkey.com/docs/commands/GetKey.htm
+
 
 detecthiddenwindows, on
 
 SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 
 ;Avoid using stupid CTRL when alt is released https://autohotkey.com/boards/viewtopic.php?f=76&t=57683
-#MenuMaskKey vk07  ; vk07 is unassigned.
+#MenuMaskKey vk07  ; vk07 is (was) unassigned. See my full list of scan codes and virtual keys to see what else is available.
 
 ;_________________________________________________________________________________________
 ;                                                                                                                       
@@ -119,6 +122,14 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ;                                                                                                                        
 ; Be aware that sometimes other programs like PUUSH can overlap/conflict with your customized shortcuts.                          
 ;_______________________________________________________________________________________________
+;
+;
+; NOTE:
+; SC0E8: "scan code of an unassigned key" that I use to tell the computer "yeah, treat this like a keyboard,"
+; SC0E9: Nullify ALT's sticky key effect. See for more info: Alt_menu_acceleration_DISABLER.ahk
+; VK07:  #menumaskkey https://autohotkey.com/docs/commands/_MenuMaskKey.htm
+
+
 
 ;these are sent from the stream deck.
 ;I didn't use CTRL and SHIFT and stuff because I wanted NO CROSS TALK!!
@@ -135,6 +146,20 @@ SC121::SendInput {Raw}%ClipBoard_3% 	;launch (1)
 ;note to self, this is where to go for tap dance stuff
 ; https://autohotkey.com/board/topic/35566-rapidhotkey/
 
+currentTool = "v"
+
+;this is pause/break. I'm using it for debugging...
+sc045::
+^sc045::
++sc045::
+!sc045::
+ctrlbreak::
+^ctrlbreak::
+tooltip, pause break
+sleep 100
+tooltip,
+KeyHistory
+return 
 ;____________________________________________________________________
 ;                                                                    
 ;		  2ND KEYBOARD USING INTERCEPTOR (Logitech K120)  
@@ -148,10 +173,10 @@ SC121::SendInput {Raw}%ClipBoard_3% 	;launch (1)
 
 
 ;;;;;;;;;;;;;BEGIN K120 (2ND KEYBOARD) REMAPPED INTO ALL MACRO KEYS;;;;;;;;;;;;;;;;;
-#if (getKeyState("F23", "P")) ;THIS is the line that makes all the lines below possible.
+#if (getKeyState("F22", "P")) ;THIS is the line that makes all the lines below possible.
 
 
-F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," since it will ALWAYS be fired before any of the keystrokes below, any time you use the 2nd keyboard.
+F22::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," since it will ALWAYS be fired before any of the keystrokes below, any time you use the 2nd keyboard.
 ;;also, you must NEVER use F23 for anything else. Doing so will sometimes allow and F23 keystroke to pass through unwrapped, which can cause big problems with cross-talk.
 
 ;SC06E::return ;;This is F23's scan code. Using this line acts as some insurance against cross-talk. comment this in if you have issues.
@@ -322,7 +347,7 @@ l::preset("25% blur and darkener")
 '::preset("Warp Stabilizer Preset")
 enter::enter
 
-;;;;;next line;;;;;;;;
+;;;;;next line, still inside the K120;;;;;;;;
 
 Lshift::Lshift
 ;;msgbox, , ,you pressed Left shift - you should never see this message if you let it pass normally, 5
@@ -347,9 +372,9 @@ m::preset("a0p0 pan down")
 ;;Lctrl::msgbox,,, LEFT ctrl,0.5 ;this must be commented out for the sake of numpad5, which was converted into left ctrl.
 
 ;None of these modifiers should ever be triggered. I have blocked them and replaced with something else. What is below is just here for diagnostic purposes.
-Lwin::msgbox,,, LEFT win,0.5
-Lalt::msgbox,,, LEFT alt,0.5
-Rshift::msgbox,,, RIGHT shift,0.5 
+; Lwin::msgbox,,, LEFT win,0.5
+; Lalt::msgbox,,, LEFT alt,0.5
+; Rshift::msgbox,,, RIGHT shift,0.5 
 
 
 
@@ -361,7 +386,7 @@ SC072::msgbox,,, K120 Lwin -to-> SC072:"Lang 1", 0.5 ;Lwin to SC072 - Lang1
 SC073::msgbox,,, K120 Lalt -to-> SC073:"International1", 0.5 ;LAlt to SC073 - International1
 
 
-SC07D::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music") ;K120 rightShift -to- SC07D: International3
+SC07D::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music") ;K120 RShift -to- SC07D: International3
 SC07B::preset("50% stereo") ;K120 rCTRL -to-> SC07B:International5 -to-> Premiere 50% stereo
 
 space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
@@ -844,13 +869,17 @@ p::
 
 ;;;this is the azio F24 keyboard;;;
 
+;F20 IS CAPSLOCK
 ;CAPSLOCK IS TRELLO
+F20::
 capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOux8/ltt-production-planner")
 
 ;LEFTSHIFT > SC070 / International2 > Firefox calendar open
-; SC00::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r")
-SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
-
+;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+SC070::gotofiretab("Calendar - December 2018","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
+;en dash –
+;em dash –
 ;; ask about URLs: https://autohotkey.com/boards/viewtopic.php?f=6&t=26947&p=139114#p139114
 
 ;;;this is still the azio F24 keyboard;;;
@@ -858,17 +887,21 @@ SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;LEFTCTRL > SC071 / Lang2 > GMAIL INBOX
 SC071::gotofiretab("Linus Media Group Inc. Mail","https://mail.google.com/mail/u/0/#inbox")
 ;or a tab that says "says..."
-a::recallClipboard("a")
-+a::saveClipboard("a")
-s::recallClipboard("s")
-+s::saveClipboard("s")
-d::recallClipboard("d")
-+d::saveClipboard("d")
-f::recallClipboard("f")
-+f::saveClipboard("f")
+; a::recallClipboard("a")
+; +a::saveClipboard("a")
+; s::recallClipboard("s")
+; +s::saveClipboard("s")
+; d::recallClipboard("d")
+; +d::saveClipboard("d")
+; f::recallClipboard("f")
+; +f::saveClipboard("f")
+a::
+s::
+d::
+f::
 g::
-h::
-j::tooltip, ^!o ;render audio
+h::return
+j::sendinput, ^!o ;render audio
 k::sendinput, ^!i ;render entire work area (in to out)
 l::return
 `;::tooltip, you pressed  %A_thishotkey% ;fun fact, the syntax highlighting gets this wrong. ";" is escaped, and therefore is not actually a comment.
@@ -882,6 +915,15 @@ if WinActive("ahk_class Premiere Pro")
 	}
 return
 
+SC07D::
+;(AZIO keyboard) RShift -to-> SC07D:International3 -to-> Show Through Edits
+if WinActive("ahk_class Premiere Pro")
+	{
+	prFocus("timeline")
+	sleep 10
+	sendinput, ^!+/ ;my "show through edits" shortcut in Premiere
+	}
+return
 
 ;;;;;next line;;;;;;;;
 ;;;this is the azio F24 keyboard;;;
@@ -935,9 +977,9 @@ Lwin::msgbox, LEFT win. ;but this won't happen, it was swapped with another key.
 ;;;this is the azio F24 keyboard;;;
 
 space::tooltip,
-Ralt::msgbox, Ralt - doesnt work
-Rwin::msgbox, Right Win 
-Rshift::msgbox RIGHT SHIFT lol
+; Ralt::msgbox, Ralt - doesnt work
+; Rwin::msgbox, Right Win 
+; Rshift::msgbox RIGHT SHIFT lol
 
 ;Lwin to SC072 - Lang1
 SC072::
@@ -1227,6 +1269,7 @@ return
 
 ~left & right::
 ;msgbox,,, hellllllo,0.5
+;note to self, check for stuck modifier keys on this one too...
 Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field - very useful!!
 return
 
@@ -1364,9 +1407,10 @@ return
 
 #ifWinActive ahk_exe Adobe Premiere Pro.exe
 ;macro key G4.
-~^+,::audioMonoMaker("left")
+;I've removed the ~ that was in front of them.
+^+,::audioMonoMaker("left")
 ; macro key G5.
-~^+.::audioMonoMaker("right")
+^+.::audioMonoMaker("right")
 
 ;note that i have capslock remapped to F20
 F20::home
@@ -1375,13 +1419,14 @@ F20::home
 
 #ifWinNotActive ahk_exe Adobe Premiere Pro.exe
 ;macro key G4.
-~^+,::msgbox,,,Macro G4 not yet assigned outside premiere,0.7
+^+,::msgbox,,,Macro G4 not yet assigned outside premiere,0.7
 ; macro key G5.
-~^+.::msgbox,,,Macro G5 not yet assigned outside premiere,0.7
+^+.::msgbox,,,Macro G5 not yet assigned outside premiere,0.7
 
 #IfWinActive 
 ;Macro key G6
-~^+U::reSelect() ;formerly ^+9
+;modifiers -- I removed the ~
+^+U::reSelect() ;formerly ^+9
 
 /*
 
@@ -1473,21 +1518,48 @@ appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You
 !q::^!+q ;"Trim Previous Edit to Playhead" (not RIPPLE trim.)
 
 
-#IfWinActive ahK_exe Adobe Premiere Pro.exe
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
 
-~^+]::Send {F2}7{enter} ;adds 7 gain.
+F21::return
+;^+]:: ;I decided that if a trigger key uses certain modifiers,
+;then those same modifiers must not turn up in in the macro itself... this is troublesome...
+F21 & F7::
+Send {F2}7{enter} ;adds 7 gain. ; +7db 
+
+;maybe have some code here to fix a stuck shift or CTRL key...
+/*
+A2  01D	 	d	5.75	LControl       	Audio Gain
+A0  02A	#	d	0.00	LShift         	
+DD  01B	h	d	0.00	]              	
+A2  01D	i	u	0.00	LControl       	
+A0  02A	i	u	0.00	LShift         	
+71  03C	i	d	0.00	F2             	
+71  03C	i	u	0.00	F2             	
+37  008	i	d	0.00	7              	
+37  008	i	u	0.00	7              	
+0D  01C	i	d	0.00	Enter          	
+0D  01C	i	u	0.01	Enter          	
+DD  01B	 	u	0.00	]              	
+A2  01D	i	d	0.00	LControl       	
+A0  02A	#	u	0.00	LShift         	
+A0  02A	i	d	0.00	LShift         	
+A2  01D	 	u	0.00	LControl      
+*/ 	
+
+return
 
 ; control shift r = reverse selected clip
 ^+r::Send ^r{tab}{tab}{space}{enter}
 
 
-#IfWinActive ahK_exe Adobe Premiere Pro.exe
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
 
 
 ;This script is to stop, rewind 3 seconds, and then play. Premiere's version of this SUCKS because it brings you bacK to where you started
 ; the ~ is only there so that the KeystroKe visualizer can see this Keypress. Otherwise, it should not be used.
 ;Lwin::
-~!space::
+;~!space:: ;note, the ~ might result in stuck modifier keys, so i am not using it anymore...
+!space::
 Rwin::
 Send s ;"stop" command (From JKL remapped to ASD.)
 Send +{left}
@@ -1547,7 +1619,7 @@ return
 ~F6::cropClick()
 
 #IfWinActive ahK_exe Adobe Premiere Pro.exe
-;Disable single clip at cursor
+;Disable single clip at cursor - must turn this into a proper function.
 Xbutton2::
 ~F7::
 send, ^!d ;ctrl alt d is DESELECT
@@ -1556,6 +1628,24 @@ send, {alt down}
 send, {lbutton}
 send, {alt up}
 send, {home} ;disable
+sleep 10
+;now i need a FANCY way of figuring out which tool i WAS using. until then, i must hard code it. it was usually B, the blade.
+;should just be a thing that listens for v t r y b x h p and saves that as a string.
+; send, b
+send, %currentTool%
+return
+
+;IMPORTANT - these are MY keyboard assignments for tools
+;Your own assignments will probably be different!
+~v::
+~t::
+~r::
+~y::
+~b::
+~x::
+~h::
+~p::
+currentTool = %A_thishotkey% ;so, %currentTool% might become r or y or v. Whatever the last tool is that I selected.
 return
 
 #IfWinActive ahK_exe Adobe Premiere Pro.exe
@@ -1569,7 +1659,7 @@ send, {alt up}
 send, c ;delete
 return
 
-~F9::masterClipSelect() ;this has not been fully programmed yet
+;~F9::masterClipSelect() ;this has not been fully programmed yet
 
 ;F10:: ;unused for now. Acts as a menu accelerator in Windows applications!! why the heck do they think they also need ALT, then???
 ;F11:: ;unused. "Full screen" in Firefox and chrome.
