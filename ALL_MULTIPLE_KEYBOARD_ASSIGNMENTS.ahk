@@ -173,10 +173,10 @@ return
 
 
 ;;;;;;;;;;;;;BEGIN K120 (2ND KEYBOARD) REMAPPED INTO ALL MACRO KEYS;;;;;;;;;;;;;;;;;
-#if (getKeyState("F22", "P")) ;THIS is the line that makes all the lines below possible.
+#if (getKeyState("F23", "P")) ;THIS is the line that makes all the lines below possible.
 
 
-F22::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," since it will ALWAYS be fired before any of the keystrokes below, any time you use the 2nd keyboard.
+F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," since it will ALWAYS be fired before any of the keystrokes below, any time you use the 2nd keyboard.
 ;;also, you must NEVER use F23 for anything else. Doing so will sometimes allow and F23 keystroke to pass through unwrapped, which can cause big problems with cross-talk.
 
 ;SC06E::return ;;This is F23's scan code. Using this line acts as some insurance against cross-talk. comment this in if you have issues.
@@ -816,7 +816,7 @@ F9::
 F8::
 F10::
 F11::
-F12::tooltip, you pressed  %A_thishotkey%
+F12::tooltip, you pressed F24 then %A_thishotkey%
 
 `::tooltip, 22222
 1::gotofiretab("AHK needed","https://docs.google.com/document/d/1xsjjKYggXYig_4lfBMJ6LDGRZ9VOvDd7SCSTSi7GwN8/edit")
@@ -824,13 +824,13 @@ F12::tooltip, you pressed  %A_thishotkey%
 3::
 4::
 5::
-6::tooltip, you pressed  %A_thishotkey%
+6::tooltip, you pressed F24 then %A_thishotkey%
 7::
 8::
 9::
 0::
 -::
-=::tooltip, you pressed  %A_thishotkey%
+=::tooltip, you pressed F24 then %A_thishotkey%
 backspace::send, ^+!r
 
 ;;;;;next line;;;;;;;;
@@ -864,7 +864,7 @@ i::
 o::
 p::
 [::
-]::tooltip, you pressed  %A_thishotkey%
+]::tooltip, you pressed F24 then %A_thishotkey%
 \::run, C:\Program Files (x86)\Corsair\Corsair Utility Engine\CUE.exe
 
 ;;;this is the azio F24 keyboard;;;
@@ -928,7 +928,7 @@ return
 ;;;;;next line;;;;;;;;
 ;;;this is the azio F24 keyboard;;;
 
-Lshift::tooltip, you pressed  %A_thishotkey%
+Lshift::tooltip, you pressed F24 then %A_thishotkey%
 z::
 if WinActive("ahk_class Premiere Pro")
 	send ^+6 ;track targeting presets in premiere.
@@ -1018,11 +1018,11 @@ CtrlBreak::msgbox, CTRL BREAK?
 pause::msgbox, is this the PAUSE key?? IDK
 Break::msgbox, Maybe THIS is the pause/break key???
 
-pgdn::tooltip, you pressed  %A_thishotkey%
-end::tooltip, you pressed  %A_thishotkey%
+pgdn::tooltip, you pressed F24 then %A_thishotkey%
+end::tooltip, you pressed F24 then %A_thishotkey%
 delete::sendinput, ^!+j ;lock/unlock all audio tracks
-pgup::tooltip, you pressed  %A_thishotkey%
-home::tooltip, you pressed  %A_thishotkey%
+pgup::tooltip, you pressed F24 then %A_thishotkey%
+home::tooltip, you pressed F24 then %A_thishotkey%
 insert::sendinput, ^!+l ;lock/unlock all video tracks
 
 up::
@@ -1033,7 +1033,7 @@ return
 
 down::
 left::
-right::tooltip, you pressed  %A_thishotkey%
+right::tooltip, you pressed F24 then %A_thishotkey%
 
 ;;;;;next area;;;;;;;;
 ;;;this is the azio F24 keyboard;;;
@@ -1055,13 +1055,13 @@ numpad4::monitorKeys("source","^{numpad1}") ;source monitor res to 1/1
 
 numpad5::monitorKeys("program","^+1") ;program monitor resolution to 1/1
 
-numpad6::tooltip, you pressed  %A_thishotkey%
+numpad6::tooltip, you pressed F24 then %A_thishotkey%
 
 numpad7::monitorKeys("source","^{numpad5}") ;source monitor res to 1/2. ^{numpad2} does not work because CTRL SHIFT ALT 2 is the shortcut for the source monitor. cross talk.
 
 numpad8::monitorKeys("program","^+2") ;program monitor res to 1/2
 
-numpad9::tooltip, you pressed  %A_thishotkey%
+numpad9::tooltip, you pressed F24 then %A_thishotkey%
 
 ;+numlock::
 SC05C::monitorKeys("source","^{numpad3}") ;source monitor res to 1/4
@@ -1069,11 +1069,11 @@ SC05C::monitorKeys("source","^{numpad3}") ;source monitor res to 1/4
 numpadDiv::monitorKeys("program","^+3") ;program monitor res to 1/4
 
 numpadMult::send, +`` ;premiere shortcut for "Maximize (program?) Monitor"
-numpadSub::tooltip, you pressed  %A_thishotkey%
+numpadSub::tooltip, you pressed F24 then %A_thishotkey%
 numpadAdd::sendinput, ^!{F10}
 numpadEnter::sendinput, ^!m ;mute/unmute mic - shadowplay ;unfortunately ctrl alt m is also NEW COMMENT in google sheets... i might wish to change it
 
-numpadDot::tooltip, you pressed  %A_thishotkey%
+numpadDot::tooltip, you pressed F24 then %A_thishotkey%
 
 
 ;SC070::msgbox,,, SC070 - "Keyboard intl 2 INSIDE OF F24", 0.5
@@ -1126,8 +1126,8 @@ numpadDot::tooltip, you pressed  %A_thishotkey%
 ;|                                                          |
 ;| PRIMARY KEYBOARD, (Corsair K95 RGB) AHK KEY ASSIGNMENTS  |
 ;|__________________________________________________________|
-;(\__/)||
-;(•ㅅ•) ||
+;(\__/)  ||
+;(•ㅅ•)  ||
 ;/ 　 \づ|| 
 
 ;;;~~~~~~FUNCTION KEYS IN VARIOUS PROGRAMS~~~~
@@ -1618,7 +1618,18 @@ return
 ~F5::clickTransformIcon2()
 ~F6::cropClick()
 
-#IfWinActive ahK_exe Adobe Premiere Pro.exe
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
+;cut single layer (in cases of multiple linked audio tracks)
+Xbutton1::
+send, ^!d ;ctrl alt d is DESELECT
+send, b ;blade tool
+send, {alt down}
+send, {lbutton}
+send, {alt up}
+sleep 10
+send, %currentTool%
+return
+
 ;Disable single clip at cursor - must turn this into a proper function.
 Xbutton2::
 ~F7::
@@ -1648,7 +1659,7 @@ return
 currentTool = %A_thishotkey% ;so, %currentTool% might become r or y or v. Whatever the last tool is that I selected.
 return
 
-#IfWinActive ahK_exe Adobe Premiere Pro.exe
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Delete single clip at cursor
 ~F8::
 send, ^!d ;ctrl alt d is DESELECT
@@ -1719,7 +1730,7 @@ return
 
 ;::---::— ;this one just results in â€” being typed.
 :*:--- ::{Asc 0151}
-;convert three dashes into an EM dash. https://superuser.com/questions/857338/how-to-add-the-em-dash-to-my-keyboard
+;converts three dashes into an EM dash. https://superuser.com/questions/857338/how-to-add-the-em-dash-to-my-keyboard
 ; ^-:: ;en dash (150/x96)
 ; Send –
 ; Return
@@ -1815,16 +1826,20 @@ SC07F::tooltip, SC07F - cannot find trigger
 #IfWinNotActive ahk_exe Adobe Premiere Pro.exe
 ;Macro key G12
 F17::
+doAnEnter := 1
 sendinput, ^c
 sleep 100
 ;WinActivate ahk_exe firefox.exe
 ; send ^{F4} ;shortcut for activate word, and if active, move to next comment.
 ; msgbox, EXTREMELY WEIRD - the above code would CLOSE THE TAB. IDK what kind of cross-talk was going on... will look into that later.
+if WinActive("ahk_exe EXCEL.exe")
+	doAnEnter := 0 ;sooo if you're copying out of Excel rather than google sheets, the copied cell has it's own "return," so you don't need to add one.
 switchToWord()
 sleep 100
 send ^v
 sleep 100
-send {enter}
+if (doAnEnter = 1)
+	send {enter}
 sleep 10
 ; send ^{F4} ;only use this line if switchToWord() is not directly available.
 ;;;;msgbox,,, just before,0.5
@@ -1903,10 +1918,10 @@ ConvertSentence()
 
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-;saving this blanK Keyboard for future use
-/*
-#if (getKeyState("F24", "P"))
-F24::return ;F24
+;saving this blank keyboard for future use
+
+#if (getKeyState("F22", "P"))
+F22::return ;F22
 
 escape::msgbox,,, you pressed escape. this might cause liKe problems maybe, 0.9
 F1::
@@ -1920,7 +1935,7 @@ F9::
 F8::
 F10::
 F11::
-F12::tooltip, you pressed %A_thishotKey%
+F12::tooltip, you pressed F22 then %A_thishotKey%
 
 `::
 1::
@@ -1935,12 +1950,11 @@ F12::tooltip, you pressed %A_thishotKey%
 0::
 -::
 =::
-bacKspace::return
+backspace::
 
 ;;;;;next line;;;;;;;;
 
-tab::msgbox,,, you pressed tab. :P,0.8
-
+tab::
 q::
 w::
 e::
@@ -1953,8 +1967,8 @@ o::
 p::
 [::
 ]::
-\::return
-capslocK::msgbox, , ,i hate capslocK!, 1000
+\::tooltip, you pressed F22 then %A_thisHotKey%
+capslock::msgbox, , ,i hate capslock F22!, 1000
 
 a::
 s::
@@ -1966,20 +1980,20 @@ j::
 K::
 l::
 `;::
-'::
+'::tooltip, you pressed F22 then %A_thisHotKey%
 ;;;;;next line;;;;;;;;
 
-Lshift::return
+;Lshift::return
 z::
 x::
 c::
 v::
-b::return
+b::
 n::
 m::
 ,::
 .::
-/::return
+/::tooltip, you pressed F22 then %A_thishotKey%
 Lwin::msgbox, LEFT win
 Lalt::msgbox, LEFT alt
 space::tippy("3rd space")
