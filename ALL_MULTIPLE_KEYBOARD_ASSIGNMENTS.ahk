@@ -876,7 +876,7 @@ capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOu
 
 ;LEFTSHIFT > SC070 / International2 > Firefox calendar open
 ;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
-SC070::gotofiretab("Calendar - December 2018","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+SC070::gotofiretab("Calendar - January 2019","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
 ;em dash –
@@ -1618,9 +1618,22 @@ return
 ~F5::clickTransformIcon2()
 ~F6::cropClick()
 
+; #IfWinActive ahk_exe Adobe Premiere Pro.exe
+; Delete single clip at cursor
+; F8::
+; send, ^!d ;ctrl alt d is DESELECT
+; send, v ;selection tool
+; send, {alt down}
+; send, {lbutton}
+; send, {alt up}
+; send, c ;delete
+; return
+
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
-;cut single layer (in cases of multiple linked audio tracks)
+;cut single clip at cursor
 Xbutton1::
+F7::
 send, ^!d ;ctrl alt d is DESELECT
 send, b ;blade tool
 send, {alt down}
@@ -1632,7 +1645,7 @@ return
 
 ;Disable single clip at cursor - must turn this into a proper function.
 Xbutton2::
-~F7::
+F8::
 send, ^!d ;ctrl alt d is DESELECT
 send, v ;selection tool
 send, {alt down}
@@ -1646,6 +1659,14 @@ sleep 10
 send, %currentTool%
 return
 
+
+;~F9::masterClipSelect() ;this has not been fully programmed yet
+;F10:: ;unused for now. Acts as a menu accelerator in Windows applications!! why the heck do they think they also need ALT, then???
+;F11:: ;unused. "Full screen" in Firefox and chrome.
+;F12:: ;unused. "Inspector" in Firefox and chrome.
+
+;================ CURRENT TOOL REMEMBERER ===============
+
 ;IMPORTANT - these are MY keyboard assignments for tools
 ;Your own assignments will probably be different!
 ~v::
@@ -1658,24 +1679,6 @@ return
 ~p::
 currentTool = %A_thishotkey% ;so, %currentTool% might become r or y or v. Whatever the last tool is that I selected.
 return
-
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
-;Delete single clip at cursor
-~F8::
-send, ^!d ;ctrl alt d is DESELECT
-send, v ;selection tool
-send, {alt down}
-send, {lbutton}
-send, {alt up}
-send, c ;delete
-return
-
-;~F9::masterClipSelect() ;this has not been fully programmed yet
-
-;F10:: ;unused for now. Acts as a menu accelerator in Windows applications!! why the heck do they think they also need ALT, then???
-;F11:: ;unused. "Full screen" in Firefox and chrome.
-;F12:: ;unused. "Inspector" in Firefox and chrome.
-
 
 ;;**********************MEDIA KEYS IN PREMIERE**********************
 
