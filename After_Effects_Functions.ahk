@@ -169,3 +169,68 @@ aePreset(item := "neco se posralo"){
 	MouseMove, X, Y, 0
 }
 ; -------- END of aePreset(); --------------
+
+aeGain(gain := "+7") { ; the gain "by how much" not to "what value"
+	ifWinNotActive ahk_exe AfterFX.exe goto Endiiging
+
+	CoordMode, mouse
+	CoordMode, pixel
+	
+	MouseGetPos, X, Y
+
+	aeFocus("timeline") ; to be SURE colors are right and keyboard shortcuts work...
+	
+	PixelSearch, cX, cY, -1420, 465, -1419, 11390, 0xA5A5A5, 0, fast ; cX - output X varieble, cY - output Y varieble, left upper corner from witch to search (are to be search is described in search_area.png), color to find (0xA5A5A5) 
+	
+	Sleep 100
+	
+	if ErrorLevel {
+		MsgBox, Aperrently no selected layer was found.
+		goto Endiiging
+	} else {
+		ImageSearch, pX, pY, cX - 200, cY - 5, cX - 150, cY + 20, aeTwireledTriangleSelectedLayer.png
+		Sleep 5
+		if(ErrorLevel = 2) {
+			MsgBox Could not conduct the search (mejbí the image wasn't found).
+			goto Endiiging
+		} else if(ErrorLevel = 1) {
+			ImageSearch, pX, pY, cX - 200, cY - 5, cX - 150, cY + 20, aeUntwireledTriangleSelectedLayer.png ; If the layer was untwireled, the picture would be diferent - so another try
+			Sleep 5
+			if(ErrorLevel = 2) {
+				MsgBox Could not conduct the search (mejbí the image wasn't found).
+				goto Endiiging
+			} else if(ErrorLevel = 1) {
+				MsgBox Icon could not be found on the screen.
+				goto Endiiging
+			} else {
+				MouseMove, pX, pY, 0
+				MouseClick, L ; Twirel the layer to be able to surely untwirel it by presing L to go to audio level
+			}
+		}
+	}
+	
+	Send l ; untwirel right into audio levels
+	Sleep 5
+	
+	MouseMove, pX + 210, pY + 20, 0
+	Sleep 5
+	MouseClick, L
+	Send {Right} ; put coursor to end of text
+	Sleep 5
+	if(SubStr(gain,1,1) = "+"){ ; if the first chareacter of the value is +
+		Send {NumpadAdd} ; Send + and the value
+		gain := SubStr(gain,2)
+		Send %gain%
+	} else {
+		Send {NumpadSub} ; otherwise
+		gain := SubStr(gain,2) ; send - and the value
+		Send %gain%
+	}
+	Sleep 500
+	Send {Enter}
+	
+	Endiiging:
+	
+	MouseMove X, Y, 0
+}
+; ------- END of aeGain(); ----------------
