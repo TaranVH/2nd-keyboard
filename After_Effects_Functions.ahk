@@ -156,7 +156,7 @@ aePreset(item := "neco se posralo"){
 	SendInput, {a up}{Ctrl up}
 	sleep 20
 	
-	Send {Delete} ; Delete everything that might have been writen inside the search box alredy.
+	Send +{Backspace} ; Delete everything that might have been writen inside the search box alredy.
 	Sleep 5
 	
 	Send %item% ; Enter the preset name
