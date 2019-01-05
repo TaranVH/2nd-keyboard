@@ -52,10 +52,10 @@ SetKeyDelay, 0 ;warning ---this was absent for some reason. i just added it back
 ; Lots of other explanatory videos other AHK scripts can be found on my youtube channel! https://www.youtube.com/user/TaranVH/videos 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-; Also, I will put shortcuts to all the AHK scripts that I use into my startup folder... which will be here:
+; Also, I will put shortcuts to all the AHK scripts that I use into my startup folder... which is here for all users:
 ;  C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
-;  and\or here:
-;  C:\Users\[YOUR_USERNAME]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+;  Or here for just one user:
+;  C:\Users\YOUR_USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
 
 #NoEnv
@@ -162,7 +162,7 @@ KeyHistory
 return 
 ;____________________________________________________________________
 ;                                                                    
-;		  2ND KEYBOARD USING INTERCEPTOR (Logitech K120)  
+;		  2ND KEYBOARD USING HASU USB TO USB (Logitech K120)  
 ;____________________________________________________________________
 ;please watch https://www.youtube.com/watch?v=y3e_ri-vOIo if you need help.
 ;DANGER: installing interception may cause your USB devices to stop working sometimes, because it is limited to supporting only 10 of each device class. You have to uninstall it to fix that. Here is a follow up video with new information: https://www.youtube.com/watch?v=Hn18vv--sFY
@@ -477,43 +477,12 @@ SC0FF::msgbox sc0FF ...this does not register.
 #if
 #IfWinActive
 
-;____________END OF K120 (2ND KEYBOARD) REMAPPED INTO ALL MACRO KEYS____________
+;-------------------------------------------------------------------------------
+;----------END OF K120 (2ND KEYBOARD) REMAPPED INTO ALL MACRO KEYS--------------
+;-------------------------------------------------------------------------------
 
-
-#IfWinActive
-
-; !F2::
-; openApp("ahk_class ConsoleWindowClass", "C:\Users\TaranWORK\Downloads\Intercept - use this one\intercept.exe")
-; openApp("ahk_class ConsoleWindowClass", "intercept.exe")
-; ;must have both of these or it wont work.
-; sleep 100
-; ;send y
-; return
-
-
-;experimenting with scan codes. here is a list of blank ones.
-;https://developer.mozilla.org/en/docs/Web/API/KeyboardEvent/code
-; #if (getKeyState("F1", "P"))
-; F1::return 
-
-;IN HERE, WE ARE SENDING THE FIRST SCANCODE KEYSTOKES. win key assignemtns will recieve.
-
-#ifwinactive
-
-#if
-
-;scan code scancodes information
-;according to https://msdn.microsoft.com/en-us/library/aa299374(v=vs.60).aspx it only goes up to 53
-;but SC076 is f24 apparently?
-/*
-SC159:: ; Replace 159 with your key's value.
-MsgBox, %A_ThisHotKey% was pressed.
-return
-
-*/
 
 ;3RD KEYBOARD CODE WAS HERE (was actually just a shitty numpad) - used F22 - but has been replaced with the stream deck.
-
 
 
 ;; https://autohotkey.com/board/topic/53346-explorer-view-mode/
@@ -524,89 +493,6 @@ return
 
 
 
-/*
-;~~~~~~~~~JELLY COMB NUMPAD USING F21~~~~~~~~~~~
-;#if (getKeyState("F21", "P") and If WinActive("ahk_exe Adobe Premiere Pro.exe"))
-#if (getKeyState("F21", "P"))
-F21::return 
-
-numpad0::
-prFocus("program") ;the following shortcut only works if the program monitor is in focus...
-send ^{numpadEnter} ;zoom to fit program monitor
-prFocus("timeline")
-return
-numpad1::
-prFocus("program")
-send ^{numpadSub} ;zoom out program monitor
-prFocus("timeline")
-return
-numpad2::
-prFocus("program")
-send ^{numpadAdd} ;zoom in program monitor
-prFocus("timeline")
-return
-
-numpad3::sortExplorerByName()
-
-numpad6::sortExplorerByDate()
-
-numpad5::
-If (exphWnd := WinActive("ahk_class CabinetWClass"))
-	{
-	ExplorerViewChange_ICONS(exphWnd)
-	}
-return
-
-numpad4::
-If (exphWnd := WinActive("ahk_class CabinetWClass"))
-	{
-	ExplorerViewChange_Window(exphWnd)
-	}
-return
-
-numpad7::instantexplorer("C:\AHK\2nd-keyboard") 
-numpad8::instantexplorer("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
-Numpad9::instantexplorer("C:\Users\TaranWORK\Videos\Desktop") ;shadowplay folder opener
-
-NumpadDiv::
-Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field in explorer
-;msgbox,,, 4th keyboard %A_thishotkey%,0.6
-return
-
-backspace::
-prFocus("program")
-send ^+4 ;set program monitor resolution to 1/8th
-tippy("wat")
-prFocus("timeline")
-return
-
-NumpadSub::
-prFocus("program")
-send ^+3 ;res to 1/4
-prFocus("timeline")
-return
-
-NumpadAdd::
-prFocus("program")
-send ^+2 ;res to 1/2
-prFocus("timeline")
-return
-
-TAB::
-prFocus("program")
-send ^+1 ;set resolution to 1/1
-prFocus("timeline")
-return
-
-NumpadEnter::msgbox,,, numpad F21 enter,0.3
-
-numpadMult::instantexplorer("C:\Users\TaranWORK\Videos\Base Profile")
-
-
-NumpadDot::
-IfWinActive, ahk_exe Adobe Premiere Pro.exe
-	send !p ;choose poster frame shortcut in Premiere
-return
 
 #if
 ;~~~~END OF 4TH KEYBOARD (mechanical Jelly) USING INTERCEPTOR~~~~
@@ -648,7 +534,7 @@ HandleNum:
 Ascii_Unicode_Input .= SubStr( A_ThisHotkey, 0 )
 return
 #if
-*/
+
 ;________________END OF 4TH KEYBOARD OVERALL______________________
 
 
@@ -801,10 +687,7 @@ numpadDot::
 #if (getKeyState("F24", "P")) ;and WinActive("ahk_exe Adobe Premiere Pro.exe") ;; bad idea to have the "and [something]", this means the keyboard behaves normally, any time you are NOT in Premiere...
 F24::return ;F24
 
-escape::
-msgbox,,,you pressed escape. this might cause like problems maybe,0.9
-tooltip, 
-return
+escape::return ;need to make this release all modifier keys and F24 like it did before
 F1::tooltip, Yes hello
 F2::tooltip,
 F3::
@@ -876,6 +759,8 @@ capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOu
 
 ;LEFTSHIFT > SC070 / International2 > Firefox calendar open
 ;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+
+;;;this is Lshift
 SC070::gotofiretab("Calendar - January 2019","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
@@ -884,8 +769,8 @@ SC070::gotofiretab("Calendar - January 2019","https://calendar.google.com/calend
 
 ;;;this is still the azio F24 keyboard;;;
 
-;LEFTCTRL > SC071 / Lang2 > GMAIL INBOX
-SC071::gotofiretab("Linus Media Group Inc. Mail","https://mail.google.com/mail/u/0/#inbox")
+;LEFTCTRL -> SC071/Lang2 -> GMAIL INBOX
+SC071 up::gotofiretab("Linus Media Group Inc. Mail","https://mail.google.com/mail/u/0/#inbox")
 ;or a tab that says "says..."
 ; a::recallClipboard("a")
 ; +a::saveClipboard("a")
@@ -927,6 +812,7 @@ return
 
 ;;;;;next line;;;;;;;;
 ;;;this is the azio F24 keyboard;;;
+;;;oh god the chaos of my code. it's awful but it works somehow
 
 Lshift::tooltip, you pressed F24 then %A_thishotkey%
 z::
@@ -981,8 +867,8 @@ space::tooltip,
 ; Rwin::msgbox, Right Win 
 ; Rshift::msgbox RIGHT SHIFT lol
 
-;Lwin to SC072 - Lang1
-SC072::
+;Lwin -to-> SC072:Lang1
+SC072 up::
 ;msgbox,,,sc072,0.5
 ;msgbox,,, trying to open VNC,0.5
 IfWinNotExist, ahk_class TvnWindowClass
@@ -1014,9 +900,9 @@ return
 PrintScreen::return
 ScrollLock::return
 SC061::msgbox,,, scancode061,1
-CtrlBreak::msgbox, CTRL BREAK?
-pause::msgbox, is this the PAUSE key?? IDK
-Break::msgbox, Maybe THIS is the pause/break key???
+;CtrlBreak::msgbox, CTRL BREAK?
+;pause::msgbox, is this the PAUSE key?? IDK
+;Break::msgbox, Maybe THIS is the pause/break key???
 
 pgdn::tooltip, you pressed F24 then %A_thishotkey%
 end::tooltip, you pressed F24 then %A_thishotkey%
@@ -1118,17 +1004,17 @@ numpadDot::tooltip, you pressed F24 then %A_thishotkey%
 ;------------
 
 
-;okay, so these keys MUST be AFTER the intercept.exe launched keys, otherwise BOTH scripts will be called, which is bad. IDK why, but putting them down here fixes the problem.
-;addendum: if #IfWinActive ahk_exe explorer.exe is BEFORE the 2nd keybaord code, it executes all by itself. So yeah, the secondary keybaords must be before all else.
+;okay, so these keys MUST be AFTER the HASU USB QMK launched keys, otherwise BOTH scripts will be called, which is bad. IDK why, but putting them down here fixes the problem.
+;addendum: if #IfWinActive ahk_exe explorer.exe is BEFORE the 2nd keybaord code, it executes all by itself. So yeah, the secondary keyboards must be before all else.
 
 
 ; __________________________________________________________ 
 ;|                                                          |
 ;| PRIMARY KEYBOARD, (Corsair K95 RGB) AHK KEY ASSIGNMENTS  |
 ;|__________________________________________________________|
-;(\__/)  ||
-;(•ㅅ•)  ||
-;/ 　 \づ|| 
+;					(\__/)  ||
+;					(•ㅅ•)  ||
+;					/ 　 \づ|| 
 
 ;;;~~~~~~FUNCTION KEYS IN VARIOUS PROGRAMS~~~~
 
@@ -1297,7 +1183,7 @@ pgdn::send, {alt}vo{down}{enter} ;sort by date modified, but it functions as a t
 
 
 ;shortcut to forcefully CLOSE PREMIERE ALREADY, WITH NO BULLSHIT. BULLDOZE IT FLAT, BURN IT, SALT THE EATH, NUKE IT FROM ORBIT. JUST FUCKING DIE!!!
-;This doesn't work. Might need C++ for this...
+;.......This doesn't work.... Might need C++ for this...
 ^!+p::
 Run, %comspec% /c "taskkill.exe /IM /Adobe Premiere Pro.exe /T /F" ;,, hide
 sleep 100
@@ -1372,13 +1258,13 @@ Joy3::msgbox you hit Joy3
 ;I could never get any of these working
 
 #ifWinActive
-!,::msgbox, A_workingDir should be %A_WorkingDir%
-!.::msgbox, TaranDir should be %TaranDir%
+; !,::msgbox, A_workingDir should be %A_WorkingDir%
+; !.::msgbox, TaranDir should be %TaranDir%
 Xbutton1::return
-Xbutton2::return ;these are both on the side of my mouse and I don't like accidentally hitting them.
+Xbutton2::return
+;but they do do stuff in premiere now.
 
-
-;-----BEGIN ASSIGNMENT OF ALL 18 K95 MACRO KEYS--------
+;---------------------BEGIN ASSIGNMENT OF ALL 18 K95 MACRO KEYS---------------------
 
 #IfWinActive
 ;macro key G1 on K95. universal SEARCH EVERYTHINGER
@@ -1406,14 +1292,19 @@ return
 ;;NOTE that this shows up also as a huge bit of script when premiere is NOT in focus, must be moved to All Premiere Functions.
 
 #ifWinActive ahk_exe Adobe Premiere Pro.exe
+
 ;macro key G4.
 ;I've removed the ~ that was in front of them.
-^+,::audioMonoMaker("left")
+;;;^+,::audioMonoMaker("left")
+^+,::preset("50%")
+
 ; macro key G5.
-^+.::audioMonoMaker("right")
+;;;;^+.::audioMonoMaker("right")
+^+.::preset("50%")
 
 ;note that i have capslock remapped to F20
 F20::home
+; and "home" is disable in premiere.
 ;note that I also use "F20" for moving windows around without having to click the taskbar.
 
 
@@ -1429,7 +1320,6 @@ F20::home
 ^+U::reSelect() ;formerly ^+9
 
 /*
-
 G7:  F17 - rotation
 G8:  F19 - V1 A1 locker
 G9:  ctrl shift ] - add 7 gain
@@ -1449,7 +1339,8 @@ G12: F14 - Scale
 	; ; sendinput, {escape}
 ; return
 
-;put selected text into a lengthend comment in premiere.
+;Script to put a word comment into a lengthend marker in Premiere.
+;note to self, move this to where it belongs
 F12::
 sendinput, ^a
 sleep 80
@@ -1511,12 +1402,12 @@ appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You
 ~+K::KbShortcutsFindBox()
 
 ;no longer used:
-!]::preset("DeHummer Preset") ;This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.
+;!]::preset("DeHummer Preset") ;This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.
 
 ;Pressing ALT W will send CTRL ALT SHIFT W, which is set to "Trim Next Edit to Playhead" in Premiere. This is to get around Premiere's menu acceleration, and annoying warning noise. Otherwise, I could have just assigned these commands directly to ALT Q and ALT W.
 !w::^!+w ;"Trim Next Edit to Playhead" (not RIPPLE trim.)
 !q::^!+q ;"Trim Previous Edit to Playhead" (not RIPPLE trim.)
-
+; for more information: https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/Alt_menu_acceleration_DISABLER.ahk
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
@@ -1526,26 +1417,7 @@ F21::return
 F21 & F7::
 Send {F2}7{enter} ;adds 7 gain. ; +7db 
 
-;maybe have some code here to fix a stuck shift or CTRL key...
-/*
-A2  01D	 	d	5.75	LControl       	Audio Gain
-A0  02A	#	d	0.00	LShift         	
-DD  01B	h	d	0.00	]              	
-A2  01D	i	u	0.00	LControl       	
-A0  02A	i	u	0.00	LShift         	
-71  03C	i	d	0.00	F2             	
-71  03C	i	u	0.00	F2             	
-37  008	i	d	0.00	7              	
-37  008	i	u	0.00	7              	
-0D  01C	i	d	0.00	Enter          	
-0D  01C	i	u	0.01	Enter          	
-DD  01B	 	u	0.00	]              	
-A2  01D	i	d	0.00	LControl       	
-A0  02A	#	u	0.00	LShift         	
-A0  02A	i	d	0.00	LShift         	
-A2  01D	 	u	0.00	LControl      
-*/ 	
-
+;note to self, maybe have some code here to fix a stuck shift or CTRL key...
 return
 
 ; control shift r = reverse selected clip
@@ -1555,8 +1427,8 @@ return
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
 
-;This script is to stop, rewind 3 seconds, and then play. Premiere's version of this SUCKS because it brings you bacK to where you started
-; the ~ is only there so that the KeystroKe visualizer can see this Keypress. Otherwise, it should not be used.
+;This script is to stop, rewind 3 seconds, and then play. Premiere's version of this SUCKS because it brings you back to where you started
+; the ~ is only there so that the keystroke visualizer can see this keypress. Otherwise, it should not be used.
 ;Lwin::
 ;~!space:: ;note, the ~ might result in stuck modifier keys, so i am not using it anymore...
 !space::
@@ -1570,12 +1442,12 @@ Send d ;"shuttle right" command. Might be best to instead have it on a key combo
 return
 
 ;;no longer used:
-; control g = maKe 200% speed
+; control g = make 200% speed
 ;^g::
 ;Send ^r200{Enter}
 ;return
 ;;no longer used:
-; control h = maKe 50% speed
+; control h = make 50% speed
 ;^h::
 ;Send ^r50{Enter}
 ;return
@@ -1594,6 +1466,7 @@ return
 
 #IfWinActive ahK_exe Adobe Premiere Pro.exe
 ;; instant cut at cursor (UPON KEY RELEASE) -- super useful! even respects snapping!
+;note to self, move this to premiere_functions already
 ~F4::
 ;keywait, F4
 ;tooltip, |
@@ -1665,7 +1538,7 @@ return
 ;F11:: ;unused. "Full screen" in Firefox and chrome.
 ;F12:: ;unused. "Inspector" in Firefox and chrome.
 
-;================ CURRENT TOOL REMEMBERER ===============
+;============== CURRENT TOOL REMEMBERER ================
 
 ;IMPORTANT - these are MY keyboard assignments for tools
 ;Your own assignments will probably be different!
@@ -1710,14 +1583,14 @@ global VFXkey = "F15" ;the VFXkey variable has to be defined NOW. IDK why.
 instantVFX("anchor_point_vertical")
 return
 
-;F16 aka SC067 is still available
-
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Macro key G7
 ~F17::
 global VFXkey = "F17"
 instantVFX("rotation")
 return
+
+;F16 is not currently used for anything
 
 ;Macro key G10
 ~F18::
@@ -1731,100 +1604,31 @@ return
 
 #IfWinActive
 
-;::---::— ;this one just results in â€” being typed.
-:*:--- ::{Asc 0151}
-;converts three dashes into an EM dash. https://superuser.com/questions/857338/how-to-add-the-em-dash-to-my-keyboard
-; ^-:: ;en dash (150/x96)
-; Send –
-; Return
-
-; !-:: ;em dash (151/x97)
-; Send —
-; Return
-
-; !^-:: ;bullet (149/x95)
-; Send •
-; Return
-;;https://www.experts-exchange.com/questions/29046416/Favorite-way-to-make-an-em-dash.html
-
 +capslock::capslock ;only SHIFT CAPSLOCK will now turn on capslock, freeing the real capslock key to be used as a MODIFIER KEY, just like CTRL.
 +F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
-capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
+;capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
 
 ;F20 is triggered by capslock, and adds a 2nd layer to keyboard #1.
-;F21 - Jelly comb 22 key numpad. will free this up later by using some other scan code
+;F21 - reserved for a 4th and probably final keyboard
 ;F22 - FREE FOR NOW, PROBABLY
 ;F23 is for the 2nd keyboard, the Logitech K120. Will maintain for sake of tutorials.
 ;F24 (SC076) is the FULL AZIO KEYBOARD. ;F24 used to be used for LuaMacros.
 
 ;[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
-;There are still keys beyond F24! Check out my Table_of_all_scan_codes.xlsx for more information. Very useful to have those.
+; There are still keys beyond F24! Check out 
+; https://docs.google.com/spreadsheets/d/1GSj0gKDxyWAecB3SIyEZ2ssPETZkkxn67gdIwL1zFUs/edit#gid=0
+; for more information. Very useful to know. If you're a Taran.
 ;]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 ;Below here is a bunch of potentialy useful stuff, for future development. Some of it can be tirggered by my Corsair keyboard, and some of it cannot.
-;note to self -- seriously need to standardize what  i am substituting for modifier keys here...
 
 #IfWinActive
-;VKEASC05C::tooltip, VirtualKey:EA ScanCode:05C
-;SC05C::tooltip, SC05C - "Keyboard Intl' 6"
-;SC05D::tooltip, SC05D - this is ALSO the appskey apparently??
-;;SC15D::tooltip, SC15D - this is ALSO the appskey apparently?? ;must keep commented out because i use this in premiere lol
-SC05E::tooltip, SC05E - cannot find a corsair trigger
-SC05F::tooltip, SC05F - cannot find a corsair trigger
-
-SC060::tooltip, SC060 - cannot find a corsair trigger.
-SC061::tooltip, SC061 - cannot find a corsair trigger
-;;SC062::tooltip, SC062 - cannot find trigger but this is used from intercept.exe
-SC063::tooltip, SC063 - cannot find a corsair trigger - Labeled as "Help"
-
-; SC064 - F13
-; SC065 - F14
-; SC066 - F15
-; SC067 - F16
-; SC068 - F17
-; SC069 - F18
-; SC06A - F19
-; SC06B - F20
-; SC06C - F21
-; SC06D - F22
-; SC06E - F23
-
-SC06F::tooltip,  SC06F - cannot find trigger
-
-;SC070::msgbox,,, SC070 - "Keyboard intl 2", 0.5
-
-VKE9::msgbox,,, VKE9 ??? - "Keyboard Lang 2", 0.5 ;does not work from Corsair keyboard
-;VKE9SC071::msgbox,,, VKE9 SC071 ??? - Keyboard Lang 2, 0.5 ;;this will not register as an allowed hotkey
-SC071::msgbox,,, SC071:"Keyboard Lang 2", 0.5 ;does not work from Corsair keyboard
-SC072::msgbox,,, SC072:"Keyboard Lang 1", 0.5 ;Lwin to SC072 - Lang1
-SC073::msgbox,,, SC073:"Keyboard Intl' 1", 0.5 ;LAlt to SC073 - International1
-
-SC074::msgbox,,, SC074: cannot find trigger, 0.5
-SC075::msgbox,,, SC075: cannot find trigger - this is just before SC076 which is F24, 0.5
-;SC076::tooltip, this is F24
-SC077::msgbox,,, rALT -to-> SC077:"Keyboard Lang 4", 0.5
-SC078::msgbox,,, rWin -to-> SC078:"Keyboard Lang 3", 0.5
-SC079::msgbox,,, no keyboard yet uses Appskey -to- SC079: "Keyboard Intl' 4", 0.5
-
-SC07A::tooltip, SC07A: cannot find trigger
-;SC07B::tooltip, rCTRL -to-> SC07B:International5
-SC07C::tooltip, SC07C: cannot find trigger
-
-;SC07D::msgbox,,, rshift -to-> SC07D:"Keyboard Intl' 3", 0.5
-SC07E::tooltip, SC07E:"Brazillian `,"
-
-SC07F::tooltip, SC07F - cannot find trigger
-
-;After SC07F, Autohotkey seems to have trouble picking them up. Not sure why.
-
-
 
 ;;---------------------------------------------------
 
 
-
 ;+++++++++++++++++++++++++++++++
-;macro for moving GOOGLE SHEETS' B-roll matrix information into WORD
+;macro for moving GOOGLE SHEETS' or EXCEL's B-roll matrix information into WORD
 #IfWinActive ;ahk_class MozillaWindowClass
 #IfWinNotActive ahk_exe Adobe Premiere Pro.exe
 ;Macro key G12
@@ -1918,157 +1722,38 @@ ConvertSentence()
 }
 
 
-
-;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-;saving this blank keyboard for future use
-
-#if (getKeyState("F22", "P"))
-F22::return ;F22
-
-escape::msgbox,,, you pressed escape. this might cause liKe problems maybe, 0.9
-F1::
-F2::
-F3::
-F4::
-F5::
-F6::
-F7::
-F9::
-F8::
-F10::
-F11::
-F12::tooltip, you pressed F22 then %A_thishotKey%
-
-`::
-1::
-2::
-3::
-4::
-5::
-6::
-7::
-8::
-9::
-0::
--::
-=::
-backspace::
-
-;;;;;next line;;;;;;;;
-
-tab::
-q::
-w::
-e::
-r::
-t::
-y::
-u::
-i::
-o::
-p::
-[::
-]::
-\::tooltip, you pressed F22 then %A_thisHotKey%
-capslock::msgbox, , ,i hate capslock F22!, 1000
-
-a::
-s::
-d::
-f::
-g::
-h::
-j::
-K::
-l::
-`;::
-'::tooltip, you pressed F22 then %A_thisHotKey%
-;;;;;next line;;;;;;;;
-
-;Lshift::return
-z::
-x::
-c::
-v::
-b::
-n::
-m::
-,::
-.::
-/::tooltip, you pressed F22 then %A_thishotKey%
-Lwin::msgbox, LEFT win
-Lalt::msgbox, LEFT alt
-space::tippy("3rd space")
-Ralt::msgbox, Ralt - doesnt worK
-Rwin::msgbox, Right Win 
-Rshift::msgbox RIGHT SHIFT lol
-SC06E::msgbox,,,right WINKey,0.5
-SC06F::msgbox,,,SC06F,0.5
-SC062::msgbox,,,SC062,0.5
-Rctrl::msgbox,,,Rctrl,0.5
-appsKey::msgbox, this is the appsKey KEY I guess
+;;;;;;;**************this is where I had a blank, 4th, "F22" keyboard all set up, but I moved it. **************
+;;;;I don't actaully use 4 total keyboards in my work. Well, not yet.
 
 
-PrintScreen::
-ScrollLocK::return
-SC061::msgbox, scancode061
-CtrlBreaK::msgbox, CTRL BREAK?
-pause::msgbox, is this the PAUSE Key?? IDK
-BreaK::msgbox, Maybe THIS is the pause/breaK Key???
-
-pgdn::
-end::
-delete::
-pgup::
-home::
-insert::
-
-up::
-down::
-left::
-right::
-
-;;;;;next area;;;;;;;;
-
-numpad0::
-numpad1::
-numpad2::
-numpad3::
-numpad4::
-numpad5::
-numpad6::
-numpad7::
-numpad8::
-numpad9::
-
-+numlocK::
-numlocK::
-numpadDiv::
-numpadMult::
-numpadSub::
-numpadAdd::
-numpadEnter::return
-numpadDot::
 
 
-#if
-
-;;;discontinued stuff below:
 
 
-;;;discontinued because now they are direct launch, no need to go through a shortcut.
-; #IfWinActive
-; ;These are mapped from the stream deck. Note that this actually includes a SHIFT keypress, due to the weird effects of numlock being on or off, which acts as if SHIFt is down... or up... whatever.
-; ; So, rather than ^+!numpad1:: ... instead, you have to do:
-; ^!numpadend::instantexplorer("C:\AHK\2nd-keyboard") 
-; ^!NumpadDown::instantexplorer("Z:\Linus\1. Linus Tech Tips\1. Template File Structure\Project")
-; ^!numpadpgdn::instantexplorer("C:\Users\TaranWORK\Videos\Desktop") ;shadowplay folder opener
-
-;------------
 
 
-;;;Script to use F11 and F12 as scroll down and up! Useful for wacom tablet users who don't have a scrol wheel.
+
+;::---::— ;this one just results in â€” being typed.
+:*:--- ::{Asc 0151}
+;converts three dashes into an EM dash. https://superuser.com/questions/857338/how-to-add-the-em-dash-to-my-keyboard
+
+; ^-:: ;en dash (150/x96)
+; Send –
+; Return
+
+; !-:: ;em dash (151/x97)
+; Send —
+; Return
+
+; !^-:: ;bullet (149/x95)
+; Send •
+; Return
+;;https://www.experts-exchange.com/questions/29046416/Favorite-way-to-make-an-em-dash.html
+
+
+
+
+;;;Script to use F11 and F12 to scroll down and up! Useful for wacom tablet users who don't have a scroll wheel.
 ;;i found the code here https://stackoverflow.com/questions/24001634/how-can-i-bind-my-mouse-wheel-to-scroll-down-with-a-key-and-this-key-is-ahk
 ; *F11::
 ; While GetKeyState("F11", "p")
@@ -2099,100 +1784,3 @@ numpadDot::
 ; ;EXAMPLE: https://i.ytimg.com/vi/L-zDtBINvzk/hqdefault.jpg
 ; ;http://img.youtube.com/vi/<insert-youtube-video-id-here>/maxresdefault.jpg
 ; return
-
-*/
-
-;;;;--------------------------------------
-;;;;-------------------------------------
-;wooooah google docs is crazy - it actually notices high scan codes. here are my notes about that - will transfer this info into my spreadsheet if possible.
-
-;google docs ;autohotkey
-; 1::send {SC052} ;- 				;NumpadIns
-; 2::send {SC053} ;NumpadDel		;NumpadDel
-; 3::send {SC054} ;PrintScreen		;PrintScreen
-; 4::send {SC055} ;not found		;(nothing)
-; 5::send {SC056} ;\				;\
-; 6::send {SC057} ;F11				;F11 which is also z
-; 7::send {SC058} ;F12				;F12 which is also {
-; 8::send {SC059} ;NumpadClear		;(nothing)
-
-; 9::send {SC05a} ;not found		;î
-; ;-\z{î
-
-
-
-; F9::send {SC05B} ;ñ
-; F10::send {SC05C} ;ê
-; F11::send {SC05D} ;ù
-; F12::send {SC05E} ;õ
-
-; 1::send {SC05F} ;ó
-; 2::send {SC060} ;(nothing)
-; 3::send {SC061} ;(nothing)
-; 4::send {SC062} ;û
-; 5::send {SC063} ;(nothing)
-; 6::send {SC064} ;|
-; 7::send {SC065} ;}
-; 8::send {SC066} ;~
-; 9::send {SC067} ;
-; ;óû|}~
-
-
-; Lshift & Rshift::suspend
-
-; 1::send {SC068} ;
-; 2::send {SC069} ;
-; 3::send {SC06A} ;
-; 4::send {SC06b} ;
-; 5::send {SC06c} ;
-; 6::send {SC06d} ;
-; 7::send {SC06e} ; ;0086
-; 8::send {SC06f} ;í ;;should be ESA
-; 9::send {SC070} ; 
-;í
-; https://notepad-plus-plus.org/community/topic/14812/how-to-search-for-unknown-3-digit-characters-with-black-background/2
-
-; 1::send {SC071} ;é
-; 2::send {SC072} ;
-; 3::send {SC073} ;
-; 4::send {SC074} ;
-; 5::send {SC075} ;
-; 6::send {SC076} ;
-; 7::send {SC077} ;
-; 8::send {SC078} ;
-; 9::send {SC089} ;
-                 
-; 1::send {SC08a} ;
-; 2::send {SC08b} ;
-; 3::send {SC08c} ;
-; 4::send {SC08d} ;
-; 5::send {SC08e} ;
-; 6::send {SC08f} ;
-; 7::send {SC090} ;
-; 8::send {SC091} ;
-; 9::send {SC092} ;
-
-
-
-
-
-; ; kill me beyond here
-; dasd
-; 1::send {SC068} 
-   ; send {SC069} 
-; 3::send {SC06A} 
-; 4::send {SC06b} 
-; 5::send {SC06c} 
-; 6::send {SC06d} 
-; 7::send {SC06e}  ;0086
-; 8::send {SC06f} í ;;should be ESA
-; 9::send {SC070}  
-; í
-; https://notepad-plus-plus.org/community/topic/14812/how-to-search-for-unknown-3-digit-characters-with-black-background/2
-
-; 1::send {SC071} ;é
-; 2::send {SC072} ;
-; 3::send {SC073} ;
-; 4::send {SC074} ;
-; 5::send {SC075} ;
- ; 6::send {SC076} 
