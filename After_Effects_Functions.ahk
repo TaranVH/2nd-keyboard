@@ -121,6 +121,7 @@ aeFocus(panel){
 }
 
 ; AE PRESET aplyier - counterpart to Premiere-functions preset(); (I have it rename to prPreset for consistancy but it isn't necesarry)
+
 aePreset(item := "neco se posralo"){
 	aeFocus("effects") ; bring focus to effects panel - just to be shure it won't need a double click for aplying the effect later...
 	
@@ -160,7 +161,7 @@ aePreset(item := "neco se posralo"){
 	Sleep 5
 	
 	Send %item% ; Enter the preset name
-	Sleep 3
+	Sleep 10
 	
 	MouseMove, 100, 60, 0, R
 	MouseClickDrag, L, , , 0, -600, 0, R ; Drag it up (my effect controls panel is above the effects panel)
@@ -170,9 +171,29 @@ aePreset(item := "neco se posralo"){
 }
 ; -------- END of aePreset(); --------------
 
-aeGain(gain := "+7") { ; the gain "by how much" not to "what value"
-	ifWinNotActive ahk_exe AfterFX.exe goto Endiiging
+global selectedLayerX := 0 ; varieble in whitch to store the final value
+global selectedLayerY := 0
+global layerFound := 0
 
+getSelectedLayer(){ ; function to store the position of selected layer title
+	PixelSearch, cX, cY, -1420, 465, -1419, 11390, 0xA5A5A5, 0, fast ; cX - output X varieble, cY - output Y varieble, left upper corner from witch to search (are to be search is described in search_area.png), color to find (0xA5A5A5) 
+	Sleep 100
+	
+	if ErrorLevel { ; if the search throw an exeption - 0(false) = all went smooth, 1(true) = nothing found, 2(true) = the search could not be conducted
+		MsgBox, Aperrently no selected layer was found.
+		selectedLayerX := ""
+		selectedLayerY := ""
+		layerFound := 0
+	} else { ; if it went smooth
+		selectedLayerX := cX
+		selectedLayerY := cY
+		layerFound := 1
+	}
+}
+; end of getSelectedLayer();
+
+
+aeGain(gain := "+7") { ; the gain "by how much" not to "what value"
 	CoordMode, mouse
 	CoordMode, pixel
 	
@@ -180,21 +201,16 @@ aeGain(gain := "+7") { ; the gain "by how much" not to "what value"
 
 	aeFocus("timeline") ; to be SURE colors are right and keyboard shortcuts work...
 	
-	PixelSearch, cX, cY, -1420, 465, -1419, 11390, 0xA5A5A5, 0, fast ; cX - output X varieble, cY - output Y varieble, left upper corner from witch to search (are to be search is described in search_area.png), color to find (0xA5A5A5) 
+	getSelectedLayer() ; get position of the selected layer and if ti is actually selected
 	
-	Sleep 100
-	
-	if ErrorLevel {
-		MsgBox, Aperrently no selected layer was found.
-		goto Endiiging
-	} else {
-		ImageSearch, pX, pY, cX - 200, cY - 5, cX - 150, cY + 20, aeTwireledTriangleSelectedLayer.png
+	if(layerFound) { ; a layer is selected
+		ImageSearch, pX, pY, selectedLayerX - 200, selectedLayerY - 5, selectedLayerX - 150, selectedLayerY + 20, aeTwireledTriangleSelectedLayer.png
 		Sleep 5
 		if(ErrorLevel = 2) {
 			MsgBox Could not conduct the search (mejbí the image wasn't found).
 			goto Endiiging
 		} else if(ErrorLevel = 1) {
-			ImageSearch, pX, pY, cX - 200, cY - 5, cX - 150, cY + 20, aeUntwireledTriangleSelectedLayer.png ; If the layer was untwireled, the picture would be diferent - so another try
+			ImageSearch, pX, pY, selectedLayerX - 200, selectedLayerY - 5, selectedLayerX - 150, selectedLayerY + 20, aeUntwireledTriangleSelectedLayer.png ; If the layer was untwireled, the picture would be diferent - so another try
 			Sleep 5
 			if(ErrorLevel = 2) {
 				MsgBox Could not conduct the search (mejbí the image wasn't found).
@@ -207,6 +223,8 @@ aeGain(gain := "+7") { ; the gain "by how much" not to "what value"
 				MouseClick, L ; Twirel the layer to be able to surely untwirel it by presing L to go to audio level
 			}
 		}
+	} else { ; no selected layer
+		goto Endiiging
 	}
 	
 	Send l ; untwirel right into audio levels
@@ -234,3 +252,106 @@ aeGain(gain := "+7") { ; the gain "by how much" not to "what value"
 	MouseMove X, Y, 0
 }
 ; ------- END of aeGain(); ----------------
+
+aeBlendingMode(mode){ ; set blending mode of an layer
+	
+	downAmount := 0 ; number of keystokes needed to select the proper mode
+	
+	if(mode = "normal") { ; I tried to do this by arrays but I didn't manage to make it work
+		downAmount := 0
+	} else if(mode = "dissolve") {
+		downAmount := 1
+	} else if(mode = "dancing dissolve") {
+		downAmount := 2
+	} else if(mode = "darken") {
+		downAmount := 3
+	} else if(mode = "multiply") {
+		downAmount := 4
+	} else if(mode = "color burn") {
+		downAmount := 5
+	} else if(mode = "classic color burn") {
+		downAmount := 6
+	} else if(mode = "linear burn") {
+		downAmount := 7
+	} else if(mode = "darker color") {
+		downAmount := 8
+	} else if(mode = "add") {
+		downAmount := 9
+	} else if(mode = "lighten") {
+		downAmount := 10
+	} else if(mode = "screen") {
+		downAmount := 11
+	} else if(mode = "color dodge") {
+		downAmount := 12
+	} else if(mode = "classic color dodge") {
+		downAmount := 13
+	} else if(mode = "lighter color") {
+		downAmount := 14
+	} else if(mode = "overlay") {
+		downAmount := 15
+	} else if(mode = "soft light") {
+		downAmount := 16
+	} else if(mode = "hard light") {
+		downAmount := 17
+	} else if(mode = "linear light") {
+		downAmount := 18
+	} else if(mode = "vivid light") {
+		downAmount := 19
+	} else if(mode = "pin light") {
+		downAmount := 20
+	} else if(mode = "hard mix") {
+		downAmount := 21
+	} else if(mode = "difference") {
+		downAmount := 22
+	} else if(mode = "classic difference") {
+		downAmount := 23
+	} else if(mode = "exclusion") {
+		downAmount := 24
+	} else if(mode = "subtract") {
+		downAmount := 25
+	} else if(mode = "divide") {
+		downAmount := 26
+	} else if(mode = "hue") {
+		downAmount := 27
+	} else if(mode = "saturation") {
+		downAmount := 28
+	} else if(mode = "color") {
+		downAmount := 29
+	} else if(mode = "luminosity") {
+		downAmount := 30
+	} else if(mode = "stencil alpha") {
+		downAmount := 31
+	} else if(mode = "stencil luma") {
+		downAmount := 32
+	} else if(mode = "silhouette alpha") {
+		downAmount := 33
+	} else if(mode = "silhouette luma") {
+		downAmount := 34
+	} else if(mode = "alpha add") {
+		downAmount := 35
+	} else if(mode = "luminescent premul") {
+		downAmount := 36
+	}
+	
+	CoordMode, mouse
+	CoordMode, pixel
+	
+	MouseGetPos, X, Y
+	
+	getSelectedLayer() ; get the position of the selected layer and if it was ACTUALLY selected
+	if(layerFound){ ; if it was found
+		MouseMove, selectedLayerX, selectedLayerY + 2, 0 ; the + 2 is there to be shure it is on the layer not on anti aliasing...
+		Sleep 10
+		MouseClick, R ; open menu
+		Send {Down 11} ; goto blending mode
+		Sleep 20
+		Send {Right} ; go inside
+		Sleep 3
+		Send {Down %downAmount%} ; goto the mode you selected
+		Sleep %downAmount% * 5
+		Send {Enter}
+	}
+	
+	MouseMove, X, Y, 0
+}
+; ------ END of aeBlendingMode(); --------
