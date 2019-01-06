@@ -5,8 +5,17 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #SingleInstance force
 
-; If this is your first time using AutoHotkey, you must take this tutorial:
-; https://autohotkey.com/docs/Tutorial.htm
+
+;________________________________________________________________________________________
+;                                                                                        
+;		    2ND KEYBOARD USING INTERCEPTION AND INTERCEPT.exe (Logitech K120)            
+;________________________________________________________________________________________
+
+; Please watch https://www.youtube.com/watch?v=y3e_ri-vOIo for a comprehensive tutorial. 
+;________________________________________________________________________________________
+;
+;  The full script is FULL_extra_keyboard.ahk , but please try this script first, as it is
+;  an important part of the tutorial.
 
 #if (getKeyState("F12", "P"))
 F12::return

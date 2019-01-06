@@ -33,10 +33,8 @@ My most used, most useful, simplest script is this one: https://www.youtube.com/
 
 -----
 NOTE:
-By the time you need to add a 2nd keyboard, you should already be fairly familiar with how AutoHotKey works. You should also have already used up all your function keys, and macro keys (if your main keyboard has them.)
-You do not really need to add a 2nd keyboard until you've already used up all of the macro keys on your normal keyboard.
-You can also use up all the function keys, using AutoHotkey. Most programs don't really use them for anything.
-
+By the time you need to add a 2nd keyboard, you should already be fairly familiar with how AutoHotKey works. You should also have already assigned commands to all your function keys, and macro keys (if your main keyboard has them.)
+Don't just add a 2nd keyboard because you think it's cool! Make sure you actually need it.
 -----
 
 As of August 2018, I've changed the root directory from this:

@@ -1,4 +1,6 @@
-SetWorkingDir, C:\AHK\2nd-keyboard\ ;This line is actually optional. But it must go here if you need it.
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+;SetWorkingDir, C:\AHK\2nd-keyboard\ ;Or you could put the directory here. Whatevs.
 Menu, Tray, Icon, shell32.dll, 283 ;changes the taskbar icon to something
 ;SetKeyDelay, 0 ;IDK exactly what this does.
 
@@ -52,9 +54,6 @@ SendMode Input
 ;; https://notepad-plus-plus.org/
 ;; You'll probably want the syntax highlighting:  https://stackoverflow.com/questions/45466733/autohotkey-syntax-highlighting-in-notepad
 
-;;;#if (getKeyState("F23", "P")) && (uselayer = 0) ;;you can use a varibable like so, but I don't.
-;;;More info about #if thingies (important): https://github.com/TaranVH/2nd-keyboard/issues/65
-
 
 ;;;WARNING - THIS IS KINDA UNTESTED SINCE I STOPPED USING IT. LET ME KNOW IF YOU HAVE ANY ISSUES, BY LEAVING A GITHUB... ISSUE.  https://github.com/TaranVH/2nd-keyboard/issues
 
@@ -63,9 +62,14 @@ SendMode Input
 F23::return ;this line is mandatory for proper functionality
 
 escape::tooltip, [F23] You might wish to not give a command to escape. Could cause problems. IDK.
-F1::
+;escape::return ;<--to disable a key, just use a "return," like so.
+
+F1::msgbox, you pressed F1 on the extra keyboard
 F2::
-F3::
+SoundBeep, 900, 400
+tooltip, you pressed F2 AND get a beep sound!
+return
+F3::tooltip, you pressed F3 but do not get a beep.
 F4::
 F5::
 F6::
@@ -74,7 +78,7 @@ F9::
 F8::
 F10::
 F11::
-F12::tooltip, [F23]  %A_thishotKey%
+F12::tooltip, you pressed the function key %A_thishotkey% on the [F23] keyboard
 ;;Note that the assignment on the above line will apply to ALL prior lines ending in "::"
 ;;...which you should know from the AHK tutorial I linked you to.
 
@@ -154,6 +158,7 @@ return
 
 ;;===================== MODIFIERS =========================;;
 
+;;Keep these commented out, as they are!
 ;Lshift::tooltip, do not use
 ;Lctrl::tooltip, do not use
 ;Lwin::tooltip, do not use
@@ -275,6 +280,8 @@ F1::msgbox, You pressed F1 on your secondary keyboard while inside of Premiere P
 	; msgbox, You pressed F1 on your secondary keyboard while NOT inside of Premiere Pro
 ;;This is easier to understand, but it's not as clean of a solution.
 
+;; #if (getKeyState("F23", "P")) && (uselayer = 0) ;;you can also use a varibable like so, but I don't.
+
 ;; Here is a discussion about all this:
 ;; https://github.com/TaranVH/2nd-keyboard/issues/65
 
@@ -285,6 +292,7 @@ F1::msgbox, You pressed F1 on your secondary keyboard while inside of Premiere P
 ;;Note that this whole script was written for North American keyboard layouts.
 ;;IDK what you foreign language peoples are gonna have to do!
 ;;At the very least, you'll have some duplicate keys.
+
 
 #if
 

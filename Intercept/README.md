@@ -33,7 +33,7 @@ install-interception.exe /install
 ### USING INTERCEPT.EXE -- (This is different from intercepTION!)
 - Download Kamaz's intercept.exe zip from here:
 - http://octopup.org/img/code/interception/intercept.zip
-	(Let me know if this file ever goes offline, I'll rehost it.)
+	(If it's no longer available from that location, I've already rehosted it in this folder.)
 - Unzip intercept.zip to some location on your computer.
 - Plug in your second keyboard and ensure that it is working normally.
 - Double click on intercept.exe. It will open a command prompt thingy.
@@ -53,7 +53,7 @@ install-interception.exe /install
 - Press <kbd>S</kbd> to save the filter, or <kbd>C</kbd> to cancel if you made a mistake.
 - This has the effect of basically "wrapping" the keystroke inside of another keystroke.
 - Now repeat the above steps, but using the keys <kbd>W</kbd>, <kbd>E</kbd>, and <kbd>R</kbd>.
-
+- If you make a mistake, you can always just open the .ini file in a text editor and delete any bad entries.
 
 
 ### CREATING THE AUTOHOTKEY SCRIPT
@@ -84,7 +84,7 @@ r::SoundBeep, 1000, 500
 - Open a blank text file and type "QWERTY" using your primary keyboard in it to ensure that it works.
 - Now, type Q, W, E, or R on your secondary keyboard. Instead of text, you should recieve message boxes, tooltips, or a beep.
 - Now that you have that working, you can restart intercept.exe, and (A)dd all the remaining keys, using the method described above.
-- HOWEVER, that will be very slow. So instead, you can download and use Taran's files, "keyremap.ini" and "fancy extra keyboards.ahk" and customize them to your own computer.
+- HOWEVER, that will be very slow. So instead, you can download and use Taran's files, "keyremap.ini" and "FULL_extra_keyboard.ahk" and customize them to your own computer.
 
 
 - If you use Taran's keyremap.ini, be sure to "find and replace" all instances of this line:
@@ -104,7 +104,6 @@ F23::return
 #if
 ;Done with F23
 ```
-
 
 
 
