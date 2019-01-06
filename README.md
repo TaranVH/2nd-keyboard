@@ -11,7 +11,7 @@ IF YOU ARE NEW TO AUTOHOTKEY, start here:
 https://autohotkey.com/docs/Tutorial.htm
 
 I know there's a lot of scripts in this repository. Look here to see what launches when I start my computer:
-https://github.com/TaranVH/2nd-keyboard/blob/master/INFO_and_PROFILES/startup_folder_TARAN_Aug_2018.png
+https://github.com/TaranVH/2nd-keyboard/blob/master/INFO_and_PROFILES/Taran_startup_folder_2018_DEC.png
 
 Some of the scripts are #include-d in other scripts. The MAIN script from which most others are run, is this one - so, you can start here: https://github.com/TaranVH/2nd-keyboard/blob/master/ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk
 
@@ -58,6 +58,8 @@ Make sure to populate your startup folder with file shortcuts, to launch all the
 *C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp*
 
 *C:\Users\TaranWORK\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup*
+
+You can open the folder for everyone by typing *shell:common startup* and for your user account *shell:startup* in WIN+R / Windows Explorer Adress Bar
 
 ---
 
