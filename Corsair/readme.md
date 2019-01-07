@@ -12,20 +12,18 @@ Don't bother adding a 2nd keyboard unless you're already familiar with AutoHotKe
 
 ### **OKAY, LET'S DO THIS**
 
-- DOWNLOAD AND INSTALL THESE:
+Download and install the following:
+
 - https://www.corsair.com/ca/en/icue
 - https://www.autohotkey.com/download/
-
-- Optional:
-- Notepad++  https://notepad-plus-plus.org/download/v7.6.2.html
-- Syntax highlighting for .ahk scripts:
-- https://www.autohotkey.com/boards/viewtopic.php?t=50
-- /Optional
+- Optional: Notepad++  https://notepad-plus-plus.org/download/v7.6.2.html
+- Optional: Syntax highlighting for .ahk scripts: https://www.autohotkey.com/boards/viewtopic.php?t=50
 
 - Create this exact folder structure on your PC:
+
 ```C:\AHK\2nd-keyboard\Corsair```
 
-Download CORSAIR files from my github:
+- Download ```2nd_keyboard_if_using_iCue.ahk``` and ```K55_wrapped_in_F24.cueprofile```
 
 https://github.com/TaranVH/2nd-keyboard/Corsair
 
@@ -35,8 +33,8 @@ https://github.com/TaranVH/2nd-keyboard/Corsair
 
 - Double click on it to get it running. A blue folder icon should appear in your taskbar.
   
-- Open iCue and import K55_wrapped_in_F24.cueprofile
-  --I do not know if this will work for other Corsair keyboards...
+- Open iCue and import ```K55_wrapped_in_F24.cueprofile```
+  (I do not know if this will work for other Corsair keyboards...)
   
 - Make sure that that profile is active.
   
@@ -55,18 +53,12 @@ https://github.com/TaranVH/2nd-keyboard/Corsair
 
 - Right click on ```2nd_keyboard_if_using_iCue.ahk``` and select "create shortcut."
 
-- Navigate to:
+- Navigate to: ```C:\Users\YOUR_USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup```
 
-```C:\Users\YOUR_USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup```
+(Replace YOUR_USERNAME with your own username)
 
-- (Replace YOUR_USERNAME with your own username)
+- Or navigate here if you want this script to launch for ALL users: ```C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp```
 
-- Or navigate here if you want this script to launch for ALL users:
+- ...And move the shortcut file into that folder.
 
-```C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp```
-
-- And move the shortcut file into that folder.
-
-- I also like to add it to my start menu. (Right click the folder, select "pin to start.")
-
-
+I also like to add it to my start menu. (Right click the folder, select "pin to start.")
