@@ -29,22 +29,24 @@ Download and install the following:
 
 ```C:\AHK\2nd-keyboard\Razer\2nd_keyboard_if_using_Razer.ahk```
 
-- Double click on it to get it running. A dumb tree icon should appear in your taskbar.
+- Double click on it to get it running. A dumb green tree icon should appear in your taskbar.
 
-- Download ALL the scripts in this folder:
+- Download ALL 106 scripts in this folder:
 https://github.com/TaranVH/2nd-keyboard/tree/master/Razer/razer_direct_launch
-- You can use this tool to do so: 
-https://minhaskamal.github.io/DownGit/#/home
 
-(Here is the direct link:)
+(Github doesn't have a way to do this, so here is a direct link:)
 https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/TaranVH/2nd-keyboard/tree/master/Razer/razer_direct_launch.ahk
+
+- Unzip that file and make sure that all the scripts go exactly here:
+
+```C:\AHK\2nd-keyboard\Razer\razer_direct_launch\``` (scripts go here)
 
 - Download this file: 
 https://github.com/TaranVH/2nd-keyboard/blob/master/Razer/Cyonosa_2nd_Keyboard.synapse3
 
-- Open Razer Synapse and import **Cyonosa_2nd_Keyboard.synapse3**
+- Open Razer Synapse and import ```Cyonosa_2nd_Keyboard.synapse3```
 
-- Make sure that the razer profile is active on your Cyonosa Chroma.
+- Make sure that the Razer profile is active on your Cyonosa Chroma keyboard.
 - Make sure that the .ahk script is running.
 	
 - Hit a key on your Razer keyboard. A message box should appear that includes the word **"Horray."** Success!
@@ -55,16 +57,14 @@ This gets a bit complicated, but basically, we had to do it in this special way,
 
 But if you like, you can use Razer synapse to directly launch an autohotkey script of your own design, which is independant from all the other ones. The sky's the limit!
 
-Now it's up to you, to replace each of those lines in 2nd_keyboard_if_using_Razer.ahk with calls to your own scripts and functions.
- 
-You can find some of mine, here: https://github.com/TaranVH/2nd-keyboard/blob/master/Almost_All_Windows_Functions.ahk
+- Now it's up to you, to replace each of those lines in 2nd_keyboard_if_using_Razer.ahk with calls to your own scripts and functions. It's all just normal AHK scripting from this point on. You can find some of my functions, here: https://github.com/TaranVH/2nd-keyboard/blob/master/Almost_All_Windows_Functions.ahk
 
 
 ### Auto-launching
 
-You will want to make this .ahk script tart up automatically when Windows does.
-Navigate to C:\AHK\2nd-keyboard\Razer
-Right click on 2nd_keyboard_if_using_Razer.ahk and select "create shortcut."
+- You will want to make this .ahk script start up automatically when Windows does.
+- Navigate to C:\AHK\2nd-keyboard\Razer
+- Right click on ```2nd_keyboard_if_using_Razer.ahk``` and select "create shortcut."
 
 - Navigate to: ```C:\Users\YOUR_USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup```
 

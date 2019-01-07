@@ -27,7 +27,7 @@ Download and install the following:
 
 https://github.com/TaranVH/2nd-keyboard/Corsair
 
-- Place the AutoHotkey script, here:
+- Place the AutoHotkey script here:
 
 ```C:\AHK\2nd-keyboard\Corsair\2nd_keyboard_if_using_iCue.ahk```
 
@@ -42,12 +42,13 @@ https://github.com/TaranVH/2nd-keyboard/Corsair
   
 - Open a notepad window, and try typing on your Corsair Keyboard. Every single key should result in a tooltip instead. Success!
   
-- Now it's up to you, to replace each of those lines with calls to your own scripts and functions. It's all just normal AHK scripting from this point on. You can find some of mine, here: https://github.com/TaranVH/2nd-keyboard/blob/master/Almost_All_Windows_Functions.ahk
+- Now it's up to you, to replace each of those lines with calls to your own scripts and functions. It's all just normal AHK scripting from this point on. You can find some of my funcitons, here: https://github.com/TaranVH/2nd-keyboard/blob/master/Almost_All_Windows_Functions.ahk
 
 
 
 ### Auto-launch
-- You will want to make this .ahk script tart up automatically when Windows does.
+
+- You will want to make this .ahk script start up automatically when Windows does.
 
 - Navigate to ```C:\AHK\2nd-keyboard\Corsair```
 
