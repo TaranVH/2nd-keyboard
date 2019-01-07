@@ -8,13 +8,28 @@ SendMode Input
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm ;this may prevent taskbar flashing.
 detecthiddenwindows, on
+Menu, Tray, Icon, shell32.dll, 42 ;turns the tray icon into a dumb green tree. If you don't like it, choose another: https://github.com/TaranVH/2nd-keyboard/blob/master/INFO_and_PROFILES/system32-shell32_dll.png
+;;#NoTrayIcon ;If you don't want a tray icon, comment this in. Not recommmended! You won't know if it's running or not.
 
-;;--------------------------------------------------------------------
-;;;;;;SCRIPT THAT RECIEVES MESSAGES AND TURNS THEM INTO FUNCTIONS:;;;;
-;;--------------------------------------------------------------------
+;________________________________________________________________________________________
+;                                                                                        
+;		  2ND KEYBOARD USING Razer Synapse (and the Cyonosa Chroma, specifially)		 
+;________________________________________________________________________________________
+;																						 
+;     Please watch [link not yet available] for a comprehensive tutorial. 		 		 
+;________________________________________________________________________________________
 
+;; You should DEFINITELY not be trying to add a 2nd keyboard unless you're already
+;; familiar with how AutoHotkey works. I recommend that you at least take this tutorial:
+;; https://autohotkey.com/docs/Tutorial.htm
+
+;; You should probably use something better than Notepad for your scripting. I use Notepad++. 
+
+
+;;----------------------------------------------------------------------------
+;;;;;;Receive_WM_COPYDATA RECIEVES MESSAGES AND TURNS THEM INTO FUNCTIONS:;;;;
+;;----------------------------------------------------------------------------
 ;;Discussion:https://autohotkey.com/board/topic/18361-anyway-to-pass-params-to-script-while-running/
-
 ;;Where I got the script from:
 ; https://autohotkey.com/docs/commands/OnMessage.htm
 
@@ -26,7 +41,6 @@ Receive_WM_COPYDATA(wParam, lParam)
 {
 StringAddress := NumGet(lParam + 2*A_PtrSize)  ; Retrieves the CopyDataStruct's lpData member.
 CopyOfData := StrGet(StringAddress)  ; Copy the string out of the structure.
-
 ;msgbox, %A_ScriptName%`nReceived the following string:`n`n%CopyOfData%
 
 Var = %CopyOfData%
@@ -106,11 +120,11 @@ DoSomethingElse := Var = "k" ? function("k")
 	: Var = "forwardslash" ?function("/")
 	: Var = "RShift" ?		function("RShift")
 	: Var = "RCtrl" ?		function("Rctrl")
-	: Var = "RWin" ?		function("Rwin")
+	: Var = "RWin" ?		function("Rwin") ;this key does not exist on a razer keyboard
 	: Var = "RAlt" ?		function("Ralt")
 	: Var = "space" ?		function("le space")
 	: Var = "Lalt" ?		function("LAlt")
-	: Var = "LWin" ?		function("LWin")
+	: Var = "LWin" ?		function("LWin") ;This key can't be remapped in Razer Synapse
 	: Var = "appskey" ?		function("appskey can be annoying")
 	: Var = "RCtrl" ?		function("RCtrl")
 	: Var = "printscreen" ?	function("PrtScn")
@@ -153,7 +167,13 @@ return true  ; Returning 1 (true) is the traditional way to acknowledge this mes
 
 
 function(par){
-msgbox, Horray %par%
+if WinActive("ahk_exe Adobe Premiere Pro.exe")
+	msgbox, You pressed %par% on your Razer keyboard while inside of Premiere Pro! ;Because of how we had to call our functions, this must be done instead of the traditional #ifwinactive
+else
+	{
+	msgbox, Horray, you pressed`n%par%`n on your Razer keyboard!
+	
+	}
 }
 
 whateverrr(stuff, things){
@@ -167,10 +187,10 @@ msgbox, you have not assigned `n%var%`nto anything
 }
 
 
-^+s::
-send ^s
-reload
-return
+; ^+s::
+; send ^s
+; reload
+; return
 
 
 

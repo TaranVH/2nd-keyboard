@@ -29,6 +29,7 @@ install-interception.exe /install
 - ...and hit <kbd>ENTER</kbd>
 - Once the program installs sucessfully, you still must restart your computer in order to complete the installation.
 
+- (If you ever want to UNinstall interception, watch this): https://www.youtube.com/watch?v=Hn18vv--sFY
 
 ### USING INTERCEPT.EXE -- (This is different from intercepTION!)
 - Download Kamaz's intercept.exe zip from here:

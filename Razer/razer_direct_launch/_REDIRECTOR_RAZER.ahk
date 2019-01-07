@@ -37,7 +37,7 @@ Send_WM_COPYDATA(ByRef StringToSend, ByRef TargetScriptTitle := "C:\AHK\2nd-keyb
     DetectHiddenWindows On
     SetTitleMatchMode 2
 	;tooltip, %errorlevel%
-    TimeOutTime = 6000  ; Optional. Milliseconds to wait for response from 2nd_keyboard_if_using_Razer.ahk. Default is 5000
+    TimeOutTime = 5000  ; Optional. Milliseconds to wait for response from 2nd_keyboard_if_using_Razer.ahk. Default is 5000
     ; Must use SendMessage not PostMessage.
     SendMessage, 0x4a, 0, &CopyDataStruct,, %TargetScriptTitle%,,,, %TimeOutTime% ; 0x4a is WM_COPYDATA.
 	;tooltip, %errorlevel%
@@ -50,7 +50,8 @@ Send_WM_COPYDATA(ByRef StringToSend, ByRef TargetScriptTitle := "C:\AHK\2nd-keyb
 ;; This is what happens when calling a function fails to work:
 failtastic(stringtosend,result){
 SoundBeep, 350, 200
-msgbox, Tried to send `n%stringToSend%`nbut the result was:`n`n%result%`n`nIs the receiving script not running?`n`nAlternatively`, perhaps it was already running another script`, so it ignored THIS one`, which is EXACTLY what is supposed to happen. `n`nAlternatively`, perhaps it timed out`, because the script took longer than 6 seconds to execute`,possibly because you were looking at a messagebox.`n`nAlternatively`, something else may have gone wrong that I have not encountered. You'll have to figure it out. Sorry!`n`nOf course`, if you don't like this message box`, you can always just delete it. It is located inside of REDIRECTOR_RAZER.ahk
+
+msgbox, Tried to send `n%stringToSend%`nbut the result was:`n`n%result%`n`nIs the receiving script not running?`n`nAlternatively`, perhaps it was already running another script`, so it ignored THIS one`, which is EXACTLY what is supposed to happen. `n`nAlternatively`, perhaps it timed out`, because the script took longer than 5 seconds to execute`,possibly because you were looking at a messagebox.`n`nAlternatively`, something else may have gone wrong that I have not encountered. You'll have to figure it out. Sorry!`n`nOf course`, if you don't like this message box`, you can always just delete it. It is located inside of _REDIRECTOR_RAZER.ahk
 }
 
 ;; This is what happens if 2nd_keyboard_if_using_Razer.ahk exists, but ignores the request.
