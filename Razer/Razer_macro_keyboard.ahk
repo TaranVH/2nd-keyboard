@@ -165,6 +165,13 @@ return true  ; Returning 1 (true) is the traditional way to acknowledge this mes
 }
 
 
+;;#############################################################################
+;;:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+;;~~~~~~~~~~~~~~~~~DEFINE YOUR FUNCTIONS BELOW THIS LINE~~~~~~~~~~~~~~~~~~~~~~~
+;;:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+;;#############################################################################
+
+
 
 function(par){
 if WinActive("ahk_exe Adobe Premiere Pro.exe")
@@ -177,7 +184,8 @@ else
 }
 
 whateverrr(stuff, things){
-msgbox, %stuff%`n%things%
+
+msgbox, %stuff%`nand`n%things%
 
 }
 

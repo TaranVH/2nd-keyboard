@@ -1,7 +1,7 @@
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ;SetWorkingDir, C:\AHK\2nd-keyboard\ ;Or you could put the directory here. Whatevs.
-Menu, Tray, Icon, imageres.dll, 223 ;changes the taskbar icon to a blue folder
+;Menu, Tray, Icon, shell32.dll, 319 ;if commented in, this line changes the taskbar icon to a blue star. Beware that if you don't have shell32.dll, it'll be a blank icon!
 ;SetKeyDelay, 0 ;IDK exactly what this does.
 
 ;;EXACT LOCATION FOR WHERE TO PUT THIS SCRIPT:
@@ -60,7 +60,7 @@ SendMode Input
 ;; You'll probably want the syntax highlighting: https://www.autohotkey.com/boards/viewtopic.php?t=50
 
 
-;;;WARNING - THIS IS KINDA UNTESTED SINCE I STOPPED USING IT. LET ME KNOW IF YOU HAVE ANY ISSUES, BY LEAVING A GITHUB... ISSUE.  https://github.com/TaranVH/2nd-keyboard/issues
+;;;WARNING - THIS IS KINDA UNTESTED SINCE I HAVE STOPPED USING IT. LET ME KNOW IF YOU HAVE ANY ISSUES, BY LEAVING A GITHUB... ISSUE.  https://github.com/TaranVH/2nd-keyboard/issues
 
 
 #if (getKeyState("F24", "P")) ;<--Everything after this line will only happen on the secondary keyboard that uses F24.
@@ -332,9 +332,10 @@ F2::msgbox, You pressed F2 on your normal keyboard while inside of Premiere Pro.
 
 ;;more key assignments here
 
-
+;;:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ;;:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ;;~~~~~~~~~~~~~~~~~DEFINE YOUR FUNCTIONS BELOW THIS LINE~~~~~~~~~~~~~~~~~~~~~~~
+;;:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ;;:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 coolFunction(stuff)
