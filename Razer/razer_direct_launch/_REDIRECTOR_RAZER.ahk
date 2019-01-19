@@ -1,9 +1,17 @@
 ﻿#NoEnv
-;; The following two lines have already been run, in the original script (like Q.ahk) which #includes this one.
+;; Lines 4 and 5 (below) have already been run, in the original script (like Q.ahk) which #includes this one.
+;;===================================================
 ;SetWorkingDir %A_ScriptDir%
 ;#Include %A_ScriptDir%/_REDIRECTOR_RAZER.ahk 
+;;===================================================
+
+;; Every single one of those small scripts is exactly the same except for their filename, which is very important, as it will be used in a function in Razer_macro_keyboard.ahk 
 
 ;; _REDIRECTOR_RAZER.ahk must always be in the same folder as all the smaller scripts that it is servicing.
+
+;;EXACT LOCATION FOR WHERE TO PUT THIS SCRIPT:
+; C:\AHK\2nd-keyboard\Razer\razer_direct_launch
+;;(This is MANDATORY. It will not work otherwise.)
 
 StringToSend = %A_Scriptname%
 ;; The above line is literally just writing the original script's filename to a variable. So, if it was Q.ahk that was launched, %StringToSend will be "Q.ahk"

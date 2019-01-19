@@ -1,8 +1,18 @@
 #NoEnv
 SendMode Input
 #InstallKeybdHook
-#InstallMouseHook
+;#InstallMouseHook
 #UseHook On
+
+;;EXACT LOCATION FOR WHERE TO PUT THIS SCRIPT:
+; C:\AHK\2nd-keyboard\Razer\
+;;(This is MANDATORY)
+
+;;Location for where to put a shortcut to this script, so that it will start with Windows:
+;;  Here for just yourself:
+;;  C:\Users\YOUR_USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+;;  Or here for all users:
+;;  C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
 
 #SingleInstance force ;only one instance may run at a time!
 #MaxHotkeysPerInterval 2000

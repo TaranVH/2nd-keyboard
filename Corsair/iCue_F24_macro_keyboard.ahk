@@ -6,6 +6,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ;;EXACT LOCATION FOR WHERE TO PUT THIS SCRIPT:
 ; C:\AHK\2nd-keyboard\Corsair\
+;;(It's not mandatory for this one, but if you use any of my other scripts, it'll make things way easier later.)
 
 ;;Location for where to put a shortcut to this script, so that it will start with Windows:
 ;;  Here for just yourself:
@@ -31,10 +32,13 @@ SendMode Input
 ;________________________________________________________________________________________
 ;                                                                                        
 ;		  2ND KEYBOARD USING iCue (and the K55, though it'll work with any of them.)     
+;  
 ;________________________________________________________________________________________
 ;																						 
 ;     Please watch [link not yet available] for a comprehensive tutorial. 		 		 
 ;________________________________________________________________________________________
+
+; https://www.corsair.com/us/en/Categories/Products/Gaming-Keyboards/Standard-Gaming-Keyboards/K55-RGB-Gaming-Keyboard/p/CH-9206015-NA
 
 ; I personally use the Hasu USB to USB keyboard converter instead of this.
 ; https://www.1upkeyboards.com/shop/controllers/usb-to-usb-converter/
@@ -66,11 +70,11 @@ SendMode Input
 #if (getKeyState("F24", "P")) ;<--Everything after this line will only happen on the secondary keyboard that uses F24.
 F24::return ;this line is mandatory for proper functionality
 
-escape::tooltip, [F24] You might wish to not give a command to escape. Could cause problems. IDK.
+escape::tooltip, "[F24] You might wish to not give a command to escape. Could cause problems. IDK."
 ;escape::return ;<--to disable a key, just use a "return", like so.
 
-F1::
-F2::
+F1::coolFunction("Hello World. From F1") ;<--This is just serving as an example of how you would assign functions to these keys
+F2::coolFunction("Hello World. From F2")
 F3::
 F4::
 F5::
@@ -103,9 +107,9 @@ backspace::tooltip, [F24]  %A_thishotKey%
 
 ;;------------------------NEXT ROW--------------------------;;
 
-tab::tooltip, [F24]  %A_thisHotKey%
-q::coolFunction("Hello World. From Q") ;<--This is just serving as an example of how you would assign functions to these keys
-w::coolFunction("Hello World. From W")
+tab::
+q::
+w::
 e::
 r::
 t::
@@ -117,7 +121,7 @@ p::
 [::
 ]::
 \::tooltip, [F24]  %A_thisHotKey%
-;;capslock::tooltip, [F24] capslock - this should have been remapped to F20. Don't use this line.
+;;capslock::tooltip, [F24] capslock - this should have been remapped to F20. Keep this line commented out.
 
 ;;------------------------NEXT ROW--------------------------;;
 
@@ -155,6 +159,7 @@ tooltip,
 return
 ;;And THAT^^ is how you do multi-line instructions in AutoHotkey.
 ;;Notice that the very first line, "space::" cannot have anything else on it.
+;;Also notice the mandatory RETURN at the very end.
 ;;Again, these are fundamentals that you should have learned from the tutorial.
 
 
@@ -196,6 +201,7 @@ SC070::tooltip, [F24] LShift -to-> SC070:International 2
 SC071 up::tooltip, [F24] LCtrl -to-> SC071:Language 2
 SC072 up::tooltip, [F24] LWin -to-> SC072:Language 1
 SC073 up::tooltip, [F24] LAlt -to-> SC073:International 1
+;the above MUST up the UP stroke
 
 SC077::tooltip, [F24] RAlt -to-> SC077:Language 4
 SC078::tooltip, [F24] RWin -to-> SC078:Language 3
@@ -239,8 +245,10 @@ down::
 left::
 right::tooltip,[F24] %A_thishotKey%
 
-;;================== THE NUMPAD ======================;;
-
+;;=========== THE NUMPAD WITH NUMLOCK ON ==============;;
+;;; -- (I never turn numlock off, FYI.) -- ;;
+;;Please note that SHIFT will make numlock act like it's off...
+;;or is it the other way around? AGH! Just don't use shift with the numpad!
 numpad0::
 numpad1::
 numpad2::
@@ -250,10 +258,26 @@ numpad5::
 numpad6::
 numpad7::
 numpad8::
-numpad9::tooltip,[F24] %A_thishotKey%
+numpad9::tooltip,[F24] %A_thishotKey% Because numlock is ON`, which is how I like it.
 
+;;============ THE NUMPAD WITH NUMLOCK OFF ============;;
+numpadins::
+numpadend::
+numpaddown::
+numpadpgdn::
+numpadleft::
+numpadclear::
+numpadright::
+numpadhome::
+numpadup::
+numpadpgup::tooltip,[F24] %A_thishotKey% Because numlock is off
 
-;;NumLock::tooltip, DO NOT USE THIS IN YOUR 2ND KEYBOARD!
+;;If you want a function to be called no matter what the status of numlock, do it like so:
+;numpad0::
+;numpadins::coolFunction("hello")
+
+;;====== NUMPAD KEYS THAT DON'T CARE ABOUT NUMLOCK =====;;
+;;NumLock::tooltip, DO NOT USE THE NUMLOCK KEY IN YOUR 2ND KEYBOARD! I have replaced it with SC05C-International 6
 numpadDiv::
 numpadMult::
 numpadSub::
@@ -261,19 +285,36 @@ numpadAdd::
 numpadEnter::
 numpadDot::tooltip, [F24] %A_thishotKey%
 
-;;================= NEXT SECTION ======================;;
-;;The K55 has 6 macro keys. I assigned them to F13-F18. still wrapped, of course. Be careful though, as this might create cross-talk if you use any of those keys in any other AHK scripts.
-F13::tooltip, [F24] G1 mapped to %A_thishotKey%
-F14::tooltip, [F24] G2 mapped to %A_thishotKey%
-F15::tooltip, [F24] G3 mapped to %A_thishotKey%
-F16::tooltip, [F24] G4 mapped to %A_thishotKey%
-F17::tooltip, [F24] G5 mapped to %A_thishotKey%
-F18::tooltip, [F24] G6 mapped to %A_thishotKey%
-
-
 #if ;this line will end the F24 secondary keyboard assignments.
 
+
+;;================= NEXT SECTION ======================;;
+;; The K55 has 6 macro keys. I assigned them to F13-F18.
+;; These keys are NOT WRAPPED. But you can do it that way (in iCue) if you like. 
+
+F13::tooltip, G1 mapped to %A_thishotKey%
+F14::tooltip, G2 mapped to %A_thishotKey%
+F15::tooltip, G3 mapped to %A_thishotKey%
+F16::tooltip, G4 mapped to %A_thishotKey%
+F17::tooltip, G5 mapped to %A_thishotKey%
+F18::tooltip, G6 mapped to %A_thishotKey%
+
+
+;;====== MEDIA KEYS CANNOT BE USED IN AN iCUE MACRO =====;;
+;;==== BUT WE CAN REMAP THEM TO THE SUPER FUNCTION KEYS==;;
+
+F19::tooltip, media_stop mapped to %A_thishotKey%
+;;F20 was already used as capslock
+F21::tooltip, media_prev mapped to %A_thishotKey%
+F22::tooltip, media_play_pause mapped to %A_thishotKey%
+F23::tooltip, media_next mapped to %A_thishotKey%
+;;F24 is already used as this keyboard's wrapping key.
+
+
+;; move the #if to here if you want to use wrapped F13-F23 keys
+
 ;;;--------------------IMPORTANT: HOW TO USE #IF THINGIES----------------------
+;;;---------------(I don't know what they are actually called.)----------------
 
 ;;You can use more than one #if thingy at a time, but it must be done like so:
 #if (getKeyState("F24", "P")) and if WinActive("ahk_exe Adobe Premiere Pro.exe")
@@ -315,9 +356,12 @@ F1::msgbox, You pressed F1 on your secondary keyboard while inside of Premiere P
 
 
 ;;*******************************************************************************
+;;*******************************************************************************
 ;;~~~~~~~~~~~~~DEFINE YOUR NORMAL KEY ASSIGNMENTS BELOW THIS LINE~~~~~~~~~~~~~~~~
 ;;If you assign them BEFORE the second keyboard, they'll overrule it. That's bad!
 ;;*******************************************************************************
+;;*******************************************************************************
+
 
 #ifwinactive ahk_exe ahk_exe Adobe Premiere Pro.exe ;Code beneath this line will ONLY run in Premiere
 F2::msgbox, You pressed F2 on your normal keyboard while inside of Premiere Pro. `nThis is an autohotkey script by the way - in case you forgot.`nCheck your taskbar to find it.

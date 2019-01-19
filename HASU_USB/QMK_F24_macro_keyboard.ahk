@@ -12,9 +12,10 @@ SetWorkingDir, C:\AHK\2nd-keyboard\
 ;; https://www.youtube.com/playlist?list=PLH1gH0v9E3ruYrNyRbHhDe6XDfw4sZdZr
 
 ;;LOCATION FOR WHERE TO PUT THIS SCRIPT:
+; C:\AHK\2nd-keyboard\HASU_USB\
+;;(It's not mandatory for this one, but if you use any of my other scripts, it'll make things easier later.)
 
 ;;Location for where to put a shortcut to the script, such that it will start when Windows starts:
-
 ;;  Here for just yourself:
 ;;  C:\Users\YOUR_USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 ;;  Or here for all users:
@@ -56,13 +57,19 @@ SendMode Input
 ;; https://notepad-plus-plus.org/
 ;; You'll probably want the syntax highlighting:  https://stackoverflow.com/questions/45466733/autohotkey-syntax-highlighting-in-notepad
 
+;;COOL BONUS BECAUSE YOU'RE USING QMK:
+;;The up and down keystrokes are registered seperately.
+;;Therefore, your macro can do half of its action on the down stroke,
+;;And the other half on the up stroke. (using "keywait,")
+;;This can be very handy in specific situations.
+;;The Corsair K55 keyboard fires the up and down keystrokes instantly.
 
 #if (getKeyState("F24", "P")) ;<--Everything after this line will only happen on the secondary keyboard that uses F24.
 F24::return ;this line is mandatory for proper functionality
 
-escape::tooltip, [F24] You might wish to not give a command to escape. Could cause problems. IDK.
-F1::
-F2::
+escape::tooltip, "[F24] You might wish to not give a command to escape. Could cause problems. IDK."
+F1::coolFunction("Hello World. From F1") ;<--This is just serving as an example of how you would assign functions to these keys
+F2::coolFunction("Hello World. From F2")
 F3::
 F4::
 F5::
@@ -72,7 +79,7 @@ F9::
 F8::
 F10::
 F11::
-F12::tooltip, [F24]  %A_thishotKey%
+F12::tooltip, you pressed the function key %A_thishotkey% on the [F24] keyboard
 ;;Note that the assignment on the above line will apply to ALL prior lines ending in "::"
 ;;...which you should know from the AHK tutorial I linked you to.
 
@@ -95,9 +102,9 @@ backspace::tooltip, [F24]  %A_thishotKey%
 
 ;;------------------------NEXT ROW--------------------------;;
 
-tab::tooltip, [F24]  %A_thisHotKey%
-q::coolFunction("Hello World. From Q") ;<--This is just serving as an example of how you would assign functions to these keys
-w::coolFunction("Hello World. From W")
+tab::
+q::
+w::
 e::
 r::
 t::
@@ -109,7 +116,7 @@ p::
 [::
 ]::
 \::tooltip, [F24]  %A_thisHotKey%
-;;capslock::tooltip, [F24] capslock - this should have been remapped to F20. Don't use this line.
+;;capslock::tooltip, [F24] capslock - this should have been remapped to F20. Keep this line commented out.
 
 ;;------------------------NEXT ROW--------------------------;;
 
@@ -152,7 +159,7 @@ return
 
 ;;===================== MODIFIERS =========================;;
 
-;Lshift::tooltip, If you used the "F22_with_modifiers" hex file then you shouldn't block or use the modifiers.
+;Lshift::tooltip, Even if you used the "F22_with_modifiers" hex file, these woudn't be wrapped unless you were already holding down some OTHER key. hmm.
 ;If you DID use F24.hex, then these won't get pressed in the first place.
 ;Lctrl::tooltip, do not use
 ;Lwin::tooltip, do not use
@@ -173,6 +180,7 @@ return
 ;;Etc.
 ;;However, I use few to no modifiers on my secondary keyboards... I prefer tap dance instead. The decision is up to you.
 ;;If you're super confused by all this, don't be. Just use F24.hex and don't worry about the modifiers at all.
+;;Also, I have to do some more testing to see if the stuff I said above is actually true, hmmmmmm.
 
 
 ;;================= MODIFIERS REMAPPED ======================;;
@@ -183,10 +191,11 @@ return
 
 SC070::tooltip, [F24] Lshift -to-> SC070-International 2
 
-;; The following 3 assignments MUST use the UP stroke - the down stroke doesn't appear, at least when sent from QMK...
+;; The following 3 assignments MUST use the UP stroke - the down stroke doesn't appear for some reason.
 SC071 up::tooltip, [F24] LCtrl -to-> SC071-Language 2
 SC072 up::tooltip, [F24] LWin -to-> SC072-Language 1
 SC073 up::tooltip, [F24] LAlt -to-> SC073-International 1
+; The above 3 assignments MUST up the UP stroke
 
 SC077::tooltip, [F24] RAlt -to-> SC077-Language 4
 SC078::tooltip, [F24] RWin -to-> SC078-Language 3
@@ -230,7 +239,10 @@ down::
 left::
 right::tooltip,[F24] %A_thishotKey%
 
-;;================== THE NUMPAD ======================;;
+;;=========== THE NUMPAD WITH NUMLOCK ON ==============;;
+;;; -- (I never turn numlock off, FYI.) -- ;;
+;;Please note that SHIFT will make numlock act like it's off...
+;;or is it the other way around? AGH! Just don't use shift with the numpad!
 
 numpad0::
 numpad1::
@@ -243,8 +255,20 @@ numpad7::
 numpad8::
 numpad9::tooltip,[F24] %A_thishotKey%
 
+;;============ THE NUMPAD WITH NUMLOCK OFF ============;;
+numpadins::
+numpadend::
+numpaddown::
+numpadpgdn::
+numpadleft::
+numpadclear::
+numpadright::
+numpadhome::
+numpadup::
+numpadpgup::tooltip,[F24] %A_thishotKey% Because numlock is off
 
-;;NumLock::tooltip, DO NOT USE THIS IN YOUR 2ND KEYBOARD!
+;;====== NUMPAD KEYS THAT DON'T CARE ABOUT NUMLOCK =====;;
+;;NumLock::tooltip, DO NOT USE THE NUMLOCK KEY IN YOUR 2ND KEYBOARD! I have replaced it with SC05C-International 6
 numpadDiv::
 numpadMult::
 numpadSub::
@@ -256,6 +280,7 @@ numpadDot::tooltip, [F24] %A_thishotKey%
 ; I tested a CoolerMaster keyboard that had P1 P2 P3 and P4 keys on it,
 ; which corresponded to some of the super function keys. (F13-F24)
 ; So I've put those below too, just in case you have the same thing.
+; You don't have the option to NOT wrap them, unless you make your own hex file.
 
 F13::
 F14::
@@ -270,9 +295,15 @@ F19::tooltip, [F24] %A_thishotKey%
 ;;F23::might be used by some other keyboard
 ;;F24::do not use
 
+;;== MEDIA KEYS CANNOT BE WRAPPED IN F24 WITH THE USB CONVERTER ==;;
+;;; otherwise they would be here :(
+
+;;============== END OF ALL KEYBOARD KEYS ===============;;
+
 #if ;this line will end the F24 secondary keyboard assignments.
 
-;;;--------------------IMPORTANT: HOW TO USE #IF THINGIES----------------------
+
+;;;---------------IMPORTANT: HOW TO USE #IF THINGIES-------------------
 
 ;;You can use more than one #if thingy at a time, but it must be done like so:
 #if (getKeyState("F24", "P")) and if WinActive("ahk_exe Adobe Premiere Pro.exe")
@@ -280,7 +311,7 @@ F1::msgbox, You pressed F1 on your secondary keyboard while inside of Premiere P
 
 ;; HOWEVER, You still would still need to block F1 using #if (getKeyState("F24", "P"))
 ;; If you don't, it'll pass through normally, any time Premiere is NOT active.
-;; Does that make sense? I sure hope so.
+;; Does that make sense? I sure hope so. Experiment with it if you don't understand.
 
 ;; Alternatively, you can use the following: (Comment it in, and comment out other instances of F1::)
 ; #if (getKeyState("F24", "P"))

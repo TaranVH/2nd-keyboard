@@ -164,70 +164,71 @@ return
 ;                                                                    
 ;		  2ND KEYBOARD USING HASU USB TO USB (Logitech K120)  
 ;____________________________________________________________________
-;please watch https://www.youtube.com/watch?v=y3e_ri-vOIo if you need help.
-;DANGER: installing interception may cause your USB devices to stop working sometimes, because it is limited to supporting only 10 of each device class. You have to uninstall it to fix that. Here is a follow up video with new information: https://www.youtube.com/watch?v=Hn18vv--sFY
-
+; watch [link NYA] to understand how this works.
+; https://www.1upkeyboards.com/shop/controllers/usb-to-usb-converter/
 
 ;#if ( \\\\\\\\\\\\\\\getKeyState("F23", "P")) && IfWinActive ahk_exe Adobe Premiere Pro.exe ;have not tested this to see if it works
 ;#if (getKeyState("F23", "P")) && (uselayer = 0) ;;you can also use a varibable like so.
 
 
 ;;;;;;;;;;;;;BEGIN K120 (2ND KEYBOARD) REMAPPED INTO ALL MACRO KEYS;;;;;;;;;;;;;;;;;
-#if (getKeyState("F23", "P")) ;THIS is the line that makes all the lines below possible.
+#if (getKeyState("F23", "P")) ;This is the line that makes all the lines below possible.
 
 
 F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it to "return," since it will ALWAYS be fired before any of the keystrokes below, any time you use the 2nd keyboard.
-;;also, you must NEVER use F23 for anything else. Doing so will sometimes allow and F23 keystroke to pass through unwrapped, which can cause big problems with cross-talk.
+;;This also means that you must NEVER use F23 for anything else. Doing so will sometimes allow a key to pass through unwrapped, which can cause big problems with cross-talk.
 
-;SC06E::return ;;This is F23's scan code. Using this line acts as some insurance against cross-talk. comment this in if you have issues.
+;SC06E::return ;;This is F23's scan code. Using this line acts as some more insurance against cross-talk. comment this in if you have issues.
 
 ;Keep in mind, these use the CTRL modifier, as indicated by the ^
+;The ~ is there to allow the key revealer script to notice these... but it might cause issues, so i might change it.
 ~^numpad1::
 Keyshower("add marker color 1 (taran mod)")
 marker()
 send !{numpad1}
 return
 
-;I converted the "numpad5" key on the 2nd keyboard into a CTRL key, by using intercept. All my keyboard bindings can be found in: keyremap.ini
+;I converted the "numpad5" key on the 2nd keyboard into a CTRL key.
 
-;intercept converted this the numlock key into a harmless numpad5.
-~^numpad5::
+;the following assignment is no longer relevant, i think.
+^numpad5::
 Keyshower("add marker color 2 (taran mod)")
 marker()
 send !{numpad2}
 return
+;the above assignment is no longer relevant
 
-~^numpadmult::
+^numpadmult::
 Keyshower("add marker color 3 (taran mod)")
 marker()
 send !{numpad3}
 return
 
-~^numpad3::
+^numpad3::
 Keyshower("add marker color 4 (taran mod)")
 marker()
 send !{numpad4}
 return
 
-~^numpad7::
+^numpad7::
 Keyshower("add marker color 5 (taran mod)")
 marker()
 send !{numpad5}
 return
 
-~^numpaddiv::
+^numpaddiv::
 Keyshower("add marker color 6 (taran mod)")
 marker()
 send !{numpad6}
 return
 
-~^numpad0::
+^numpad0::
 Keyshower("add marker color 7 (taran mod)")
 marker()
 send !{numpad7}
 return
 
-~^numpad9::
+^numpad9::
 Keyshower("add marker color 8 (taran mod)")
 marker()
 send !{numpad8}
@@ -236,7 +237,6 @@ return
 
 escape::msgbox,,, you pressed escape. this might cause like problems maybe, 0.9
 
-;C:\ProgramData\NVIDIA Corporation\GeForce Experience\Update ;location to disable GFEv3
 
 F2::insertSFX("Whoosh19-Short") ;you may not use spaces for filenames of sounds that you want to retreive in this way... since searching in premiere will disregard spaces in a a weird way... returning multiple wrong results....
 F3::insertSFX("Whoosh7-Short")
@@ -248,7 +248,13 @@ F9::insertSFX("SimpleWhoosh3")
 F8::insertSFX("SimpleWhoosh8")
 F10::insertSFX("woosh2")
 F11::insertSFX("woosh1")
-F12::InstantExplorer("Z:\Linus\5. Fast As Possible\_FAP Transcoding\_FAP Delivery")
+F12::
+IfWinNotExist, ahk_class TvnWindowClass
+	Run, C:\Program Files\TightVNC\tvnviewer.exe
+if WinExist("ahk_exe tvnviewer.exe")
+	WinActivate ahk_exe tvnviewer.exe
+return
+
 
 ;F12::search() ;"search" is also used on ^+j 
 ; F12 must not used here IF it is the keyboard's launching key. You MAY put it here if you used F13 to F24 as the launching key
@@ -261,6 +267,10 @@ F12::InstantExplorer("Z:\Linus\5. Fast As Possible\_FAP Transcoding\_FAP Deliver
 2::
 3::
 4::
+tooltip, this happens on key down
+keywait, 4 ;waits for the key to go up
+tooltip, and this happens on key up. dang
+return
 5::insertSFX("")
 6::insertSFX("record scratch")
 7::preset("180 hue angle")
@@ -269,17 +279,13 @@ F12::InstantExplorer("Z:\Linus\5. Fast As Possible\_FAP Transcoding\_FAP Deliver
 0::insertSFX("pop")
 -::audioMonoMaker("left")
 =::audioMonoMaker("right")
-backspace::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\cutting_room_floor")
+backspace::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\cutting_room_floor") ;"FLOOR"
 
 ;;;;;next line;;;;;;;;
 ;;;;;K120 keyb;;;;;;;;
 
 tab::msgbox,,,K120 - you pressed tab. :P,0.8
 
-;This was the old code, before I realized I can just use A_thishotkey and assign all of them at once!!
-; q::recallClipboard("q")
-; w::recallClipboard("w")
-; e::recallClipboard("e")
 q::preset("T wipe straight 135")
 w::preset("T wipe straight 225")
 
@@ -296,7 +302,7 @@ r::preset("T wipe soft 225")
 t::recallClipboard("t")
 +t::saveClipboard("t")
 
-;;;still need to improve and fix the clipboard scriptypoo
+
 ;;t::recallClipboard(A_thishotkey)
 ;;+t::saveClipboard(A_thishotkey)
 
@@ -307,19 +313,20 @@ o::preset("flip vertical")
 p::preset("flip horizontal")
 [::preset("T impact flash MED")
 ]::preset("T Impact Pop")
+
 \::
 instantExplorer("Z:\Linus\9 - Tools\1-Sound Effects")
 sleep 20
 search() ;immediately highlights the search bar so you can search for a sound effect. Sadly this does not always seem to work...
 sleep 250
-search()
+search() ;so i do it again here. still doesn't always work.
 return
 
 ;;;;;next line;;;;;;;;
 ;;;;K120 keyboard;;;;;
 
 ; capslock::msgbox, , ,i hate capslock!, 1000
-capslock::capslock
+;capslock::capslock
 
 a::preset("T wipe straight 45")
 s::preset("T wipe straight 315")
@@ -349,7 +356,7 @@ enter::enter
 
 ;;;;;next line, still inside the K120;;;;;;;;
 
-Lshift::Lshift
+;Lshift::Lshift
 ;;msgbox, , ,you pressed Left shift - you should never see this message if you let it pass normally, 5
 ;now I use it as a modifier for some of the other numpad keys.
 z::preset("T wipe soft down")
@@ -378,74 +385,56 @@ m::preset("a0p0 pan down")
 
 
 
-capslock::msgbox,,, K120 capslock,0.5
 
+F20::msgbox,,, K120 capslock to F20,0.5
 ;;SC062 was once the remap of appskey, but it seemed to cause problems.
 
-SC072::msgbox,,, K120 Lwin -to-> SC072:"Lang 1", 0.5 ;Lwin to SC072 - Lang1
-SC073::msgbox,,, K120 Lalt -to-> SC073:"International1", 0.5 ;LAlt to SC073 - International1
 
+;;Lshift -to-> SC070-International 2 -back-to-> Lshift. Don't ask...
+SC070::Lshift
 
-SC07D::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music") ;K120 RShift -to- SC07D: International3
+SC071 up::tooltip, [F23] LCtrl -to-> SC071-Language 2
+SC072 up::tooltip, [F23] LWin -to-> SC072-Language 1
+SC073 up::tooltip, [F23] LAlt -to-> SC073-International 1
+
+SC077::tooltip, [F23] RAlt -to-> SC077-Language 4
+SC078::tooltip, [F23] RWin -to-> SC078-Language 3
+SC079::tooltip, [F23] AppsKey -to-> SC079-International 4
 SC07B::preset("50% stereo") ;K120 rCTRL -to-> SC07B:International5 -to-> Premiere 50% stereo
+SC07D::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music") ;K120 RShift -to- SC07D: International3
 
 space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
-;SC065::runexplorer("Z:\Linus\10. Ad Assets & Integrations\~ For Review") ;this is remapped from ALT. JK, SC065 is F14, do not use.
-appskey::msgbox, this is the right click appskey KEY I guess
 
-; PrintScreen::InstantExplorer("Z:\Linus\Team_Documents\TARAN THINGS")
-PrintScreen::
-IfWinNotExist, ahk_class TvnWindowClass
-	Run, C:\Program Files\TightVNC\tvnviewer.exe
-if WinExist("ahk_exe tvnviewer.exe")
-	WinActivate ahk_exe tvnviewer.exe
-return
+PrintScreen::InstantExplorer("Z:\Linus\2. Tech Linked\5. Transcode\_TL Delivery")
+ScrollLock::InstantExplorer("Z:\Linus\5. Fast As Possible\_FAP Transcoding\_FAP Delivery") ;scroll lock WAS reassigned to SC061 back when i used interception
+;;Pause -to-> SC07E:Brazillian comma
+SC07E::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\_LTT DELIVERY")
 
-ScrollLock::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\_LTT DELIVERY") ;just in case
-;pause::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\Delivery")
-;numlock::msgbox, hello again
-SC061::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\_LTT DELIVERY") ;from scroll lock - K120
 
-CtrlBreak::msgbox, CTRL BREAK - maybe the default output of the pause/break key??
-pause::msgbox, is this the PAUSE key?? IDK
-Break::msgbox, Maybe THIS is the pause/break key?? WHAT CAN I BELEVE ANYMORE??
+
+
+; CtrlBreak::msgbox, CTRL BREAK - maybe the default output of the pause/break key??
+; pause::msgbox, is this the PAUSE key?? IDK
+; Break::msgbox, Maybe THIS is the pause/break key?? WHAT CAN I BELEVE ANYMORE??
 
 pgdn::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Pending")
 end::InstantExplorer("Z:\Linus\5. Fast As Possible\1. Pending")
-delete::InstantExplorer("Z:\Linus\6. Channel Super Fun")
+delete::InstantExplorer("Z:\Linus\2. Tech Linked\3. Pending")
 
 pgup::InstantExplorer("N:\Linus Tech Tips")
 home::InstantExplorer("N:\Fast As Possible") ;runexplorer("N:\Fast As Possible")
-insert::InstantExplorer("N:\Channel Super Fun")
+insert::InstantExplorer("N:\TechLinked")
 
 up::preset("push up")
 down::preset("push down")
 left::preset("push left")
 right::preset("push right")
 
-;;;;;next area;;;;;;;;
-;;;;K120 keyboard;;;;;
 
-numpad0::SendKey("numpad0", , "sky blue")
-numpad1::SendKey(A_thishotkey, ,"blue-green")
-numpad2::SendKey(A_thishotkey, ,"nudge down")
-numpad3::
-if WinActive("ahk_exe Adobe Premiere Pro.exe")
-	SendKey(A_thishotkey, ,"orange")
-if WinActive("ahk_exe chrome.exe")
-	sendinput, ^+{tab} ;go to previous tab in chrome
-return
+;;=========== THE K120 NUMPAD ==============;;
 
-numpad4::SendKey(A_thishotkey, ,"nudge left")
-numpad5::msgbox, this text should never appear. I have remapped numpad5 to "left ctrl" in interceptor. scan code 1d,0,0.
-numpad6::SendKey(A_thishotkey, ,"nudge right")
-numpad7::SendKey(A_thishotkey, ,"purple")
-numpad8::SendKey(A_thishotkey, ,"nudge up")
-numpad9::SendKey(A_thishotkey, ,"dark green")
-
-+numlock::msgbox, "shift numlock"
-;on the K120
-numlock::
+;;NumLock -to-> SC05C-International 6
+SC05C::
 IfWinActive, ahk_exe Adobe Premiere Pro.exe
 	{
 	tippy("numlock")
@@ -455,6 +444,34 @@ else
 	search()
 return
 
+numpadins::
+numpad0::SendKey("numpad0", , "sky blue")
+numpadend::
+numpad1::SendKey(A_thishotkey, ,"blue-green")
+numpaddown::
+numpad2::SendKey(A_thishotkey, ,"nudge down")
+numpadpgdn::
+numpad3::
+if WinActive("ahk_exe Adobe Premiere Pro.exe")
+	SendKey(A_thishotkey, ,"orange")
+if WinActive("ahk_exe chrome.exe")
+	sendinput, ^+{tab} ;go to previous tab in chrome
+return
+
+numpadleft::
+numpad4::SendKey(A_thishotkey, ,"nudge left")
+numpadclear::
+numpad5::Rctrl ;because I use it... well, as a ctrl key. baka.
+numpadright::
+numpad6::SendKey(A_thishotkey, ,"nudge right")
+numpadhome::
+numpad7::SendKey(A_thishotkey, ,"purple")
+numpadup::
+numpad8::SendKey(A_thishotkey, ,"nudge up")
+numpadpgup::
+numpad9::SendKey(A_thishotkey, ,"dark green")
+
+
 numpadDiv::SendKey("numpadDiv", ,"clip blue")
 numpadMult::SendKey("numpadmult", ,"pink")
 
@@ -463,23 +480,18 @@ numpadSub::openApp("ahk_class AU3Reveal", "AU3_Spy.exe", "Active Window Info") ;
 numpadAdd::openApp("ahk_class Notepad++", "notepad++.exe") ;msgbox, , , num ADD, 0.5
 numpadEnter::switchToChrome()
 
-
+numpaddel::
 numpadDot::openApp("ahk_class Photoshop", "Photoshop.exe") ;msgbox, , , num dot, 0.5
 
 
-SC045::msgbox sc045... pause/break, but MAYBE numlock???
 
-;scancode scan code information
-SC07F::msgbox sc7F is as high as I could go, after 80 they become unusable for some reason.
-SC080::msgbox sc080... this does not register.
-SC0FF::msgbox sc0FF ...this does not register.
 
 #if
 #IfWinActive
 
-;-------------------------------------------------------------------------------
-;----------END OF K120 (2ND KEYBOARD) REMAPPED INTO ALL MACRO KEYS--------------
-;-------------------------------------------------------------------------------
+;-----------------------------------------------------------------------
+;--------END OF K120 (2ND KEYBOARD) REMAPPED INTO ALL MACRO KEYS--------
+;-----------------------------------------------------------------------
 
 
 ;3RD KEYBOARD CODE WAS HERE (was actually just a shitty numpad) - used F22 - but has been replaced with the stream deck.
@@ -495,47 +507,48 @@ SC0FF::msgbox sc0FF ...this does not register.
 
 
 #if
-;~~~~END OF 4TH KEYBOARD (mechanical Jelly) USING INTERCEPTOR~~~~
+;~~~~(mechanical Jelly) USING INTERCEPTOR (No longer used)~~~~
+; But the code for the ALT characters is really clever, and I've seen it nowhere else, so I am saving it here for all of y'all
 ; https://www.reddit.com/r/MechanicalKeyboards/comments/4kf2gk/review_jellycomb_mechanical_numpad/
 ; https://autohotkey.com/board/topic/29542-rebinding-alt-061/
 
 ; this is for the jellycomb numpad 4th keyboard's TOP ROW of keys:
-$*~LAlt::
-Loop 10
-	Hotkey, % "*Numpad" A_Index-1, HandleNum, on
-keywait, LAlt ; replace with "Sleep 100" for an alternative
-Loop 10
-	Hotkey, % "*Numpad" A_Index-1, HandleNum, off
-If (Ascii_Unicode_Input = "061")
-	{
-	msgbox,,, you pressed the equals key!,1
-	; ;InputBox, password, Enter Password, (your input will be hidden), hide 
-	; InputBox, UserInput, Phone Number, Please confirm murdering of premiere, , 640, 480
-	; if UserInput = "="
-		; {
-		; MsgBox, You entered "%UserInput%"
-		; Run, %comspec% /c "taskkill.exe /F /IM Adobe Premiere Pro.exe",, hide 
-		; }	
-	; else***
-		; return
-	}
-If (Ascii_Unicode_Input = "040")
-{
-	prFocus("Effect Controls") ;the following shortcut only works if the Effect Controls panel is in focus...
-	send ^!p ;shortcut for pin to clip
-	prFocus("timeline")
-}
-If (Ascii_Unicode_Input = "041")
-	msgbox,,, you pressed the close parenthisesis key!,1
-Ascii_Unicode_Input := ""
-return
+; $*~LAlt::
+; Loop 10
+	; Hotkey, % "*Numpad" A_Index-1, HandleNum, on
+; keywait, LAlt ; replace with "Sleep 100" for an alternative
+; Loop 10
+	; Hotkey, % "*Numpad" A_Index-1, HandleNum, off
+; If (Ascii_Unicode_Input = "061")
+	; {
+	; msgbox,,, you pressed the equals key!,1
+	; ; ;InputBox, password, Enter Password, (your input will be hidden), hide 
+	; ; InputBox, UserInput, Phone Number, Please confirm murdering of premiere, , 640, 480
+	; ; if UserInput = "="
+		; ; {
+		; ; MsgBox, You entered "%UserInput%"
+		; ; Run, %comspec% /c "taskkill.exe /F /IM Adobe Premiere Pro.exe",, hide 
+		; ; }	
+	; ; else***
+		; ; return
+	; }
+; If (Ascii_Unicode_Input = "040")
+; {
+	; prFocus("Effect Controls") ;the following shortcut only works if the Effect Controls panel is in focus...
+	; send ^!p ;shortcut for pin to clip
+	; prFocus("timeline")
+; }
+; If (Ascii_Unicode_Input = "041")
+	; msgbox,,, you pressed the close parenthisesis key!,1
+; Ascii_Unicode_Input := ""
+; return
 
-HandleNum:
-Ascii_Unicode_Input .= SubStr( A_ThisHotkey, 0 )
-return
-#if
+; HandleNum:
+; Ascii_Unicode_Input .= SubStr( A_ThisHotkey, 0 )
+; return
+; #if
 
-;________________END OF 4TH KEYBOARD OVERALL______________________
+;___________________END OF JELLY NUMPAD______________________
 
 
 	
@@ -814,7 +827,7 @@ return
 ;;;this is the azio F24 keyboard;;;
 ;;;oh god the chaos of my code. it's awful but it works somehow
 
-Lshift::tooltip, you pressed F24 then %A_thishotkey%
+;Lshift::tooltip, you pressed F24 then %A_thishotkey%
 z::
 if WinActive("ahk_class Premiere Pro")
 	send ^+6 ;track targeting presets in premiere.
@@ -1506,10 +1519,13 @@ return
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;cut single clip at cursor
 Xbutton1::
-F7::
+~F7::
 send, ^!d ;ctrl alt d is DESELECT
 send, b ;blade tool
+;keywait, F7 ;waits for the key to go UP.
+
 send, {alt down}
+keywait, %A_thishotkey% ;waits for the key to go UP.
 send, {lbutton}
 send, {alt up}
 sleep 10
@@ -1604,6 +1620,9 @@ return
 
 #IfWinActive
 
+;;I can't use ~ thingies or these keys can very easily get stuck...
+Rshift & Lshift::capslock
+Lshift & Rshift::capslock
 +capslock::capslock ;only SHIFT CAPSLOCK will now turn on capslock, freeing the real capslock key to be used as a MODIFIER KEY, just like CTRL.
 +F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
 ;capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
