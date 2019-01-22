@@ -31,7 +31,7 @@ https://github.com/TaranVH/2nd-keyboard/Corsair
 
 ```C:\AHK\2nd-keyboard\Corsair\2nd_keyboard_if_using_iCue.ahk```
 
-- Double click on it to get it running. A blue folder icon should appear in your taskbar.
+- In an Explorer window, double click on the .ahk script to get it running. An "H" icon should appear in your taskbar. You can hover over it to view the script name, or right click it for a little menu.
   
 - Open iCue and import ```K55_wrapped_in_F24.cueprofile```
   (I do not know if this will work for other Corsair keyboards...)
@@ -41,6 +41,8 @@ https://github.com/TaranVH/2nd-keyboard/Corsair
 - Make sure that the .ahk script is running.
   
 - Open a notepad window, and try typing on your Corsair Keyboard. Every single key should result in a tooltip instead. Success!
+
+- NOTE: If you mash keys too rapidly, some unwrapped keystrokes might get through. But, you shouldn't ever need to do that, since this is a macro keyboard, intended for only an occasional, single key press.
   
 - Now it's up to you, to replace each of those lines with calls to your own scripts and functions. It's all just normal AHK scripting from this point on. You can find some of my funcitons, here: https://github.com/TaranVH/2nd-keyboard/blob/master/Almost_All_Windows_Functions.ahk
 
