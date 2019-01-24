@@ -969,8 +969,11 @@ numpadDiv::monitorKeys("program","^+3") ;program monitor res to 1/4
 
 numpadMult::send, +`` ;premiere shortcut for "Maximize (program?) Monitor"
 numpadSub::tooltip, you pressed F24 then %A_thishotkey%
-numpadAdd::sendinput, ^!{F10}
-numpadEnter::sendinput, ^!m ;mute/unmute mic - shadowplay ;unfortunately ctrl alt m is also NEW COMMENT in google sheets... i might wish to change it
+numpadAdd::sendinput, ^!{F10} ;default is shift alt F10, and i hate thingies that dont use the ctrl key
+numpadEnter::
+sendinput, ^!m ;mute/unmute mic - shadowplay ;unfortunately ctrl alt m is also NEW COMMENT in google sheets... i might wish to change it
+tippy("this should work")
+return
 
 numpadDot::tooltip, you pressed F24 then %A_thishotkey%
 
@@ -1082,6 +1085,12 @@ sleep 10
 Sendinput !d
 sleep 10
 return
+
+;;just some tests
+; #IfWinActive
+; F10::send, {SC10d} 
+; F11::send, {SC10e} 
+; F12::send, {SC10f} 
 
 
 ;;;;;;;;;;;;;;EXPLORER SHORTCUTS;;;;;;;;;;;;;;;;;
@@ -1282,7 +1291,8 @@ Xbutton2::return
 #IfWinActive
 ;macro key G1 on K95. universal SEARCH EVERYTHINGER
 ; this used to have a ~ to let it pass through... not sure why. it was creating an ENTER keypress effect in notepad++ so i removed it.
-^+J::search()
+^+J::
+F21 & F8::search()
 
 
 #ifWinActive
@@ -1432,6 +1442,8 @@ Send {F2}7{enter} ;adds 7 gain. ; +7db
 
 ;note to self, maybe have some code here to fix a stuck shift or CTRL key...
 return
+
+F21 & F8::search()
 
 ; control shift r = reverse selected clip
 ^+r::Send ^r{tab}{tab}{space}{enter}

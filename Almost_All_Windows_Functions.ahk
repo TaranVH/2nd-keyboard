@@ -402,6 +402,7 @@ InstantExplorer(f_path,pleasePrepend := 0)
 
 send {SC0E8} ;scan code of an unassigned key. This is needed to prevent the item from merely FLASHING on the task bar, rather than opening the folder. Don't ask me why, but this works.
 
+;msgbox, hello
 
 if pleasePrepend = 1 ;i forget what this is even for...
 	{
@@ -417,9 +418,11 @@ if IsFunc("Keyshower") {
 	RetVal := Func.Call(f_path,"InstExplor") 
 }
 
+;;;SUPER IMPORTANT: YOU NEED TO GO INTO FOLDER OPTIONS > VIEW > AND CHECK "DISPLAY THE FULL PATH IN THE TITLE BAR" OR THIS WON'T WORK.
+
 if !FileExist(f_path)
 {
-    MsgBox,,, No such path exists.,0.7
+    MsgBox,,, %f_path%`nNo such path exists.,1.7
 	GOTO, instantExplorerEnd
 }
 

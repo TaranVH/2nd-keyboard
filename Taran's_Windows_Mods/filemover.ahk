@@ -6,7 +6,7 @@ Menu, Tray, Icon, shell32.dll, 156
 #IfWinActive ahk_exe explorer.exe
 ^F11::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\LTT 2160 x 1080")
 ^F12::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\LTT Match Source")
-^+F11::Filemover("Z:\Linus\5. Fast As Possible\_FAP Transcoding\FAP 1920 x 960")
+^+F11::Filemover("Z:\Linus\5. Fast As Possible\_FAP Transcoding\FAP 1920 x 1080")
 ^+F12::Filemover("Z:\Linus\5. Fast As Possible\_FAP Transcoding\FAP Match Source")
 
 ; ^F10::
