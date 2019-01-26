@@ -2,12 +2,16 @@
 
 An accompanying video tutorial can be found here: [link pending]
 
+The converter: https://www.1upkeyboards.com/shop/controllers/usb-to-usb-converter/
+The K120: (But any cheap keyboard will work) https://www.logitech.com/en-ca/product/k120
 
-What follows is the alternative to using this lame online tool: http://www.tmk-kbd.com/tmk_keyboard/editor/unimap/?usb_usb
+What follows is the alternative to using this lame online tool: 
+http://www.tmk-kbd.com/tmk_keyboard/editor/unimap/?usb_usb
 
-As another alternative, you can just use this .hex file that I already created for you: https://github.com/TaranVH/2nd-keyboard/blob/master/HASU_USB/F24/F24.hex
+As another alternative, you can just use this .hex file that I already created for you:
+ https://github.com/TaranVH/2nd-keyboard/blob/master/HASU_USB/F24/F24.hex
 
-###SETTING UP YOUR DEVELOPMENT ENVIRONMENT OR WHATEVER IT'S CALLED
+##SETTING UP YOUR DEVELOPMENT ENVIRONMENT OR WHATEVER IT'S CALLED
 
 Here are some alternative instructions for how to set up the environment, using MSYS2 rather than Ubuntu in Windows: https://beta.docs.qmk.fm/newbs/newbs_getting_started#set-up-your-environment (I tried it and failed to get it working)
 
@@ -15,7 +19,7 @@ Here are some alternative instructions for how to set up the environment, using 
 - Apparently there's a ton of guides on how to do it, (which are probably better than this one!)
 - First, check to see if you have Ubuntu installed already, by searching for ```ubuntu``` or ```bash``` in your start menu. If you already have it, skip the steps below.
 
-####TURNING ON UBUNTU IN WINDOWS, OR WHATEVER THIS IS
+###TURNING ON UBUNTU IN WINDOWS, OR WHATEVER THIS IS
 - Go to your control panel by hitting the WIN key, typing ```control panel```, and hitting ENTER.
 - Click “Programs and Features.”
 - On the left side, click “Turn Windows features on or off”
@@ -25,7 +29,7 @@ Here are some alternative instructions for how to set up the environment, using 
 - Exit the control panel; you don’t need it anymore.
 - You’ll have to restart your machine now. Hah!
 
-####OK, BACK TO SETTING UP UBUNTU IN WINDOWS
+###OK, BACK TO SETTING UP UBUNTU IN WINDOWS
 - Hit the Windows key, search for “Microsoft Store,” and hit ENTER
 - In the top left of the Microsoft Store window, click on the search box and search for “Ubuntu.” It should be the first result. Click on that and click “Get” to install it, if you don’t already have it.
 - Click the "launch" button when it appears, to launch Ubuntu
