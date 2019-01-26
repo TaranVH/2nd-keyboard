@@ -366,7 +366,7 @@ loop
 	{
 	waiting2 ++
 	sleep 33
-	tooltip, counter = %waiting2%`nCaret = %A_CaretX%
+	tooltip, counter = (%waiting2% * 33)`nCaret = %A_CaretX%
 	if (A_CaretX <> "")
 		{
 		tooltip, CARET WAS FOUND
@@ -384,6 +384,8 @@ loop
 sleep 1
 tooltip,
 }
+
+;yeah, I've seen this go all the way up to "8," which is 264 milliseconds
 
 MouseMove, %A_CaretX%, %A_CaretY%, 0
 sleep 5
