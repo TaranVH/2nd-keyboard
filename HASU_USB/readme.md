@@ -100,17 +100,17 @@ Here are some alternative instructions for how to set up the environment, using 
 
 ### GETTING THIS TO WORK WITH AUTOHOTKEY
 
-- Download and install Autohotkey if you don’t already have it
-- Download this script
+- Download and install Autohotkey... but you should already have it, and be familiar with it: https://www.autohotkey.com/download/
+- Download this script:
 https://github.com/TaranVH/2nd-keyboard/blob/master/HASU_USB/QMK_F24_macro_keyboard.ahk
 
 - Use an Explorer window to create this folder structure, and save it here.
 
-- C:\AHK\2nd-keyboard\HASU_USB\QMK_F24_macro_keyboard.ahk
+- ```C:\AHK\2nd-keyboard\HASU_USB\QMK_F24_macro_keyboard.ahk```
 
 - In Explorer, double-click on the AHK script to get it running. A friendly green "H" icon should appear in your taskbar. Boop!
 
-- NOW, try typing into a text document. Instead of text, you should be seeing TOOLTIPS, no matter which key you press.
+- Now, try typing into a text document. Instead of text, you should be seeing tooltips, no matter which key you press. (Well, F1 and F2 will result in message boxes.)
 
 ### NOW YOU FILL UP THAT AHK SCRIPT WITH FUNCTIONS! YAH!
 
