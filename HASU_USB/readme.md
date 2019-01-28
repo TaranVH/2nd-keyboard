@@ -1,6 +1,8 @@
 # Creating a secondary, macro keyboard with the Hasu USB keyboard converter
 
-An accompanying video tutorial can be found here: [link pending]
+Main video is here: https://youtu.be/GZEoss4XIgc
+
+An accompanying video tutorial can be found here: https://youtu.be/kTXK8kZaZ8c
 
 The converter: https://www.1upkeyboards.com/shop/controllers/usb-to-usb-converter/
 The K120: (But any cheap keyboard will work) https://www.logitech.com/en-ca/product/k120

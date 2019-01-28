@@ -29,8 +29,7 @@ Download and install the following:
 
  ```C:\AHK\2nd-keyboard\Razer```
 
-- Use <kbd>CTRL</kbd> <kbd>S</kbd> to download this file. Delete the ```.txt``` if it appears:  https://raw.githubusercontent.com/TaranVH/2nd-keyboard/master/Razer/2nd_keyboard_if_using_Razer.ahk
-
+- Use <kbd>CTRL</kbd> <kbd>S</kbd> to download this file. Delete the ```.txt``` if it appears:  https://raw.githubusercontent.com/TaranVH/2nd-keyboard/master/Razer/Razer_macro_keyboard.ahk
 - Place it here, exactly: (Otherwise, none of the direct launch scripts will work!)
 
 ```C:\AHK\2nd-keyboard\Razer\2nd_keyboard_if_using_Razer.ahk```
@@ -50,7 +49,7 @@ https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/TaranVH/2nd-
 - Now, you can double click on any of them to test how long the delay is before you get a messagebox. It should be very minimal. If the delay is too long, this method might not be the best one for you.
 
 - Download this file: 
-https://github.com/TaranVH/2nd-keyboard/blob/master/Razer/Cyonosa_2nd_Keyboard.synapse3
+https://github.com/TaranVH/2nd-keyboard/blob/master/Razer/Cyonosa_macro_Keyboard.synapse3
 
 - Open Razer Synapse and import ```Cyonosa_2nd_Keyboard.synapse3```
 
