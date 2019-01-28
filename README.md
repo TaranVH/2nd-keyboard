@@ -8,12 +8,12 @@ I pioneered the use of a 2nd keyboard purely for macros, and later, the concept 
 https://www.youtube.com/playlist?list=PLH1gH0v9E3ruYrNyRbHhDe6XDfw4sZdZr
 
 If you want to make your own macro keyboard, these are the options described in the above video series:
-Luamacros (unstable, not recommended)
-Interception (or AutoHotInterception)
-iCue (K55)
-Razer Synapse (Cyonosa Chroma)
-QMK (Hasu USB converter, my current solution.)
-There's also MacroMyKBD - (NEW, UNTESTED, I have no idea if it works. If someone could try it out and report back to me, that'd be greeeaaat) https://github.com/lal12/macroMyKBD
+- Luamacros (unstable, not recommended)
+- Interception (or AutoHotInterception)
+- iCue (K55)
+- Razer Synapse (Cyonosa Chroma)
+- QMK (Hasu USB converter, my current solution.)
+- There's also MacroMyKBD - (NEW, UNTESTED, I have no idea if it works. If someone could try it out and report back to me, that'd be greeeaaat) https://github.com/lal12/macroMyKBD
 
 IF YOU ARE NEW TO AUTOHOTKEY, start here:
 https://autohotkey.com/docs/Tutorial.htm
