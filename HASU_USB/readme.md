@@ -7,8 +7,11 @@ An accompanying video tutorial can be found here: https://youtu.be/kTXK8kZaZ8c
 The converter: https://www.1upkeyboards.com/shop/controllers/usb-to-usb-converter/
 The K120: (But any cheap keyboard will work) https://www.logitech.com/en-ca/product/k120
 
-What follows is the alternative to using this lame online tool: 
+What follows is the alternative to using this incomplete online TMK tool: 
 http://www.tmk-kbd.com/tmk_keyboard/editor/unimap/?usb_usb
+
+Oh, there's also a QMK one, but IDK if it has full functionality either:
+https://config.qmk.fm/#/converter/usb_usb/hasu/LAYOUT_all
 
 As another alternative, you can just use this .hex file that I already created for you:
  https://github.com/TaranVH/2nd-keyboard/blob/master/HASU_USB/F24/F24.hex

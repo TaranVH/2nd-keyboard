@@ -7,6 +7,12 @@ SendMode Input
 #SingleInstance force ;only one instance of this script may run at a time!
 #MaxHotkeysPerInterval 2000
 #WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
+Menu, Tray, Icon, imageres.dll, 251 ;makes the icon into two blue window thingies. would prefer a PS icon if only i knew how to make custom icons.
+
+;Menu, Tray, Icon, C:\My Icon.ico
+;https://superuser.com/questions/1102307/change-the-picture-from-the-icon-tray
+
+
 
 ;-------------------------------------------------------------------------
 ; HELLO PEOPLES!
@@ -38,14 +44,14 @@ sleep 5
 send, {ctrl up} ;I've had issues with modifier keys getting stuck
 return
 
-F9::
-send, ^-
-sleep 5
-send, {ctrl up} ;I've had issues with modifier keys getting stuck
-return
+; F9::
+; send, ^-
+; sleep 5
+; send, {ctrl up} ;I've had issues with modifier keys getting stuck
+; return
 
-F10::
-send, ^=
-sleep 5
-send, {ctrl up} ;I've had issues with modifier keys getting stuck
-return
+; F10::
+; send, ^=
+; sleep 5
+; send, {ctrl up} ;I've had issues with modifier keys getting stuck
+; return

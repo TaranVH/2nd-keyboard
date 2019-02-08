@@ -401,7 +401,8 @@ SC077::tooltip, [F23] RAlt -to-> SC077-Language 4
 SC078::tooltip, [F23] RWin -to-> SC078-Language 3
 SC079::tooltip, [F23] AppsKey -to-> SC079-International 4
 SC07B::preset("50% stereo") ;K120 rCTRL -to-> SC07B:International5 -to-> Premiere 50% stereo
-SC07D::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music") ;K120 RShift -to- SC07D: International3
+; SC07D::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Music") ;K120 RShift -to- SC07D: International3
+SC07D::instantExplorer("C:\Users\13gpu\Downloads") ;K120 RShift -to- SC07D: International3
 
 space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
 
@@ -773,8 +774,8 @@ capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOu
 ;LEFTSHIFT > SC070 / International2 > Firefox calendar open
 ;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 
-;;;this is Lshift
-SC070::gotofiretab("Calendar - January 2019","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+;;;this is(was) Lshift
+SC070::gotofiretab("Calendar - February 2019","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
 ;em dash –
@@ -1422,7 +1423,7 @@ Return
 ;tab::7 ;"7" is set to enable/disable for now. just testing stuff
 appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
 ^w::closeTitler()
-~+K::KbShortcutsFindBox()
++K::KbShortcutsFindBox()
 
 ;no longer used:
 ;!]::preset("DeHummer Preset") ;This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.
@@ -1481,7 +1482,7 @@ return
 ;----ALL STANDARD FUNCTION KEYS IN PREMIERE------
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
-~F1::
+F1::
 Send ^!s ;ctrl alt s  is assigned to [select clip at playhead]
 ;Send ^c ;ctrl c is [copy] ;was just testing a thing for a guy.
 Send ^+!d ;ctrl alt shift d  is [ripple delete]
@@ -1492,7 +1493,8 @@ return
 #IfWinActive ahK_exe Adobe Premiere Pro.exe
 ;; instant cut at cursor (UPON KEY RELEASE) -- super useful! even respects snapping!
 ;note to self, move this to premiere_functions already
-~F4::
+;this is NOT suposed to stop the video playing when you use it, but now it does for some reason....
+F4::
 ;keywait, F4
 ;tooltip, |
 send, b ;selects the blade tool
@@ -1513,8 +1515,8 @@ return
 ; send, v ;selection tool
 ; return
 
-~F5::clickTransformIcon2()
-~F6::cropClick()
+F5::clickTransformIcon2()
+F6::cropClick()
 
 ; #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ; Delete single clip at cursor
@@ -1531,7 +1533,7 @@ return
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;cut single clip at cursor
 Xbutton1::
-~F7::
+F7::
 send, ^!d ;ctrl alt d is DESELECT
 send, b ;blade tool
 ;keywait, F7 ;waits for the key to go UP.
