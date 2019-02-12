@@ -307,10 +307,10 @@ if not WinActive(theClass)
 }
 
 ;MOVED FROM PREMIERE SCRIPTS
-;this should probably all be replaced with instantexplorer, since that will work to change any existing Save as dialouges or whatever.
+;this should probably all be replaced with instantexplorer, since that will work to change any existing Save as dialogs or whatever.
 runexplorer(foo)
 {
-send {SC0E8} ;the scan code of an unassigned key ;;sending even a single keystroke like this, which comes "from" the secondary keyboard, will prevent the taskbar icon from sometimes flashing pointlessly rather than opening.
+send {SC0E7} ;the scan code of an unassigned key ;;sending even a single keystroke like this, which comes "from" the secondary keyboard, will prevent the taskbar icon from sometimes flashing pointlessly rather than opening.
 sleep 5
 Run, % foo
 sleep 10
@@ -488,7 +488,7 @@ if f_class = #32770    ; It's a dialog.
 			{
 			ControlFocus, Edit1, ahk_id %f_window_id% ;this is really important.... it doesn't work if you don't do this...
 			msgbox,,,you are here,0.5
-			tippy2("DIALOUGE WITH PREMIERE'S Edit1`n`nLE controlfocus of Edit1 for f_window_id was just engaged.", 2000)
+			;tippy2("DIALOUGE WITH PREMIERE'S Edit1`n`nLE controlfocus of Edit1 for f_window_id was just engaged.", 2000)
 			; msgbox, is it in focus?
 			; MouseMove, f_Edit1Pos, f_Edit1PosY, 0
 			; sleep 10
@@ -524,7 +524,7 @@ if f_class = #32770    ; It's a dialog.
 		{
 
 		ControlFocus, Edit1, ahk_id %f_window_id% ;this is really important.... it doesn't work if you don't do this...
-		tippy2("DIALOUGE WITH EDIT1`n`nwait really?`n`nLE controlfocus of edit1 for f_window_id was just engaged.", 1000)
+		;tippy2("DIALOUGE WITH EDIT1`n`nwait really?`n`nLE controlfocus of edit1 for f_window_id was just engaged.", 1000)
 		; msgbox, is it in focus?
 		; MouseMove, f_Edit1Pos, f_Edit1PosY, 0
 		; sleep 10
@@ -592,7 +592,7 @@ ending2:
 ; 1) It's an unsupported window type but f_AlwaysShowMenu is y (yes).
 ; 2) It's a supported type but it lacks an Edit1 control to facilitate the custom
 ;    action, so instead do the default action below.
-Tippy2("end was reached.",333)
+;Tippy2("end was reached.",333)
 ;SoundBeep, 800, 300 ;this is nice but the whole damn script WAITS for the sound to finish before it continues...
 ; Run, Explorer %f_path%  ; Might work on more systems without double quotes.
 
@@ -664,6 +664,12 @@ windowSwitcher(savedCLASS, savedEXE)
 back(){
 ;; if WinActive("ahk_class MozillaWindowClass")
 ;tooltip, baaaack
+;sendinput, {ctrl up}
+If GetKeystate(Lctrl, "P")
+        Send {Lctrl Up}
+If GetKeystate(Rctrl, "P")
+        Send {Rctrl Up}
+
 if WinActive("ahk_exe firefox.exe")
 	Send ^+{tab}
 if WinActive("ahk_class Chrome_WidgetWin_1")
@@ -681,7 +687,17 @@ if WinActive("ahk_class OpusApp")
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
 
 switchToFirefox(){
+
 sendinput, {SC0E8} ;scan code of an unassigned key. Do I NEED this?
+
+;now to unstick any potentially stuck modifier keys
+KeyList := "Shift|ctrl|alt"
+Loop, Parse, KeyList, |
+	{
+	If GetKeystate(A_Loopfield, "P")
+		Send % "{" A_Loopfield " Up}"
+	}
+
 IfWinNotExist, ahk_class MozillaWindowClass
 	Run, firefox.exe
 if WinActive("ahk_exe firefox.exe")
@@ -691,7 +707,9 @@ if WinActive("ahk_exe firefox.exe")
 		msgbox, this is a notification
 	}
 if WinActive("ahk_exe firefox.exe")
+	{
 	Send ^{tab}
+	}
 else
 	{
 	;WinRestore ahk_exe firefox.exe

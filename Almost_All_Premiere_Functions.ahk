@@ -53,18 +53,18 @@ msgbox, the recallTransition function was deleted cause it never worked very wel
 ;;;;;;non luamacros stuff begins now.;;;;;
 
 ;;;;;;temporary tooltip maker;;;;;;
-Tippy(tipsHere, wait:=333)
+Tippy(tipsHere, wait:=-333)
 {
 ToolTip, %tipsHere% TP,,,8
 SetTimer, noTip, %wait% ;--in 1/3 seconds by default, remove the tooltip
 }
-noTip:
-	ToolTip,,,,8
-	;removes the tooltip
+
 return
 ;;;;;;/temporary tooltip maker;;;;;;
 
-
+noTip:
+	ToolTip,,,,8
+	;removes the tooltip
 
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO! (until canceled with a lone "#IfWinActive")

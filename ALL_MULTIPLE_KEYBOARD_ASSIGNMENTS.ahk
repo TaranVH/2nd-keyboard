@@ -1817,3 +1817,23 @@ ConvertSentence()
 ; ;EXAMPLE: https://i.ytimg.com/vi/L-zDtBINvzk/hqdefault.jpg
 ; ;http://img.youtube.com/vi/<insert-youtube-video-id-here>/maxresdefault.jpg
 ; return
+
+;;MODS - script to fix stuck modifier keys
+;this is ANY key though
+; KeyList := "Shift|a|b|c|d|e|f|g|h|i|j" ; and so on
+
+; Loop, Parse, KeyList, |
+; {
+    ; If GetKeystate(A_Loopfield, "P")
+        ; Send % "{" A_Loopfield " Up}"
+; }
+
+; KeyList := "Shift|ctrl|alt" ; and so on
+
+; Loop, Parse, KeyList, |
+; {
+    ; If GetKeystate(A_Loopfield, "P")
+        ; Send % "{" A_Loopfield " Up}"
+; }
+
+

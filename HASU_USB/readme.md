@@ -87,6 +87,8 @@ Here are some alternative instructions for how to set up the environment, using 
 -------------
 
 ### FLASHING THE HEX FILE ONTO THE USB KEYBOARD CONVERTER
+
+- (If the instructions below do not work, try this instead: https://github.com/mechmerlin/qmk_setup/blob/master/windows_flashing.md )
 - Make sure that your usb converter is NOT plugged in.
 - Download, install, and run QMK Toolbox: https://github.com/qmk/qmk_toolbox/releases
 - Plug in your USB converter by itself, with no keyboard attached to it. Wait to hear the Windows “hardware found” sound.  (“Beeedlde-BOOP!”)

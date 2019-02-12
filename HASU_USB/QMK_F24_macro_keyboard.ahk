@@ -6,7 +6,7 @@ SetWorkingDir, C:\AHK\2nd-keyboard\
 ;;WHAT'S THIS ALL ABOUT??
 
 ;;THE SHORT VERSION:
-;; << Video URL to be inserted here >>
+;; https://www.youtube.com/watch?v=kTXK8kZaZ8c
 
 ;;THE LONG VERSION:
 ;; https://www.youtube.com/playlist?list=PLH1gH0v9E3ruYrNyRbHhDe6XDfw4sZdZr
