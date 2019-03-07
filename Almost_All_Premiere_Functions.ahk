@@ -57,15 +57,16 @@ Tippy(tipsHere, wait:=-333)
 {
 ToolTip, %tipsHere% TP,,,8
 SetTimer, noTip, %wait% ;--in 1/3 seconds by default, remove the tooltip
+;return
 }
 
-return
+
 ;;;;;;/temporary tooltip maker;;;;;;
 
 noTip:
-	ToolTip,,,,8
-	;removes the tooltip
-
+ToolTip,,,,8
+;removes the tooltip
+return
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO! (until canceled with a lone "#IfWinActive")
 
@@ -374,7 +375,8 @@ loop
 		}
 	if (waiting2 > 30)
 		{
-		tooltip, FAIL - no caret found, go to ending
+		tooltip, FAIL - no caret found. `nIf your cursor will not move`, hit the button to call the preset() function again.`nTo remove this tooltip`, refresh the script using its icon in the taskbar.
+		;Note to self, need much better way to debug this than screwing the user
 		sleep 200
 		;tooltip,
 		GOTO theEnding
@@ -1151,7 +1153,7 @@ Title := """" . Title . """"
 IfInString, Title, "Marker @"
 	{
 	msgbox, you made it
-	Tippy("USE SHIFT TAB ENTER", 1200)
+	Tippy("USE SHIFT TAB ENTER", -1200)
 	; ImageSearch, FoundX, FoundY, xPos, yPos, xPos+600, yPos+1000, *5 %A_WorkingDir%\v1_unlocked_targeted.png
 	send, +{tab}
 	sleep 10
@@ -1159,8 +1161,8 @@ IfInString, Title, "Marker @"
 	}
 else
 	{
-	Tippy("Close titler (ctrl w )", 1200)
-	MouseMove, Width-40, -20, 0 ;-----moves the mouse onto the "x" at the top right of the titler window
+	Tippy("Close titler (ctrl w )", -1200)
+	MouseMove, Width-35, -15, 0 ;-----moves the mouse onto the "x" at the top right of the titler window
 
 	tooltip, closing titler now!
 	Click left

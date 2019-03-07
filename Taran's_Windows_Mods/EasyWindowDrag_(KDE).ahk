@@ -1,39 +1,19 @@
-; Easy Window Dragging -- KDE style (requires XP/2k/NT) -- by Jonny
-; Modified by Taran to work with F20 instead (which I have in place of capslock)
+; Easy Window Dragging and resizing -- KDE style (requires XP/2k/NT) -- by Jonny
+; IT'S AWESOME. CAN'T LIVE WITHOUT IT NOW.
+; Modified by Taran to work with Xbutton1 and Xbutton2 instead (the forward and back buttons on a 5-button mouse.)
 
-; Original script is here:
+; ORIGINAL SCRIPT IS HERE:
 ; https://autohotkey.com/docs/scripts/EasyWindowDrag_(KDE).htm
-; This script makes it much easier to move or resize a window: 1) Hold down
-; the ALT key and LEFT-click anywhere inside a window to drag it to a new
-; location; 2) Hold down ALT and RIGHT-click-drag anywhere inside a window
-; to easily resize it; 3) Press ALT twice, but before releasing it the second
-; time, left-click to minimize the window under the mouse cursor, right-click
-; to maximize it, or middle-click to close it.
 
-; This script was inspired by and built on many like it
-; in the forum. Thanks go out to ck, thinkstorm, Chris,
-; and aurelian for a job well done.
 
-; Change history:
-; November 07, 2006: Optimized resizing code in !RButton, courtesy of bluedawn.
-; February 05, 2006: Fixed double-alt (the ~Alt hotkey) to work with latest versions of AHK.
-; February 06, 2019 - Taran modified to use different keys. Alt is annoying because of menu acceleration, and I prefer to only have to press one key, not a key and a mouse button.
-
-; The Double-Alt modifier is activated by pressing
-; Alt twice, much like a double-click. Hold the second
-; press down until you click.
-;
-; The shortcuts:
-;  Alt + Left Button  : Drag to move a window.
-;  Alt + Right Button : Drag to resize a window.
-;  Double-Alt + Left Button   : Minimize a window.
-;  Double-Alt + Right Button  : Maximize/Restore a window.
-;  Double-Alt + Middle Button : Close a window.
-;
-; You can optionally release Alt after the first
-; click rather than holding it down the whole time.
 #SingleInstance force
+#InstallKeybdHook
+#KeyHistory 500
+
 Menu, Tray, Icon, imageres.dll, 262 ;makes the icon into two window things
+
+; Xbutton2::msgbox testing 1
+; Xbutton1::msgbox testing 2
 
 If (A_AhkVersion < "1.0.39.00")
 {
@@ -52,10 +32,12 @@ CoordMode,Mouse
 return
 
 
-#ifWinNotActive ahk_exe Adobe Premiere Pro.exe ;because I use F20 in Premiere to disable and enable clips. Also, it's full-screen anyway.
+#ifWinNotActive ahk_exe Adobe Premiere Pro.exe ;because I use xbutton1 and xbutton2 for different things in Premiere. It's always full screen, so it doesn't matter. You can comment this entire line out.
 
-;!LButton::
-~F20::
+
+Xbutton2::
+
+thekey = %A_thishotkey%
 If DoubleAlt
 {
     MouseGetPos,,,KDE_id
@@ -75,7 +57,8 @@ If KDE_Win
 WinGetPos,KDE_WinX1,KDE_WinY1,,,ahk_id %KDE_id%
 Loop
 {
-    GetKeyState,KDE_Button,F20,P ; Break if button has been released.
+    ;GetKeyState,KDE_Button,F20,P ; Break if button has been released.
+    GetKeyState,KDE_Button,%thekey%,P ; Break if button has been released.
     If KDE_Button = U
         break
     MouseGetPos,KDE_X2,KDE_Y2 ; Get the current mouse position.
@@ -87,8 +70,9 @@ Loop
 }
 return
 
-;!RButton::
-~F20 & RButton::
+;------------------------
+
+Xbutton1::
 If DoubleAlt
 {
     MouseGetPos,,,KDE_id
@@ -121,7 +105,7 @@ Else
     KDE_WinUp := -1
 Loop
 {
-    GetKeyState,KDE_Button,RButton,P ; Break if button has been released.
+    GetKeyState,KDE_Button,Xbutton1,P ; Break if button has been released.
     If KDE_Button = U
         break
     MouseGetPos,KDE_X2,KDE_Y2 ; Get the current mouse position.
@@ -139,6 +123,7 @@ Loop
 }
 return
 
+;;;stuff from the old script that I never used:
 ; ; "Alt + MButton" may be simpler, but I
 ; ; like an extra measure of security for
 ; ; an operation like this.

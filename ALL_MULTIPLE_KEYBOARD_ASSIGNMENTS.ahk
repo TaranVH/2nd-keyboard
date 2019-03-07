@@ -22,7 +22,7 @@ SetKeyDelay, 0 ;warning ---this was absent for some reason. i just added it back
 ; CHECK OUT MY BIG TUTORIAL FOR SOME EXPLANATION OF HOW THESE
 ; AHK SCRIPTS WORK, AND HOW THEY COMMUNICATE WITH ONE ANOTHER.
 ; https://youtu.be/O6ERELse_QY?t=20m7s
-;
+; ;
 ; IF YOU HAVE NOT USED AHK BEFORE, YOU MUST TAKE THIS TUTORIAL:
 ;  https://autohotkey.com/docs/Tutorial.htm
 ;
@@ -147,6 +147,7 @@ SC121::SendInput {Raw}%ClipBoard_3% 	;launch (1)
 ; https://autohotkey.com/board/topic/35566-rapidhotkey/
 
 currentTool = "v"
+#if
 
 ;this is pause/break. I'm using it for debugging...
 sc045::
@@ -159,6 +160,7 @@ tooltip, pause break
 sleep 100
 tooltip,
 KeyHistory
+sleep 10
 return 
 ;____________________________________________________________________
 ;                                                                    
@@ -315,7 +317,7 @@ p::preset("flip horizontal")
 ]::preset("T Impact Pop")
 
 \::
-instantExplorer("Z:\Linus\9 - Tools\1-Sound Effects")
+instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN USEFUL ELEMENTS\SFX")
 sleep 20
 search() ;immediately highlights the search bar so you can search for a sound effect. Sadly this does not always seem to work...
 sleep 250
@@ -775,7 +777,7 @@ capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOu
 ;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 
 ;;;this is(was) Lshift
-SC070::gotofiretab("Calendar - February 2019","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+SC070::gotofiretab("Calendar - March 2019","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
 ;em dash –
@@ -1194,9 +1196,32 @@ If (exphWnd := WinActive("ahk_class CabinetWClass"))
 return
 
 
-;these are not very reliable, I have been REALLY trying to get a direct execution of this command. might need C++ for that, IDK.
-pgup::send, {alt}vo{enter} ;sort by name
-pgdn::send, {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
+; ;these are not very reliable, I have been REALLY trying to get a direct execution of this command. might need C++ for that, IDK.
+; ; pgup::send, {alt}vo{enter} ;sort by name
+; ; pgdn::send, {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
+
+
+pgup::
+sortByName() ;doesn't work both ways...
+Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field. wish i knew how to do this with DLL calls though.
+return
+;sort by name
+
+pgdn::sortByDate()
+;sort by date modified
+
+; ; ^F12:: ;test SHGetNameFromPropertyKey
+; ; vName := "System.ItemNameDisplay"
+; ; PROPERTYKEY := ""
+; ; VarSetCapacity(PROPERTYKEY, 20, 0)
+; ; DllCall("propsys\PSGetPropertyKeyFromName", Str,vName, Ptr,&PROPERTYKEY)
+
+; ; MsgBox, % DllCall("propsys\PSGetNameFromPropertyKey", Ptr,&PROPERTYKEY, PtrP,vAddrName)
+; ; vName := StrGet(vAddrName, "UTF-16")
+; ; MsgBox, % vName ;System.ItemNameDisplay
+; ; DllCall("ole32\CoTaskMemFree", Ptr,vAddrName)
+; ; return
+
 
 ;+++++++++ SHORTCUTS THAT WORK IN ALL PROGRAMS +++++++++
 #IfWinActive
@@ -1283,8 +1308,8 @@ Joy3::msgbox you hit Joy3
 #ifWinActive
 ; !,::msgbox, A_workingDir should be %A_WorkingDir%
 ; !.::msgbox, TaranDir should be %TaranDir%
-Xbutton1::return
-Xbutton2::return
+; Xbutton1::return
+; Xbutton2::F20
 ;but they do do stuff in premiere now.
 
 ;---------------------BEGIN ASSIGNMENT OF ALL 18 K95 MACRO KEYS---------------------
@@ -1342,6 +1367,10 @@ F20::home
 ;Macro key G6
 ;modifiers -- I removed the ~
 ^+U::reSelect() ;formerly ^+9
+
+
+#IfWinActive ahk_exe firefox.exe
+F18::Send, !+5 ;alt shift 5 is "strikethrough" in Google docs...
 
 /*
 G7:  F17 - rotation
@@ -1423,7 +1452,8 @@ Return
 ;tab::7 ;"7" is set to enable/disable for now. just testing stuff
 appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
 ^w::closeTitler()
-+K::KbShortcutsFindBox()
+~+K::KbShortcutsFindBox() ;this one DOES need the ~ so that capital Ks will work in the titler, and so that the keyboard shortcuts panel will actually launch when it is pressed.
+;Note, if you don't arealdy know —the ~ is dangerous since it can lead to stuck modifier keys. I still don't know exactly why, or how to stop it.
 
 ;no longer used:
 ;!]::preset("DeHummer Preset") ;This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.

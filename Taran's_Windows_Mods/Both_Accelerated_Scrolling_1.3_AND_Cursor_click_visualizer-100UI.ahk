@@ -251,7 +251,7 @@ looper:
 
 
 MouseGetPos, realposX, realposY
-;tooltip,^ ;this is just in case my cursor vanishes in premiere, as it has done sometimes...
+;tooltip, ^ ;this is just in case my cursor vanishes in premiere, as it has done sometimes...
 
 posX := realposX - Size/3.4, posY := realposY - Size/4.1 + 0 ; puts the gui in the middle rather than the corner. You'll have to change these variables if you have UI scaling set to 100% rather than 150% like I do.
 If(Lbuttondown = 1 and Rbuttondown = 1) ;this doesn't really work. Often the ) will be out of alignment or will not show up.

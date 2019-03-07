@@ -28,7 +28,7 @@ If all of this just seems like a huge PITA, try the Stream Deck instead: https:/
 
 NOTE: You do not need a 2nd keyboard to use AutoHotKey. Most poeple don't. By the time you need to add a 2nd keyboard, you should already be quite familiar with how AutoHotKey works. You can probably use your function keys for AHK macros, and if your main keyboard has dedicated macro keys, you can also use those.
 
-Basically, don't just add a 2nd keyboard because you think it's cool! Make sure you actually need it, because you've run out of spac eon your main keyboard.
+Basically, don't just add a 2nd keyboard because you think it's cool! Make sure you actually need it, because you've run out of space on your main keyboard.
 
 ## My AHK scripts
 
