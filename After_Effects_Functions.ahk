@@ -33,7 +33,7 @@ BlockInput, on
 BlockInput, MouseMove
 
 MouseGetPos xPos, yPos
-;I work on a 4k, 150% UI scaled screen. You might have to change these  values to fit your own screen.
+;I currently work on a 4k, 100% UI scaled screen. You might have to change these  values to fit your own screen, if you use a different UI.
 rightedge = 200 ;250 for 150% UI
 expanseUp = 21  ;32 for 150% UI
 expanseDown = 7 ;10 for 150% UI
