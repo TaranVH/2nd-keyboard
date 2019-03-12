@@ -34,9 +34,9 @@ BlockInput, MouseMove
 
 MouseGetPos xPos, yPos
 ;I work on a 4k, 150% UI scaled screen. You might have to change these  values to fit your own screen.
-edge = 250
-expanseUp = 32
-expanseDown = 10
+rightedge = 200 ;250 for 150% UI
+expanseUp = 21  ;32 for 150% UI
+expanseDown = 7 ;10 for 150% UI
 
 CoordMode Pixel ;, screen  ; IDK why but it works like this...
 CoordMode Mouse, screen
@@ -48,12 +48,12 @@ CoordMode Mouse, screen
 
 If open = 1
 	{
-	ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, edge, yPos+expanseDown, %A_WorkingDir%\AE_down.png
+	ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, %A_WorkingDir%\AE_down.png
 
 	if ErrorLevel = 1 ;if that was unable to find it, try again with another image
-		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, edge, yPos+expanseDown, *2 %A_WorkingDir%\AE_down2.png
+		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, *2 %A_WorkingDir%\AE_down2.png
 	if ErrorLevel = 1 ;if that was unable to find it, try again with another image
-		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, edge, yPos+expanseDown, *2 %A_WorkingDir%\AE_down3.png
+		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, *2 %A_WorkingDir%\AE_down3.png
 
 	if ErrorLevel = 0
 		{
@@ -69,12 +69,12 @@ If open = 1
 else if open = 0
 	{
 
-	ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, edge, yPos+expanseDown, %A_WorkingDir%\AE_right.png
+	ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, %A_WorkingDir%\AE_right.png
 
 	if ErrorLevel = 1 ;if that was unable to find it, try again with another image
-		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, edge, yPos+expanseDown, *2 %A_WorkingDir%\AE_right2.png
+		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, *2 %A_WorkingDir%\AE_right2.png
 	if ErrorLevel = 1 ;if that was unable to find it, try again with another image
-		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, edge, yPos+expanseDown, *2 %A_WorkingDir%\AE_right3.png
+		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, *2 %A_WorkingDir%\AE_right3.png
 		
 	if ErrorLevel = 0
 		{
@@ -86,10 +86,10 @@ else if open = 0
 		goto resettwirl
 		}
 	}
-tooltip, FAIL
+tooltip, FAIL`, ErrorLevel is %ErrorLevel%
 ;msgbox, , , num enter, 0.5;msgbox, , , num enter, 0.5
 resettwirl:
-MouseMove, xPos-11, yPos-11, 0
+MouseMove, xPos-8, yPos-8, 0 ;IDK why, but if I don't subtract a few pixels, the cursor ends up in a slightly wrong spot...
 blockinput, off
 blockinput, MouseMoveOff
 sleep 20
