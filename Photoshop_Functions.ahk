@@ -29,20 +29,22 @@ Menu, Tray, Icon, imageres.dll, 251 ;makes the icon into two blue window thingie
 ; you want.
 ;------------------------------------------------------------------------
 
+;update, just kidding. this script somehow, and very weirdly, interfered with ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk -—so i just moced all of this crap over there.
+
 #IfWinActive ahk_exe Photoshop.exe
 
 ;fix stupid requirement to hold CTRL for photoshop zooming...
--::
-send, ^- ;zoom out
-sleep 5
-send, {ctrl up} ;I've had issues with modifier keys getting stuck
-return
+; -::
+; send, ^- ;zoom out
+; sleep 5
+; send, {ctrl up} ;I've had issues with modifier keys getting stuck
+; return
 
-=::
-send, ^= ;zoom in
-sleep 5
-send, {ctrl up} ;I've had issues with modifier keys getting stuck
-return
+; =::
+; send, ^= ;zoom in
+; sleep 5
+; send, {ctrl up} ;I've had issues with modifier keys getting stuck
+; return
 
 ; F9::
 ; send, ^-

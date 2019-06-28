@@ -119,7 +119,7 @@ windowWidth := CoordGetControl(x,y, ActiveHwnd)
 
 if (windowWidth < 2000) ;this means that the monitor is NOT maximized
 	{
-	; tooltip, we in here now
+	;tooltip, windowwidth is less than 2000
 	; sleep 500
 	if (whichMonitor = "source"){
 		prFocus("source") ;keep in mind, this FIRST brings focus to the Effects panel
@@ -160,6 +160,11 @@ if (windowWidth > 2000) ;if the monitor in question IS maximized...
 {
 ;tooltip, %shortcut% boy
 ;Then it's not obvious which monitor it is, and it's possible that I misremembered, and pressed the wrong button. Therefore, I will ALSO send the shortcut that corresponds to the alternative monitor.
+
+;Also, it's possible that the window is not in focus. I want to send a middle click to it without moving the mouse, since coordinates arent well supported on other monitors. For this, controlfocus or controlclick MIGHT work...
+
+;ControlClick , x1800 y500, WinTitle, WinText, MIDDLE, 1, Pos
+
 if (shortcut = "^{numpad1}")
 	{
 	;sleep 30
@@ -450,6 +455,7 @@ IfInString, item, CROP
 {
 	if IsFunc("cropClick") {
 		Func := Func("cropClick")
+		sleep 160 ;because it might take awhile to appear in Premiere
 		sleep 160 ;because it might take awhile to appear in Premiere
 		RetVal := Func.Call() 
 		}
@@ -1043,6 +1049,7 @@ return
 
 reselect()
 {
+;Needs a thing here for chekcing to see what application is open!
 ;alt k??
 Send ^!+k ; another shortcut for Shuttle Stop
 sleep 5
@@ -1086,10 +1093,10 @@ send {enter}
 #ifwinactive
 
 marker(){
-send ^{SC027} ;this is the scan code for a semicolon.  ^;  CTRL SEMICOLON.
-;msgbox,,,hie,0.5
-;should be hitting CTRL ; to make a marker. That's a premiere shortcut u gotta set up.
-;sleep 10
+sendinput, ^!+K ;Premiere shortcut for STOP
+sleep 5
+send ^{SC027} ;this is the scan code for a semicolon. CTRL SEMICOLON is one of my shortcuts to create a marker.  ^;  You have to set that up in Premiere of course.
+
 }
 
 
@@ -1635,7 +1642,7 @@ if (foobar = "scale" ||  foobar = "anchor_point" || foobar = "rotation")
 }
 else if (foobar = "anchor_point_vertical")
 {
-	tooltip, looking for 0.00
+	tooltip, 0.00? ;(looking for that now)
 	;msgbox,,, looking for 0.00,0.5
 	;ImageSearch, Px, Py, xxx+50, yyy, xxx+800, yyy+100, *3 %A_WorkingDir%\anti-flicker-filter_000_D2019.png ;because i never change the value of the anti-flicker filter, (0.00) and it is always the same distance from the actual hot text that i WANT, it is a reliable landmark. So this is a screenshot of THAT.
 	ImageSearch, Px, Py, xxx+50, yyy, xxx+800, yyy+100, *3 %A_WorkingDir%\anti-flicker-filter_000_D2019_ui100.png ;for a user interface at 100%...
@@ -1796,16 +1803,16 @@ if IsFunc("Keyshower") {
 ;Trying to bring focus to the TIMELINE itself is really dangerous and unpredictable, since its Class# is always changing, based upon how many sequences, and other panels, that might be open.
 ControlFocus, DroverLord - Window Class3,ahk_exe Adobe Premiere Pro.exe
 ; Window Class14 is the Program monitor, at least on my machine.
-sleep 20
+sleep 30
 ;ControlFocus, DroverLord - Window Class14,ahk_exe Adobe Premiere Pro.exe
 ;If we don't use ControlFocus first, ControlSend experiences bizzare and erratic behaviour, only able to work when the video is PLAYING, but not otherwise, but also SOMETIMES working perfectly, in unknown circumstances. Huge thanks to Frank Drebin for figuring this one out; it had been driving me absolutely mad. https://www.youtube.com/watch?v=sC2SeGCTX4U
 
 ;I tried windowclass3, (the effect controls) but that does not work, possibly due to stuff in the bins, which would play instead sometimes.
 
-sleep 10
+;sleep 10
 ;ControlSend,DroverLord - Window Class3,^!+5,ahk_exe Adobe Premiere Pro.exe
 ;that is my shortcut for the Effect Controls.
-sleep 10
+;sleep 10
 ;ControlSend,DroverLord - Window Class3,^!+3,ahk_exe Adobe Premiere Pro.exe
 
 ;that is my shortcut for the Timeline.
@@ -1848,7 +1855,7 @@ if not WinActive(lolClass)
 CoordGetControl(xCoord, yCoord, _hWin) ; _hWin should be the ID of the active window
 {
 
-	;this overly complicated funciton will get information about a window without having to move the cursor to those coordinates first. the AHK people really should have a command for this already....
+	;this overly complicated function will get information about a window without having to move the cursor to those coordinates first. the AHK people really should have a command for this already....
 	;Keep in mind, Premiere has LOTS of small windows within it. Open window Spy and move your cursor around Premiere, to see what i mean.
 
 	;script originally from Coco

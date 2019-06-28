@@ -208,7 +208,16 @@ QuickToolTip(text, delay)
 }
 
 
-
+#Lbutton::
+if (toggle_fake_cursor = 1)
+	toggle_fake_cursor = 0
+else {
+	toggle_fake_cursor = 1
+	sleep 2
+	tooltip,
+	}
+;I need this becaue sometimes my cursor vanishes in Premiere and i need SOMETHING to use...
+return
 ; pgup::send {wheelup 50}
 ; pgdn::send {wheeldown 50}
 
@@ -220,6 +229,7 @@ QuickToolTip(text, delay)
 ~*$LButton::
 Lbuttondown = 1
 Return
+
 ~*$LButton up::
 Lbuttondown = -1
 Return
@@ -249,11 +259,15 @@ Return
 
 looper:
 
+if (toggle_fake_cursor = 1)
+	tooltip, ^ ;this is just in case my cursor vanishes in premiere, as it has done sometimes...
+else if (toggle_fake_cursor = 0)
+	tooltip, 
 
 MouseGetPos, realposX, realposY
-;tooltip, ^ ;this is just in case my cursor vanishes in premiere, as it has done sometimes...
 
-posX := realposX - Size/3.4, posY := realposY - Size/4.1 + 0 ; puts the gui in the middle rather than the corner. You'll have to change these variables if you have UI scaling set to 100% rather than 150% like I do.
+
+posX := realposX - Size/3.4, posY := realposY - Size/4.1 + 0 ; puts the gui in the middle rather than the corner. You'll have to change these variables if you have UI scaling set to anything other than 100%.
 If(Lbuttondown = 1 and Rbuttondown = 1) ;this doesn't really work. Often the ) will be out of alignment or will not show up.
     {
 		GuiControl,, MyText, ()

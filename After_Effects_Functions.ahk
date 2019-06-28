@@ -32,11 +32,14 @@ twirlAE(open := 1)
 BlockInput, on
 BlockInput, MouseMove
 
+CoordMode Pixel ;, screen  ; IDK why but it works like this...
+CoordMode Mouse, screen
+
 MouseGetPos xPos, yPos
 ;I currently work on a 4k, 100% UI scaled screen. You might have to change these  values to fit your own screen, if you use a different UI.
 rightedge = 200 ;250 for 150% UI
-expanseUp = 21  ;32 for 150% UI
-expanseDown = 7 ;10 for 150% UI
+expanseUp = 13  ;32 for 150% UI
+expanseDown = 13 ;10 for 150% UI
 
 CoordMode Pixel ;, screen  ; IDK why but it works like this...
 CoordMode Mouse, screen
@@ -53,7 +56,7 @@ If open = 1
 	if ErrorLevel = 1 ;if that was unable to find it, try again with another image
 		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, *2 %A_WorkingDir%\AE_down2.png
 	if ErrorLevel = 1 ;if that was unable to find it, try again with another image
-		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, *2 %A_WorkingDir%\AE_down3.png
+		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, *5 %A_WorkingDir%\AE_down3.png
 
 	if ErrorLevel = 0
 		{
@@ -74,7 +77,7 @@ else if open = 0
 	if ErrorLevel = 1 ;if that was unable to find it, try again with another image
 		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, *2 %A_WorkingDir%\AE_right2.png
 	if ErrorLevel = 1 ;if that was unable to find it, try again with another image
-		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, *2 %A_WorkingDir%\AE_right3.png
+		ImageSearch, FoundX, FoundY, 0, yPos-expanseUp, rightedge, yPos+expanseDown, *5 %A_WorkingDir%\AE_right3.png
 		
 	if ErrorLevel = 0
 		{
@@ -89,7 +92,8 @@ else if open = 0
 tooltip, FAIL`, ErrorLevel is %ErrorLevel%
 ;msgbox, , , num enter, 0.5;msgbox, , , num enter, 0.5
 resettwirl:
-MouseMove, xPos-8, yPos-8, 0 ;IDK why, but if I don't subtract a few pixels, the cursor ends up in a slightly wrong spot...
+;;MouseMove, xPos-8, yPos-8, 0 ;IDK why, but if I don't subtract a few pixels, the cursor ends up in a slightly wrong spot...
+MouseMove, xPos+0, yPos+0, 0 ;oh, it's what happens if after effects isn't full screen. hmm.
 blockinput, off
 blockinput, MouseMoveOff
 sleep 20

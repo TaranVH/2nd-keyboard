@@ -1,10 +1,10 @@
-﻿;msgbox, this is the original place I tested the Send_WM_COPYDATA function.
-
-StringToSend = Premiere direct
-result := Send_WM_COPYDATA(StringToSend, TargetScriptTitle)
-
-windowSwitcher(ahk_class Qt5QWindowIcon, StreamDeck.exe)
+﻿StringToSend = open Stream Deck app
+Send_WM_COPYDATA(StringToSend)
+;result := Send_WM_COPYDATA(StringToSend, TargetScriptTitle)
 ;windowSwitcher(theClass, theEXE)
+;windowSwitcher(ahk_class Qt5QWindowIcon, StreamDeck.exe)
+windowSwitcher("ahk_exe StreamDeck.exe","C:\Program Files\Elgato\StreamDeck\StreamDeck.exe")
+
 
 Exitapp
 

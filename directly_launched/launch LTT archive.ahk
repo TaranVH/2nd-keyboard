@@ -1,6 +1,6 @@
-﻿StringToSend = runexplorer("N:\Linus Tech Tips")
+﻿StringToSend = InstantExplorer("N:\Linus Tech Tips")
 Send_WM_COPYDATA(StringToSend)
-runexplorer("N:\Linus Tech Tips")
+InstantExplorer("N:\Linus Tech Tips")
 Exitapp
 SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%/REDIRECTOR Windows.ahk
