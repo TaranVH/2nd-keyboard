@@ -78,7 +78,7 @@ detecthiddenwindows, on
 SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 
 ;Avoid using stupid CTRL when alt is released https://autohotkey.com/boards/viewtopic.php?f=76&t=57683
-;#MenuMaskKey vk07  ; vk07 is (was) unassigned. See my full list of scan codes and virtual keys to see what else is available.
+;#MenuMaskKey vk07  ; vk07 is (was) unassigned. See my full list of scan codes and virtual keys to see what else is available: 
 #MenuMaskKey sc08A  ; vk07 is (was) unassigned. See my full list of scan codes and virtual keys to see what else is available: https://docs.google.com/spreadsheets/d/1GSj0gKDxyWAecB3SIyEZ2ssPETZkkxn67gdIwL1zFUs/edit#gid=0
 
 ;_________________________________________________________________________________________
@@ -190,7 +190,7 @@ F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it
 
 escape::msgbox,,, you pressed escape. this might cause like problems maybe, 0.9
 
-
+F1::return
 F2::insertSFX("Whoosh19-Short") ;you may not use spaces for filenames of sounds that you want to retreive in this way... since searching in premiere will disregard spaces in a a weird way... returning multiple wrong results....
 F3::insertSFX("Whoosh7-Short")
 F4::insertSFX("Whoosh2-Short")
@@ -201,19 +201,8 @@ F9::insertSFX("SimpleWhoosh3")
 F8::insertSFX("SimpleWhoosh8")
 F10::insertSFX("woosh2")
 F11::insertSFX("woosh1")
-F12::
-if WinActive("New TightVNC Connection") ;if we are at the thingy that asks for a password or whatever
-	{
-	Sendinput, {enter}
-	goto tvnEND ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!! DESPAIR!!!!
-	}
-IfWinNotExist, ahk_class TvnWindowClass
-	Run, C:\Program Files\TightVNC\tvnviewer.exe
-if WinExist("ahk_exe tvnviewer.exe")
-	WinActivate ahk_exe tvnviewer.exe
-tvnEND:
-;all done
-return
+F12::instantExplorer("N:\Team_Documents\N_TARAN_THINGS\prompter and cutting_room_floor") ;"FLOOR"
+
 
 
 ;F12::search() ;"search" is also used on ^+j 
@@ -225,7 +214,7 @@ return
 `::msgbox tilde or weird quote thing??
 1::insertSFX("bleep")
 2::
-3::
+3::return
 4::
 tooltip, this happens on key down
 keywait, 4 ;waits for the key to go up
@@ -239,7 +228,19 @@ return
 0::insertSFX("pop")
 -::audioMonoMaker("left")
 =::audioMonoMaker("right")
-backspace::instantExplorer("N:\Team_Documents\N_TARAN_THINGS\prompter and cutting_room_floor") ;"FLOOR"
+backspace::
+if WinActive("New TightVNC Connection") ;if we are at the thingy that asks for a password or whatever
+	{
+	Sendinput, {enter}
+	goto tvnEND ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!! DESPAIR!!!!
+	}
+IfWinNotExist, ahk_class TvnWindowClass
+	Run, C:\Program Files\TightVNC\tvnviewer.exe
+if WinExist("ahk_exe tvnviewer.exe")
+	WinActivate ahk_exe tvnviewer.exe
+tvnEND:
+;all done
+return
 
 ;;;;;next line;;;;;;;;
 ;;;;;K120 keyb;;;;;;;;
@@ -275,7 +276,7 @@ p::preset("flip horizontal")
 ]::preset("T Impact Pop")
 
 \::
-instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN USEFUL ELEMENTS\SFX")
+instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\SFX")
 sleep 20
 search() ;immediately highlights the search bar so you can search for a sound effect. Sadly this does not always seem to work...
 sleep 250
@@ -366,32 +367,33 @@ SC073 up::tooltip, [F23] LAlt -to-> SC073-International 1
 
 SC077::instantExplorer("N:\Team_Documents\N_TARAN_THINGS") ;;tooltip, [F23] RAlt -to-> SC077-Language 4
 SC078::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\LOGOS") ;;tooltip, [F23] RWin -to-> SC078-Language 3
-SC079::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\OBJECTS") ;tooltip, [F23] AppsKey -to-> SC079-International 4
-SC07B::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\IMAGES") ;K120 rCTRL:: -to-> SC07B:International5 
+SC079::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\BGs") ;tooltip, [F23] AppsKey -to-> SC079-International 4
+SC07B::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\GRAPHICS") ;K120 rCTRL:: -to-> SC07B:International5 
 ;;Rshift is staying as Rshift for the time being.
 
 SC07D::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS") ;K120 RShift -to-> SC07D: International3 --to--> \TARAN ASSETS\
 
 space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
 
-PrintScreen::InstantExplorer("Z:\Linus\2. Tech Linked\5. Transcode\_TL Delivery")
-ScrollLock::InstantExplorer("Z:\Linus\5. Fast As Possible\_FAP Transcoding\_FAP Delivery") ;scroll lock WAS reassigned to SC061 back when i used interception
-SC07E::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\_LTT DELIVERY") ;;Pause -to-> SC07E:Brazillian comma -to-> \_LTT DELIVERY
+;;;;;;;-----------------------------------------
 
-
-
+PrintScreen::InstantExplorer("N:\TechLinked")
+ScrollLock::InstantExplorer("N:\Fast As Possible")
+;scroll lock WAS reassigned to SC061 back when i used interception
+SC07E::InstantExplorer("N:\Linus Tech Tips")
+;;Pause -to-> SC07E:Brazilian comma
 
 ; CtrlBreak::msgbox, CTRL BREAK - maybe the default output of the pause/break key??
 ; pause::msgbox, is this the PAUSE key?? IDK
 ; Break::msgbox, Maybe THIS is the pause/break key?? WHAT CAN I BELEVE ANYMORE??
 
-pgup::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Pending")
-home::InstantExplorer("Z:\Linus\5. Fast As Possible\1. Pending")
-insert::InstantExplorer("Z:\Linus\2. Tech Linked\3. Pending")
+insert::InstantExplorer("Z:\Linus\2. Tech Linked\5. Transcode\_TL Delivery")
+home::InstantExplorer("Z:\Linus\5. Fast As Possible\_FAP Transcoding\_FAP Delivery") 
+pgup::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\_LTT DELIVERY")
 
-pgdn::InstantExplorer("N:\Linus Tech Tips")
-end::InstantExplorer("N:\Fast As Possible") ;runexplorer("N:\Fast As Possible")
-delete::InstantExplorer("N:\TechLinked")
+delete::InstantExplorer("Z:\Linus\2. Tech Linked\3. Pending")
+end::InstantExplorer("Z:\Linus\5. Fast As Possible\1. Pending")
+pgdn::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Pending")
 
 up::preset("push up")
 down::preset("push down")
@@ -469,7 +471,7 @@ return
 ; return
 
 
-
+;;;STILL IN THE K120 KEYBOARD
 
 ;;NumLock -to-> SC05C-International 6
 SC05C::
@@ -485,7 +487,20 @@ return
 numpadins::
 numpad0::SendKey("numpad0", , "sky blue")
 numpadend::
-numpad1::SendKey(A_thishotkey, ,"blue-green")
+numpad1::
+;openApp("", ahk_exe waifu2x-caffe.exe, waifu2x-caffe)
+;SendKey(A_thishotkey, ,"blue-green")
+IfWinNotExist, ahk_exe waifu2x-caffe.exe
+	Run, C:\waifu2x-caffe\waifu2x-caffe.exe
+if not WinActive(ahk_exe waifu2x-caffe.exe)
+	{
+	WinActivate ahk_exe waifu2x-caffe.exe
+	;WinGetTitle, Title, A
+	WinRestore waifu2x-caffe
+	}
+; I had to do this directly because it has the same AHK_class as a regular explorer window, so my usual use od openApp() woudln't work. Oh teh wells.
+return
+
 numpaddown::
 numpad2::SendKey(A_thishotkey, ,"nudge down")
 numpadpgdn::
@@ -807,8 +822,7 @@ backspace::send, ^+!r
 
 ; tab::msgbox,,, you pressed tab. :P,0.8
 ;VIDEO TRACKER
-tab::
-gotofiretab("Video Tracker LTT - Google","https://docs.google.com/spreadsheets/d/1FmuWOCKHxZbxS5XbwpVDP4M27BjTAJJ67B0yoSXUN9k/edit#gid=0")
+tab::gotofiretab("Fast As Possible | Trello","https://trello.com/b/yUSFtaXn/fast-as-possible")
 ; WinActivate ahk_exe firefox.exe
 ; sleep 10
 ; WinGet, the_current_id, ID, A
@@ -816,7 +830,7 @@ gotofiretab("Video Tracker LTT - Google","https://docs.google.com/spreadsheets/d
 ; ;tooltip, vret is %vRet%
 ; if (vRet = 0)
 	; run, firefox.exe https://docs.google.com/spreadsheets/d/1FmuWOCKHxZbxS5XbwpVDP4M27BjTAJJ67B0yoSXUN9k/edit#gid=0
-return
+;return
 
 ;;;this is the azio F24 keyboard;;;
 
@@ -848,7 +862,7 @@ capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOu
 ;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 
 ;;;this is(was) Lshift::
-SC070::gotofiretab("Calendar - June 2019","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+SC070::gotofiretab("Calendar - August 2019","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
 ;em dash –
@@ -1537,17 +1551,20 @@ G18: Activate/switch to Premiere
 */
 
 
-#IfWinActive ahK_exe Adobe Premiere Pro.exe
-;TITLE BAR REMOVER
-;;ctrl backslash is a nice shortcut in MACINTOSH Premiere for hiding the title bar. There is no Windows equivalent... unless you use autohotKey!
-;;WARNING THOUGH - i think this script makes premiere less stable. I hardly use it...
-;;https://jacKsautohotKeyblog.wordpress.com/2016/05/27/autohotKey-toggles-and-the-ternary-operator-beginning-hotKeys-part-18/
-^\::
-  If (toggle := !toggle)
-    WinSet, Style, -0xC00000, A
-  else
-    WinSet, Style, +0xC00000, A
-Return
+; #IfWinActive ahK_exe Adobe Premiere Pro.exe
+; ;TITLE BAR REMOVER
+; ;;ctrl backslash is a nice shortcut in MACINTOSH Premiere for hiding the title bar. There is no Windows equivalent... unless you use autohotKey!
+; ;;WARNING THOUGH - i think this script makes premiere less stable. I hardly use it...
+; ;;https://jacKsautohotKeyblog.wordpress.com/2016/05/27/autohotKey-toggles-and-the-ternary-operator-beginning-hotKeys-part-18/
+; ^\::
+  ; If (toggle := !toggle)
+    ; WinSet, Style, -0xC00000, A
+  ; else
+    ; WinSet, Style, +0xC00000, A
+; Return
+
+;UPDATE:
+;Premiere in Windows now HAS this feature by default!! But there is no visible shortcut for it in the shortcuts mapper, strangely enough. anyway, that makes my script obsolete. yay!
 
 
 #IfWinActive ahK_exe Adobe Premiere Pro.exe
@@ -1725,7 +1742,7 @@ Media_Next::^numpadMult
 ;These are assigned to some of the new LABEL COLORS in premiere, using Premiere's own shortcut assignment panel.
 
 
-
+;;&&&&&&&&&&&&&& KEY ASSIGNMENTS FOR PHOTOSHOP &&&&&&&&&&&&&&&&&&&&&
 #IfWinActive ahk_exe Photoshop.exe
 
 ;;-----------------IMPORTANT NOTE--------------------:
@@ -1739,13 +1756,13 @@ Media_Next::^numpadMult
 ;;https://forums.adobe.com/thread/1453594
 
 
-;anyway, f14 is labeled "scale" already, so I'm going to use it for brush resizing in photoshop.
+;anyway, f14 is labeled "scale" already on my Corsair K95, so I'm going to use it for brush resizing in Photoshop.
 F14::
 tooltip, f14
 sendinput {Lalt down}
 sendinput {Rbutton down}
 sleep 1 ;just because. Maybe this is a bad idea though.
-keywait, F14 ;saits for F14 to be released
+keywait, F14 ;waits for F14 to be released
 sleep 1
 sendinput {Rbutton up}
 sendinput {Lalt up}
@@ -1753,8 +1770,6 @@ tooltip,
 return
 
 ;This will work, but ONLY if you don't have some OTHER AutoHotKey script running, even one that has nothing to do with Photoshop specifically. .... in THAT case, the keys end up being not fully blocked, and can slip through.
-
-
 
 ;actually, just to keep things safe, I'm going to manually block them.
 !F14::
@@ -1767,8 +1782,33 @@ return
 ;;ATTENTION WACOM TABLET USERS. I APOLOGISE FOR BREAKING YOUR SHIT. WACOM/ADOBE COULD THINK OF NO WAY TO LIKE, INTERFACE DIRECTLY. THEY HAD TO GO AND STEAL SOME OBSCURE SHORTCUTS THAT THEY THOUGHT NOBODY WOULD USE. WELL THEY DIDN'T KNOW THAT TARAN "MACRO" VAN HEMERT WAS ON THE CASE.
 ;;ANYWAY, YOU CAN JUST REMOVE THE ABOVE STUFF AND GET YOUR WACOM SHORTCUTS BACK. (Thread about wacom stuff: https://forums.adobe.com/thread/1453594)
 
+F5::
+sendinput, {F5} ;this is my shortcut for "Rasterize > Layer"
+sleep 1
+sendinput, ^!+{F5} ;this is my shortcut for "Rasterize > Layer style"
+;You're not allowed to put both of these commands on the same shortcut, but to that I say BULLSHIT, I DO WHAT I WANT.
+return
 
 
+
+;This is absolutely bizarre. When I had the below shortcuts in their own separate script,, F15 and F14 when paired with alt and right mouse button clicks, and manual LEFT mouse button clicks,, would zoom in and rotate the canvas, respectively. IDK wtf is going on with that.
+
+;fix stupid requirement to hold CTRL for photoshop zooming...
+-::
+send, ^- ;zoom out
+sleep 5
+;send, {ctrl up} ;I've had issues with modifier keys getting stuck
+return
+
+=::
+send, ^= ;zoom in
+sleep 5
+;send, {ctrl up} ;I've had issues with modifier keys getting stuck
+return
+
+
+
+;;&&&&&&&&&&&&&&&&&&&& PHOTOSHOP END &&&&&&&&&&&&&&&&&&&&&
 
 ;;^^^^^^^^^^PREMIERE SUPER FUCTION KEYS (F13 and up)^^^^^^^^^^^^^^^
 
@@ -1830,29 +1870,30 @@ return
 ; for more information. Very useful to know. If you're a Taran.
 ;]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-;Below here is a bunch of potentialy useful stuff, for future development. Some of it can be tirggered by my Corsair keyboard, and some of it cannot.
+;Below here is a bunch of potentially useful stuff, for future development. Some of it can be triggered by my Corsair keyboard, and some of it cannot.
 
 #IfWinActive
 
 
+
+<#WheelUp::
+sendinput, {Volume_Up}
+sendinput, {SC0E9}
+return
+
+<#WheelDown::
+sendinput, {Volume_Down}
+sendinput, {SC0E9}
+return
+;;holding the windows key and scrolling will now change the volume.
+;;I'm only gonna use this for laptops that don't have dedicated volume keys.
+;;also this script sucks because it still launches the windows menu but IDK how to resolve that right now and it's just not worth figuring out.
+
+;;https://jacksautohotkeyblog.wordpress.com/2016/03/08/windows-volume-control-using-your-mouse-wheel-and-the-autohotkey-if-directive-beginning-hotkeys-part-6/
+
+
+
 ; 
-
-;This is absolutely bizzare. When I had these in their own seperate script, F15 and F14 when paired with alt and right mouse button clicks, and manual LEFT mous button clicks, would zoom in and rotate the canvas, respectively. IDK wtf is going on with that.
-
-#IfWinActive ahk_exe Photoshop.exe
-
-;fix stupid requirement to hold CTRL for photoshop zooming...
--::
-send, ^- ;zoom out
-sleep 5
-;send, {ctrl up} ;I've had issues with modifier keys getting stuck
-return
-
-=::
-send, ^= ;zoom in
-sleep 5
-;send, {ctrl up} ;I've had issues with modifier keys getting stuck
-return
 
 
 
@@ -1928,7 +1969,7 @@ return
 
 
 F9::ConvertSentence()
-; F9::Convert_Cap()
+; ^+F9::Convert_Cap()
 
 ; Convert_Cap()
 ; {

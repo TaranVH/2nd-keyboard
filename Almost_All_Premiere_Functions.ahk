@@ -1188,6 +1188,93 @@ else
 clickTransformIcon2()
 {
 Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it causes problems.
+
+; ;;;;;;;;;;;;;;;new stuff
+
+; dontrestart = 0
+; restartPoint:
+; blockinput, sendandMouse
+; blockinput, MouseMove
+; blockinput, on
+; ;-Sendinput ^!+5
+; prFocus("effect controls") ;essentially just hits CTRL ALT SHIFT 5 to highlight the effect controls panel.
+; sleep 10
+
+; ;ToolTip, A, , , 2
+; MouseGetPos Xbeginlol, Ybeginlol
+; global Xbegin = Xbeginlol
+; global Ybegin = Ybeginlol
+; ; MsgBox, "please verify that the mouse cannot move"
+; ; sleep 2000
+; ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro ;This is HOPEFULLY the ClassNN of the effect controls panel. Use Window Spy to figure it out.
+
+; YY := Ycorner+66 ;ui 100%
+; XX := Xcorner+13 ;ui 100%
+
+; MouseMove, XX, YY, 0
+; sleep 10
+
+; PixelGetColor, colorr, XX, YY
+
+; ; if (colorr = "0x353535") ;for 150% ui
+; if (colorr = "0x222222") ;for 100% ui
+; {
+	; tooltip, color %colorr% means closed triangle. Will click and then SCALE SEARCH
+	; blockinput, Mouse
+	; Click XX, YY
+	; sleep 5
+	; clickTransformIcon()
+	; findVFX(foobar)
+	; Return
+; }
+; ;else if (colorr = "0x757575") ;for 150% ui. again, this values could be different for everyone. check with window spy. This color simply needs to be different from the color when the triangle is closed. it also cannot be the same as a normal panel color (1d1d1d or 232323)
+; else if (colorr = "0x7A7A7A") ;for 100% ui
+; {
+	; ;tooltip, %colorr% means OPENED triangle. SEARCHING FOR SCALE
+	; blockinput, Mouse
+	; sleep 5
+	; clickTransformIcon()
+	
+	
+	; the GOTO goes HERE
+	
+	
+	
+	; ;untwirled = 1
+	; Return, untwirled
+; }
+; else if (colorr = "0x1D1D1D" || colorr = "0x232323")
+	; {
+	; tooltip, this is a normal panel color of 0x1d1d1d or %colorr%, which means NO CLIP has been selected ; assuming you didnt change your UI brightness. so we are going to select the top clip at playhead.
+	; ;I should experiement with putting a "deselect all clips on the timeline" shortcut here...
+	; Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
+	; sleep 10
+	; Send ^p ;this disables "selection follows playhead." I don't know if there is a way to CHECK if it is on or not. 
+	; resetFromAutoVFX()
+	; ;play noise
+	; ;now you need to do all that again, since the motion menu is now open. But only do it ONCE more! 
+	; If (dontrestart = 0)
+		; {
+		; dontrestart = 1
+		; goto, restartPoint ;this is stupid but it works. Feel free to improve any of my code.
+		; }
+	; Return reset
+	; }
+; else
+	; {
+	; tooltip, %colorr% not expected
+	; ;play noise
+	; resetFromAutoVFX()
+	; Return reset
+	; }
+; }
+; Return ;from autoscaler part 1
+
+
+
+; ;;;;;;;;;;;;;new stuff above
+
+
 BlockInput, On ;blocks keyboard and mouse input... I think.
 SetKeyDelay, 0
 sendinput ^!+5 ;highlights the effect controls
@@ -1480,9 +1567,10 @@ else
 ;how to use instantVFX: https://www.youtube.com/watch?v=Bi3zBqO74ms
 
 ;UPDATE:
-;I overwrote the high DPI scaling behaviour of Premiere, by following THESE instructions: https://forums.adobe.com/message/10081059#10081059 , which changes the look of text and other elements of Premiere.
+;I had overwritten the high DPI scaling behaviour of Premiere, by following THESE instructions: https://forums.adobe.com/message/10081059#10081059 , which changes the look of text and other elements of Premiere.
 ;Doing this totally BROKE the functionality of instantVFX() because now the pixel colors were different, and the images to be searched for would have had to have been updated.
 ;THEREFORE, I switched back to Premiere's built-in UI scaling, and will just have to wait for adobe to fix the issues that come with it.
+;UPDATE: now that i have a 43" 4k monitor, I am back to 100% UI and it is wonderful. Will NEVER go back. 150% UI is just such a PITA to deal with.
 
 
 instantVFX(foobar)

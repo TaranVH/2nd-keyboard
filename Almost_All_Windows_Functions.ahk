@@ -54,6 +54,17 @@ return
 ;;https://cedeq.com/enterpad/en/autohotkey/useful-ahk-scripts/multiple-clipboards
 ;;https://jacksautohotkeyblog.wordpress.com/2016/06/09/autohotkey-solutions-for-windows-clipboard-limitations-autohotkey-clipboard-tips/
 
+
+
+
+
+
+;; I'm seeing some excellent sounding scripts in here which i might wish to take for myself:
+;   https://github.com/func-github/AHK-Windows-Enhancement
+; oh just kidding, they are in the TO DO section... they don't actually exist...
+
+
+
 GetFromClipboard()
 { 
   ClipSaved := ClipboardAll ;Save the clipboard
@@ -496,6 +507,8 @@ if IsFunc("Keyshower") {
 }
 
 ;;;SUPER IMPORTANT: YOU NEED TO GO INTO WINDOWS' FOLDER OPTIONS > VIEW > AND CHECK "DISPLAY THE FULL PATH IN THE TITLE BAR" OR THIS WON'T WORK.
+;;;UPDATE: THE INSTRUCTION ABOVE MIGHT BE OBSOLETE NOW, I'VE FIGURED OUT A BETTER WAY TO DO THIS SHIT
+
 
 instantExplorerTryAgain:
 
@@ -583,6 +596,14 @@ if f_path =
 if f_class = #32770    ; It's a dialog.
 	{
 
+	if WinActive("ahk_exe waifu2x-caffe.exe")
+		{
+		tooltip, you are inside of Waifu2x
+		
+		GOTO, ending2
+		;this will open an explorer window rather than trying to change waifu2x's input path as it otherwise would.
+		}
+	
 	if WinActive("ahk_exe Adobe Premiere Pro.exe")
 		{
 		tooltip, you are inside of premiere
@@ -753,7 +774,7 @@ ending2:
 ;	msgbox,,,Directory does not exist,1
 
 instantExplorerEnd:
-
+tooltip,
 }
 ;end of instantexplorer()
 
@@ -832,7 +853,8 @@ if WinActive("ahk_class OpusApp")
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
 
 switchToFirefox(){
-sleep 12
+sleep 16 ;So this is here because I think that with the way I have iCUE set up, it won't always get to the Right CTRL UP event because it's no longer on that profile, you know what I mean? So this gives it a bit more time to do that.
+
 sendinput, {SC0E8} ;scan code of an unassigned key. Do I NEED this?
 
 
@@ -853,7 +875,8 @@ else
 	{
 	;WinRestore ahk_exe firefox.exe
 	;WinActivate ahk_exe firefox.exe ;was winactivatebottom before...
-	WinActivatebottom ahk_class MozillaWindowClass ;was winactivatebottom before...
+	;WinActivatebottom ahk_class MozillaWindowClass ;was winactivatebottom before...
+	WinActivate ahk_class MozillaWindowClass ;was winactivatebottom before...
 	;sometimes winactivate is not enough. the window is brought to the foreground, but not put into FOCUS.
 	;the below code should fix that.
 	WinGet, hWnd, ID, ahk_class MozillaWindowClass
@@ -868,7 +891,8 @@ sleep 2
 		; Send % "{" A_Loopfield " Up}"
 	; }
 
-send, {Rctrl up}
+send, {Rctrl up} ;This SHOULD work, but i think it doesn't because the RCTRL event is still coming from the keyboard itself. I need to make something that will send RCTRL up and double click that shit and then see if it makes any difference at all next time. hmm.
+;okay, I've created RCTRL UP.AHK to test this. Just doble clicking on it will send a RCTRL UP event. This is important because it's not being done through the keyboard. Will try that next time this shizz happens.
 send, {Lctrl up}
 
 }
@@ -933,6 +957,9 @@ send, {Lctrl up}
 closeAllExplorers()
 {
 WinClose,ahk_group taranexplorers
+; i want to improve this so that the bottom (most recently active) explorer window does NOT close. IDK how to do that yet though.
+; https://stackoverflow.com/questions/39601787/close-windows-explorer-window-with-auto-hotkey
+; https://autohotkey.com/board/topic/88648-close-all-explorer-windows/
 }
 
 

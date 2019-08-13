@@ -1,4 +1,4 @@
-Menu, Tray, Icon, shell32.dll, 110 ; changes the icon to a (\) thingy
+Menu, Tray, Icon, shell32.dll, 110 ; changes the icon to a 🚫
 
 ;SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #InstallKeybdHook
@@ -14,7 +14,11 @@ SendMode Input
 #MenuMaskKey vk07  ; vk07 is unassigned. 
 #UseHook
 
+; INFO: YOU MIGHT NEED TO DISABLE WINDOWS GAME BAR, OR AT LEAST CHANGE THE SHORTCUTS. ON ONE MACHINE, HITTING ALT WOUDL ALWAYS BRING IT UP. SO ANNOYING. Just hit the windows key and search for "game bar settings"
+
 ; INFO: you can hold down both ALT keys if you want to easily toggle this script on and off.
+
+;INFO: here's a video about this: https://www.youtube.com/watch?v=vRld4bVFrpU
 
 
 ; THEY ALL SAID IT COULD NOT BE DONE
@@ -88,6 +92,8 @@ Lalt & Ralt::suspend ;hit both ALT keys simultaneously to toggle the functonalit
 
 
 ;;comment in the code below if you wish to reassign alt modifier combinations:
+;; take this tutorial if you don't know how AHK works. https://www.autohotkey.com/docs/Tutorial.htm
+
 
 ; !f::msgbox,,,To block modifier key use of alt you can do it like this,0.7
 ; !e::msgbox,,,replace msgbox with whatever code you want,0.7

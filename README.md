@@ -58,6 +58,10 @@ My most used, most useful, simplest script is this one: https://www.youtube.com/
 
 -----
 
+To see all my currently assigned scan codes and virual keys, take a look at this spreadsheet: https://docs.google.com/spreadsheets/d/1GSj0gKDxyWAecB3SIyEZ2ssPETZkkxn67gdIwL1zFUs/edit?usp=drive_web&ouid=107638578296445823789
+
+-----
+
 As of August 2018, I've changed the root directory from this:
 
 **C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard**
