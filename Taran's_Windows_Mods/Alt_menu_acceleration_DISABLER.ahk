@@ -10,16 +10,64 @@ Process, Priority, , H
 SendMode Input
 #SingleInstance force
 
-;These next two lines are EXTREMELY IMPORTANT. You have to change the "menu mask key" away from being CTRL, to something that won't result in cross-talk. Read this thread to learn the details: https://autohotkey.com/boards/viewtopic.php?f=76&t=57683
+;These next two lines are very important. You have to change the "menu mask key" away from being CTRL, to something that won't result in cross-talk. Read this thread to learn the details: https://autohotkey.com/boards/viewtopic.php?f=76&t=57683
 #MenuMaskKey vk07  ; vk07 is unassigned. 
 #UseHook
 
-; INFO: YOU MIGHT NEED TO DISABLE WINDOWS GAME BAR, OR AT LEAST CHANGE THE SHORTCUTS. ON ONE MACHINE, HITTING ALT WOUDL ALWAYS BRING IT UP. SO ANNOYING. Just hit the windows key and search for "game bar settings"
+; *********** IS THE WINDOWS / XBOX GAME BAR GETTING IN YOUR WAY? INSTRUCTIONS FOR HOW TO FIX THAT ARE BELOW! *************
 
-; INFO: you can hold down both ALT keys if you want to easily toggle this script on and off.
 
-;INFO: here's a video about this: https://www.youtube.com/watch?v=vRld4bVFrpU
+;===============================  READ ME  ====================================
 
+;TO RUN THIS SCRIPT:
+
+
+;IF YOU DON'T WANT TO INSTALL AUTOHOTKEY
+
+;You merely need to download the .exe from here:  https://github.com/TaranVH/2nd-keyboard/raw/master/Taran's_Windows_Mods/Alt_menu_acceleration_DISABLER.exe
+
+;Now double click on that file to run it.
+
+
+
+;ALTERNATIVELY, IF YOU DO WANT TO INSTALL AUTOHOTKEY:
+
+;Download and install autohotkey from here: https://www.autohotkey.com/
+
+;You don't need to download the .exe of this script.
+
+; Instead, go to this exact page https://raw.githubusercontent.com/TaranVH/2nd-keyboard/master/Taran's_Windows_Mods/Alt_menu_acceleration_DISABLER.ahk
+
+;...and hit CTRL S to save it somewhere. Make sure it is saved as a .ahk file, not a .txt file!
+
+;Double click on the file to run it.
+
+
+
+;TO USE THE SCRIPT: (This applies to the .exe and .ahk -- they are exactly the same.)
+
+; YOU MIGHT NEED TO DISABLE WINDOWS GAME BAR, OR AT LEAST CHANGE THE SHORTCUTS! Just hit the windows key and search for "game bar settings." Click on that and turn it OFF. Here is a picture of that process: https://i.imgur.com/yQlOB38.png or https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/HOW_TO_DISABLE_GAME_BAR.png
+
+;Note that the script will add a little red 🚫 to your task bar, which can be right clicked to be disabled or exited from the menu.
+
+; You can hold down both ALT keys whenever you want to easily toggle this script on and off. This is useful for things like Premiere's keyboard shortcuts menu, which has ALT-nullification of its own.
+
+
+;TO AUTO-START THIS SCRIPT WHEN WINDOWS STARTS:
+
+; Once you've chosen a good folder location for the script, right click on it and choose "create shortcut." Then drag that shortcut into your startup folder! KEEP IN MIND that there are TWO startup folders - one for your user account, and one for ALL users. you can use either one. Here they are:
+
+;  C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
+
+;  C:\Users\TaranWORK\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+
+
+;Here's a video about this script: https://www.youtube.com/watch?v=vRld4bVFrpU
+
+
+
+
+;========================== RAMBLINGS ====================================
 
 ; THEY ALL SAID IT COULD NOT BE DONE
 ; THEY ALL HAD SHITTY SOLUTIONS THAT DIDN'T WORK
