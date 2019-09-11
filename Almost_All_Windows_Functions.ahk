@@ -819,6 +819,7 @@ if savedCLASS = ahk_class Notepad++
 		Send ^{tab}
 		}
 	}
+
 ;msgbox,,,got to here,0.5
 windowSwitcher(savedCLASS, savedEXE)
 }
@@ -1066,11 +1067,21 @@ else
 #IfWinActive
 windowSwitcher(theClass, theEXE)
 {
+;if savedCLASS = Chrome_WidgetWin_1
+if theCLASS = Chrome_WidgetWin_1
+	{
+	msgbox, it is a chrome thingy
+	if theEXE = Teams.exe
+		WinActivate %theEXE%
+		goto, switchEND
+	}
+
 ;msgbox,,, switching to `nsavedCLASS = %theClass% `nsavedEXE = %theEXE%, 0.5
 IfWinNotExist, %theClass%
 	Run, % theEXE
 if not WinActive(theClass)
 	WinActivate %theClass%
+switchEND:
 }
 
 ;;;EXPLORERSORT.AHK CODE IS BELOW
@@ -1337,6 +1348,26 @@ sortByDate()
 	else {
 		vList := "System.DateModified -1" ;Date modified descending should be default in my humble
 	}
+	JEE_IFV2SetSortColumns(ifv2, vList)
+	isp := isb := isv := ifv2 := icm := ""
+}
+
+sortByDateDescending()
+{
+	WinGet, hWnd, ID, A
+	oWin := JEE_ExpWinGetObj(hWnd)
+	JEE_ExpGetInterfaces(oWin, isp, isb, isv, ifv2, icm)
+	;above must load up the complex structures with black magic
+	;clipboard:=JEE_IFV2GetSortColumns(ifv2)
+	;System.DateModified -1
+	;System.DateModified 1
+	;;if RegExMatch(JEE_IFV2GetSortColumns(ifv2),"System.DateModified ?:-1")
+	;regexesllwork but not straightforward
+	curCol:=JEE_IFV2GetSortColumns(ifv2)
+	;dont call it twice - maybe you wouldnt need to but im not seeing a superb way to avoid it below
+	
+	vList := "System.DateModified -1" ;Date modified descending 
+	
 	JEE_IFV2SetSortColumns(ifv2, vList)
 	isp := isb := isv := ifv2 := icm := ""
 }

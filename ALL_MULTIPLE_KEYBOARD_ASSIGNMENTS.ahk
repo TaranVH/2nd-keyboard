@@ -368,7 +368,7 @@ SC073 up::tooltip, [F23] LAlt -to-> SC073-International 1
 SC077::instantExplorer("N:\Team_Documents\N_TARAN_THINGS") ;;tooltip, [F23] RAlt -to-> SC077-Language 4
 SC078::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\LOGOS") ;;tooltip, [F23] RWin -to-> SC078-Language 3
 SC079::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\BGs") ;tooltip, [F23] AppsKey -to-> SC079-International 4
-SC07B::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\GRAPHICS") ;K120 rCTRL:: -to-> SC07B:International5 
+SC07B::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\Screenshots") ;K120 rCTRL:: -to-> SC07B:International5 
 ;;Rshift is staying as Rshift for the time being.
 
 SC07D::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS") ;K120 RShift -to-> SC07D: International3 --to--> \TARAN ASSETS\
@@ -799,8 +799,7 @@ F12::tooltip, you pressed F24 then %A_thishotkey%
 
 ;`::tooltip, tilde thing 
 `::
-tooltip, trying it now
-
+gotofiretab("ADDENDUM to 4hr","https://docs.google.com/document/d/1YRr5O2PN10PRtAMZHUJJhh6_2FXANjaHTGYH0RadTaI/edit")
 return
 
 
@@ -862,7 +861,7 @@ capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOu
 ;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 
 ;;;this is(was) Lshift::
-SC070::gotofiretab("Calendar - August 2019","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+SC070::gotofiretab("Calendar - September 2019","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
 ;em dash –
@@ -1158,7 +1157,7 @@ F4::F2 ;this is to regain what I lost when I used F2 and F3 for tab navigation.
 #IfWinActive ahk_exe Photoshop.exe
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
-F3::send ^w 
+F3::send ^o
 
 ;;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1520,10 +1519,13 @@ sleep 50
 send, {left} ;IDK why this is here but it's important.
 send, ^v ;pastes the text into the title area
 sleep 10
+send, ^!+k ;ctrl alt shift K is  "shuttle stop"
 ;sleep 500
 send, +{tab} ;shift tab will make it highlight the "duration" field
 sleep 10
 send, 00:00:04:00
+sleep 10
+send, ^!+k ;ctrl alt shift K is  "shuttle stop"
 sleep 10
 ;unstick any modifier keys, UGH what a pain this is to deal with
 Send,{LCtrl up}
@@ -1536,6 +1538,8 @@ Send,{LShift up}
 Send,{RShift up}
 sleep 10
 send, {enter}
+sleep 10
+send, ^!+k ;ctrl alt shift K is  "shuttle stop"
 return
 
 #IfWinActive
@@ -1850,9 +1854,11 @@ return
 
 #IfWinActive
 
+
+;
 ;;I can't use ~ thingies or these keys can very easily get stuck...
-; Rshift & Lshift::capslock
-; Lshift & Rshift::capslock
+Rshift & Lshift::capslock
+Lshift & Rshift::capslock
 +capslock::capslock ;only SHIFT CAPSLOCK will now turn on capslock, freeing the real capslock key to be used as a MODIFIER KEY, just like CTRL.
 +F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
 ~F20 & Shift::Capslock ;IN CASE THE CAPslock key goes down first.

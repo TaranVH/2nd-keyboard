@@ -1,5 +1,5 @@
 ﻿
-StringToSend = InstantExplorer("",1)
+StringToSend = InstantExplorer - ROOT
 Send_WM_COPYDATA(StringToSend)
 InstantExplorer("",1)
 Exitapp
