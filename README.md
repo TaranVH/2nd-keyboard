@@ -1,82 +1,82 @@
 # 2nd-keyboard
-ALL of Taran's scripts - (not just for the 2nd keyboard.)
+Todos os scripts do Taran - (não é apenas para o 2º teclado.)
 
-I'm the main video editor for Linus Media Group. We put out 1 or more videos every day, so I had to learn how to work quickly, without sacrificing quality.
-These AutoHotKey scripts speed up my workflow significantly. (Mostly for Premiere Pro and Explorer)
+Sou o editor primário do Linus Media Group. Postamos 1 ou mais videos por dia, e por isso tive que aprender a trabalhar rápido sem sacrificar qualidade.
+Esses scripts de AutoHotKey agilizaram meu workflow significativamente. (Em sua maioria Premiere Pre e Explorer)
 
-I pioneered the use of a 2nd keyboard purely for macros, and later, the concept of "wrapping" keystrokes inside of other keystrokes, (ideally, the super-function keys (F13-F24)) as a means of massively multiplying the number of unique available keys.
+Fui pioneiro para o uso de teclados secundários somente para macros e depois, o conceito de amarrar keystroke dentro de keystroke, (ideaidealmente as teclas de super-função(F13-F24)) como uma forma de multiplicar o número de teclas únicas disponíveis.
 
 ------------
 
-Adding a 2nd, independent keyboard is remarkably difficult, as Windows has no native support for distinguishing between multiple keyboards. There are many possible solutions, which vary greatly in difficulty, functionality, stability, and price. Here's a spreadsheet that breaks it all down for you. My preferred solution might not be best for you:
+Adicionar um teclado secundário independente é uma tarefa notavelmente dificil devido ao fato do Windows não ter suporte nativo para distinguir de multiplos teclados. Existem diversas soluções que variam em dificuldade, funcionabilidade, estabilidade e preço. Abaixo está uma tabela que explica melhor para você. Minha solução de escolha pode não ser a melhor para seu caso:
 
 https://docs.google.com/spreadsheets/d/18e6-OlUzc_1wbGvm9zqMOwtC4oysm6C7XMU1bOf8Nrc/edit?usp=sharing
 
 
-#### So, to summarize, if you want to make your own macro keyboard, these are all the methods that I know of:
-- Luamacros (unstable/buggy, no longer recommended) https://youtu.be/Arn8ExQ2Gjg
-- Interception https://youtu.be/y3e_ri-vOIo and https://youtu.be/Hn18vv--sFY
+#### Para resumir, se você quiser fazer seu próprio teclado de macro, esses são todos os métodos que conheço:
+- Luamacros (Instável/bugado, não recomendado atualmente) https://youtu.be/Arn8ExQ2Gjg
+- Interceptação https://youtu.be/y3e_ri-vOIo and https://youtu.be/Hn18vv--sFY
 - iCue (K55) https://youtu.be/cQ2atofn3lE
 - Razer Synapse (Cyonosa Chroma) https://youtu.be/GttedCcyxa4
-- QMK (Hasu USB converter, my current solution.) https://youtu.be/GZEoss4XIgc
+- QMK (Conversor USB Hasu, meu método atual.) https://youtu.be/GZEoss4XIgc
 
-#### Other potential methods that I have not personally tested
-- There's also MacroMyKBD - (NEW, UNTESTED, I have no idea if it works. If someone could try it out and report back to me, that'd be greeeaaat) https://github.com/lal12/macroMyKBD
-- There's also 2key, which uses a Raspberry Pi. - (UNTESTED, I also have no idea if this works. Lemme know, if you try it!) https://github.com/Gum-Joe/2Keys/blob/v0.3.5/docs/SETUP.md
+#### Outros métodos que não testei
+- Existe o MacroMyKBD - (Novo, não testado, não tenho ideia de como funciona. Seria ótimo se alguém puder testar e dar o feedback)  https://github.com/lal12/macroMyKBD
+- Existe também o 2key que usa um Raspberry Pi. - (Não testado, também não tenho ideia de como funciona. Me conte se testar!) https://github.com/Gum-Joe/2Keys/blob/v0.3.5/docs/SETUP.md
 
-If all of this just seems like a huge PITA, try the Stream Deck instead: https://youtu.be/vhPLhfP1b_s
+Se isso tudo estiver parecendo somente um incómodo, use o Stream Deck no lugar: https://youtu.be/vhPLhfP1b_s
 
-NOTE: You do not need a 2nd keyboard to use AutoHotKey. Most poeple don't. By the time you need to add a 2nd keyboard, you should already be quite familiar with how AutoHotKey works. You can probably use your function keys for AHK macros, and if your main keyboard has dedicated macro keys, you can also use those.
+Nota: Você não precisa de um 2º teclado para usar o AutoHotKey. Amaioria não usa e quando você precisar de um 2º teclado, já deve estar familiarizado em como o AutoHotKey funciona. Você provavelmente pode usar suas téclas de função paraAHK macros e se seu teclado primário tiver teclas macro, também é possivel utilizar estas.
 
-Basically, don't just add a 2nd keyboard because you think it's cool! Make sure you actually need it, because you've run out of space on your main keyboard.
+Resumindo, você não precisa adicionar um teclado secundário por parecer legal! Faça isso somente se for precisa, como no caso de acabar o espao no teclado primário.
 
-## My AHK scripts
+## meus scripts AHK 
 
-IF YOU ARE NEW TO AUTOHOTKEY, start here:
+Se voce é novo com o AUTOHOTKEY, comece aqui:
 https://autohotkey.com/docs/Tutorial.htm
 
-I know there's a lot of scripts in this repository. Look here to see what launches when I start my computer:
+Seu que tem muitos scripts nesse repositório. Olhe aqui o que inicia junto ao meu computador:
 https://github.com/TaranVH/2nd-keyboard/blob/master/INFO_and_PROFILES/startup_folder_TARAN_Aug_2018.png
 
-Some of the scripts are #include-d in other scripts. The MAIN script from which most others are run, is this one - so, you can start here: https://github.com/TaranVH/2nd-keyboard/blob/master/ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk
+Alguns screipts estão inclusos em outros scripts. O script principal da qual a maioria depende é este - portanto, você pode começar aqui: https://github.com/TaranVH/2nd-keyboard/blob/master/ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk
 
-Some scripts can stand entirely on their own, like this one: https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/Both_Accelerated_Scrolling_1.3_AND_Cursor_click_visualizer.ahk
+Alguns scripts são independentes, como esse aqui: https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/Both_Accelerated_Scrolling_1.3_AND_Cursor_click_visualizer.ahk
 
-To see most of these scripts in action during a real workday, check out my "World's Most Advanced Editing Tutorial" https://www.youtube.com/watch?v=O6ERELse_QY
+Para ver como estes scripts entram em ação durante o trabalho, assista nmeu vídeo "World's Most Advanced Editing Tutorial" https://www.youtube.com/watch?v=O6ERELse_QY
 
-Please note, I'm not a real programmer (in this lifetime.) My organization can be bad, and my code can be spaghetti-y. I have, however, done extensive commenting... so if you know how to code, it should be pretty easy to figure out what's going on.
+Por favor, saiba que não sou um programador(nesta vida.) Minha organização pode ser ruim e meu código desajeitado. Escrevi muita documentação, então se você sabe programar, deve ser até que facil para entender o que está acontecendo.
 
-Help with this repository is appreciated, but don't feel bad if I never officially merge your scripts. I can't trust anything that I haven't fully tested myself, or something with code that I don't recognise or understand. These are my real day-to-day working scripts, so I can't compromise them for anybody. 
+Ajuda com este repositório é apreciada, porém não fique triste se eu nunca oficialmente fundir seus scripts. Não posso confiar em nada que nunca testei totalmenteou algo com código que não reconheço ou entendo. Esses são meus scripts de trabalho diário, então não posso compromete-los para ninguém.
 
-Sometimes I put out tutorials on my personal channel: https://www.youtube.com/user/TaranVH/videos ...and sometimes I make "reverse tutorials" where I ask questions instead.
+As vezes posto tutoriais no meu canal pessoal: https://www.youtube.com/user/TaranVH/videos .e as vezes faço "reverse tutorials" onde sou eu quem pergunta.
 
-Twitter is probably the most effective method for you to contact me: https://twitter.com/TaranVH
+Twitter é provavelmente o método mais eficiente de me contatar: https://twitter.com/TaranVH
 
-You're free to use any of these scripts for yourself. Take what you need, modify it to your heart's content.
+Você é livre para usar qualquer desses scripts para si mesmo. Modifique para suas necessidades, modifique aos seus desejos.
 
-My most used, most useful, simplest script is this one: https://www.youtube.com/watch?v=OqyQABySV8k
-
------
-
-To see all my currently assigned scan codes and virual keys, take a look at this spreadsheet: https://docs.google.com/spreadsheets/d/1GSj0gKDxyWAecB3SIyEZ2ssPETZkkxn67gdIwL1zFUs/edit?usp=drive_web&ouid=107638578296445823789
+Meu script mais simples, mais usado e mais útil é esse: https://www.youtube.com/watch?v=OqyQABySV8k
 
 -----
 
-As of August 2018, I've changed the root directory from this:
+Para ver todos os eus códigos scaneados e téclas virtuais, olhe nesta tabela: https://docs.google.com/spreadsheets/d/1GSj0gKDxyWAecB3SIyEZ2ssPETZkkxn67gdIwL1zFUs/edit?usp=drive_web&ouid=107638578296445823789
+
+-----
+
+Em agosto de 2018, troco o diretório raiz deste:
 
 **C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard**
 
-to this:
+para este:
 
 **C:\AHK\2nd-keyboard**
 
-which is an enormous improvement, since users no longer have to change all the scattered instances of "TaranWORK" to their own username. Now, a huge amount of the scripts are turn-key, as long as you don't move anything or change any file paths.
+que é uma grande melhoria já que usuários não precisam mais trocar todas as instancias espalhadas de "TaranWORK" para seu próprio usuário. Agora uma grande quntidade de scripts estão pré-ativos des de que você não movca nada ou troque caminhos de arquivos.
 
-This also means that the Corsair K95 and Stream Deck direct-launch scripts are ready to go immediately.
+Isso também significa que os scripts de inicialização do Corsair K95 e Stream Deck estão habilitados de imediato.
 
-The only disadvantage is that these AHK scripts will be available to ALL users on a machine. If you share a computer, you may wish to move them under your user account after all.
+A unida desvantagem é que esses scripts AHK estão disponíveis para todos os usuários na máquina. Se você compartilha o computador, recomendo move-los para um novo usuário.
 
-Make sure to populate your startup folder with file shortcuts, to launch all the scripts you want as soon as the computer boots up. KEEP IN MIND that there are TWO startup folders - one for your user account, and one for ALL users. Here they are:
+Certifique-se de encher sua pasta de inicio com atalho de arquivos para inicializar todos os scripts que quiser no momento que o computador inicializar. SAIBA que tem duas pastas de inicialização - uma para seu usuário e outra para TODOS usuários. aqui estão elas:
 
 *C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp*
 
@@ -84,15 +84,15 @@ Make sure to populate your startup folder with file shortcuts, to launch all the
 
 ---
 
-**If you're ready to kick it up a notch, check out these interesting related repositories**
+**Se já está pronto para começar, olhe esses repositórios interessantes que são semelhantes**
 
-https://github.com/TaranVH/2nd-keyboard/pull/27 (easier install of Interception)
+https://github.com/TaranVH/2nd-keyboard/pull/27 (Instalação facil do Interception)
 
 https://github.com/evilC/AutoHotInterception
 
 https://github.com/sebinside/AHK2PremiereCEP
 
-More info on how to use Adobe CEP:
+Mais informações em como usar o Adobe CEP:
 
 https://www.youtube.com/channel/UCmq_t_-4GLFu_nYaEDDModw/videos
 
