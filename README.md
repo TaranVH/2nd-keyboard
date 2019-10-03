@@ -98,4 +98,4 @@ https://www.youtube.com/channel/UCmq_t_-4GLFu_nYaEDDModw/videos
 
 https://github.com/Adobe-CEP/Samples/blob/master/PProPanel/jsx/PPRO/Premiere.jsx
 
-
+This is a PT-BR translation made by Gabriel T. Kamigauti(@GTKamigauti)
