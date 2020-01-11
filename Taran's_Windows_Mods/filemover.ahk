@@ -8,6 +8,8 @@ Menu, Tray, Icon, shell32.dll, 156
 ^F12::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\LTT Match Source")
 ^+F11::Filemover("Z:\Linus\5. Fast As Possible\_FAP Transcoding\FAP 1920 x 1080")
 ^+F12::Filemover("Z:\Linus\5. Fast As Possible\_FAP Transcoding\FAP Match Source")
+^!+F11::Filemover("Z:\Linus\2. Tech Linked\5. Transcode\TL 1920 x 1080")
+^!+F12::Filemover("Z:\Linus\2. Tech Linked\5. Transcode\TL Match Source")
 
 ; ^F10::
 ; tooltip, nimdamover activated

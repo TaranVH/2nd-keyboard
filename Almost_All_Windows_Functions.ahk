@@ -802,33 +802,34 @@ global savedEXE = lolexe ;is this the way to do it? IDK.
 
 ;SHIFT + macro key G14
 
+;;;i think i can comment these out,,,, idk.
+; global savedCLASS = "ahk_class Notepad++"
+; global savedEXE = "notepad++.exe"
 
-global savedCLASS = "ahk_class Notepad++"
-global savedEXE = "notepad++.exe"
+; switchToSavedApp(savedCLASS, savedEXE)
+; {
+; ;msgbox,,, savedCLASS is %savedCLASS%,0.5
+; ;msgbox,,, savedexe is %savedEXE%,0.5
+; if savedCLASS = ahk_class Notepad++
+	; {
+	; ;msgbox,,, is notepad++,0.5
+	; if WinActive("ahk_class Notepad++")
+		; {
+		; sleep 5
+		; Send ^{tab}
+		; }
+	; }
 
-switchToSavedApp(savedCLASS)
+; ;msgbox,,,got to here,0.5
+; windowSwitcher(savedCLASS, savedEXE)
+; }
+
+
+
+
+
+back()
 {
-;msgbox,,, savedCLASS is %savedCLASS%,0.5
-;msgbox,,, savedexe is %savedEXE%,0.5
-if savedCLASS = ahk_class Notepad++
-	{
-	;msgbox,,, is notepad++,0.5
-	if WinActive("ahk_class Notepad++")
-		{
-		sleep 5
-		Send ^{tab}
-		}
-	}
-
-;msgbox,,,got to here,0.5
-windowSwitcher(savedCLASS, savedEXE)
-}
-
-
-
-
-
-back(){
 ;; if WinActive("ahk_class MozillaWindowClass")
 ;tooltip, baaaack
 ;sendinput, {ctrl up}
@@ -1034,7 +1035,18 @@ switchWordWindow()
 	; }
 }
 
+switchToTeams()
+{
+SetTitleMatchMode, 2
+WinActivate, | Microsoft Teams
+;ahk_class Chrome_WidgetWin_1
+; General (Editors) | Microsoft Teams
+; ahk_class Chrome_WidgetWin_1
+; ahk_exe Teams.exe
+; ahk_pid 11508
+; https://www.autohotkey.com/docs/misc/WinTitle.htm
 
+}
 
 switchToChrome()
 {
@@ -1067,13 +1079,32 @@ else
 #IfWinActive
 windowSwitcher(theClass, theEXE)
 {
-;if savedCLASS = Chrome_WidgetWin_1
-if theCLASS = Chrome_WidgetWin_1
+
+if theClass = ahk_class Notepad++
 	{
-	msgbox, it is a chrome thingy
+	;msgbox,,, is notepad++,0.5
+	if WinActive("ahk_class Notepad++")
+		{
+		sleep 5
+		Send ^{tab}
+		}
+	}
+
+; ;if savedCLASS = Chrome_WidgetWin_1
+if theCLASS = ahk_class Chrome_WidgetWin_1
+	{
+	;tooltip, it is a chrome thingy
+	;msgbox % theEXE
 	if theEXE = Teams.exe
-		WinActivate %theEXE%
-		goto, switchEND
+		{
+		;tooltip, we have arrived
+		SetTitleMatchMode, 2
+		WinActivate, | Microsoft Teams
+		;WinActivate ahk_exe %theEXE%
+		}
+	goto, switchEND
+	;programmer status: Triggered
+	; https://xkcd.com/292/
 	}
 
 ;msgbox,,, switching to `nsavedCLASS = %theClass% `nsavedEXE = %theEXE%, 0.5

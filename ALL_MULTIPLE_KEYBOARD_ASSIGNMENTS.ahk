@@ -7,9 +7,12 @@ Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece
 ;gui must be #included first, or it does not work, for some reason...
 ;YOU probably do NOT need the GUI at all. Delete the line below:
 
-global savedCLASS = "ahk_class Notepad++"
-global savedEXE = "notepad++.exe" ;BEFORE the #include is apparently the only place these can go.
-
+; global savedCLASS = "ahk_class Notepad++"
+; global savedEXE = "notepad++.exe" ;BEFORE the #include is apparently the only place these can go.
+;This has now been changed to Teams (Hangouts replacement) since I use that a lot mroe now, and Notepad++ already has a button on numpad+ on the K120 keyboard.
+;This is for macro key G14 by the way.
+global savedCLASS = "ahk_class Chrome_WidgetWin_1"
+global savedEXE = "Teams.exe"
 
 #Include C:\AHK\2nd-keyboard\gui.ahk
 #include C:\AHK\2nd-keyboard\Almost_All_Premiere_Functions.ahk
@@ -211,7 +214,7 @@ F12::instantExplorer("N:\Team_Documents\N_TARAN_THINGS\prompter and cutting_room
 ;;;;;next line;;;;;;;;
 ;;;;K120 keyboard;;;;;
 
-`::msgbox tilde or weird quote thing??
+`::msgbox tilde or weird quote thing?? K120
 1::insertSFX("bleep")
 2::
 3::return
@@ -805,8 +808,9 @@ return
 
 1::gotofiretab("AHK needed","https://docs.google.com/document/d/1xsjjKYggXYig_4lfBMJ6LDGRZ9VOvDd7SCSTSi7GwN8/edit")
 2::gotofiretab("LTT note","https://docs.google.com/document/d/1CWjC7DWyXGIFDaSwXzUsdHmdktvgV0kdgNOFEK7wf7U/edit")
-3::
-4::
+3::gotofiretab("LTT To Do - Google Docs","https://docs.google.com/document/d/1Gi8sruMEBEQG3WHPM2jaFOQ1oR1A8bSz47vSxB9NfBQ/edit")
+4::gotofiretab("Music Hypercube - Google Docs","https://docs.google.com/document/d/11hIiENqLMtuQRLV4FjZMRY2uNFLtPw5QW6fivMix9VE/edit")
+
 5::
 6::tooltip, you pressed F24 then %A_thishotkey%
 7::
@@ -861,7 +865,7 @@ capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOu
 ;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 
 ;;;this is(was) Lshift::
-SC070::gotofiretab("Calendar - September 2019","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+SC070::gotofiretab("Calendar - January 2020","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
 ;em dash –
@@ -969,13 +973,25 @@ space::tooltip,
 
 ;Lwin -to-> SC072:Lang1
 SC072 up::
+switchToTeams()
+
+;switchToSavedApp(ahk_class Chrome_WidgetWin_1)
+;windowSwitcher(ahk_class Chrome_WidgetWin_1, ahk_exe Teams.exe)
+;ahk_class Chrome_WidgetWin_1
+;ahk_exe Teams.exe
+
 ;msgbox,,,sc072,0.5
 ;msgbox,,, trying to open VNC,0.5
-IfWinNotExist, ahk_class TvnWindowClass
-	Run, C:\Program Files\TightVNC\tvnviewer.exe
-if WinExist("ahk_exe tvnviewer.exe")
-	WinActivate ahk_exe tvnviewer.exe
+
+; IfWinNotExist, ahk_class TvnWindowClass
+	; Run, C:\Program Files\TightVNC\tvnviewer.exe
+; if WinExist("ahk_exe tvnviewer.exe")
+	; WinActivate ahk_exe tvnviewer.exe
+	
 return
+
+
+
 
 appskey::msgbox, "this is the appskey KEY maybe. You should never see this message."
 
@@ -1124,6 +1140,7 @@ return
 
 ;;;~~~~~~FUNCTION KEYS IN VARIOUS PROGRAMS~~~~
 
+;;FIREFOX KEYS
 #IfWinActive ahk_class MozillaWindowClass ;or ahk_class Chrome_WidgetWin_1
 !F1::send ^+{pgup}
 !F2::send ^+{pgdn}
@@ -1132,6 +1149,19 @@ return
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
 
+;these are for when I am music surfing
+End::send ^+{tab} ;control shift tab, which goes to the next tab
+PgDn::send ^{tab} ;control tab, which goes to the previous tab
+
+PgUp::send ^w ;control w, which closes a tab
+
+;these are also for music surfing.
+;macro key G8
+F19::up
+;macro key G11
+F15::down
+;macro key G9
+^+J::enter ;not particularly stable, but I'm out of function keys...
 
 F3::send ^w ;control w, which closes a tab
 F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
@@ -1219,6 +1249,15 @@ return
 
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe firefox.exe") ;An Explorer window as launched by Firefox
 `::Send !{up} ;DOWN one folder level in explorer
+~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
+
+#if WinActive("ahk_class #32770") and WinActive("ahk_exe 4kvideodownloader.exe") 
+`::Send !{up} ;DOWN one folder level in 4k video downloader
+~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
+
+#if WinActive("ahk_class #32770") and WinActive("ahk_exe WINWORD.exe")
+`::Send !{up} ;DOWN one folder level 
+~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
 
 
 
@@ -1238,6 +1277,11 @@ return
 
 
 #IfWinActive, ahk_class CabinetWClass ;this is also explorer
+
+;because I'm probably transferring images from explorer to firefox or vice-versa, and I want to be able to still easily go from one tab to the next.
+F1::switchToFirefox()
+;F2::switchToFirefox() ;oops this one is used for renaming. gotta keep this commented out.
+
 F3::
 Send {alt down}
 sleep 10
@@ -1315,20 +1359,20 @@ pgdn::sortByDate()
 ;+++++++++ SHORTCUTS THAT WORK IN ALL PROGRAMS +++++++++
 #IfWinActive
 
-;;shortcut to CLOSE FIREFOX with no bullshit or fanfare or annoying dialouge boxes that try to argue with you. Just completely nuke it from orbit so we can start over
-^!+f::Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
+; ;;shortcut to CLOSE FIREFOX with no bullshit or fanfare or annoying dialouge boxes that try to argue with you. Just completely nuke it from orbit so we can start over
+; ^!+f::Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
 
 
-;shortcut to forcefully CLOSE PREMIERE ALREADY, WITH NO BULLSHIT. BULLDOZE IT FLAT, BURN IT, SALT THE EATH, NUKE IT FROM ORBIT. JUST FUCKING DIE!!!
-;.......This doesn't work.... Might need C++ for this...
-^!+p::
-Run, %comspec% /c "taskkill.exe /IM /Adobe Premiere Pro.exe /T /F" ;,, hide
-sleep 100
-;Run, %comspec% /c "taskkill.exe /F /PID 72536",, hide
-tooltip, killed premiere
-sleep 100
-tooltip,
-return
+; ;shortcut to forcefully CLOSE PREMIERE ALREADY, WITH NO BULLSHIT. BULLDOZE IT FLAT, BURN IT, SALT THE EATH, NUKE IT FROM ORBIT. JUST FUCKING DIE!!!
+; ;.......This doesn't work.... Might need C++ for this...
+; ^!+p::
+; Run, %comspec% /c "taskkill.exe /IM /Adobe Premiere Pro.exe /T /F" ;,, hide
+; sleep 100
+; ;Run, %comspec% /c "taskkill.exe /F /PID 72536",, hide
+; tooltip, killed premiere
+; sleep 100
+; tooltip,
+; return
 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -1359,7 +1403,7 @@ SC064::back()
 ^F5::switchToChrome()
 ;also, CTRL works a little funny when the function uses CTRL TAB to switch tabs. This might be better assigned to ALT F5 or something.
 
-;macro key G14
+;SHIFT and then macro key G14
 +^F6::
 windowSaver()
 msgbox,,, savedCLASS = %savedCLASS% `nsavedEXE = %savedEXE%, 0.6
@@ -1369,7 +1413,8 @@ Return
 ^F6::
 ;I had to learn just now to use the parameter to pass "savedCLASS" even though it's already a global variable. Just works better this way... but really IDK what i am doing.
 ;msgbox,,, switching to `nsavedCLASS = %savedCLASS% `nsavedEXE = %savedEXE%,0.3
-switchToSavedApp(savedCLASS) 
+;switchToSavedApp(savedCLASS, savedEXE) ;obsolete
+windowSwitcher(savedCLASS, savedEXE) 
 return
 
 ;No K95 macro key assigned:
@@ -1406,6 +1451,7 @@ Joy3::msgbox you hit Joy3
 #IfWinActive
 ;macro key G1 on K95. universal SEARCH EVERYTHINGER
 ; this used to have a ~ to let it pass through... not sure why. it was creating an ENTER keypress effect in notepad++ so i removed it.
+;uh actually this is G9?
 ^+J::
 F21 & F8::search()
 
@@ -1446,6 +1492,21 @@ F20::home
 
 
 
+; #ifWinActive ahk_exe Adobe Premiere Pro.exe
+
+
+; !f::f
+; !e::e
+; !c::c
+; !s::s
+; !m::m
+; !g::g
+; !v::v
+; !w::w
+; !h::h
+
+
+
 #ifWinNotActive ahk_exe Adobe Premiere Pro.exe
 ;macro key G4.
 ^+,::msgbox,,,Macro G4 not yet assigned outside premiere,0.7
@@ -1457,6 +1518,7 @@ F20::home
 ;modifiers -- I removed the ~
 ^+U::reSelect() ;formerly ^+9
 
+;G6 is assigned to single left click in iCue if the "All" profile is active, which it is (automatically) unless Premiere is active. I only have the two profiles - premiere, and everything else.
 
 #IfWinActive ahk_exe firefox.exe
 F18::Send, !+5 ;alt shift 5 is "strikethrough" in Google docs...
@@ -1586,6 +1648,29 @@ appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You
 !q::^!+q ;"Trim Previous Edit to Playhead" (not RIPPLE trim.)
 ; for more information: https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/Alt_menu_acceleration_DISABLER.ahk
 
+
+; !f::f
+; !e::e
+; !c::c
+; !s::s
+; !m::m
+; !g::g
+; !v::v
+;;!w::w
+; !h::h
+
+!f::return
+!e::return
+!c::return
+!s::return
+!m::return
+!g::return
+!v::return
+
+!h::return
+
+
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
 F21::return
@@ -1701,6 +1786,7 @@ return
 
 ;Disable single clip at cursor - must turn this into a proper function.
 Xbutton2::
+
 F8::
 send, ^!d ;ctrl alt d is DESELECT
 send, v ;selection tool
@@ -1713,6 +1799,8 @@ sleep 10
 
 send, %currentTool%
 return
+
+
 
 
 ;~F9::masterClipSelect() ;this has not been fully programmed yet
@@ -1744,6 +1832,11 @@ Media_Play_Pause::^numpad9
 Media_Next::^numpadMult
 ;Volume_Mute::^numpadDiv
 ;These are assigned to some of the new LABEL COLORS in premiere, using Premiere's own shortcut assignment panel.
+
+
+;===================================================================
+#ifWinActive ahk_exe firefox.exe
+!x::!+x ;this is the shortcut for Nuke Anything Enhanced.
 
 
 ;;&&&&&&&&&&&&&& KEY ASSIGNMENTS FOR PHOTOSHOP &&&&&&&&&&&&&&&&&&&&&
@@ -1791,6 +1884,8 @@ sendinput, {F5} ;this is my shortcut for "Rasterize > Layer"
 sleep 1
 sendinput, ^!+{F5} ;this is my shortcut for "Rasterize > Layer style"
 ;You're not allowed to put both of these commands on the same shortcut, but to that I say BULLSHIT, I DO WHAT I WANT.
+sleep 10
+sendinput, ^!k ;ctrl alt K is my photoshop shortcut for Layer Mask > Apply.
 return
 
 
@@ -1857,8 +1952,8 @@ return
 
 ;
 ;;I can't use ~ thingies or these keys can very easily get stuck...
-Rshift & Lshift::capslock
-Lshift & Rshift::capslock
+; Rshift & Lshift::capslock
+; Lshift & Rshift::capslock
 +capslock::capslock ;only SHIFT CAPSLOCK will now turn on capslock, freeing the real capslock key to be used as a MODIFIER KEY, just like CTRL.
 +F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
 ~F20 & Shift::Capslock ;IN CASE THE CAPslock key goes down first.
@@ -1914,7 +2009,7 @@ return
 
 #if WinActive("ahk_exe EXCEL.exe") or WinActive("ahk_exe firefox.exe") ;might have to add chrome to this eventually.
 
-;Macro key G12
+;Macro key G7 i think
 F17::
 doAnEnter := 1
 sendinput, ^c
@@ -1941,7 +2036,22 @@ sleep 10
 return
 
 
+;#if WinActive("ahk_exe firefox.exe")
+#ifWinActive ahk_exe firefox.exe
+;Macro key G11 to left click. Just because I hate clicking on the tiny little play buttons on apmmusic.ca and this reduces RSI by sharing the load with my left hand.
+F15::Lbutton
+; sendinput, Lbutton
+; tooltip, hi
+; return
 
+;shift tilde will full screen  a page
++`::send, {F11}
+
+; ;experimental caps lock to full screen for firefox:
+; F20::send, {F11}
+
+;"scale" key will fullscreen firefox now. (macro G12)
+F14::send, {F11}
 
 
 

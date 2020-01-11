@@ -53,6 +53,7 @@ MouseGetPos,KDE_X1,KDE_Y1,KDE_id
 WinGet,KDE_Win,MinMax,ahk_id %KDE_id%
 If KDE_Win
     return
+;tooltip, %KDE_Win%
 ; Get the initial window position.
 WinGetPos,KDE_WinX1,KDE_WinY1,,,ahk_id %KDE_id%
 Loop

@@ -1295,7 +1295,7 @@ BlockInput, Off
 }
 
 
-masterClipSelect()
+masterClipSelect() ;i htink i never use this one
 {
 Tippy("masterClipSelect()")
 BlockInput, On
@@ -1308,7 +1308,7 @@ sleep 20
 Send {tab}
 if (A_CaretX = "")
 {
-	;No Caret (blinking vertical line) can be found. Therefore, no clip is selected.
+	;tooltip, No Caret (blinking vertical line) can be found. Therefore`, no clip is selected.
 	;Therefore, we try to select the TOP clip at the playhead, using the code below.
 	Send ^p ;"selection follows playhead,"
 	sleep 10
@@ -1533,7 +1533,7 @@ else if (colorr = "0x7A7A7A") ;for 100% ui
 }
 else if (colorr = "0x1D1D1D" || colorr = "0x232323")
 	{
-	tooltip, this is a normal panel color of 0x1d1d1d or %colorr%, which means NO CLIP has been selected ; assuming you didnt change your UI brightness. so we are going to select the top clip at playhead.
+	;tooltip, this is a normal panel color of 0x1d1d1d or %colorr%, which means NO CLIP has been selected ; assuming you didnt change your UI brightness. so we are going to select the top clip at playhead.
 	Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
 	sleep 10
 	Send ^p ;this disables "selection follows playhead." I don't know if there is a way to CHECK if it is on or not. 
@@ -1581,8 +1581,25 @@ blockinput, sendandMouse
 blockinput, MouseMove
 blockinput, on
 ;-Sendinput ^!+5
+
+;clickTransformIcon()
+
 prFocus("effect controls") ;essentially just hits CTRL ALT SHIFT 5 to highlight the effect controls panel.
 sleep 10
+
+
+; Send {tab}
+; if (A_CaretX = "")
+; {
+	; tooltip, No Caret (blinking vertical line) can be found. Therefore`, no clip is selected.
+	; ;Therefore, we try to select the TOP clip at the playhead, using the code below.
+	; Send ^p ;"selection follows playhead,"
+	; sleep 10
+	; Send ^p
+; }
+
+
+
 
 ;ToolTip, A, , , 2
 MouseGetPos Xbeginlol, Ybeginlol
@@ -1630,7 +1647,7 @@ else if (colorr = "0x7A7A7A") ;for 100% ui
 }
 else if (colorr = "0x1D1D1D" || colorr = "0x232323")
 	{
-	tooltip, this is a normal panel color of 0x1d1d1d or %colorr%, which means NO CLIP has been selected ; assuming you didnt change your UI brightness. so we are going to select the top clip at playhead.
+	;tooltip, this is a normal panel color of 0x1d1d1d or %colorr%, which means NO CLIP has been selected ; assuming you didnt change your UI brightness. so we are going to select the top clip at playhead.
 	;I should experiement with putting a "deselect all clips on the timeline" shortcut here...
 	Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
 	sleep 10
@@ -1726,7 +1743,7 @@ if (foobar = "scale" ||  foobar = "anchor_point" || foobar = "rotation")
 {
 	;msgbox,,,scale or the other 3,1
 	;PixelSearch, Px, Py, xxx+50, yyy, xxx+350, yyy+11, 0x3398EE, 30, Fast RGB ;this is searching to the RIGHT, looking the blueness of the scrubbable hot text. Unfortunately, it sees to start looking from right to left, so if your window is sized too small, it'll possibly latch onto the blue of the playhead/CTI.
-	PixelSearch, Px, Py, xxx+50, yyy, xxx+350, yyy+11, 0x2d8ceb, 30, Fast RGB ;this is searching to the RIGHT, looking the blueness of the scrubbable hot text. Unfortunately, it sees to start looking from right to left, so if your window is sized too small, it'll possibly latch onto the blue of the playhead/CTI.
+	PixelSearch, Px, Py, xxx+50, yyy, xxx+250, yyy+11, 0x2d8ceb, 30, Fast RGB ;this is searching to the RIGHT, looking the blueness of the scrubbable hot text. Unfortunately, it sees to start looking from right to left, so if your window is sized too small, it'll possibly latch onto the blue of the playhead/CTI. TEchnically, I could check to see the size of the Effect controls panel FIRST, and then allow the number that is currently 250 to be less than half that, but I haven't run into too much trouble so far...
 }
 else if (foobar = "anchor_point_vertical")
 {
@@ -1752,7 +1769,7 @@ if ErrorLevel
 	}
 else
 	{
-	tooltip, A color within 30 shades of variation was found at X%Px% Y%Py%
+	;tooltip, A color within 30 shades of variation was found at X%Px% Y%Py%
 	;sleep 1000
     ;MsgBox, A color within 30 shades of variation was found at X%Px% Y%Py%.
 	if (foobar <> "anchor_point_vertical")
@@ -1864,20 +1881,29 @@ tooltip,,,12
 
 
 ;;;;note to self: this highlights the find box of the bin it highlights, i have no idea why. must fix
+;other not to self -- i don't know what that sentance is referring to.
 
-;#IfWinNotActive ahk_class Premiere Pro
+
+
+
+;macro key G3, when NOT in Premiere.
+;macro sends CTRL SHIFT L, though CTRL ALT L might be better. ideally, it should not use any modifier keys at all... maybe just send a wrapped super function key.
+;play/pause premiere even when not in focus
 stopPlaying()
 {
+sleep 12 ;this is because all my macros in icue are set to spend 10ms held down before they release. This adds 10ms of latency, but it's worth it to ensure that the keystroke(s) are actually seen by Windows. I should add this to a lot of my other macros. Also, I might reduce it to 5ms in the future.
+send {SC081} ; this is for debugging. it does nothing but show up in the Key History and Script info.
 if WinActive("ahk_exe Adobe Premiere Pro.exe")
+	{
 	sendinput, {space}
-;then it will ekip this next part and go to the end.
+	goto, stopPlayEND
+	}
+;then it will skip this next part and go to the end.
 if !WinActive("ahk_exe Adobe Premiere Pro.exe")
 {
-;Below is some code to pause/play the timeline in Premiere, when the application is NOT the active window (on top.) This means that I can be reading through the script, WHILE the video is playing, and play/pause as needed without having to switch back to premeire every single time.
-;Maybe this code really shoudl be in ALL PREMIERE FUNCTIONS.ahk.
+;Below is some code to pause/play the timeline in Premiere, when the application is NOT the active window (on top.) This means that I can be reading through the script, WHILE the video is playing, and play/pause as needed without having to switch back to premiere every single time.
 
-;;macro key G3, when NOT in Premiere.
-;play/pause premiere even when not in focus
+
 
 ;WinGet, lolexe, ProcessName, A
 WinGetClass, lolclass, A ; "A" refers to the currently active window
@@ -1891,6 +1917,8 @@ if IsFunc("Keyshower") {
 ;Trying to bring focus to the TIMELINE itself is really dangerous and unpredictable, since its Class# is always changing, based upon how many sequences, and other panels, that might be open.
 ControlFocus, DroverLord - Window Class3,ahk_exe Adobe Premiere Pro.exe
 ; Window Class14 is the Program monitor, at least on my machine.
+; well, now it's Window Class13. it really does change around a lot.
+; Window Class3 seems to fairly consistently be the Effect Controls panel.
 sleep 30
 ;ControlFocus, DroverLord - Window Class14,ahk_exe Adobe Premiere Pro.exe
 ;If we don't use ControlFocus first, ControlSend experiences bizzare and erratic behaviour, only able to work when the video is PLAYING, but not otherwise, but also SOMETIMES working perfectly, in unknown circumstances. Huge thanks to Frank Drebin for figuring this one out; it had been driving me absolutely mad. https://www.youtube.com/watch?v=sC2SeGCTX4U
@@ -1919,13 +1947,23 @@ sleep 40
 ;msgbox,,, srsly wtf,0.5
 ;msgbox,srsly wtf
 ControlSend,DroverLord - Window Class3, ^+!5,ahk_exe Adobe Premiere Pro.exe
-sleep 30
-
+sleep 10 ;this asn't here at all for a long time. dunno if i really need it.
+; ;just in case these keys get stuck down due to some window making itself the top one, or some autosave somewhere that does the same thing, or something...
+; sleep 30
+; Send,{LCtrl up}
+; Send,{RCtrl up}
+; sleep 1
+; Send,{RAlt up}
+; Send,{RAlt up}
+; sleep 1
+; Send,{LShift up}
+; Send,{RShift up}
+; sleep 2
 
 ControlSend,,{space}, ahk_exe Adobe Premiere Pro.exe
 ;;;use either the ABOVE line, or the line BELOW. Can't say right now which is better...
 ;ControlSend,DroverLord - Window Class1,{space},ahk_exe Adobe Premiere Pro.exe
-;even though we are sending the "SPACE" to a windowclass that (often) doesn't exist, because we already highlighted the effect controls, the space will go to the effect controls panel. (it hasb't failed to do so yet, at least.)
+;even though we are sending the "SPACE" to a windowclass that (often) doesn't exist, because we already highlighted the effect controls, the "space" will go to the effect controls panel. USUALLY. Sometimes it still ends up playing some file in some bin.
 
 
 
@@ -1936,6 +1974,8 @@ if not WinActive(lolClass)
 }
 
 ;end of Premiere play/pause when not in focus.
+send {SC082} ; only used as a sort of a debugging flag thingy. will comment out later. maybe.
+stopPlayEND:
 }
 
 

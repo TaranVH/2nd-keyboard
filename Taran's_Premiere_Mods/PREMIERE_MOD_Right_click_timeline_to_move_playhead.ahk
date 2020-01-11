@@ -88,16 +88,16 @@ Return
 ;SCRIPT HAS NOT YET BEEN TESTED BY ME.
 
 ;;;;;Mbutton::\ ;<----this would be the STUPID way of doing this. BAD BAD BAD! do not want!
-
-; Mbutton::
-; if GetKeyState("Mbutton", "P") = 1
+; #ifwinactive ahk_exe adobe premiere pro.exe
+; Xbutton2::
+; if GetKeyState("Xbutton2", "P") = 1
 		; {
 		; loop
 			; {
 			; Send \ ;in premiere, this must be set to "move playhead to cursor."
-			; Tooltip, Middle click playhead mod!
+			; ;Tooltip, button 5 playhead mod!
 			; sleep 16 ;this loop will repeat every 16 milliseconds.
-			; if GetKeyState("Mbutton", "P") = 0
+			; if GetKeyState("Xbutton2", "P") = 0
 				; {
 				; ;msgbox,,,time to break,1
 				; tooltip,

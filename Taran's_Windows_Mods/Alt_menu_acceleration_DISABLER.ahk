@@ -143,6 +143,18 @@ Lalt & Ralt::suspend ;hit both ALT keys simultaneously to toggle the functonalit
 ;; take this tutorial if you don't know how AHK works. https://www.autohotkey.com/docs/Tutorial.htm
 
 
-; !f::msgbox,,,To block modifier key use of alt you can do it like this,0.7
+;!f::msgbox,,,To block modifier key use of alt you can do it like this,0.7
 ; !e::msgbox,,,replace msgbox with whatever code you want,0.7
 ; !w::msgbox,,,horray for having control of your own computer,0.7
+;#ifWinActive ahk_exe Adobe Premiere Pro.exe
+
+
+; ~!f::f
+; !e::e
+; !c::c
+; !s::s
+; !m::m
+; !g::g
+; !v::v
+; !w::w
+; !h::h
