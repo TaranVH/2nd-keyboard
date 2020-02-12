@@ -6,14 +6,26 @@
 ; https://autohotkey.com/docs/scripts/EasyWindowDrag_(KDE).htm
 
 
+;KNOWN ISSUE:
+;does NOT work properly on systems with varying UI scaling from one monitor to the next. it just keep enlargening the window indefinitely as soon as it touches the dofferently scaled monitor. i have no idea how to fix this...
+;further reading...
+;https://www.autohotkey.com/boards/viewtopic.php?f=14&t=13810
+;
+
+
+
 #SingleInstance force
-#InstallKeybdHook
-#KeyHistory 500
+; #InstallKeybdHook
+; #KeyHistory 500
 
 Menu, Tray, Icon, imageres.dll, 262 ;makes the icon into two window things
 
 ; Xbutton2::msgbox testing 1
 ; Xbutton1::msgbox testing 2
+
+
+DllCall("SetThreadDpiAwarenessContext", "ptr", -3, "ptr")
+;Gui -DPIScale
 
 If (A_AhkVersion < "1.0.39.00")
 {
@@ -36,17 +48,19 @@ return
 
 
 Xbutton2::
+WinRestore, A
+;winrestore will take your window OUT of fullscreen mode and into... "restore down" mode. So you can remove this if you don't like that. https://autohotkey.com/board/topic/53403-solved-pressing-the-restore-down-button-on-windows/
 
 thekey = %A_thishotkey%
-If DoubleAlt
-{
-    MouseGetPos,,,KDE_id
-    ; This message is mostly equivalent to WinMinimize,
-    ; but it avoids a bug with PSPad.
-    PostMessage,0x112,0xf020,,,ahk_id %KDE_id%
-    DoubleAlt := false
-    return
-}
+; If DoubleAlt
+; {
+    ; MouseGetPos,,,KDE_id
+    ; ; This message is mostly equivalent to WinMinimize,
+    ; ; but it avoids a bug with PSPad.
+    ; PostMessage,0x112,0xf020,,,ahk_id %KDE_id%
+    ; DoubleAlt := false
+    ; return
+; }
 ; Get the initial mouse position and window id, and
 ; abort if the window is maximized.
 MouseGetPos,KDE_X1,KDE_Y1,KDE_id
@@ -74,18 +88,21 @@ return
 ;------------------------
 
 Xbutton1::
-If DoubleAlt
-{
-    MouseGetPos,,,KDE_id
-    ; Toggle between maximized and restored state.
-    WinGet,KDE_Win,MinMax,ahk_id %KDE_id%
-    If KDE_Win
-        WinRestore,ahk_id %KDE_id%
-    Else
-        WinMaximize,ahk_id %KDE_id%
-    DoubleAlt := false
-    return
-}
+WinRestore, A
+;winrestore will take your window OUT of fullscreen mode and into... "restore down" mode. So you can remove this if you don't like that. https://autohotkey.com/board/topic/53403-solved-pressing-the-restore-down-button-on-windows/
+
+; If DoubleAlt
+; {
+    ; MouseGetPos,,,KDE_id
+    ; ; Toggle between maximized and restored state.
+    ; WinGet,KDE_Win,MinMax,ahk_id %KDE_id%
+    ; If KDE_Win
+        ; WinRestore,ahk_id %KDE_id%
+    ; Else
+        ; WinMaximize,ahk_id %KDE_id%
+    ; DoubleAlt := false
+    ; return
+; }
 ; Get the initial mouse position and window id, and
 ; abort if the window is maximized.
 MouseGetPos,KDE_X1,KDE_Y1,KDE_id

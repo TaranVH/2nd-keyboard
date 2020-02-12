@@ -1,7 +1,7 @@
 ﻿StringToSend = InstantExplorer() shadowplay
 Send_WM_COPYDATA(StringToSend)
 
-InstantExplorer("C:\Users\13gpu\Videos\Desktop")
+InstantExplorer("C:\Users\Taran\Videos\Desktop")
 sleep 10
 sortByDateDescending()
 sleep 50

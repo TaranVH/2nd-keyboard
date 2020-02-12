@@ -18,8 +18,10 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ; https://autohotkey.com/docs/Tutorial.htm
 ; -------------------------------------------------------------------------
 ; Also, please note that some of the code in this script requires that the
-; ACC LIBRARY be installed. I don't remember where I got it, or how to install it.
-; Sooooo, you can just delete those functions that use it.
+; ACC LIBRARY be installed.
+; just scroll to the top of this page and follow the instructions.)
+;https://autohotkey.com/boards/viewtopic.php?f=6&t=26947&p=139114#p139114
+;alternatively, you can just delete the functions that use it.
 ; -------------------------------------------------------------------------
 
 Menu, Tray, Icon, shell32.dll, 16 ;this changes the icon into a little laptop thingy. just useful for making it distinct from the others.
@@ -831,7 +833,7 @@ global savedEXE = lolexe ;is this the way to do it? IDK.
 back()
 {
 ;; if WinActive("ahk_class MozillaWindowClass")
-;tooltip, baaaack
+;tooltip, back
 ;sendinput, {ctrl up}
 If GetKeystate(Lctrl, "P")
         Send {Lctrl Up}

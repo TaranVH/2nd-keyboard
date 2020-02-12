@@ -1009,12 +1009,12 @@ effectControlsY = 200 ;the coordinates of roughly where my Effect Controls usual
 
 ;ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+200, effectControlsY+800, %A_WorkingDir%\CROP_transform_button_D2019.png ;
 
-ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+200, effectControlsY+800, %A_WorkingDir%\CROP_transform_button_D2019_ui100.png
+ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+200, effectControlsY+800, %A_WorkingDir%\CROP_transform_2020.png
 if ErrorLevel = 2
 	{
 	;msgbox,,, TaranDir is `n%TaranDir%,0.7
-	ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_workingDir%\CROP_transform_button_D2019.png
-	ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_workingDir%\CROP_transform_button_D2019_ui100.png
+	; ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_workingDir%\CROP_transform_button_D2019.png
+	ImageSearch, FoundX, FoundY, effectControlsX, effectControlsY, effectControlsX+400, effectControlsY+1200, %A_workingDir%\CROP_transform_2020.png
 	}
 if ErrorLevel = 1
 	{
@@ -1184,7 +1184,7 @@ else
 
 
 
-;EFFECT CONTROLS PANEL ---TRANSFORM ICON CLICKER
+;EFFECT CONTROLS PANEL ---TRANSFORM ICON CLICKER ;F5::
 clickTransformIcon2()
 {
 Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it causes problems.
@@ -1273,7 +1273,8 @@ Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it
 
 
 ; ;;;;;;;;;;;;;new stuff above
-
+sendinput, {F5} ;lol because premiere now has the shortcut but it SUCKS so this is in case it had failed.
+sleep 5
 
 BlockInput, On ;blocks keyboard and mouse input... I think.
 SetKeyDelay, 0
@@ -1292,6 +1293,15 @@ MouseMove, X, Y, 0
 MouseClick, left
 MouseMove, %xpos%, %ypos%, 0
 BlockInput, Off
+
+sleep 10
+sendinput ^!+3 ;highlights the timeline
+sleep 10
+sendinput, {F5} ;lol because premiere now has the shortcut but it SUCKS so this is in case it had failed.
+;the above line might not be needed and in fact is useless isnce the shortcut only works while on the timeline....
+sleep 10
+sendinput ^!+5 ;highlights the effect controls. This is so that if you hit COPY, it'll copy the motion effect, NOT a selected clip on the timeline.
+
 }
 
 
@@ -2019,37 +2029,45 @@ CoordGetControl(xCoord, yCoord, _hWin) ; _hWin should be the ID of the active wi
 
 
 
-
+;this is assigned to G2,
+;which sends CTRL numpad0.
 easeInAndOut(){
 
-;EASE IN AND EASE OUT
-;This will click on the necessary menu items for you
-;all you have to do is hover the cursor over a keyframe (or selected keyframes) in the Effect Controls panel, and hit the button.
-tooltip, ease in and out
-; blockinput, sendandMouse
-blockinput, MouseMove
-; blockinput, on
-click right
-send T
+;NEW method in 2020 is below.
+send, {f10} ;shortcut is set in premiere to ease in
 sleep 10
-send E
-send E
-sleep 10
-send {enter}
-sleep 10
-tooltip, 
+send, +{F10} ;shortcut is set in premiere to ease out
+sleep 5
+
+
+; ;OLD EASE IN AND EASE OUT before the shortcuts were added for real in 2020
+; ;This will click on the necessary menu items for you
+; ;all you have to do is hover the cursor over a keyframe (or selected keyframes) in the Effect Controls panel, and hit the button.
+; tooltip, ease in and out
+; ; blockinput, sendandMouse
+; blockinput, MouseMove
+; ; blockinput, on
 ; click right
-click middle
-sendinput {click right}
-send T
-sleep 10
-send E
-sleep 10
-send {enter}
-blockinput, off
-blockinput, MouseMoveOff
-;sleep 100
-tooltip,
+; send T
+; sleep 10
+; send E
+; send E
+; sleep 10
+; send {enter}
+; sleep 10
+; tooltip, 
+; ; click right
+; click middle
+; sendinput {click right}
+; send T
+; sleep 10
+; send E
+; sleep 10
+; send {enter}
+; blockinput, off
+; blockinput, MouseMoveOff
+; ;sleep 100
+; tooltip,
 
 }
 

@@ -14,10 +14,28 @@ SendMode Input
 #MenuMaskKey vk07  ; vk07 is unassigned. 
 #UseHook
 
-; *********** IS THE WINDOWS / XBOX GAME BAR GETTING IN YOUR WAY? INSTRUCTIONS FOR HOW TO FIX THAT ARE BELOW! *************
 
 
-;===============================  READ ME  ====================================
+;;;; THE READ ME IS BELOW. TRUST ME, YOU SHOULD READ IT. ;;;;
+
+
+
+; *********** IS THE WINDOWS / XBOX GAME BAR GETTING IN YOUR WAY? ************
+; ****************** OR MAYBE IT'S THE NVIDIA SHARE OVERLAY! *****************
+; ============================================================================
+; ************* HERE ARE THE INSTRUCTIONS FOR HOW TO FIX THAT! ***************
+; ============================================================================
+
+; You will need to disable Windows Game Bar, or at least change or disable the shortcuts! Just hit the windows key and search for "game bar settings." Click on that and turn it OFF. Here is a picture of that process: https://i.imgur.com/yQlOB38.png or https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/HOW_TO_DISABLE_GAME_BAR.png
+
+;ALSO, IF YOU HAVE AN NVIDIA GPU, AND YOUR "SHARE" OVERLAY IS ENABLED, YOU WILL NEED TO DISABLE THE "Broadcast LIVE" OVERLAY! You do this from the GEFORCE EXPERIENCE application. Then you click the little triangle that says "Open in-game overlay." Click on the gear, then click on "Broadcast LIVE." Then click the little slider to turn that OFF!!
+
+;EXPLANATION: For some reason, any scan code above SC07F, or any unused virtual key, when preceeded with ALT, acts as the shortcut to enable the game bar or Broadcast Live overlay. I have no idea why this is. It's very frustrating. Those shortcuts cannot be disabled or changed. So you have to disable the thing that it triggers, instead. If you want to use the game bar, AND you want to use the ALT nullifier, you're out of luck. I have no way to do it. Let me know if you figure it out!
+
+; =============================================================================
+
+
+;-------------------------------  READ ME  ------------------------------------
 
 ;TO RUN THIS SCRIPT:
 
@@ -44,13 +62,14 @@ SendMode Input
 
 
 
-;TO USE THE SCRIPT: (This applies to the .exe and .ahk -- they are exactly the same.)
 
-; YOU MIGHT NEED TO DISABLE WINDOWS GAME BAR, OR AT LEAST CHANGE THE SHORTCUTS! Just hit the windows key and search for "game bar settings." Click on that and turn it OFF. Here is a picture of that process: https://i.imgur.com/yQlOB38.png or https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/HOW_TO_DISABLE_GAME_BAR.png
+; ===== TO USE THE SCRIPT: ===== (This applies to the .exe and .ahk -- they are exactly the same.)
+
 
 ;Note that the script will add a little red 🚫 to your task bar, which can be right clicked to be disabled or exited from the menu.
 
 ; You can hold down both ALT keys whenever you want to easily toggle this script on and off. This is useful for things like Premiere's keyboard shortcuts menu, which has ALT-nullification of its own.
+
 
 
 ;TO AUTO-START THIS SCRIPT WHEN WINDOWS STARTS:
@@ -100,7 +119,9 @@ SendMode Input
 ; Some people would think to use F13 through F24. Those poeple are wrong. They are not The Macro King.
 ; "F24" is just the name that we give to the scan code 76, also known as SC076. But the scan codes go much higher than this.
 ; How high? I have a list. I made it myself, since nobody else on the internet seems to have done so:
-; https://github.com/TaranVH/2nd-keyboard/blob/master/FYI/Table_of_all_scan_codes.xlsx
+
+; https://docs.google.com/spreadsheets/d/1GSj0gKDxyWAecB3SIyEZ2ssPETZkkxn67gdIwL1zFUs/edit#gid=0
+
 ; There are hundreds of unused ones to choose from. However, although the following scan codes might APPEAR to be unused...:
 ;SC05A SC05B SC05C SC05D SC05E SC05F SC060 SC061 SC062 SC06F SC070 SC071 SC072 SC073 SC074 SC075 SC077 SC078 SC079 SC07A SC07B SC07C SC07D SC07E SC07F
 ;You should probably only use scan codes above SC080. This is because diffreent software will treat each code differently. Google docs, for example, changes some of those scan codes into accented characters. Again, see my spreadsheet for the full, gory details.
@@ -119,6 +140,8 @@ return
 ~LAlt up::
 sendinput, {SC0E9 up}
 return
+
+;it was 0E9 before...
 
 
 ~RAlt::

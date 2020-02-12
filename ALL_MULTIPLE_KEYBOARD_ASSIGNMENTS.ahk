@@ -14,6 +14,7 @@ Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece
 global savedCLASS = "ahk_class Chrome_WidgetWin_1"
 global savedEXE = "Teams.exe"
 
+
 #Include C:\AHK\2nd-keyboard\gui.ahk
 #include C:\AHK\2nd-keyboard\Almost_All_Premiere_Functions.ahk
 #include C:\AHK\2nd-keyboard\Almost_All_Windows_Functions.ahk
@@ -61,6 +62,10 @@ SetKeyDelay, 0 ;warning ---this was absent for some reason. i just added it back
 ;  C:\Users\YOUR_USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
 
+;For some of the firefox/chrome shortcuts, you have to install the ACC library into AutoHotKey (it's pretty easy, just follow the instructions on this page.)
+;https://www.autohotkey.com/boards/viewtopic.php?f=6&t=26201
+;one such function is JEE_FirefoxFocusTabByName
+
 #NoEnv
 SendMode Input
 #InstallKeybdHook
@@ -96,6 +101,7 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; 
 ;----------------------------------------------------------------------------------
 ; RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE'S BUILT IN KEYBOARD SHORTCUTS MENU
+; THESE ARE ESSENTIAL FOR THE SCRIPTS TO WORK PROPERLY.
 ;----------------------------------------------------------------------------------
 ; KEYS                  PREMIERE FUNCTIONS
 ;----------------------------------------------------------------------------------
@@ -114,6 +120,7 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; ctrl alt shift 3      Application > Window > Timeline (default is shift 3)
 ; ctrl alt shift 1      Application > Window > Project  (This sets the focus onto a BIN.) (default is SHIFT 1)
 ; ctrl alt shift 4      Application > Window > program monitor (Default is SHIFT 4)
+; ctrl alt shift 5      Application > Window > Effect Controls (Default is SHIFT 5)
 ; ctrl alt shift 7      Application > Window > Effects   (NOT the Effect Controls panel) (Default is SHIFT 7) --- The defaults are stupid. SHIFT 7 is an ampersand if you happen to be in a text box somewhere...
 ; F2                    gain
 ; F3                    audio channels --- To be pressed manually by the user. (this might change in the future.)
@@ -124,7 +131,14 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; ctrl alt F            select find box 
 ; ctrl shift 6			Apply source assignment preset 1 (set to V5 and A3)
 ; ctrl ; (semicolon)	Add Marker
-;                                                                                                                        
+; ctrl alt k			Remove selected marker
+; ctrl shift alt 9 		activate lumetri scopes
+; ctrl alt D   			"deselect all" (clips on the timeline)
+; ctrl alt shift K 	 	"shuttle stop"
+; CTRL SEMICOLON 		"(add) marker."
+; ctrl shift alt R		is "reset to saved layout" (workspace)
+; Media_Stop::^numpad7 ;select label group
+;                                                                                                                      
 ; Be aware that sometimes other programs like PUUSH can overlap/conflict with your customized shortcuts.                          
 ;_______________________________________________________________________________________________
 ;
@@ -271,7 +285,7 @@ t::recallClipboard("t")
 ;;+t::saveClipboard(A_thishotkey)
 
 y::preset("autogate -25")
-u::preset("red red red")
+u::preset("90 IRE")
 i::preset("multiply")
 o::preset("flip vertical")
 p::preset("flip horizontal")
@@ -455,10 +469,13 @@ return
 ; ; return
 
 numpaddiv::
-Keyshower("add marker color 6 (taran mod)")
-marker()
-sleep 10
-send ^!{numpad6} ;shortcut for Set marker color 6
+send ^!{numpad6} ;shortcut for CREATE marker color 6 (white)
+
+;;;the below code is no longer necessary, since Adobe added shortcuts to create markers of any color!
+; Keyshower("add marker color 6 (taran mod)")
+; marker()
+; sleep 10
+; send ^!{numpad6} ;this WAS the shortcut for Set marker color 6
 return
 
 ; ^numpad0::
@@ -819,7 +836,7 @@ return
 0::
 -::
 =::tooltip, you pressed F24 then %A_thishotkey%
-backspace::send, ^+!r
+backspace::send, ^+!r ;ctrl shift alt r is "reset workspace"
 
 ;;;;;next line;;;;;;;;
 
@@ -865,7 +882,7 @@ capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOu
 ;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 
 ;;;this is(was) Lshift::
-SC070::gotofiretab("Calendar - January 2020","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+SC070::gotofiretab("Calendar - February 2020","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
 ;em dash –
@@ -1489,6 +1506,7 @@ return
 ;note that i have capslock remapped to F20
 F20::home
 ; and "home" is set to "disable (clip)" in premiere.
+;you can actually do this directly. I'm not sure why I set it up that way....
 
 
 
@@ -1516,7 +1534,8 @@ F20::home
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Macro key G6
 ;modifiers -- I removed the ~
-^+U::reSelect() ;formerly ^+9
+;^+U::
+;reSelect() ;formerly ^+9
 
 ;G6 is assigned to single left click in iCue if the "All" profile is active, which it is (automatically) unless Premiere is active. I only have the two profiles - premiere, and everything else.
 
@@ -1637,7 +1656,9 @@ G18: Activate/switch to Premiere
 ;tab::7 ;"7" is set to enable/disable for now. just testing stuff
 appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
 ^w::closeTitler()
-~+K::KbShortcutsFindBox() ;this one DOES need the ~ so that capital Ks will work in the titler, and so that the keyboard shortcuts panel will actually launch when it is pressed.
+
+;;;below thing is no longer needed. Premiere now has this feature by default.
+;~+K::KbShortcutsFindBox() ;this one DOES need the ~ so that capital Ks will work in the titler, and so that the keyboard shortcuts panel will actually launch when it is pressed.
 ;Note, if you don't arealdy know —the ~ is dangerous since it can lead to stuck modifier keys. I still don't know exactly why, or how to stop it.
 
 ;no longer used:
@@ -1759,7 +1780,8 @@ F6::cropClick()
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;;Delete single clip at cursor
 F9::
-send, ^!d ;ctrl alt d is DESELECT
+prFocus("timeline") ; you can't just send ^+!3 because it'll change the sequence if you do. you have to go to the effect controls fiurst. that is what this function does.
+send, ^!d ;ctrl alt d is DESELECT. this only works if the timeline is in focus.
 send, v ;selection tool
 send, {alt down}
 send, {lbutton}
@@ -1771,7 +1793,7 @@ return
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;cut single clip at cursor
 Xbutton1::
-F7::
+;F7::
 send, ^!d ;ctrl alt d is DESELECT
 send, b ;blade tool
 ;keywait, F7 ;waits for the key to go UP.
@@ -1784,9 +1806,10 @@ sleep 10
 send, %currentTool%
 return
 
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Disable single clip at cursor - must turn this into a proper function.
 Xbutton2::
-
 F8::
 send, ^!d ;ctrl alt d is DESELECT
 send, v ;selection tool
@@ -1824,10 +1847,19 @@ currentTool = %A_thishotkey% ;so, %currentTool% might become r or y or v. Whatev
 return
 
 ;;**********************MEDIA KEYS IN PREMIERE**********************
-
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;;the top rightmost keys on my K95.
 Media_Stop::^numpad7 ;select label group
-Media_Prev::^numpad8
+;Media_Prev::^numpad8
+Media_Prev::
+send {down}
+sleep 1
+send u
+sleep 1
+send 0
+sleep 1
+return
+
 Media_Play_Pause::^numpad9
 Media_Next::^numpadMult
 ;Volume_Mute::^numpadDiv
@@ -1952,11 +1984,12 @@ return
 
 ;
 ;;I can't use ~ thingies or these keys can very easily get stuck...
-; Rshift & Lshift::capslock
-; Lshift & Rshift::capslock
-+capslock::capslock ;only SHIFT CAPSLOCK will now turn on capslock, freeing the real capslock key to be used as a MODIFIER KEY, just like CTRL.
-+F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
-~F20 & Shift::Capslock ;IN CASE THE CAPslock key goes down first.
+;oh boy THIS RIGHT HERE IS A MESS i gotta clean up someday. caplock sometimes gets stuck or maybe it's just the shift key(s). gotta make this better. work better.
+Rshift & Lshift::capslock
+Lshift & Rshift::capslock
+^capslock::capslock ;only CTRL CAPSLOCK will now turn on capslock, freeing the real capslock key to be used as a MODIFIER KEY, just like CTRL.
+^F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
+~F20 & LCTRL::Capslock ;IN CASE THE CAPslock key goes down first.
 ;capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
 
 ;F20 is triggered by capslock, and adds a 2nd layer to keyboard #1.
@@ -2199,4 +2232,23 @@ ConvertSentence()
         ; Send % "{" A_Loopfield " Up}"
 ; }
 
+#ifwinactive
 
+;;i used this to delete premiere title styles quickly.
+; numpadsub::
+; click right
+; sleep 5
+; send d
+; sleep 5
+; send d
+; sleep 5
+; send {enter}
+; sleep 5
+; send {enter}
+; return
+
+^+!Escape::ExitApp
+
+^+/::sendinput, !{F9}
+;
+;
