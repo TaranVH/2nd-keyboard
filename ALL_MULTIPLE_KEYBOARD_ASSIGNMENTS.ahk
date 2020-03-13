@@ -541,7 +541,8 @@ return
 numpadleft::
 numpad4::SendKey(A_thishotkey, ,"nudge left")
 numpadclear::
-numpad5::Rctrl ;because I use it... well, as a ctrl key. baka.
+numpad5::numpad5
+;numpad5::Rctrl ;because I use it... well, as a ctrl key. baka.
 numpadright::
 numpad6::SendKey(A_thishotkey, ,"nudge right")
 numpadhome::
@@ -882,7 +883,7 @@ capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOu
 ;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 
 ;;;this is(was) Lshift::
-SC070::gotofiretab("Calendar - February 2020","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+SC070::gotofiretab("Calendar - March 2020","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
 ;em dash –
@@ -1089,7 +1090,7 @@ numpadDiv::monitorKeys("program","^+3") ;program monitor res to 1/4
 
 numpadMult::send, +`` ;premiere shortcut for "Maximize (program?) Monitor"
 numpadSub::tooltip, you pressed F24 then %A_thishotkey%
-numpadAdd::sendinput, ^!{F10} ;default is shift alt F10, and i hate thingies that dont use the ctrl key
+numpadAdd::sendinput, +!{F10} ;default is shift alt F10, and i hate thingies that dont use the ctrl key
 numpadEnter::
 sendinput, ^!m ;mute/unmute mic - shadowplay ;unfortunately ctrl alt m is also NEW COMMENT in google sheets... i might wish to change it
 tippy("this should work")
@@ -1249,7 +1250,7 @@ return
 `::Send !{up} ; go DOWN one folder level in explorer
 
 
-+`::Send !{left} ;shift tilde will go "back" in explorer
+;;+`::Send !{left} ;shift tilde will go "back" in explorer
 
 ~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
 
@@ -1536,6 +1537,7 @@ F20::home
 ;modifiers -- I removed the ~
 ;^+U::
 ;reSelect() ;formerly ^+9
+;;;in premiere, ctrl shift u is now assigned to SUPER PURPLE temporarily at least.
 
 ;G6 is assigned to single left click in iCue if the "All" profile is active, which it is (automatically) unless Premiere is active. I only have the two profiles - premiere, and everything else.
 
@@ -1739,6 +1741,7 @@ return
 
 
 ;----ALL STANDARD FUNCTION KEYS IN PREMIERE------
+;;;PREMIEREKEYS;;; <--for easy searching
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 F1::
@@ -1789,9 +1792,13 @@ send, {alt up}
 send, c ;delete
 return
 
+;this code is to remind me to do a thing, when i am rendering anyway.
+~^e::
+TrayTip, Make an EDL, Hey did you export an EDL yet, 2, 32
+return
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
-;cut single clip at cursor
+;cut single clip at cursor.
 Xbutton1::
 ;F7::
 send, ^!d ;ctrl alt d is DESELECT
@@ -1810,7 +1817,7 @@ return
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Disable single clip at cursor - must turn this into a proper function.
 Xbutton2::
-F8::
+;F8::
 send, ^!d ;ctrl alt d is DESELECT
 send, v ;selection tool
 send, {alt down}
@@ -2077,8 +2084,8 @@ F15::Lbutton
 ; tooltip, hi
 ; return
 
-;shift tilde will full screen  a page
-+`::send, {F11}
+;;shift tilde will full screen  a page
+;+`::send, {F11}
 
 ; ;experimental caps lock to full screen for firefox:
 ; F20::send, {F11}

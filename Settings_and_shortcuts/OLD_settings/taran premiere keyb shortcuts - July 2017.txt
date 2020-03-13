@@ -1,0 +1,984 @@
+Application
+   Selection Tool	V
+   Track Select Backward Tool	Shift+T
+   Track Select Forward Tool	T
+   Ripple Edit Tool
+   Rolling Edit Tool	R
+   Rate Stretch Tool	Y
+   Razor Tool	B
+   Slip Tool	X
+   Slide Tool	H
+   Pen Tool	P
+   Hand Tool
+   Zoom Tool
+   File
+      New
+         Project...	Ctrl+Alt+N
+         Team Project (Beta)...
+         Sequence...
+         Sequence From Clip
+         Bin
+         Search Bin
+         Offline File...
+         Adjustment Layer...
+         Title...
+         Photoshop File...
+      Open Project...
+      Open Team Project (Beta)...
+      Convert Premiere Clip Project...
+      Close Project
+      Close
+      Save	Ctrl+S
+      Save As...	Ctrl+Shift+S
+      Save a Copy...
+      Revert
+      taran@linusmediagroup.com
+         Sync Settings Now
+         Last Sync: 1/3/2017, 13:00:35
+         Use Settings from a Different Account...
+         Clear Settings...
+         Manage Sync Settings...
+         Manage Creative Cloud Account...
+      Capture...
+      Batch Capture...
+      Link Media...	Ctrl+L
+      Make Offline...
+      Adobe Dynamic Link
+         Replace with After Effects Composition
+         New After Effects Composition...
+         Import After Effects Composition...
+      Adobe Story
+         Attach Script File...
+         Clear Script Data
+      Import from Media Browser
+      Import...
+      Import Batch List...
+      Export
+         Media...	Ctrl+E
+         Batch List...
+         Title...
+         Captions...
+         Tape (DV/HDV)...
+         Tape (Serial Device)...
+         EDL...
+         OMF...
+         Markers...
+         Selection as Premiere Project...
+         AAF...
+         Final Cut Pro XML...
+      Get Properties for
+         File...
+         Selection...
+      Project Settings
+         General...
+         Scratch Disks...
+         Ingest Settings...
+      Project Manager...
+      Exit	Ctrl+Q
+   Edit
+      Undo	Ctrl+Z
+      Redo	Ctrl+Y	Ctrl+Shift+Z
+      Cut	Ctrl+X
+      Copy	Ctrl+C
+      Paste	Ctrl+V
+      Paste Insert	Ctrl+Shift+V
+      Paste Attributes...	Ctrl+Alt+V
+      Remove Attributes...	Ctrl+Alt+Shift+E
+      Clear	C	Delete
+      Ripple Delete	Shift+C	Shift+Delete	Ctrl+Alt+Shift+D
+      Duplicate
+      Select All	Ctrl+A
+      Select All Matching
+      Deselect All	Ctrl+Alt+D
+      Find...
+      Find Next
+      Label
+         Select Label Group
+         Violet	7 (Num)
+         Iris	/ (Num)
+         Caribbean	1 (Num)
+         Lavender	* (Num)
+         Cerulean	0 (Num)
+         Forest	9 (Num)
+         Rose	5 (Num)
+         Mango	3 (Num)
+      Remove Unused
+      Team Project
+         Get Latest Changes
+         Share My Changes...
+         Resolve Conflicts...
+         Convert Project to Team Project...
+         Convert Team Project to Project...
+         Media Management...
+      Edit Original
+      Edit in Adobe Audition
+         Clip
+         Sequence...
+      Edit in Adobe Photoshop
+      Keyboard Shortcuts...	Shift+K	Ctrl+K
+      Preferences
+         General...	Shift+P
+         Appearance...
+         Audio...
+         Audio Hardware...	Shift+H
+         Auto Save...
+         Capture...
+         Control Surface...
+         Device Control...
+         Label Colors...
+         Label Defaults...
+         Media...
+         Memory...
+         Playback...
+         Project Locking...
+         Sync Settings...
+         Titler...
+         Trim...
+   Clip
+      Rename...
+      Make Subclip...
+      Edit Subclip...
+      Edit Offline...
+      Source Settings...
+      Modify
+         Audio Channels...	F3	Ctrl+Alt+Shift+A
+         Interpret Footage...
+         Timecode...
+      Video Options
+         Frame Hold Options...	Ctrl+Alt+Shift+H
+         Add Frame Hold	Ctrl+H
+         Insert Frame Hold Segment	Ctrl+Shift+H
+         Field Options...
+         Time Interpolation
+            Frame Sampling
+            Frame Blending
+            Optical Flow	Ctrl+Shift+O
+         Scale to Frame Size	Ctrl+F
+         Set to Frame Size	Z	Ctrl+Shift+F
+      Audio Options
+         Audio Gain...	F2
+         Breakout to Mono
+         Extract Audio
+      Speed/Duration...	Ctrl+R
+      Capture Settings
+         Set Capture Settings...
+         Clear Capture Settings	Ctrl+F6	Ctrl+F5	Ctrl+F4	Ctrl+F3	Ctrl+F2	Ctrl+F1	Ctrl+Shift+.	Ctrl+Shift+,
+      Insert	,
+      Overwrite	.	Ctrl+/	Ctrl+Alt+Shift+.
+      Replace Footage...
+      Replace With Clip
+         From Source Monitor
+         From Source Monitor, Match Frame	Shift+F	Ctrl+Shift+M
+         From Bin	Shift+B	Ctrl+Shift+B
+      Render and Replace...
+      Restore Unrendered
+      Generate Audio Waveform
+      Automate to Sequence...
+      Enable	Shift+E
+      Link	0
+      Group
+      Ungroup
+      Synchronize...
+      Merge Clips...
+      Nest...	Ctrl+N
+      Create Multi-Camera Source Sequence...
+      Multi-Camera
+         Enable
+         Flatten
+   Sequence
+      Sequence Settings...
+      Render Effects in Work Area
+      Render Entire Work Area	Ctrl+Alt+I
+      Render Selection	Ctrl+Alt+R
+      Render Audio	Ctrl+Shift+A	Ctrl+Alt+A
+      Delete Render Files
+      Delete Work Area Render Files
+      Match Frame	M
+      Reverse Match Frame	Shift+M
+      Add Edit
+      Add Edit to All Tracks	E
+      Trim Edit
+      Extend Selected Edit to Playhead
+      Apply Video Transition	Ctrl+T
+      Apply Audio Transition	Ctrl+Shift+D
+      Apply Default Transitions to Selection
+      Lift
+      Extract	'
+      Zoom In	G	=
+      Zoom Out	F	-
+      Go to Gap
+         Next in Sequence	Shift+;
+         Previous in Sequence	Ctrl+Shift+;
+         Next in Track
+         Previous in Track
+      Snap	N
+      Linked Selection
+      Selection Follows Playhead	Ctrl+P
+      Show Through Edits
+      Normalize Master Track...
+      Make Subsequence
+      Add Tracks...
+      Delete Tracks...
+   Marker
+      Mark In	I
+      Mark Out	O
+      Mark Clip
+      Mark Selection	Shift+N
+      Mark Split
+         Video In
+         Video Out
+         Audio In
+         Audio Out
+      Go to In
+      Go to Out
+      Go to Split
+         Video In
+         Video Out
+         Audio In
+         Audio Out
+      Clear In	Ctrl+Shift+I
+      Clear Out
+      Clear In and Out	Ctrl+Shift+X
+      Add Marker	;	Shift+/	Ctrl+;
+      Go to Next Marker
+      Go to Previous Marker
+      Clear Selected Marker	Alt+M	Alt+K	Ctrl+Alt+M
+      Clear All Markers	Ctrl+Alt+Shift+M
+      Edit Marker...
+      Add Chapter Marker...	/
+      Add Flash Cue Marker...	. (Num)
+      Ripple Sequence Markers
+   Title
+      Add Fonts from Typekit...
+      New Title
+         Default Still...
+         Default Roll...
+         Default Crawl...
+         Based on Current Title...	Ctrl+Shift+Q
+         Based on Template...
+      Font
+      Size
+         Other...
+         48
+         60
+         72
+         96
+         120
+         156
+         180
+      Type Alignment
+         Left
+         Center
+         Right
+      Orientation
+         Horizontal
+         Vertical
+      Word Wrap
+      Tab Stops...
+      Templates...	Ctrl+J
+      Roll/Crawl Options...
+      Graphic
+         Insert Graphic...
+         Insert Graphic into Text...
+         Restore Graphic Size
+         Restore Graphic Aspect Ratio
+      Transform
+         Position...
+         Scale...
+         Rotation...
+         Opacity...
+      Select
+         First Object Above
+         Next Object Above	Ctrl+Alt+]
+         Next Object Below	Ctrl+Alt+[
+         Last Object Below
+      Arrange
+         Bring to Front	Ctrl+Shift+]
+         Bring Forward	Ctrl+]
+         Send to Back	Ctrl+Shift+[
+         Send Backward	Ctrl+[
+      Position
+         Horizontal Center
+         Vertical Center
+         Lower Third
+      Align Objects
+         Horizontal Left
+         Horizontal Center
+         Horizontal Right
+         Vertical Top
+         Vertical Center
+         Vertical Bottom
+      Distribute Objects
+         Horizontal Left
+         Horizontal Center
+         Horizontal Right
+         Horizontal Even Spacing
+         Vertical Top
+         Vertical Center
+         Vertical Bottom
+         Vertical Even Spacing
+      View
+         Safe Title Margin	Ctrl+Alt+Shift+S
+         Safe Action Margin
+         Text Baselines
+         Tab Markers
+         Show Video
+   Window
+      Workspaces
+         Reset to Saved Layout
+         Save Changes to this Workspace
+         Save as New Workspace...
+         Edit Workspaces...
+         Import Workspace from Projects
+      Browse Add-ons...
+      Adobe Story
+      Audio Clip Mixer
+      Audio Meters
+      Audio Track Mixer	Ctrl+Alt+Shift+6
+      Captions
+      Capture
+      Edit To Tape
+      Effect Controls	Ctrl+Alt+Shift+5
+      Effects	Ctrl+Alt+Shift+7
+      Events
+      History
+      Info
+      Libraries
+      Lumetri Color
+      Lumetri Scopes
+      Markers
+      Media Browser	Ctrl+Alt+Shift+8
+      Metadata
+      Program Monitor	Ctrl+Alt+Shift+4
+      Progress
+      Project	Ctrl+Alt+Shift+`	Ctrl+Alt+Shift+1
+      Reference Monitor
+      Source Monitor	Ctrl+Alt+Shift+2
+      Timecode
+      Timelines	Ctrl+Alt+Shift+3
+      Title Actions
+      Title Designer	Ctrl+Alt+Shift+I
+      Title Properties
+      Title Styles
+      Title Tools
+      Tools
+      Workspaces
+   Help
+      Adobe Premiere Pro Help...
+      Adobe Premiere Pro Support Center...
+      Keyboard...
+      About Adobe Premiere Pro...
+   Add Tracks to Match Source
+   Add or Remove Audio Keyframe
+   Add or Remove Video Keyframe	Shift+S
+   Clear Poster Frame	Ctrl+Shift+P
+   Cut to Camera 1
+   Cut to Camera 2
+   Cut to Camera 3
+   Cut to Camera 4
+   Cut to Camera 5
+   Cut to Camera 6
+   Cut to Camera 7
+   Cut to Camera 8
+   Cut to Camera 9
+   Cut to Camera 10
+   Cut to Camera 11
+   Cut to Camera 12
+   Cut to Camera 13
+   Cut to Camera 14
+   Cut to Camera 15
+   Cut to Camera 16
+   Decrease Audio Keyframe Value
+   Decrease Clip Volume	[
+   Decrease Clip Volume Many
+   Decrease Video Keyframe Value
+   Default Source Assignment
+   Edit To Tape
+   Enable Transmit
+   Expand All Tracks	Shift+=
+   Export Frame
+   Extend Next Edit To Playhead
+   Extend Previous Edit To Playhead
+   Fast Forward
+   Go to First Multi-Camera Page
+   Go to Last Multi-Camera Page
+   Go to Next Edit Point	2	Down	Alt+D
+   Go to Next Edit Point on Any Track	Shift+Down
+   Go to Next Multi-Camera Page
+   Go to Next Selected Edit Point
+   Go to Previous Edit Point	1	Up	Alt+A
+   Go to Previous Edit Point on Any Track	Shift+Up
+   Go to Previous Multi-Camera Page
+   Go to Previous Selected Edit Point
+   Go to Selected Clip End	Shift+End
+   Go to Selected Clip Start	Shift+Home
+   Go to Sequence-Clip End
+   Go to Sequence-Clip Start
+   Increase Audio Keyframe Value
+   Increase Clip Volume	]
+   Increase Clip Volume Many
+   Increase Video Keyframe Value
+   Manage Source Assignment Presets
+   Manage Track Height Presets
+   Maximize or Restore Active Frame
+   Maximize or Restore Frame Under Cursor	`
+   Minimize All Tracks	Shift+-
+   Move All Audio Sources Down
+   Move All Audio Sources Up
+   Move All Audio Targets Down
+   Move All Audio Targets Up
+   Move All Video Sources Down
+   Move All Video Sources Up
+   Move All Video Targets Down
+   Move All Video Targets Up
+   Move Audio Keyframe 1 Frame earlier
+   Move Audio Keyframe 1 Frame later
+   Move Audio Keyframe 10 Frames earlier
+   Move Audio Keyframe 10 Frames later
+   Move Video Keyframe 1 Frame earlier
+   Move Video Keyframe 1 Frame later
+   Move Video Keyframe 10 Frames earlier
+   Move Video Keyframe 10 Frames later
+   Multi-Camera Audio Follows Video
+   Multi-Camera Record On/Off Toggle
+   Multi-Camera Selection Top Down
+   Nudge Volume +1dB	Shift+]
+   Nudge Volume +3dB
+   Nudge Volume -1dB	Shift+[
+   Nudge Volume -3dB
+   Overlay Settings
+   Overlays
+   Play Around
+   Play Audio In to Out
+   Play In to Out	Ctrl+Shift+Space
+   Play In to Out with Preroll/Postroll	Shift+Space
+   Play Video In to Out
+   Play from Playhead to Audio Out Point
+   Play from Playhead to Out Point
+   Play from Playhead to Video Out Point
+   Play-Stop Toggle	8	Space	Ctrl+Space
+   Record Voiceover	Shift+X
+   Reveal Nested Sequence
+   Revert Trim Session
+   Rewind
+   Ripple Trim Next Edit To Playhead	W
+   Ripple Trim Previous Edit To Playhead	Q
+   Save Source Assignment Preset
+   Save Track Height Preset
+   Select Camera 1
+   Select Camera 2
+   Select Camera 3
+   Select Camera 4
+   Select Camera 5
+   Select Camera 6
+   Select Camera 7
+   Select Camera 8
+   Select Camera 9
+   Select Camera 10
+   Select Camera 11
+   Select Camera 12
+   Select Camera 13
+   Select Camera 14
+   Select Camera 15
+   Select Camera 16
+   Select Clip at Playhead	U	Ctrl+Alt+S
+   Select Find Box	F20	Ctrl+\	Ctrl+B	Ctrl+Alt+F
+   Select In to Out
+   Select Nearest Edit Point as Ripple In
+   Select Nearest Edit Point as Ripple Out
+   Select Nearest Edit Point as Roll
+   Select Nearest Edit Point as Trim In
+   Select Nearest Edit Point as Trim Out
+   Select Next Camera
+   Select Next Clip	Ctrl+Down
+   Select Next Panel	Shift+.
+   Select Previous Camera
+   Select Previous Clip	Ctrl+Up
+   Select Previous Panel	Shift+,
+   Select next Keyframe	Shift+D
+   Select previous Keyframe	Shift+A
+   Set All Source Audio To Gaps
+   Set All Source Video To Gaps
+   Set Clip Pan to Center
+   Set Clip Pan to Left
+   Set Clip Pan to Right
+   Set Marker Color 1	Alt+1 (Num)
+   Set Marker Color 2	Alt+2 (Num)
+   Set Marker Color 3	Alt+3 (Num)
+   Set Marker Color 4	Alt+4 (Num)
+   Set Marker Color 5	Alt+5 (Num)
+   Set Marker Color 6	Alt+6 (Num)
+   Set Marker Color 7	Alt+7 (Num)
+   Set Marker Color 8	Alt+8 (Num)
+   Set Poster Frame	Alt+P
+   Shuttle Left	J	A
+   Shuttle Right	L	D
+   Shuttle Slow Left	Shift+J
+   Shuttle Slow Right	Shift+L
+   Shuttle Stop	S	K
+   Source Assignment Preset 1	Ctrl+Shift+6
+   Source Assignment Preset 2	Ctrl+Shift+7
+   Source Assignment Preset 3
+   Source Assignment Preset 4
+   Source Assignment Preset 5
+   Source Assignment Preset 6
+   Source Assignment Preset 7
+   Source Assignment Preset 8
+   Source Assignment Preset 9
+   Source Assignment Preset 10
+   Step Back 1 Frame	3	Left
+   Step Back Many Frames - Units	Shift+Left
+   Step Forward 1 Frame	4	Right
+   Step Forward Many Frames - Units	Shift+Right
+   Stop
+   Targets Follow Inserts and Overwrites	Ctrl+Alt+0
+   Toggle All Audio Targets	Ctrl+Shift+F9	Alt+9
+   Toggle All Source Audio
+   Toggle All Source Video
+   Toggle All Video Targets	Shift+9	Ctrl+F9
+   Toggle Audio During Scrubbing
+   Toggle Control Surface Clip Mixer Mode
+   Toggle Full Screen
+   Toggle Maintain Pitch During Shuttling
+   Toggle Multi-Camera View
+   Toggle Proxies
+   Toggle Source/Program Monitor Focus
+   Toggle Target Audio 1	Alt+1
+   Toggle Target Audio 2	Alt+2
+   Toggle Target Audio 3	Alt+3
+   Toggle Target Audio 4	Alt+4
+   Toggle Target Audio 5	Alt+5
+   Toggle Target Audio 6	Alt+6
+   Toggle Target Audio 7	Alt+7
+   Toggle Target Audio 8	Ctrl+Shift+F8	Alt+8
+   Toggle Target Video 1	Shift+1
+   Toggle Target Video 2	Shift+2
+   Toggle Target Video 3	Shift+3
+   Toggle Target Video 4	Shift+4
+   Toggle Target Video 5	Shift+5
+   Toggle Target Video 6	Shift+6
+   Toggle Target Video 7	Shift+7
+   Toggle Target Video 8	Shift+8	Ctrl+F8
+   Toggle Trim Type
+   Track Height Preset 1	Ctrl+`
+   Track Height Preset 2
+   Track Height Preset 3
+   Track Height Preset 4
+   Track Height Preset 5
+   Track Height Preset 6
+   Track Height Preset 7
+   Track Height Preset 8
+   Track Height Preset 9
+   Track Height Preset 10
+   Trim Backward	Ctrl+,	Ctrl+Left
+   Trim Backward Many	Ctrl+Shift+Left
+   Trim Forward	Ctrl+.	Ctrl+Right
+   Trim Forward Many	Ctrl+Shift+Right
+   Trim Next Edit to Playhead	Shift+W
+   Trim Previous Edit to Playhead	Shift+Q
+   Workspace 1
+   Workspace 2
+   Workspace 3
+   Workspace 4
+   Workspace 5
+   Workspace 6
+   Workspace 7
+   Workspace 8
+   Workspace 9
+   Zoom to Frame
+   Zoom to Sequence
+Panels
+   Audio Clip Mixer Panel
+      Audio Clip Mixer Panel Menu
+         Keyframe Mode Latch
+         Keyframe Mode Touch
+   Audio Track Mixer
+      Audio Track Mixer Menu
+         Show/Hide Tracks...	Ctrl+Alt+T
+         Show Audio Time Units
+         Loop	Ctrl+L
+         Meter Input(s) Only	Ctrl+Shift+I
+         Switch to Touch after Write
+   Capture Panel
+      Capture Panel Menu
+         Capture Settings...
+         Record Video
+         Record Audio
+         Record Audio and Video
+         Scene Detect
+         Collapse Window
+      Eject	Ctrl+Shift+R	Ctrl+Shift+F4	Ctrl+Shift+F1	Alt+W	Alt+T	Alt+S	Alt+M	Alt+H	Alt+F	Alt+E	Alt+C	Alt+F4	Ctrl+Alt+/	Ctrl+Alt+F6	Ctrl+Alt+F2
+      Fast Forward
+      Go to In point	Alt+F10	Alt+F9	Ctrl+Alt+Delete
+      Go to Out point	Alt+Shift+Z	Alt+Shift+Y	Alt+Shift+X	Alt+Shift+W	Alt+Shift+U	Alt+Shift+S	Alt+Shift+R	Alt+Shift+O	Alt+Shift+N	Alt+Shift+M	Alt+Shift+L	Alt+Shift+K	Alt+Shift+J	Alt+Shift+I	Alt+Shift+H	Alt+Shift+G	Alt+Shift+F	Alt+Shift+E	Alt+Shift+D	Alt+Shift+C	Alt+Shift+A	Alt+Shift+;	Alt+Shift+/	Alt+Shift+.	Alt+Shift+,
+      Log Clip	Ctrl+Alt+9 (Num)	Ctrl+Alt+8 (Num)	Ctrl+Alt+7 (Num)	Ctrl+Alt+6 (Num)	Ctrl+Alt+5 (Num)	Ctrl+Alt+4 (Num)	Ctrl+Alt+3 (Num)	Ctrl+Alt+2 (Num)	Ctrl+Alt+1 (Num)	Ctrl+Alt+0 (Num)	Ctrl+Alt+/ (Num)	Ctrl+Alt+- (Num)	Ctrl+Alt++ (Num)	Ctrl+Alt+* (Num)
+      Next Scene
+      Pause	Shift+9 (Num)	Shift+7 (Num)	Shift+5 (Num)	Shift+3 (Num)	Shift+1 (Num)	Shift+0 (Num)	Shift+/ (Num)	Shift+* (Num)	Ctrl+W
+      Play
+      Previous Scene
+      Record
+      Rewind	F5	F4	F1	Ctrl+Shift+=	Ctrl+Shift+9	Ctrl+Shift+8	Ctrl+Shift+0	Ctrl+Shift+-	Alt+Space	Ctrl+Alt+J	Ctrl+Alt+H	Ctrl+Alt+G	Ctrl+Alt+Shift+7
+      Set In point
+      Set Out point
+      Slow Play
+      Slow Reverse
+      Step Back
+      Step Forward
+      Stop
+   Lumetri Color Panel
+      Lumetri Color Panel Menu
+         Solo Mode
+         Export .look...
+         Export .cube...
+         Save Preset...
+         Auto-Refresh LUT / Look
+         High Dynamic Range
+      Bypass Lumetri Color Effects	Shift+Y
+   Library
+      Open Clip
+   Edit To Tape Panel
+      Pause
+      Preview
+      Record
+   Effect Controls Panel
+      Effect Controls Panel Menu
+         Save Preset...
+         Effect Enabled
+         Remove Selected Effect	Backspace
+         Remove Effects...
+         Snap	N
+         Snap To
+            Video Keyframes
+            Audio Keyframes
+            Sequence Markers
+            Playhead
+            Clip
+            All
+            None
+         Show Audio Time Units
+         Time Ruler Numbers
+         Loop During Audio-Only Playback	Ctrl+L
+         Pin to Clip	Ctrl+Alt+P
+      Expand Audio Effects	Ctrl+Alt+Shift+E
+      Expand Video Effects
+   Effects Panel
+      Effects Panel Menu
+         New Custom Bin
+         New Presets Bin
+         Delete Custom Item	Backspace
+         Set Selected as Default Transition	Ctrl+Alt+Shift+T
+         Set Default Transition Duration...
+         Import Presets...
+         Export Presets...
+         Preset Properties...
+   History Panel
+      History Panel Menu
+         Step Backward	Left
+         Step Forward	Right
+         Delete	Backspace
+         Clear History
+         Settings...
+   Marker Panel
+      Marker Panel Menu
+         Sequence Timecode
+         Show all clip markers in sequence
+      Next Marker
+      Previous Marker
+   Media Browser Panel
+      Media Browser Panel Menu
+         Edit Columns...
+         Import as Image Sequence
+         Hover Scrub
+         New Media Browser Panel
+         Create Folder For Imported Projects
+         Allow Duplicate Media During Project Import
+         Refresh
+      Add to Favorites
+      Clear Recent Directories
+      Import
+      Open In Source Monitor	Y	Ctrl+Shift+Y
+      Open Project
+      Remove from Favorites
+      Select Directory List	Shift+Left
+      Select Media List	Shift+Right
+   Metadata Panel
+      Metadata Panel Menu
+         Metadata Display...
+      Loop	Ctrl+L
+      Next Matching Word
+      Play
+      Play In to Out
+      Previous Matching Word
+   Program Monitor Panel
+      Program Monitor Panel Menu
+         Gang to Reference Monitor
+         Gang Source and Program
+         Composite Video
+         Alpha
+         Multi-Camera
+         Display First Field
+         Display Second Field
+         Display Both Fields
+         Playback Resolution
+            Full	Ctrl+Shift+1
+            1/2	Ctrl+Shift+2
+            1/4	Ctrl+Shift+3
+            1/8	Ctrl+Shift+4
+            1/16	Ctrl+Shift+5
+         Paused Resolution
+            Full
+            1/2
+            1/4
+            1/8
+            1/16
+         High Quality Playback
+         Timecode Overlay During Edit
+         Closed Captions Display
+            Settings...
+         Show Transport Controls	Alt+B
+         Show Audio Time Units
+         Show Markers
+         Show Dropped Frame Indicator
+         Time Ruler Numbers
+         Show Multi-Camera Preview Monitor
+         Edit Cameras...
+      Closed Captioning
+      Gang to Program Monitor
+      Global FX Mute	Alt+X
+      Loop	Ctrl+L
+      Play-Stop Toggle
+      Safe Margins
+      Step Back
+      Step Forward
+      Toggle Transparency Grid
+      Toggle VR Video Display
+      VR Video - Hide Controls
+      VR Video Display Settings
+      VR Video Track Head-Mounted Display
+      Zoom Monitor In	Ctrl++ (Num)
+      Zoom Monitor Out	Ctrl+- (Num)
+      Zoom Monitor To Fit	Ctrl+Enter (Num)
+   Progress Panel
+      Progress Panel Menu
+         Remove Completed Items
+   Project Panel
+      Project Panel Menu
+         New Bin
+         New Search Bin
+         Rename
+         Delete	Backspace
+         Automate to Sequence...
+         Find...
+         List	Ctrl+Page Up
+         Icon	Ctrl+Page Down
+         Preview Area
+         Thumbnails
+         Thumbnails show effects applied
+         Hover Scrub	Shift+H
+         Thumbnail controls for all pointing devices
+         Font Size
+            Small
+            Medium (default)
+            Large
+            Extra Large
+         Refresh
+         Metadata Display...
+      Attach Proxies...
+      Create Proxies...
+      Create Search Bin From Query
+      Delete Selection with Options	Ctrl+Delete
+      Extend Selection Down	Shift+Down
+      Extend Selection Left	Shift+Left
+      Extend Selection Right	Shift+Right
+      Extend Selection Up	Shift+Up
+      Go Back	F12
+      Hide
+      Icon View Ascending Sort
+      Icon View Column List Sort
+      Icon View Descending Sort
+      Icon View User Order Sort
+      Move Selection Down	Down
+      Move Selection End
+      Move Selection Home	Home
+      Move Selection Left	Left
+      Move Selection Page Down	Page Down
+      Move Selection Page Up	Page Up
+      Move Selection Right	Right
+      Move Selection Up	Up
+      Next Column Field	Tab
+      Next Row Field	Enter
+      Open in Source Monitor	Y	S	Ctrl+Shift+Y
+      Open in Timeline	Ctrl+Shift+T
+      Previous Column Field	Shift+Tab
+      Previous Row Field	Shift+Enter
+      Reconnect Full Resolution Media...
+      Reveal In Explorer	Shift+G
+      Reveal Original
+      Reveal Project In Explorer
+      Thumbnail Size Next	Shift+]
+      Thumbnail Size Previous	Shift+[
+      Toggle View	Shift+\
+      View Hidden
+      Zoom In	Ctrl+=
+      Zoom Out	Ctrl+-
+   Source Monitor Panel
+      Source Monitor Panel Menu
+         Gang Source and Program
+         Open Sequence in Timeline
+         Composite Video
+         Audio Waveform
+         Alpha
+         Display First Field
+         Display Second Field
+         Display Both Fields
+         Playback Resolution
+            Full
+            1/2
+            1/4
+            1/8
+            1/16
+         Paused Resolution
+            Full
+            1/2
+            1/4
+            1/8
+            1/16
+         High Quality Playback
+         Closed Captions Display
+            Settings...
+         Show Transport Controls
+         Show Audio Time Units
+         Show Markers
+         Show Dropped Frame Indicator
+         Time Ruler Numbers
+         Edit Cameras...
+      Add Clip to Project
+      Closed Captioning
+      Loop	Ctrl+L
+      Play-Stop Toggle
+      Reveal in Project	Shift+V
+      Safe Margins
+      Source Clip: Close
+      Source Clip: Close All
+      Source Clip: First
+      Source Clip: Last
+      Source Clip: Next	Shift+Right
+      Source Clip: Previous	Shift+Left
+      Step Back
+      Step Forward
+      Toggle Transparency Grid
+      Toggle VR Video Display
+      VR Video - Hide Controls
+      VR Video Display Settings
+      VR Video Track Head-Mounted Display
+      Zoom Monitor In
+      Zoom Monitor Out
+      Zoom Monitor To Fit
+   Timeline Panel
+      Timeline Panel Menu
+         Work Area Bar
+         Show Audio Time Units
+         Audio Waveforms Use Label Color
+         Rectified Audio Waveforms
+         Logarithmic Waveform Scaling
+         Logarithmic Keyframe Scaling
+         Time Ruler Numbers
+         Start Time...
+         Video Head and Tail Thumbnails
+         Video Head Thumbnails
+         Continuous Video Thumbnails
+         Create Preset from Sequence...
+         Reveal Sequence in Project	Ctrl+Alt+Shift+S
+      Apply Audio Crossfade Transition
+      Apply Video Crossfade Transition	Ctrl+D
+      Apply Video Dip To White Transition	Ctrl+Shift+W
+      Apply Video Wipe Transition	Ctrl+Shift+E
+      Clear Selection
+      Composite Preview During Trim
+      Decrease Audio Tracks Height	Alt+-
+      Decrease Video Tracks Height	Ctrl+-
+      Increase Audio Tracks Height	Alt+=
+      Increase Video Tracks Height	Ctrl+=
+      Join All Through Edits
+      Lock/Unlock All Audio Tracks
+      Lock/Unlock All Video Tracks	Ctrl+Alt+Shift+L
+      Move Playhead to Cursor	\
+      Nudge Clip Selection Down	2 (Num)	Alt+Down
+      Nudge Clip Selection Left Five Frames	Shift+4 (Num)	Ctrl+4 (Num)
+      Nudge Clip Selection Left One Frame	4 (Num)	Alt+Left
+      Nudge Clip Selection Right Five Frames	Shift+6 (Num)	Ctrl+6 (Num)
+      Nudge Clip Selection Right One Frame	6 (Num)	Alt+Right
+      Nudge Clip Selection Up	8 (Num)	Alt+Up
+      Reveal In Project	Shift+V
+      Ripple Delete	Backspace	Alt+Backspace
+      Set Work Area Bar In Point	Alt+[
+      Set Work Area Bar Out Point	Alt+]
+      Show Audio Keyframes
+      Show Audio Names
+      Show Audio Waveforms
+      Show Clip Markers
+      Show Duplicate Frame Markers
+      Show Next Screen	Page Down
+      Show Previous Screen	Page Up
+      Show Video Keyframes
+      Show Video Names
+      Show Video Thumbnails
+      Slide Clip Selection Left Five Frames
+      Slide Clip Selection Left One Frame	Alt+,
+      Slide Clip Selection Right Five Frames
+      Slide Clip Selection Right One Frame	Alt+.
+      Slip Clip Selection Left Five Frames	Ctrl+Alt+Shift+Left
+      Slip Clip Selection Left One Frame	Ctrl+Alt+Left
+      Slip Clip Selection Right Five Frames	Ctrl+Alt+Shift+Right
+      Slip Clip Selection Right One Frame	Ctrl+Alt+Right
+   Titler Panel
+      Add Anchor Point Tool
+      Arc Tool
+      Area Type Tool
+      Bold	Ctrl+B
+      Clipped Corner Rectangle Tool
+      Convert Anchor Point Tool
+      Decrease Kerning by Five Units	Alt+Shift+Left
+      Decrease Kerning by One Unit	Alt+Left
+      Decrease Leading by Five Units	Alt+Shift+Down
+      Decrease Leading by One Unit	Alt+Down
+      Decrease Text Size by Five Points	Ctrl+Alt+Shift+Left
+      Decrease Text Size by One Point	Ctrl+Alt+Left
+      Delete Anchor Point Tool
+      Ellipse Tool
+      Increase Kerning by Five Units	Alt+Shift+Right
+      Increase Kerning by One Unit	Alt+Right
+      Increase Leading by Five Units	Alt+Shift+Up
+      Increase Leading by One Unit	Alt+Up
+      Increase Text Size by Five Points	Ctrl+Alt+Shift+Right
+      Increase Text Size by One Point	Ctrl+Alt+Right
+      Insert Copyright Symbol	Ctrl+Alt+Shift+C
+      Insert Registered Symbol	Ctrl+Alt+Shift+R
+      Italic	Ctrl+I
+      Line Tool	L
+      Nudge Selected Object Down by Five Pixels	Shift+Down
+      Nudge Selected Object Down by One Pixel	Down
+      Nudge Selected Object Left by Five Pixels	Shift+Left
+      Nudge Selected Object Left by One Pixel	Left
+      Nudge Selected Object Right by Five Pixels	Shift+Right
+      Nudge Selected Object Right by One Pixel	Right
+      Nudge Selected Object Up by Five Pixels	Shift+Up
+      Nudge Selected Object Up by One Pixel	Up
+      Path Type Tool
+      Pen Tool	P
+      Position Object(s) to Bottom Title Safe Margin
+      Position Object(s) to Left Title Safe Margin	Ctrl+Shift+F
+      Position Object(s) to Right Title Safe Margin
+      Position Object(s) to Top Title Safe Margin	Ctrl+Shift+O
+      Rectangle Tool	R
+      Rotation Tool	O
+      Rounded Corner Rectangle Tool
+      Rounded Rectangle Tool
+      Selection Tool	V	Ctrl+Shift+V	Alt+V
+      Show Timeline Video Behind Title	Ctrl+Alt+Shift+S
+      Type Tool	T
+      Underline	Ctrl+U
+      Vertical Area Type Tool
+      Vertical Path Type Tool
+      Vertical Type Tool	C
+      Wedge Tool

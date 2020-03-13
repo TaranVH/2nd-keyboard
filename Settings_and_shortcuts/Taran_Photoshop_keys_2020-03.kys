@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<photoshop-keyboard-shortcuts version="4" filename="$$$/FileName/Presets/KeyboardCustomization/Taran_PS_keys_202003=Taran_PS_keys_2020-03" modified="1" multi-undo="1">
+	<command kind="dynamic" name="Vanishing Point">
+		<shortcut>Alt+Ctrl+V</shortcut>
+	</command>
+	<command kind="dynamic" name="Liquify">
+		<shortcut>Shift+Ctrl+X</shortcut>
+	</command>
+	<command kind="dynamic" name="Lens Correction">
+		<shortcut>Shift+Ctrl+R</shortcut>
+	</command>
+	<command kind="dynamic" name="Camera Raw Filter">
+		<shortcut>Shift+Ctrl+A</shortcut>
+	</command>
+	<command kind="dynamic" name="Wide Angle Correction">
+		<shortcut>Alt+Shift+Ctrl+A</shortcut>
+	</command>
+	<command kind="static" id="10" name="New...">
+		<shortcut>Ctrl+N</shortcut>
+	</command>
+	<command kind="static" id="21" name="Open As...">
+		<shortcut>Alt+Shift+Ctrl+O</shortcut>
+	</command>
+	<command kind="static" id="30" name="Save">
+		<shortcut>Ctrl+S</shortcut>
+	</command>
+	<command kind="static" id="31" name="Close">
+		<shortcut>Ctrl+O</shortcut>
+	</command>
+	<command kind="static" id="33" name="Save As...">
+		<shortcut>Shift+Ctrl+S</shortcut>
+		<shortcut>Alt+Ctrl+S</shortcut>
+	</command>
+	<command kind="static" id="34" name="Revert">
+		<shortcut>F12</shortcut>
+	</command>
+	<command kind="static" id="36" name="Exit">
+		<shortcut>Ctrl+Q</shortcut>
+	</command>
+	<command kind="static" id="37" name="Close All">
+		<shortcut>Alt+Ctrl+W</shortcut>
+	</command>
+	<command kind="static" id="101" name="Undo Layer Visibility">
+		<shortcut>Ctrl+Z</shortcut>
+	</command>
+	<command kind="static" id="103" name="Cut">
+		<shortcut>Ctrl+X</shortcut>
+	</command>
+	<command kind="static" id="104" name="Copy">
+		<shortcut>Ctrl+C</shortcut>
+	</command>
+	<command kind="static" id="105" name="Paste">
+		<shortcut>Ctrl+V</shortcut>
+	</command>
+	<command kind="static" id="132" name="Redo">
+		<shortcut>Ctrl+Y</shortcut>
+	</command>
+	<command kind="static" id="177" name="Print One Copy">
+		<shortcut>Alt+Shift+Ctrl+P</shortcut>
+	</command>
+	<command kind="static" id="1002" name="Rulers">
+		<shortcut>Ctrl+R</shortcut>
+	</command>
+	<command kind="static" id="1004" name="Zoom In">
+		<shortcut>Ctrl++</shortcut>
+		<shortcut>Ctrl+=</shortcut>
+	</command>
+	<command kind="static" id="1005" name="Zoom Out">
+		<shortcut>Ctrl+-</shortcut>
+	</command>
+	<command kind="static" id="1010" name="RGB Color">
+		<shortcut>F6</shortcut>
+	</command>
+	<command kind="static" id="1016" name="Deselect">
+		<shortcut>Ctrl+D</shortcut>
+	</command>
+	<command kind="static" id="1017" name="All">
+		<shortcut>Ctrl+A</shortcut>
+	</command>
+	<command kind="static" id="1018" name="Inverse">
+		<shortcut>Shift+Ctrl+I</shortcut>
+		<shortcut>Shift+F7</shortcut>
+	</command>
+	<command kind="static" id="1019" name="Motion Blur">
+		<shortcut>Alt+Ctrl+F</shortcut>
+	</command>
+	<command kind="static" id="1030" name="Image Size...">
+		<shortcut>Alt+Ctrl+I</shortcut>
+	</command>
+	<command kind="static" id="1031" name="Canvas Size...">
+		<shortcut>Alt+Ctrl+C</shortcut>
+	</command>
+	<command kind="static" id="1036" name="Feather...">
+		<shortcut>Shift+F6</shortcut>
+	</command>
+	<command kind="static" id="1042" name="Fill...">
+		<shortcut>Shift+F5</shortcut>
+	</command>
+	<command kind="static" id="1044" name="Crop">
+		<shortcut>Ctrl+K</shortcut>
+	</command>
+	<command kind="static" id="1052" name="Lab Color">
+		<shortcut>F7</shortcut>
+	</command>
+	<command kind="static" id="1055" name="Info">
+		<shortcut>F8</shortcut>
+	</command>
+	<command kind="static" id="1099" name="Layer...">
+		<shortcut>Shift+Ctrl+N</shortcut>
+	</command>
+	<command kind="static" id="1106" name="Gamut Warning">
+		<shortcut>Shift+Ctrl+Y</shortcut>
+	</command>
+	<command kind="static" id="1114" name="Hide Layers">
+		<shortcut>Ctrl+,</shortcut>
+	</command>
+	<command kind="static" id="1115" name="Select and Mask...">
+		<shortcut>Alt+Ctrl+R</shortcut>
+	</command>
+	<command kind="static" id="1137" name="File Info...">
+		<shortcut>Alt+Shift+Ctrl+I</shortcut>
+	</command>
+	<command kind="static" id="1139" name="Merge Visible">
+		<shortcut>Shift+Ctrl+E</shortcut>
+	</command>
+	<command kind="static" id="1158" name="Reveal Selection">
+		<shortcut>Ctrl+/</shortcut>
+	</command>
+	<command kind="static" id="1166" name="Merge Down">
+		<shortcut>Ctrl+E</shortcut>
+	</command>
+	<command kind="static" id="1170" name="Actions">
+		<shortcut>Alt+F9</shortcut>
+	</command>
+	<command kind="static" id="1190" name="100%">
+		<shortcut>Ctrl+1</shortcut>
+		<shortcut>Alt+Ctrl+0</shortcut>
+	</command>
+	<command kind="static" id="1192" name="Fit on Screen">
+		<shortcut>Ctrl+0</shortcut>
+	</command>
+	<command kind="static" id="1292" name="From Transparency">
+		<shortcut>Alt+Ctrl+L</shortcut>
+	</command>
+	<command kind="static" id="1520" name="Browse in Bridge...">
+		<shortcut>Alt+Ctrl+O</shortcut>
+		<shortcut>Shift+Ctrl+O</shortcut>
+	</command>
+	<command kind="static" id="1530" name="Close and Go to Bridge...">
+		<shortcut>Shift+Ctrl+W</shortcut>
+	</command>
+	<command kind="static" id="1695" name="Save for Web (Legacy)...">
+		<shortcut>Alt+Shift+Ctrl+S</shortcut>
+	</command>
+	<command kind="static" id="1701" name="Invert">
+		<shortcut>Ctrl+I</shortcut>
+	</command>
+	<command kind="static" id="1801" name="Levels...">
+		<shortcut>Ctrl+L</shortcut>
+	</command>
+	<command kind="static" id="1802" name="Curves...">
+		<shortcut>Ctrl+M</shortcut>
+	</command>
+	<command kind="static" id="1804" name="Color Balance...">
+		<shortcut>Ctrl+B</shortcut>
+	</command>
+	<command kind="static" id="1805" name="Hue/Saturation...">
+		<shortcut>Ctrl+U</shortcut>
+	</command>
+	<command kind="static" id="1808" name="Auto Tone">
+		<shortcut>Shift+Ctrl+L</shortcut>
+	</command>
+	<command kind="static" id="1809" name="Desaturate">
+		<shortcut>Shift+Ctrl+U</shortcut>
+	</command>
+	<command kind="static" id="1810" name="Auto Contrast">
+		<shortcut>Alt+Shift+Ctrl+L</shortcut>
+	</command>
+	<command kind="static" id="1817" name="Auto Color">
+		<shortcut>Shift+Ctrl+B</shortcut>
+	</command>
+	<command kind="static" id="1824" name="Black &amp; White...">
+		<shortcut>Alt+Shift+Ctrl+B</shortcut>
+	</command>
+	<command kind="static" id="1943" name="Reselect">
+		<shortcut>Shift+Ctrl+D</shortcut>
+	</command>
+	<command kind="static" id="2204" name="Distort">
+		<shortcut>Shift+Ctrl+T</shortcut>
+	</command>
+	<command kind="static" id="2207" name="Free Transform">
+		<shortcut>Ctrl+T</shortcut>
+	</command>
+	<command kind="static" id="2711" name="Bring to Front">
+		<shortcut>Shift+Ctrl+]</shortcut>
+	</command>
+	<command kind="static" id="2712" name="Bring Forward">
+		<shortcut>Ctrl+]</shortcut>
+	</command>
+	<command kind="static" id="2713" name="Send Backward">
+		<shortcut>Ctrl+[</shortcut>
+	</command>
+	<command kind="static" id="2714" name="Send to Back">
+		<shortcut>Shift+Ctrl+[</shortcut>
+	</command>
+	<command kind="static" id="2940" name="Lock Guides">
+		<shortcut>Alt+Ctrl+;</shortcut>
+	</command>
+	<command kind="static" id="2958" name="Group Layers">
+		<shortcut>Ctrl+G</shortcut>
+	</command>
+	<command kind="static" id="2959" name="Ungroup Layers">
+		<shortcut>Shift+Ctrl+G</shortcut>
+	</command>
+	<command kind="static" id="2962" name="All Layers">
+		<shortcut>Alt+Ctrl+A</shortcut>
+	</command>
+	<command kind="static" id="2970" name="Layer Via Copy">
+		<shortcut>Ctrl+J</shortcut>
+		<shortcut>Ctrl+W</shortcut>
+	</command>
+	<command kind="static" id="2971" name="Layer Via Cut">
+		<shortcut>Shift+Ctrl+J</shortcut>
+	</command>
+	<command kind="static" id="2972" name="Create Clipping Mask">
+		<shortcut>Alt+Ctrl+G</shortcut>
+	</command>
+	<command kind="static" id="2982" name="Find Layers">
+		<shortcut>Alt+Shift+Ctrl+F</shortcut>
+	</command>
+	<command kind="static" id="3443" name="Export As...">
+		<shortcut>Alt+Shift+Ctrl+W</shortcut>
+	</command>
+	<command kind="static" id="3444" name="Quick Export as PNG">
+		<shortcut>Ctrl+P</shortcut>
+	</command>
+	<command kind="static" id="3446" name="Quick Export as PNG">
+		<shortcut>Shift+Ctrl+'</shortcut>
+	</command>
+	<command kind="static" id="3447" name="Export As...">
+		<shortcut>Alt+Shift+Ctrl+'</shortcut>
+	</command>
+	<command kind="static" id="3500" name="Extras">
+		<shortcut>Ctrl+H</shortcut>
+	</command>
+	<command kind="static" id="3502" name="Target Path">
+		<shortcut>Shift+Ctrl+H</shortcut>
+	</command>
+	<command kind="static" id="3503" name="Guides">
+		<shortcut>Ctrl+;</shortcut>
+	</command>
+	<command kind="static" id="3514" name="Pixel Grid">
+		<shortcut>F4</shortcut>
+	</command>
+	<command kind="static" id="3520" name="Snap">
+		<shortcut>Shift+Ctrl+;</shortcut>
+	</command>
+	<command kind="static" id="3547" name="Layer">
+		<shortcut>F5</shortcut>
+	</command>
+	<command kind="static" id="3557" name="Layer Style">
+		<shortcut>Alt+Shift+Ctrl+F5</shortcut>
+	</command>
+	<command kind="static" id="5095" name="Apply">
+		<shortcut>Alt+Ctrl+K</shortcut>
+	</command>
+	<command kind="static" id="5980" name="Keyboard Shortcuts...">
+		<shortcut>Shift+Ctrl+K</shortcut>
+	</command>
+	<command kind="static" id="6545" name="Render 3D Layer">
+		<shortcut>Alt+Shift+Ctrl+R</shortcut>
+	</command>
+	<command kind="static" id="10258" name="Photoshop Help...">
+		<shortcut>F1</shortcut>
+	</command>
+	<tool name="Move Tool" type="1" key="1819113074">V</tool>
+	<tool name="Rectangular Marquee Tool" type="1" key="1919380852">M</tool>
+	<tool name="Elliptical Marquee Tool" type="1" key="1701604724">M</tool>
+	<tool name="Single Row Marquee Tool" type="1" key="1936878964"></tool>
+	<tool name="Single Column Marquee Tool" type="1" key="1935895924"></tool>
+	<tool name="Lasso Tool" type="1" key="1818325871">L</tool>
+	<tool name="Polygonal Lasso Tool" type="1" key="1885826926">L</tool>
+	<tool name="Magnetic Lasso Tool" type="1" key="1835819379"></tool>
+	<tool name="Quick Selection Tool" type="1" key="1902867308">R</tool>
+	<tool name="Magic Wand Tool" type="1" key="2002873956">W</tool>
+	<tool name="Object Selection Tool" type="1" key="1835494497">W</tool>
+	<tool name="Crop Tool" type="1" key="1668444016">C</tool>
+	<tool name="Perspective Crop Tool" type="1" key="1885565552"></tool>
+	<tool name="Slice Tool" type="1" key="1399612244"></tool>
+	<tool name="Slice Select Tool" type="1" key="1399608148"></tool>
+	<tool name="Eyedropper Tool" type="1" key="1702454628">I</tool>
+	<tool name="Healing Brush Tool" type="1" key="1937010029">J</tool>
+	<tool name="Patch Tool" type="1" key="1886675816"></tool>
+	<tool name="Spot Healing Brush Tool" type="1" key="1936746562"></tool>
+	<tool name="Brush Tool" type="1" key="1886286946">B</tool>
+	<tool name="Color Replacement Tool" type="1" key="1668440692"></tool>
+	<tool name="Mixer Brush Tool" type="1" key="2003137634"></tool>
+	<tool name="Pencil Tool" type="1" key="1885695587">B</tool>
+	<tool name="Clone Stamp Tool" type="1" key="1937006957">S</tool>
+	<tool name="Pattern Stamp Tool" type="1" key="1937010032"></tool>
+	<tool name="History Brush Tool" type="1" key="1752396866">Y</tool>
+	<tool name="Art History Brush Tool" type="1" key="1634230900"></tool>
+	<tool name="Eraser Tool" type="1" key="1701994867">E</tool>
+	<tool name="Background Eraser Tool" type="1" key="1936028257"></tool>
+	<tool name="Magic Eraser Tool" type="1" key="1835364961"></tool>
+	<tool name="Gradient Tool" type="1" key="1651401812">G</tool>
+	<tool name="Paint Bucket Tool" type="1" key="1651860331">G</tool>
+	<tool name="3D Material Drop Tool" type="1" key="860111949"></tool>
+	<tool name="Blur Tool" type="1" key="1651275122"></tool>
+	<tool name="Sharpen Tool" type="1" key="1936220530"></tool>
+	<tool name="Smudge Tool" type="1" key="1936553316"></tool>
+	<tool name="Sponge Tool" type="1" key="1935766645">O</tool>
+	<tool name="Burn Tool" type="1" key="1651864174">O</tool>
+	<tool name="Dodge Tool" type="1" key="1685021799">O</tool>
+	<tool name="Pen Tool" type="1" key="1885695572">P</tool>
+	<tool name="Freeform Pen Tool" type="1" key="1836082542">P</tool>
+	<tool name="Curvature Pen Tool" type="1" key="1668310382">P</tool>
+	<tool name="Add Anchor Point Tool" type="1" key="1634430580"></tool>
+	<tool name="Delete Anchor Point Tool" type="1" key="1684762228"></tool>
+	<tool name="Convert Point Tool" type="1" key="1667985012"></tool>
+	<tool name="Horizontal Type Tool" type="1" key="1954038392">T</tool>
+	<tool name="Vertical Type Tool" type="1" key="1954038358"></tool>
+	<tool name="Vertical Type Mask Tool" type="1" key="1987344723"></tool>
+	<tool name="Horizontal Type Mask Tool" type="1" key="1954115667"></tool>
+	<tool name="Path Selection Tool" type="1" key="1885565780">V</tool>
+	<tool name="Direct Selection Tool" type="1" key="1886677089">A</tool>
+	<tool name="Rectangle Tool" type="1" key="1382376308">U</tool>
+	<tool name="Rounded Rectangle Tool" type="1" key="1381131124">U</tool>
+	<tool name="Ellipse Tool" type="1" key="1164734579">U</tool>
+	<tool name="Polygon Tool" type="1" key="1349479545">U</tool>
+	<tool name="Line Tool" type="1" key="1818848852">U</tool>
+	<tool name="Custom Shape Tool" type="1" key="1131762536">U</tool>
+	<tool name="Hand Tool" type="1" key="1751215716">H</tool>
+	<tool name="Rotate View Tool" type="1" key="1919906932"></tool>
+	<tool name="Zoom Tool" type="1" key="2054123373">Z</tool>
+	<tool name="Artboard Tool" type="1" key="1098019924"></tool>
+	<tool name="Frame Tool" type="1" key="1181773652"></tool>
+	<tool name="3D Material Eyedropper Tool" type="1" key="860115789"></tool>
+	<tool name="Color Sampler Tool" type="1" key="1668246643"></tool>
+	<tool name="Ruler Tool" type="1" key="1835360596"></tool>
+	<tool name="Note Tool" type="1" key="1417180225"></tool>
+	<tool name="Count Tool" type="1" key="1668248942"></tool>
+	<tool name="Content-Aware Move Tool" type="1" key="1919118704"></tool>
+	<tool name="Red Eye Tool" type="1" key="1919182201"></tool>
+	<tool name="Targeted Adjustment Tool" type="1" key="1952932196"></tool>
+	<tool name="Default Foreground/Background Colors" type="2">D</tool>
+	<tool name="Switch Foreground/Background Colors" type="3">X</tool>
+	<tool name="Toggle Standard/Quick Mask Modes" type="4">Q</tool>
+	<tool name="Toggle Screen Modes" type="5">F</tool>
+	<tool name="Toggle Preserve Transparency" type="6">/</tool>
+	<tool name="Decrease Brush Size" type="7">[</tool>
+	<tool name="Increase Brush Size" type="8">]</tool>
+	<tool name="Decrease Brush Hardness" type="9">{</tool>
+	<tool name="Increase Brush Hardness" type="10">}</tool>
+	<tool name="Previous Brush" type="11">,</tool>
+	<tool name="Next Brush" type="12">.</tool>
+	<tool name="First Brush" type="13">&lt;</tool>
+	<tool name="Last Brush" type="14">&gt;</tool>
+	<tool name="Foreground Color Picker" type="15"></tool>
+	<tool name="Background Color Picker" type="16"></tool>
+	<tool name="Load Mixer Brush" type="17"></tool>
+	<tool name="Clean Mixer Brush" type="18"></tool>
+	<tool name="Toggle Mixer Brush Auto-Load" type="19"></tool>
+	<tool name="Toggle Mixer Brush Auto-Clean" type="20"></tool>
+	<tool name="Toggle Mixer Brush Sample All Layers" type="21"></tool>
+	<tool name="Sharpen Erodible Tips" type="22"></tool>
+	<tool name="Direct Selection Mode Toggle" type="23"></tool>
+	<tool name="Toggle Brush Airbrush Mode" type="24"></tool>
+	<tool name="Toggle Brush Pressure Controls Size" type="25"></tool>
+	<tool name="Toggle Brush Pressure Controls Opacity" type="26"></tool>
+	<tool name="Toggle Symmetry Off/Last" type="27"></tool>
+	<tool name="Toggle Symmetry Visibility" type="28"></tool>
+	<taskspace name="Select and Mask">
+		<taskspace-tool name="Quick Selection Tool" type="1" key="1902867308">W</taskspace-tool>
+		<taskspace-tool name="Refine Edge Brush Tool" type="1" key="1397518949">R</taskspace-tool>
+		<taskspace-tool name="Brush Tool" type="1" key="1886286946">B</taskspace-tool>
+		<taskspace-tool name="Object Selection Tool" type="1" key="1835494497">W</taskspace-tool>
+		<taskspace-tool name="Lasso Tool" type="1" key="1818325871">L</taskspace-tool>
+		<taskspace-tool name="Polygonal Lasso Tool" type="1" key="1885826926">L</taskspace-tool>
+		<taskspace-tool name="Hand Tool" type="1" key="1751215716">H</taskspace-tool>
+		<taskspace-tool name="Zoom Tool" type="1" key="2054123373">Z</taskspace-tool>
+		<taskspace-property name="Cycle Tool Mode" type="1">E</taskspace-property>
+		<taskspace-property name="Show Edge" type="1">J</taskspace-property>
+		<taskspace-property name="Show Original" type="1">P</taskspace-property>
+		<taskspace-property name="High Quality Preview" type="1"></taskspace-property>
+		<taskspace-property name="Cycle View Mode" type="1">F</taskspace-property>
+		<taskspace-property name="Disable Views" type="1">X</taskspace-property>
+		<taskspace-property name="Marching Ants" type="1">M</taskspace-property>
+		<taskspace-property name="Overlay" type="1">V</taskspace-property>
+		<taskspace-property name="On Black" type="1">A</taskspace-property>
+		<taskspace-property name="On White" type="1">T</taskspace-property>
+		<taskspace-property name="Black &amp; White" type="1">K</taskspace-property>
+		<taskspace-property name="On Layers" type="1">Y</taskspace-property>
+		<taskspace-property name="Onion Skin" type="1">O</taskspace-property>
+		<taskspace-property name="Smart Radius" type="1"></taskspace-property>
+		<taskspace-property name="Decontaminate Colors" type="1"></taskspace-property>
+	</taskspace>
+	<taskspace name="Content-Aware Fill">
+		<taskspace-tool name="Sampling Brush Tool" type="1" key="1886217314">B</taskspace-tool>
+		<taskspace-tool name="Lasso Tool" type="1" key="1818325871">L</taskspace-tool>
+		<taskspace-tool name="Polygonal Lasso Tool" type="1" key="1885826926">L</taskspace-tool>
+		<taskspace-tool name="Hand Tool" type="1" key="1751215716">H</taskspace-tool>
+		<taskspace-tool name="Zoom Tool" type="1" key="2054123373">Z</taskspace-tool>
+		<taskspace-property name="Cycle Tool Mode" type="1">E</taskspace-property>
+		<taskspace-property name="Show Sampling Area" type="1"></taskspace-property>
+		<taskspace-property name="Scale" type="1"></taskspace-property>
+		<taskspace-property name="Mirror" type="1"></taskspace-property>
+	</taskspace>
+</photoshop-keyboard-shortcuts>

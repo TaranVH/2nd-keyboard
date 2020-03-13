@@ -977,13 +977,14 @@ IfWinNotExist, ahk_class Premiere Pro
 	}
 if WinActive("ahk_class Premiere Pro")
 	{
-	IfWinNotExist, ahk_exe notepad++.exe
-		{
-		Run, notepad++.exe
-		sleep 200
-		}
-	WinActivate ahk_exe notepad++.exe ;so I have this here as a workaround to a bug. Sometimes Premeire becomes unresponsive to keyboard input. (especially after timeline scrolling, especially with a playing video.) Switching to any other application and back will solve this problem. So I just hit the premiere button again, in those cases.g
-	sleep 10
+	;;update: this is no longer needed, they fixed that responsiveness issue AFAIK...
+	; ; ; IfWinNotExist, ahk_exe notepad++.exe
+		; ; ; {
+		; ; ; Run, notepad++.exe
+		; ; ; sleep 200
+		; ; ; }
+	; ; ; WinActivate ahk_exe notepad++.exe ;so I have this here as a workaround to a bug. Sometimes Premeire becomes unresponsive to keyboard input. (especially after timeline scrolling, especially with a playing video.) Switching to any other application and back will solve this problem. So I just hit the premiere button again, in those cases.g
+	; ; ; sleep 10
 	WinActivate ahk_class Premiere Pro
 	}
 else
@@ -1110,8 +1111,8 @@ if theCLASS = ahk_class Chrome_WidgetWin_1
 	}
 
 ;msgbox,,, switching to `nsavedCLASS = %theClass% `nsavedEXE = %theEXE%, 0.5
-IfWinNotExist, %theClass%
-	Run, % theEXE
+; IfWinNotExist, %theClass%
+	; Run, % theEXE
 if not WinActive(theClass)
 	WinActivate %theClass%
 switchEND:

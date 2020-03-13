@@ -15,8 +15,8 @@
 
 
 #SingleInstance force
-; #InstallKeybdHook
-; #KeyHistory 500
+#InstallKeybdHook
+#KeyHistory 500
 
 Menu, Tray, Icon, imageres.dll, 262 ;makes the icon into two window things
 
