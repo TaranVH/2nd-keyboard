@@ -394,7 +394,7 @@ space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
 
 ;;;;;;;-----------------------------------------
 
-PrintScreen::InstantExplorer("N:\TechLinked")
+PrintScreen::InstantExplorer("V:\1. LTT vault 2") ;will make tapdance keys one day...
 ScrollLock::InstantExplorer("N:\Fast As Possible")
 ;scroll lock WAS reassigned to SC061 back when i used interception
 SC07E::InstantExplorer("N:\Linus Tech Tips")
@@ -1206,6 +1206,7 @@ F4::F2 ;this is to regain what I lost when I used F2 and F3 for tab navigation.
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^o
+;;F3::send ^o IDK why, but this was an "o" when it should be a w? oh hmmm i think i wanted W for something else...
 
 ;;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
