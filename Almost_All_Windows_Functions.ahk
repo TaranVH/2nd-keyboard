@@ -918,6 +918,7 @@ global savedEXE = lolexe ;is this the way to do it? IDK.
 
 back()
 {
+;no need for 11 ms of delay, because this is sent from just F13.
 ;; if WinActive("ahk_class MozillaWindowClass")
 ;tooltip, back
 ;sendinput, {ctrl up}
@@ -943,7 +944,8 @@ if WinActive("ahk_class OpusApp")
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
 
 switchToFirefox(){
-sleep 16 ;So this is here because I think that with the way I have iCUE set up, it won't always get to the Right CTRL UP event because it's no longer on that profile, you know what I mean? So this gives it a bit more time to do that.
+sleep 11 ;this is to avoid the stuck modifiers bug
+; ; sleep 16 ;So this is here because I think that with the way I have iCUE set up, it won't always get to the Right CTRL UP event because it's no longer on that profile, you know what I mean? So this gives it a bit more time to do that.
 
 sendinput, {SC0E8} ;scan code of an unassigned key. Do I NEED this?
 
@@ -973,6 +975,7 @@ else
 	DllCall("SetForegroundWindow", UInt, hWnd) 
 	}
 sleep 2
+
 ;now to unstick any potentially stuck modifier keys
 ; KeyList := "Shift|Rctrl|alt"
 ; Loop, Parse, KeyList, |
@@ -981,9 +984,9 @@ sleep 2
 		; Send % "{" A_Loopfield " Up}"
 	; }
 
-send, {Rctrl up} ;This SHOULD work, but i think it doesn't because the RCTRL event is still coming from the keyboard itself. I need to make something that will send RCTRL up and double click that shit and then see if it makes any difference at all next time. hmm.
-;okay, I've created RCTRL UP.AHK to test this. Just doble clicking on it will send a RCTRL UP event. This is important because it's not being done through the keyboard. Will try that next time this shizz happens.
-send, {Lctrl up}
+; send, {Rctrl up} ;This SHOULD work, but i think it doesn't because the RCTRL event is still coming from the keyboard itself. I need to make something that will send RCTRL up and double click that shit and then see if it makes any difference at all next time. hmm.
+; ;okay, I've created RCTRL UP.AHK to test this. Just doble clicking on it will send a RCTRL UP event. This is important because it's not being done through the keyboard. Will try that next time this shizz happens.
+; send, {Lctrl up}
 
 }
 
@@ -993,6 +996,7 @@ send, {Lctrl up}
 ;Press SHIFT and macro key 16, and it'll switch between different WINDOWS of firefox.
 
 switchToOtherFirefoxWindow(){
+sleep 11 ;this is to avoid the stuck modifiers bug
 ;sendinput, {SC0E8} ;scan code of an unassigned key
 Process, Exist, firefox.exe
 ;msgbox errorLevel `n%errorLevel%
@@ -1015,6 +1019,7 @@ Process, Exist, firefox.exe
 ; CTRL Numpad2 is pressed with a single button stoke from my logitech G15 keyboard -- Macro key 17. 
 
 switchToExplorer(){
+sleep 11 ;this is to avoid the stuck modifiers bug
 IfWinNotExist, ahk_class CabinetWClass
 	Run, explorer.exe
 GroupAdd, taranexplorers, ahk_class CabinetWClass
@@ -1023,11 +1028,11 @@ if WinActive("ahk_exe explorer.exe")
 else
 	WinActivate ahk_class CabinetWClass ;you have to use WinActivatebottom if you didn't create a window group.
 
-;maybe need to unstick modifiers
-sleep 2
-send, {Rctrl up}
-send, {Lctrl up}
-;IDK if that even works...
+; ; ;maybe need to unstick modifiers
+; ; sleep 2
+; ; send, {Rctrl up}
+; ; send, {Lctrl up}
+
 }
 
 ; ;trying to activate these windows in reverse order from the above. it does not work.
@@ -1086,6 +1091,7 @@ send, {Lctrl up}
 
 switchToWord()
 {
+sleep 11 ;this is to avoid the stuck modifiers bug
 ;tooltip, why
 Process, Exist, WINWORD.EXE
 ;msgbox errorLevel `n%errorLevel%
@@ -1110,6 +1116,7 @@ send, {Lctrl up}
 
 switchWordWindow()
 {
+sleep 11 ;this is to avoid the stuck modifiers bug
 ; Process, Exist, WINWORD.EXE
 ; ;msgbox errorLevel `n%errorLevel%
 	; If errorLevel = 0
@@ -1126,6 +1133,7 @@ switchWordWindow()
 
 switchToTeams()
 {
+sleep 11 ;this is to avoid the stuck modifiers bug
 SetTitleMatchMode, 2
 WinActivate, | Microsoft Teams
 ;ahk_class Chrome_WidgetWin_1
@@ -1139,6 +1147,7 @@ WinActivate, | Microsoft Teams
 
 switchToChrome()
 {
+sleep 11 ;this is to avoid the stuck modifiers bug
 IfWinNotExist, ahk_exe chrome.exe
 	Run, chrome.exe
 
@@ -1154,6 +1163,7 @@ send, {Lctrl up}
 }
 
 switchToStreamDeck(){
+sleep 11 ;this is to avoid the stuck modifiers bug
 IfWinNotExist, ahk_exe StreamDeck.exe
 	{
 	Run, C:\Program Files\Elgato\StreamDeck\StreamDeck.exe
@@ -1168,7 +1178,7 @@ else
 #IfWinActive
 windowSwitcher(theClass, theEXE)
 {
-
+sleep 11 ;this is to avoid the stuck modifiers bug
 if theClass = ahk_class Notepad++
 	{
 	;msgbox,,, is notepad++,0.5
