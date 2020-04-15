@@ -1,0 +1,38 @@
+
+
+
+PHOTOSHOP SHORTCUTS LOCATION
+C:\Users\Taran\AppData\Roaming\Adobe\Adobe Photoshop 2020\Presets\Keyboard Shortcuts
+Taran_PS_keys_2020-03-try.kys
+
+
+PREMIERE SHORTCUTS LOCATION
+C:\Users\Taran\Documents\Adobe\Premiere Pro\14.0\Profile-Taran\Win
+Taran_PR_keys_2020-04.kys
+
+AFTER EFFECTS SHORTCUTS LOCATION
+C:\Users\Taran\AppData\Roaming\Adobe\After Effects\17.0\aeks
+Taran AE keys 2020-04.txt
+
+AFTER EFFECTS ANIMATION PRESETS LOCATION
+C:\Users\Taran\Documents\Adobe\After Effects 2020\User Presets
+pop in v1.ffx
+flash camera transition.ffx
+etc.
+
+Server folder I use to transfer those over
+Z:\Linus\Team_Documents\TARAN THINGS\REFORMAT Jan 2020\AA AMD SYSTEM\AE
+
+------WINDOWS STUFF:--------
+
+Specific user startup folder:
+C:\Users\Taran\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+
+All users startup folder:
+C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
+
+
+---------ETC:--------
+
+My master list of scan codes and virtual keys
+https://docs.google.com/spreadsheets/u/1/d/1GSj0gKDxyWAecB3SIyEZ2ssPETZkkxn67gdIwL1zFUs/edit#gid=0

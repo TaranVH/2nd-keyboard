@@ -87,6 +87,50 @@ GetFromClipboard()
 }
 
 
+RemoveDashes()
+{ 
+  SetKeyDelay, 0
+  ClipSaved := ClipboardAll ;Save the clipboard
+  Clipboard = ;Empty the clipboard
+  SendInput, ^c
+  ClipWait, 2
+  if ErrorLevel
+  {
+    ;; MsgBox % "Failed attempt to copy text to clipboard."
+    MsgBox,,,"Failed attempt to copy text to clipboard.",0.7
+    return
+  }
+  NewClipboard := Trim(Clipboard)
+  
+  NewClipboard := StrReplace(NewClipboard, "-", A_Space)
+  NewClipboard := StrReplace(NewClipboard, "_", A_Space)
+  
+  ;;NewClipboard := SubStr(NewClipboard, 1, -13)
+  ; use that if you want to remove the junk at the end. Go from:
+  ; hit glass bottle hit bounce solid wood MyGJ8w4u.wav
+  ; to
+  ; hit glass bottle hit bounce solid wood
+  ; and the .wav is automatically put back, fortunately.
+  
+  ;note to self, add this kinda thing to the AHK dopcumentation
+  ; https://www.autohotkey.com/docs/commands/SubStr.htm
+  
+  ; StringReplace, NewClipboard, NewClipBoard, "-", A_Space, All
+  ; StringReplace, NewClipboard, NewClipBoard, "_", A_Space, All
+  
+  sleep 2
+  
+  SendInput {Raw}%NewClipboard% ;this does it
+  
+  Clipboard := ClipSaved ;Restore the clipboard
+  ClipSaved = ;Free the memory in case the clipboard was very large.
+  
+  
+  ;return NewClipboard
+  return
+}
+
+
 
 checkFullness()
 {
@@ -1764,7 +1808,7 @@ return vOutput
 ;==================================================
 
 #ifwinactive
-+F12::
+^!+F12::
 tooltip, here we goooo
 Title := GetTitle("https://calendar.google.com/calendar/b/0/r")
 Title := GetTitle("https://www.google.com/")

@@ -883,7 +883,7 @@ capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOu
 ;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 
 ;;;this is(was) Lshift::
-SC070::gotofiretab("Calendar - March 2020","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+SC070::gotofiretab("Calendar - April 2020","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
 ;em dash –
@@ -1203,11 +1203,29 @@ F3::send ^w
 F4::F2 ;this is to regain what I lost when I used F2 and F3 for tab navigation.
 
 #IfWinActive ahk_exe Photoshop.exe
+;;U CAN GET TO PHOTOSHOP SHORTCUTS BY HITTING CTRL SHIFT K
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
-F3::send ^o
-;;F3::send ^o IDK why, but this was an "o" when it should be a w? oh hmmm i think i wanted W for something else...
+F3::send ^o ;this WAS ctrl W instead, but i wanted to use that for duplicating layers. so i do. Also note that CTRL E is combining layers.
 
+;F4 is AVAILABLE
+
+;F5 super rasterize layer. move that code here.
+;F6 convert to sRGB
+;F7 convert to LAB
+
+;F8 is now LENS BLUR (default is INFO window.)
+;F9 is AVAILABLE
+
+;F10 is SMOOTH SELECTION? I don't feel great about it.
+;F11 is EXPAND SELECTION by 1
+;+F11 should make CONTRACT SELECTION by 1
+
+; F12 is 200% nearest
+; ^F12 is 300% Nearest
+; +F12 is 50% bicubic sharper?
+; ^+F12 is 50% Nearest? Maybe switch with the previous one.
+;
 ;;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
@@ -1216,6 +1234,16 @@ F3::send ^o
 ; F1::sendinput {alt down}iac{alt up}
 
 
+
+
+
+;;;;;;;;;;;;;;EXPLORER SHORTCUTS;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;EXPLORER SHORTCUTS;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;EXPLORER SHORTCUTS;;;;;;;;;;;;;;;;;
+
+
+
+;; ----- Maybe mothball this one ------;;;;;;
 #IfWinActive, ahk_group ExplorerGroup ;this does not work...
 ; ctrl L, alt D, or F4 will highlight the address bar. But in different ways..?
 ;IDK if I need this script at all anymore.
@@ -1224,6 +1252,8 @@ sleep 10
 Sendinput !d
 sleep 10
 return
+;; ----- Maybe mothball that one ------;;;;;;
+
 
 ;;just some tests
 ; #IfWinActive
@@ -1232,7 +1262,7 @@ return
 ; F12::send, {SC10f} 
 
 
-;;;;;;;;;;;;;;EXPLORER SHORTCUTS;;;;;;;;;;;;;;;;;
+
 ; #IfWinActive, ahk_class #32770 ahk_exe Adobe Premiere Pro.exe ;this is specifically premiere's save/load dialoge.
 
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe ShareX.exe") ;this is very specifically premiere's save/load dialoge, and it is NOT the Export Settings window.
@@ -1263,12 +1293,14 @@ return
 #if
 
 
+
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe chrome.exe") ;An Explorer window as launched by Chrome
 `::Send !{up} ;DOWN one folder level in explorer
 
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe firefox.exe") ;An Explorer window as launched by Firefox
 `::Send !{up} ;DOWN one folder level in explorer
 ~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
+F6::RemoveDashes() ;when saving Audioblocks sound effects, because filenames with dashes or underscores in them cannot be searched for in Windows' fole system, which is also stupid. So this makes it so  that i don't have to manaully remove those or retype the filenames.
 
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe 4kvideodownloader.exe") 
 `::Send !{up} ;DOWN one folder level in 4k video downloader
@@ -1280,26 +1312,21 @@ return
 
 
 
-;------------------------------------------
-
-
-
-
-
 #IfWinActive ahk_exe explorer.exe ;IDK if there is any meaningful difference for using the ahk_exe rather than the ahk_CLASS
 
 ;Oh, if you are on the desktop, the EXE is the same, but the class is not. So if you hit ALT F4, you go into the shutdown menu. Not good. So i think the class is a better indicator that you are, specifically, in an Explorer WINDOW.
 
 
 
-
-
-
 #IfWinActive, ahk_class CabinetWClass ;this is also explorer
 
+; https://www.winhelponline.com/blog/master-list-keyboard-shortcuts-windows-10/
+
 ;because I'm probably transferring images from explorer to firefox or vice-versa, and I want to be able to still easily go from one tab to the next.
-F1::switchToFirefox()
-;F2::switchToFirefox() ;oops this one is used for renaming. gotta keep this commented out.
+
+F1::switchToFirefox() ;I'm not so sure about this.
+
+;F2:: ;Windows default for renaming a file or folder.
 
 F3::
 Send {alt down}
@@ -1310,15 +1337,32 @@ Send {alt up}
 Return
 ;this converts F3 into ALT F4, but only for explorer. this is just to save one more keypress, since i close explorer windows in this way quite a lot.
 ;There is a deliberate delay added, since in SOME situations, ALT would be recognised, but not F4. Adding a delay takes care of that.
+;F3 by default: "Search for a file or folder in File Explorer"
 
+;F4:: is Windows default to highlight the Address bar, I believe
 
+;F5:: is windows default to refresh. gonna keep THAT one!
+
+;F6:: Windows default is "Cycle through screen elements in a window or on the desktop." We don't need THAT!
+;F6::RemoveDashes()
+
+;F7:: unused currently
+
+;F8:: unused currently
+
+;F9:: unused currently
+
+;F10:: "Activate the Menu bar in the active app." This is the same as ALT menu acceleration, which i hate of course.
+
+;F11:: unused currently. But in fact it acts as a full screen-ifier. Don't need that.
+
+;F12:: unused currently
 
 
 ;;`::Send !{up} ;go DOWN one folder level in explorer. Discontinued.
 ;;The script above worked fine 99% of the time. But if you have a FILE selected, and that file has a preview thingy showing, it would NOT work -- instead, it would highlight the menu acceleration. Sad!! Manually hitting ALT UP  would still work in that situation, though.
 ;;After some experimentation, I discovered that adding a small delay between virtual keystrokes is essential for this to work in those situations.
 ;so instead, I have to use the script below:
-
 `::
 Sendinput, {alt Down}
 sleep 5
@@ -1335,6 +1379,7 @@ return
 ;note to self, check for stuck modifier keys on this one too...
 Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field - very useful!!
 return
+
 
 home::
 If (exphWnd := WinActive("ahk_class CabinetWClass"))
@@ -1438,7 +1483,8 @@ return
 
 ;No K95 macro key assigned:
 ^F9::windowSwitcher("ahk_exe AfterFX.exe","C:\Program Files\Adobe\Adobe After Effects CC 2017\Support Files\AfterFX.exe") ;NOTE: was used for toggle all video tracks in premiere.
-^F10::windowSwitcher("ahk_exe StreamDeck.exe","C:\Program Files\Elgato\StreamDeck\StreamDeck.exe")
+
+; ; ^F10::windowSwitcher("ahk_exe StreamDeck.exe","C:\Program Files\Elgato\StreamDeck\StreamDeck.exe")
 
 ; ^F11 is taken by filemover.ahk
 ; ^F12 is also taken by filemover.ahk
@@ -1471,7 +1517,8 @@ Joy3::msgbox you hit Joy3
 ;macro key G1 on K95. universal SEARCH EVERYTHINGER
 ; this used to have a ~ to let it pass through... not sure why. it was creating an ENTER keypress effect in notepad++ so i removed it.
 ;uh actually this is G9?
-^+J::
+
+;^+J:: ;this is the old shortcut that would require the 11ms delay.
 F21 & F8::search()
 
 
@@ -1479,7 +1526,11 @@ F21 & F8::search()
 ;MACRO KEY G2 on the K95
 ^numpad0::
 IfWinActive, ahk_exe Adobe Premiere Pro.exe
+	{
+	sleep 11 ;this sleep for 11 milliseconds is to avoid the infamous STUCK MODIFIERS error, because i have my K95 command holding this down for 10 ms, and it would release ctrl at some arbitrary point during the AHK script execution! Makes perfect sense now...
+	;might wanna reduce the delay all to 5ms if 10ms feels too long. and YES i can feel time differences in incremements of 10ms... but no lower.
 	easeInAndOut()
+	}
 else
 	return ;for now, this key does nothing in other applications
 return
@@ -1490,7 +1541,10 @@ return
 
 #ifWinActive
 ;macro key G3
-^+L::stopPlaying()
+^+L::
+sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
+stopPlaying()
+return
 ;Outside of premiere, it will STILL work to pause/play the timeline, due to some other code somewhere else...
 ;;NOTE that this shows up also as a huge bit of script when premiere is NOT in focus, must be moved to All Premiere Functions.
 
@@ -1498,12 +1552,18 @@ return
 
 ;macro key G4.
 ;I've removed the ~ that was in front of them.
-;;;^+,::audioMonoMaker("left")
-^+,::preset("50%")
+;;;^+,::audioMonoMaker("left") ;this function doesn't work as well anymore and I don't need it as much lately.
+^+,::
+sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
+preset("50%")
+return
 
 ; macro key G5.
 ;;;;^+.::audioMonoMaker("right")
-^+.::preset("50%")
+^+.::
+sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
+preset("50%") ;this is a temporary assignment until I can get a better thing for this key.
+return
 
 ;note that i have capslock remapped to F20
 F20::home
@@ -1536,9 +1596,11 @@ F20::home
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Macro key G6
 ;modifiers -- I removed the ~
-;^+U::
-;reSelect() ;formerly ^+9
+^+U::
+sleep 11 ;I need this because I put a 10ms delay before the key UP events in iCue. I had to do THAT because otherwise it would go too fast for AHK to even notice. Without this delay, those up events will happen while the function is running, which can lead to modifier keys that are virtually stuck DOWN, which is super bad and annoying.
+reSelect() ;formerly ^+9
 ;;;in premiere, ctrl shift u is now assigned to SUPER PURPLE temporarily at least.
+return
 
 ;G6 is assigned to single left click in iCue if the "All" profile is active, which it is (automatically) unless Premiere is active. I only have the two profiles - premiere, and everything else.
 
@@ -1657,7 +1719,8 @@ G18: Activate/switch to Premiere
 
 #IfWinActive ahK_exe Adobe Premiere Pro.exe
 ;tab::7 ;"7" is set to enable/disable for now. just testing stuff
-appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
+appskey::sendinput, ^!k ;in premiere's shortcuts panel, CTRL ALT K is set to "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
+
 ^w::closeTitler()
 
 ;;;below thing is no longer needed. Premiere now has this feature by default.
@@ -1700,13 +1763,19 @@ appskey::sendinput, ^!k ;in premiere, CTRL ALT K is "clear selected marker." You
 F21::return
 ;^+]:: ;I decided that if a trigger key uses certain modifiers,
 ;then those same modifiers must not turn up in in the macro itself... this is troublesome...
+;update - turns out i need 11ms of delay instead.
 F21 & F7::
+sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
 Send {F2}7{enter} ;adds 7 gain. ; +7db 
 
 ;note to self, maybe have some code here to fix a stuck shift or CTRL key...
+;update to note, that is no longer needed!
 return
 
-F21 & F8::search()
+F21 & F8::
+sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
+search()
+return
 
 ; control shift r = reverse selected clip
 ^+r::Send ^r{tab}{tab}{space}{enter}
@@ -1782,7 +1851,7 @@ F5::clickTransformIcon2()
 F6::cropClick()
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
-;;Delete single clip at cursor
+;;DELETE SINGLE CLIP AT CURSOR
 F9::
 prFocus("timeline") ; you can't just send ^+!3 because it'll change the sequence if you do. you have to go to the effect controls fiurst. that is what this function does.
 send, ^!d ;ctrl alt d is DESELECT. this only works if the timeline is in focus.
@@ -1877,6 +1946,11 @@ Media_Next::^numpadMult
 ;===================================================================
 #ifWinActive ahk_exe firefox.exe
 !x::!+x ;this is the shortcut for Nuke Anything Enhanced.
+
+;these are shortcuts for youtube's interface to slow down, pause/play, and speed up.
+Media_Next::+.
+Media_Play_Pause::k
+Media_Prev::+,
 
 
 ;;&&&&&&&&&&&&&& KEY ASSIGNMENTS FOR PHOTOSHOP &&&&&&&&&&&&&&&&&&&&&
@@ -2069,7 +2143,8 @@ if (doAnEnter = 1)
 sleep 10
 ; send ^{F4} ;only use this line if switchToWord() is not directly available.
 ;;;;msgbox,,, just before,0.5
-switchToWord()
+; switchToWord()
+sendinput, {F2} ;in word, "go to previous comment."
 sleep 10
 ;;;;msgbox,,, thingy is over,0.5
 ;WinActivate ahk_class MozillaWindowClass

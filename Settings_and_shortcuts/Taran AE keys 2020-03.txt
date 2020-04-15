@@ -1,0 +1,896 @@
+# Text File Version 1.1
+# After Effects Shortcut Preferences (modify at your own risk)
+#
+# Key Identifiers
+#  UxFFFF is used to define a 4-digit hexadecimal unicode character (e.g. Ux005A = 'Z').  Visit http://unicode.org for code charts.
+#  PadUxFFFF is used to define a 4-digit hexadecimal unicode character that exists on the numeric keypad (e.g. PadUx002C = ',').
+#  Enter
+#  Delete
+#  Backspace
+#  Tab
+#  Return
+#  Esc
+#  LeftArrow
+#  RightArrow
+#  UpArrow
+#  DownArrow
+#  Space
+#  !
+#  DoubleQuote
+#  #
+#  $
+#  %
+#  &
+#  SingleQuote
+#  LParen
+#  RParen
+#  *
+#  Plus
+#  Comma
+#  -
+#  .
+#  /
+#  0
+#  1
+#  2
+#  3
+#  4
+#  5
+#  6
+#  7
+#  8
+#  9
+#  :
+#  ;
+#  <
+#  =
+#  >
+#  ?
+#  @
+#  A
+#  B
+#  C
+#  D
+#  E
+#  F
+#  G
+#  H
+#  I
+#  J
+#  K
+#  L
+#  M
+#  N
+#  O
+#  P
+#  Q
+#  R
+#  S
+#  T
+#  U
+#  V
+#  W
+#  X
+#  Y
+#  Z
+#  [
+#  Backslash
+#  ]
+#  ^
+#  _
+#  `
+#  {
+#  |
+#  }
+#  ~
+#  Umlaut_A
+#  Ring_A
+#  Cedilla_C
+#  Acute_E
+#  Tilde_N
+#  Umlaut_O
+#  Umlaut_U
+#  Acute_a
+#  Grave_a
+#  Circumflex_a
+#  Umlaut_a
+#  Tilde_a
+#  Ring_a
+#  Cedilla_c
+#  Acute_e
+#  Grave_e
+#  Circumflex_e
+#  Umlaut_e
+#  Acute_i
+#  Grave_i
+#  Circumflex_i
+#  Umlaut_i
+#  Tilde_n
+#  Acute_o
+#  Grave_o
+#  Circumflex_o
+#  Umlaut_o
+#  Tilde_o
+#  Acute_u
+#  Grave_u
+#  Circumflex_u
+#  Umlaut_u
+#  Section
+#  German_dbl_s
+#  Acute
+#  Yen
+#  Grave_A
+#  Tilde_A
+#  Tilde_O
+#  Umlaut_y
+#  Umlaut_Y
+#  Circumflex_A
+#  Circumflex_E
+#  Acute_A
+#  Umlaut_E
+#  Grave_E
+#  Acute_I
+#  Circumflex_I
+#  Umlaut_I
+#  Grave_I
+#  Acute_O
+#  Circumflex_O
+#  Grave_O
+#  Acute_U
+#  Circumflex_U
+#  Grave_U
+#  PadDecimal
+#  PadComma
+#  PadMultiply
+#  PadPlus
+#  PadClear
+#  PadSlash
+#  PadMinus
+#  PadEqual
+#  PadInsert
+#  PadDelete
+#  PadHome
+#  PadEnd
+#  PadPageUp
+#  PadPageDown
+#  Pad0
+#  Pad1
+#  Pad2
+#  Pad3
+#  Pad4
+#  Pad5
+#  Pad6
+#  Pad7
+#  Pad8
+#  Pad9
+#  F1
+#  F2
+#  F3
+#  F4
+#  F5
+#  F6
+#  F7
+#  F8
+#  F9
+#  F10
+#  F11
+#  F12
+#  F13
+#  F14
+#  F15
+#  F16
+#  F17
+#  F18
+#  F19
+#  F20
+#  F21
+#  F22
+#  F23
+#  F24
+#  HELP
+#  HOME
+#  PageUP
+#  FwdDel
+#  END
+#  PageDOWN
+#  NumLock
+#  Insert
+#  Pause
+#  CapsLock
+
+
+["** header **"]
+	"major_version" = "93"
+
+["AE_TopLevelWindow"]
+	"SelectNextTab" = "(Alt+Shift+.)"
+	"SelectPrevTab" = "(Alt+Shift+Comma)"
+	"ToggleTabPanelMaximize" = "(`)"
+	"ZoomWindowMega" = "(Ctrl+Backslash)(Ctrl+Yen)"
+	"ZoomWindowMegaMainMonitor" = "(Ctrl+Alt+Backslash)(Ctrl+Alt+Yen)"
+
+["CCompCloneCmd"]
+	"CloneSelectPreset1" = "(3)"
+	"CloneSelectPreset2" = "(4)"
+	"CloneSelectPreset3" = "(5)"
+	"CloneSelectPreset4" = "(6)"
+	"CloneSelectPreset5" = "(7)"
+
+["CCompCmd"]
+	"AddLayerMarkerWithDialog" = "(Alt+PadMultiply)"
+	"AddMarker" = "(PadMultiply)"
+	"CenterAnchorToBounds" = "(Ctrl+Alt+HOME)"
+	"CenterLayerInView" = "(Ctrl+HOME)"
+	"Clear" = "(C)(Delete)(FwdDel)"
+	"ClearMask" = "(Alt+Delete)(Alt+FwdDel)"
+	"FlipHorizontal" = "()"
+	"FlipVertical" = "()"
+	"OpenSource" = "(Enter)(Return)"
+	"PasteAlt" = "(Ctrl+Alt+V)"
+	"ReverseLayer" = "(Ctrl+Alt+R)"
+	"SelectNext" = "(Ctrl+DownArrow)"
+	"SelectNextAdd" = "(Ctrl+Shift+DownArrow)"
+	"SelectPrevious" = "(Ctrl+UpArrow)"
+	"SelectPreviousAdd" = "(Ctrl+Shift+UpArrow)"
+	"SetWorkAreaEnd" = "(N)"
+	"SetWorkAreaStart" = "(B)"
+	"SetWorkAreaToSelection" = "(Ctrl+Alt+B)"
+	"StretchLayerToFit" = "(Ctrl+Alt+F)"
+	"StretchLayerToFitHorizontal" = "(Ctrl+Alt+Shift+H)"
+	"StretchLayerToFitVertical" = "(Ctrl+Alt+Shift+G)"
+
+["CCompCompCmd"]
+	"CompOpenCompStuff" = "(Backslash)(Yen)"
+	"CompScollSelectedLayerToTop" = "(X)"
+	"CompScrollToCurrentTime" = "(D)"
+	"CompSelectLayer1" = "()"
+	"CompSelectLayer2" = "()"
+	"CompSelectLayer3" = "()"
+	"CompSelectLayer4" = "()"
+	"CompSelectLayer5" = "()"
+	"CompSelectLayer6" = "()"
+	"CompSelectLayer7" = "()"
+	"CompSelectLayer8" = "()"
+	"CompSelectLayer9" = "()"
+	"CompTimeZoomFrames" = "(;)"
+	"CompTimeZoomIn" = "(=)"
+	"CompTimeZoomOut" = "(-)"
+	"CompTimeZoomToggleFullCustom" = "(Shift+;)"
+	"CompToggleEffects" = "(E)"
+	"CompToggleEffectsAddState" = "(Shift+E)"
+	"CompToggleMaskFeathers" = "(F)"
+	"CompToggleMaskFeathersAddState" = "(Shift+F)"
+	"CompToggleMaskFeathersAddStateNewKF" = "(Alt+Shift+F)"
+	"CompToggleMaskFeathersNewKF" = "()"
+	"CompToggleMaskShapes" = "(M)"
+	"CompToggleMaskShapesAddState" = "(Shift+M)"
+	"CompToggleMaskShapesAddStateNewKF" = "(Alt+Shift+M)"
+	"CompToggleMaskShapesNewKF" = "()"
+	"CompToggleSelectLayer1" = "(Shift+Pad1)"
+	"CompToggleSelectLayer2" = "(Shift+Pad2)"
+	"CompToggleSelectLayer3" = "(Shift+Pad3)"
+	"CompToggleSelectLayer4" = "(Shift+Pad4)"
+	"CompToggleSelectLayer5" = "(Shift+Pad5)"
+	"CompToggleSelectLayer6" = "(Shift+Pad6)"
+	"CompToggleSelectLayer7" = "(Shift+Pad7)"
+	"CompToggleSelectLayer8" = "(Shift+Pad8)"
+	"CompToggleSelectLayer9" = "(Shift+Pad9)"
+	"CompToggleUberAnimatingKeyframes" = "(U)"
+	"CompToggleUberAnimatingKeyframesAddState" = "(Shift+U)"
+	"CompToggleUberAnimatingKeyframesAndExpressions" = "()"
+	"CompToggleUberAnimatingKeyframesAndExpressionsAddState" = "()"
+	"CompTwirlAnchorPoint" = "(A)"
+	"CompTwirlAnchorPointAddState" = "(Shift+A)"
+	"CompTwirlAnchorPointAddStateNewKF" = "(Alt+Shift+A)"
+	"CompTwirlAnchorPointNewKF" = "()"
+	"CompTwirlAudio" = "(L)"
+	"CompTwirlAudioAddState" = "(Shift+L)"
+	"CompTwirlAudioAddStateNewKF" = "(Alt+Shift+L)"
+	"CompTwirlAudioNewKF" = "()"
+	"CompTwirlOpacity" = "(O)"
+	"CompTwirlOpacityAddState" = "(Shift+O)"
+	"CompTwirlOpacityAddStateNewKF" = "(Alt+Shift+O)"
+	"CompTwirlOpacityNewKF" = "()"
+	"CompTwirlPosition" = "(P)"
+	"CompTwirlPositionAddState" = "(Shift+P)"
+	"CompTwirlPositionAddStateNewKF" = "(Alt+Shift+P)"
+	"CompTwirlPositionNewKF" = "()"
+	"CompTwirlRotation" = "(R)"
+	"CompTwirlRotationAddState" = "(Shift+R)"
+	"CompTwirlRotationAddStateNewKF" = "(Alt+Shift+R)"
+	"CompTwirlRotationNewKF" = "()"
+	"CompTwirlScale" = "(S)"
+	"CompTwirlScaleAddState" = "(Shift+S)"
+	"CompTwirlScaleAddStateNewKF" = "(Alt+Shift+S)"
+	"CompTwirlScaleNewKF" = "()"
+	"NextKeyframe" = "(K)"
+	"NudgeDown" = "(DownArrow)"
+	"NudgeDownMore" = "(Shift+DownArrow)"
+	"NudgeEarlier" = "(Alt+PageUP)"
+	"NudgeEarlierMore" = "(Alt+Shift+PageUP)"
+	"NudgeKeyframesEarlier" = "(Alt+LeftArrow)"
+	"NudgeKeyframesEarlierMore" = "(Alt+Shift+LeftArrow)"
+	"NudgeKeyframesLater" = "(Alt+RightArrow)"
+	"NudgeKeyframesLaterMore" = "(Alt+Shift+RightArrow)"
+	"NudgeLater" = "(Alt+PageDOWN)"
+	"NudgeLaterMore" = "(Alt+Shift+PageDOWN)"
+	"NudgeLeft" = "(LeftArrow)"
+	"NudgeLeftMore" = "(Shift+LeftArrow)"
+	"NudgeOpacityDown" = "(Ctrl+Alt+PadMinus)"
+	"NudgeOpacityDownMore" = "(Ctrl+Alt+Shift+PadMinus)"
+	"NudgeOpacityUp" = "(Ctrl+Alt+PadPlus)"
+	"NudgeOpacityUpMore" = "(Ctrl+Alt+Shift+PadPlus)"
+	"NudgeRight" = "(RightArrow)"
+	"NudgeRightMore" = "(Shift+RightArrow)"
+	"NudgeRotCCW" = "(PadMinus)"
+	"NudgeRotCCWMore" = "(Shift+PadMinus)"
+	"NudgeRotCW" = "(PadPlus)"
+	"NudgeRotCWMore" = "(Shift+PadPlus)"
+	"NudgeScaleLarger" = "(Alt+PadPlus)(Ctrl+PadPlus)"
+	"NudgeScaleLargerMore" = "(Alt+Shift+PadPlus)(Ctrl+Shift+PadPlus)"
+	"NudgeScaleSmaller" = "(Alt+PadMinus)(Ctrl+PadMinus)"
+	"NudgeScaleSmallerMore" = "(Alt+Shift+PadMinus)(Ctrl+Shift+PadMinus)"
+	"NudgeUp" = "(UpArrow)"
+	"NudgeUpMore" = "(Shift+UpArrow)"
+	"PrevKeyframe" = "(J)"
+	"SelectAllVisibleKeyframes" = "(Ctrl+Alt+A)"
+	"TemporalAlignEnd" = "(Alt+END)"
+	"TemporalAlignStart" = "(Alt+HOME)"
+	"ToggleGraph" = "(Shift+F3)"
+	"ToggleTlwParentColumn" = "(Shift+F4)"
+	"Twirl" = "()"
+	"TwirlExplode" = "(Ctrl+`)"
+	"TwirlPreserveSolo" = "(Shift+`)"
+	"TwirlPreserveSoloExplode" = "(Ctrl+Shift+`)"
+
+["CCompMarkerCmd"]
+	"CompGotoMarker0" = "(0)"
+	"CompGotoMarker1" = "(1)"
+	"CompGotoMarker2" = "(2)"
+	"CompGotoMarker3" = "(3)"
+	"CompGotoMarker4" = "(4)"
+	"CompGotoMarker5" = "(5)"
+	"CompGotoMarker6" = "(6)"
+	"CompGotoMarker7" = "(7)"
+	"CompGotoMarker8" = "(8)"
+	"CompGotoMarker9" = "(9)"
+	"CompMarker0" = "(Shift+0)"
+	"CompMarker1" = "(Shift+1)"
+	"CompMarker2" = "(Shift+2)"
+	"CompMarker3" = "(Shift+3)"
+	"CompMarker4" = "(Shift+4)"
+	"CompMarker5" = "(Shift+5)"
+	"CompMarker6" = "(Shift+6)"
+	"CompMarker7" = "(Shift+7)"
+	"CompMarker8" = "(Shift+8)"
+	"CompMarker9" = "(Shift+9)"
+
+["CCompPaintCmd"]
+	"PaintColorResetBW" = "(D)"
+	"PaintColorSwapFgBg" = "(X)"
+	"PaintSetFlow10" = "(Shift+Pad1)"
+	"PaintSetFlow100" = "(Shift+PadDecimal)(Shift+PadComma)(Shift+PadDelete)"
+	"PaintSetFlow20" = "(Shift+Pad2)"
+	"PaintSetFlow30" = "(Shift+Pad3)"
+	"PaintSetFlow40" = "(Shift+Pad4)"
+	"PaintSetFlow50" = "(Shift+Pad5)"
+	"PaintSetFlow60" = "(Shift+Pad6)"
+	"PaintSetFlow70" = "(Shift+Pad7)"
+	"PaintSetFlow80" = "(Shift+Pad8)"
+	"PaintSetFlow90" = "(Shift+Pad9)"
+	"PaintSetOpacity10" = "(Pad1)"
+	"PaintSetOpacity100" = "(PadDecimal)(PadComma)(PadDelete)"
+	"PaintSetOpacity20" = "(Pad2)"
+	"PaintSetOpacity30" = "(Pad3)"
+	"PaintSetOpacity40" = "(Pad4)"
+	"PaintSetOpacity50" = "(Pad5)"
+	"PaintSetOpacity60" = "(Pad6)"
+	"PaintSetOpacity70" = "(Pad7)"
+	"PaintSetOpacity80" = "(Pad8)"
+	"PaintSetOpacity90" = "(Pad9)"
+	"PaintTimeStepBack" = "(1)(Ctrl+PageUP)"
+	"PaintTimeStepForward" = "(2)(Ctrl+PageDOWN)"
+
+["CCompTime"]
+	"TimeFastForward" = "(Ctrl+Alt+RightArrow)(END)"
+	"TimeJumpToIn" = "(I)"
+	"TimeJumpToNextInOut" = "(Ctrl+Alt+Shift+RightArrow)"
+	"TimeJumpToOut" = "()"
+	"TimeJumpToPrevInOut" = "(Ctrl+Alt+Shift+LeftArrow)"
+	"TimeJumpToWAEnd" = "(Shift+END)"
+	"TimeJumpToWAStart" = "(Shift+HOME)"
+	"TimeRewind" = "(Ctrl+Alt+LeftArrow)(HOME)"
+	"TimeSetIn" = "(Alt+[)"
+	"TimeSetOut" = "(Alt+])"
+	"TimeShiftSpacebarPlay" = "(Shift+Space)"
+	"TimeSpacebarPlay" = "(Space)"
+	"TimeStepBack" = "(Ctrl+LeftArrow)(PageUP)"
+	"TimeStepBackMore" = "(Shift+PageUP)(Ctrl+Shift+LeftArrow)"
+	"TimeStepForward" = "(Ctrl+RightArrow)(PageDOWN)"
+	"TimeStepForwardMore" = "(Shift+PageDOWN)(Ctrl+Shift+RightArrow)"
+	"TimeStretchIn" = "(Ctrl+Shift+Comma)"
+	"TimeStretchOut" = "(Ctrl+Alt+Comma)"
+	"TimeTrimIn" = "([)"
+	"TimeTrimOut" = "(])"
+
+["CDirItemTabPanelTime"]
+	"TimeFastForward" = "(Ctrl+Alt+RightArrow)(PadEnd)(END)"
+	"TimeRewind" = "(Ctrl+Alt+LeftArrow)(PadHome)(HOME)"
+	"TimeShiftSpacebarPlay" = "(Shift+Space)"
+	"TimeSpacebarPlay" = "(Space)"
+	"TimeStepBack" = "(Ctrl+LeftArrow)(PadPageUp)(PageUP)"
+	"TimeStepBackMore" = "(Shift+PageUP)(Ctrl+Shift+LeftArrow)"
+	"TimeStepForward" = "(Ctrl+RightArrow)(PadPageDown)(PageDOWN)"
+	"TimeStepForwardMore" = "(Shift+PageDOWN)(Ctrl+Shift+RightArrow)"
+
+["CDirTabPanel"]
+	"NewViewer" = "(Alt+Shift+N)"
+	"NewViewerNewFrame" = "(Ctrl+Alt+Shift+N)"
+	"OpenMiniFlowPopup" = "(Tab)"
+
+["CEggApp"]
+	"BrowseInBridge" = "(Ctrl+Alt+Shift+O)"
+	"CancelAllPreviews" = "(Esc)"
+	"Label1" = "(Pad5)"
+	"Label10" = "(Pad7)"
+	"Label11" = "(Pad3)"
+	"Label12" = "(PadDecimal)"
+	"Label13" = "()"
+	"Label2" = "(Pad9)"
+	"Label3" = "(Pad1)"
+	"New" = "(Ctrl+Alt+N)"
+	"OpenComp" = "(Backslash)(Yen)"
+	"OpenMRUContext" = "(Shift+Esc)"
+	"PreviewAudio" = "(PadComma)(PadDelete)"
+	"PreviewAudioWorkArea" = "(Alt+PadDecimal)(Alt+PadComma)(Alt+PadDelete)"
+	"PreviewNumpad0" = "(Pad0)(PadInsert)"
+	"PreviewNumpad0NFrames" = "(Alt+Pad0)(Alt+PadInsert)"
+	"PreviewShiftNumpad0" = "(Shift+Pad0)(Shift+PadInsert)"
+	"ShowConsole" = "(Ctrl+F12)"
+	"ToggleTransmit" = "(PadSlash)"
+	"WriteStringFile" = "()"
+	"WriteVersionFile" = "(Ctrl+Shift+HELP)"
+	"WriteVersionFileExtra" = "(Ctrl+Alt+Shift+HELP)"
+
+["CEggAppTool"]
+	"ToolArrow" = "(V)"
+	"ToolCamera" = "()"
+	"ToolCameraToggle" = "(Shift+C)"
+	"ToolHand" = "(H)"
+	"ToolMagnify" = "(Z)"
+	"ToolMask" = "(Q)"
+	"ToolMaskToggle" = "(Shift+Q)"
+	"ToolPaint" = "(Ctrl+B)"
+	"ToolPan" = "(Y)"
+	"ToolPen" = "(G)"
+	"ToolPenToggle" = "(Shift+G)"
+	"ToolPin" = "(Ctrl+P)"
+	"ToolRotate" = "(W)"
+	"ToolRotoBrush" = "(Alt+W)"
+	"ToolText" = "(T)"
+
+["CItem"]
+	"FastPreviewsAdaptiveResolution" = "(Ctrl+Alt+2)"
+	"FastPreviewsDraft" = "(Ctrl+Alt+3)"
+	"FastPreviewsFastDraft" = "(Ctrl+Alt+4)"
+	"FastPreviewsOff" = "(Ctrl+Alt+1)"
+	"FastPreviewsWireframe" = "(Ctrl+Alt+5)"
+	"PurgeSnapshot1" = "(Ctrl+Shift+F5)"
+	"PurgeSnapshot2" = "(Ctrl+Shift+F6)"
+	"PurgeSnapshot3" = "(Ctrl+Shift+F7)"
+	"PurgeSnapshot4" = "(Ctrl+Shift+F8)"
+	"ShowAlphaChannel" = "(Alt+4)"
+	"ShowAlphaChannelAlt" = "(Alt+Shift+4)"
+	"ShowAlphaOutline" = "(Alt+5)"
+	"ShowAlphaOverlay" = "(Alt+6)"
+	"ShowBlueChannel" = "(Alt+3)"
+	"ShowBlueChannelAlt" = "(Alt+Shift+3)"
+	"ShowGreenChannel" = "(Alt+2)"
+	"ShowGreenChannelAlt" = "(Alt+Shift+2)"
+	"ShowRedChannel" = "(Alt+1)"
+	"ShowRedChannelAlt" = "(Alt+Shift+1)"
+	"ShowSnapshot1" = "(F5)"
+	"ShowSnapshot2" = "(F6)"
+	"ShowSnapshot3" = "(F7)"
+	"ShowSnapshot4" = "(F8)"
+	"ShowXray" = "(Alt+X)"
+	"TakeSnapshot1" = "(Shift+F5)"
+	"TakeSnapshot2" = "(Shift+F6)"
+	"TakeSnapshot3" = "(Shift+F7)"
+	"TakeSnapshot4" = "(Shift+F8)"
+	"TitleActionGridAnim" = "(Alt+SingleQuote)"
+	"TitleActionGridRotate" = "(SingleQuote)"
+	"TitleActionSafeToggle" = "(Shift+SingleQuote)"
+
+["COutline"]
+	"Clear" = "(Delete)(FwdDel)"
+	"Rename" = "(Return)"
+
+["CPanoECOutline"]
+	"NOP" = "()"
+	"OpenComp" = "(Backslash)(Yen)"
+	"SelectNext" = "(DownArrow)"
+	"SelectNextAdd" = "(Shift+DownArrow)"
+	"SelectPrevious" = "(UpArrow)"
+	"SelectPreviousAdd" = "(Shift+UpArrow)"
+	"TwirlClosed" = "(LeftArrow)"
+	"TwirlOpen" = "(RightArrow)"
+
+["CPanoProjFootage"]
+	"TimeJumpToIn" = "(I)"
+	"TimeJumpToOut" = "()"
+	"TimeStepBack" = "()"
+	"TimeStepForward" = "()"
+	"TimeTrimIn" = "()"
+	"TimeTrimOut" = "()"
+
+["CPanoProjItem"]
+	"FitItemView" = "(Shift+/)"
+	"FitItemViewUpTo100" = "(Alt+/)"
+	"ProofColors" = "(Shift+PadSlash)"
+	"SelectNextMask" = "(Alt+`)"
+	"SelectPreviousMask" = "(Alt+Shift+`)"
+	"Zoom100Percent" = "(/)"
+	"ZoomIn" = "(Ctrl+Alt+=)(.)"
+	"ZoomInResize" = "(Alt+.)(Ctrl+=)"
+	"ZoomNoScroll" = "(Ctrl+Alt+/)"
+	"ZoomOut" = "(Ctrl+Alt+-)(Comma)"
+	"ZoomOutResize" = "(Alt+Comma)(Ctrl+-)"
+
+["CPanoProjLayer"]
+	"Clear" = "(Delete)(FwdDel)"
+	"ClearMask" = "(Alt+Delete)(Alt+FwdDel)"
+	"OpenComp" = "(Backslash)(Yen)"
+	"TimeSetIn" = "()"
+	"TimeSetOut" = "()"
+	"TimeStretchIn" = "(Ctrl+Shift+Comma)"
+	"TimeStretchOut" = "(Ctrl+Alt+Comma)"
+	"TimeTrimIn" = "()"
+	"TimeTrimOut" = "()"
+
+["CPanoProjLayerPano"]
+	"NudgeDown" = "(DownArrow)(Alt+DownArrow)"
+	"NudgeDownMore" = "(Shift+DownArrow)(Alt+Shift+DownArrow)"
+	"NudgeLeft" = "(LeftArrow)"
+	"NudgeLeftMore" = "(Shift+LeftArrow)"
+	"NudgeOpacityDown" = "(Ctrl+Alt+PadMinus)"
+	"NudgeOpacityDownMore" = "(Ctrl+Alt+Shift+PadMinus)"
+	"NudgeOpacityUp" = "(Ctrl+Alt+PadPlus)"
+	"NudgeOpacityUpMore" = "(Ctrl+Alt+Shift+PadPlus)"
+	"NudgeRight" = "(RightArrow)"
+	"NudgeRightMore" = "(Shift+RightArrow)"
+	"NudgeRotCCW" = "(PadMinus)"
+	"NudgeRotCCWMore" = "(Shift+PadMinus)"
+	"NudgeRotCW" = "(PadPlus)"
+	"NudgeRotCWMore" = "(Shift+PadPlus)"
+	"NudgeScaleLarger" = "(Alt+PadPlus)(Ctrl+PadPlus)"
+	"NudgeScaleLargerMore" = "(Alt+Shift+PadPlus)(Ctrl+Shift+PadPlus)"
+	"NudgeScaleSmaller" = "(Alt+PadMinus)(Ctrl+PadMinus)"
+	"NudgeScaleSmallerMore" = "(Alt+Shift+PadMinus)(Ctrl+Shift+PadMinus)"
+	"NudgeUp" = "(UpArrow)(Alt+UpArrow)"
+	"NudgeUpMore" = "(Shift+UpArrow)(Alt+Shift+UpArrow)"
+
+["CPanoProjLayerPanoMask"]
+	"Zoom100Percent" = "(/)"
+	"ZoomIn" = "(.)"
+	"ZoomOut" = "(Comma)"
+
+["CPanoRender"]
+	"StopRenderQueue" = "(Ctrl+.)(Esc)"
+
+["CSwitchboard"]
+	"AddCompToRenderQueue" = "(Ctrl+Shift+/)(Ctrl+M)"
+	"AddItemToComp" = "(Ctrl+/)"
+	"AddItemToCompReplaceLayer" = "(Ctrl+Alt+/)"
+	"AddItemsToNewComp" = "(Alt+Yen)(Alt+Backslash)"
+	"AddToAdobeMediaEncoderRenderQueue" = "(Ctrl+Alt+M)"
+	"AutoOrient" = "(Ctrl+Alt+O)"
+	"BestQuality" = "(Ctrl+U)"
+	"BestQualityRecurse" = "()"
+	"BringCloser" = "(Ctrl+Alt+UpArrow)(Ctrl+])"
+	"BringToFront" = "(Ctrl+Alt+Shift+UpArrow)(Ctrl+Shift+=)(Ctrl+Shift+])"
+	"Close" = "(Ctrl+W)"
+	"CloseAll" = "(Ctrl+Alt+W)"
+	"CloseWindow" = "(Ctrl+Shift+W)"
+	"CompSettings" = "(Ctrl+K)"
+	"CompToggleUberAnimatingKeyframes" = "(U)"
+	"CompToggleUberAnimatingKeyframesAddState" = "(Shift+U)"
+	"CompToggleUberAnimatingKeyframesAndExpressions" = "()"
+	"CompToggleUberAnimatingKeyframesAndExpressionsAddState" = "()"
+	"CompTrimToWorkArea" = "(Ctrl+Shift+X)"
+	"CompViewOptions" = "(Ctrl+Alt+U)"
+	"Compify" = "(Ctrl+N)"
+	"Copy" = "(Ctrl+C)"
+	"CopyExpressionLinkedInstance" = "(Ctrl+Alt+C)"
+	"CopyExpressionLinkedInstanceRelative" = "()"
+	"CustResNoDialog" = "(Ctrl+Alt+J)"
+	"CustResNoDialogRecurse" = "()"
+	"Cut" = "(Ctrl+X)"
+	"DeselectAll" = "(F2)(Ctrl+Shift+A)"
+	"DeselectAllKeyframes" = "(Shift+F2)(Ctrl+Alt+Shift+A)"
+	"DraftQuality" = "(Ctrl+Shift+U)"
+	"DraftQualityRecurse" = "()"
+	"Duplicate" = "(Ctrl+D)"
+	"EasyEase" = "(F9)"
+	"EasyEaseIn" = "(Shift+F9)"
+	"EasyEaseOut" = "(Ctrl+Shift+F9)"
+	"EditFileExternally" = "(Ctrl+E)"
+	"EnableTimeRemap" = "(Ctrl+Alt+T)"
+	"ExecuteScript" = "()"
+	"FilterNone" = "(Ctrl+Shift+E)"
+	"Find" = "(Ctrl+F)"
+	"ForceScanForChangedFootage" = "(Ctrl+Alt+L)"
+	"GoToTime" = "(Alt+Shift+J)"
+	"Group" = "(Ctrl+G)"
+	"HelpAfterEffectsHelp" = "(F1)"
+	"HideOtherVideo" = "(Ctrl+Shift+V)"
+	"HighResolution" = "(Ctrl+J)"
+	"HighResolutionRecurse" = "()"
+	"ImportFootage" = "(Ctrl+I)"
+	"ImportMultiple" = "(Ctrl+Alt+I)"
+	"IncrementAndSave" = "(Ctrl+Alt+Shift+S)"
+	"InterpretFootage" = "(Ctrl+Alt+G)"
+	"KeyframeInterpDialog" = "(Ctrl+Alt+K)"
+	"KeyframeVelocityDialog" = "(Ctrl+Shift+K)"
+	"LastEffect" = "(Ctrl+Alt+Shift+E)"
+	"LayerSettings" = "(Ctrl+Shift+Y)"
+	"LookAtSelected" = "(Ctrl+Alt+Shift+Yen)(Ctrl+Alt+Shift+Backslash)"
+	"LowResolution" = "(Ctrl+Alt+Shift+J)"
+	"LowResolutionRecurse" = "()"
+	"MacSysMenuMinimize" = "()"
+	"Mask" = "(Ctrl+Shift+M)"
+	"MaskFeather" = "(Ctrl+Shift+F)"
+	"MaskInverse" = "(Ctrl+Shift+I)"
+	"MaskReshape" = "(Ctrl+T)"
+	"MedResolution" = "(Ctrl+Shift+J)"
+	"MedResolutionRecurse" = "()"
+	"MemoryModeToggle" = "()"
+	"New" = "(Ctrl+Alt+N)"
+	"NewCamera" = "(Ctrl+Alt+Shift+C)"
+	"NewComp" = "()"
+	"NewDebugComp" = "(Alt+Shift+D)"
+	"NewEffectsLayer" = "(Ctrl+Alt+Y)"
+	"NewLight" = "(Ctrl+Alt+Shift+L)"
+	"NewMask" = "(Ctrl+Shift+N)"
+	"NewNullObject" = "(Ctrl+Alt+Shift+Y)"
+	"NewSolidInComp" = "()"
+	"NewTextLayer" = "(Ctrl+Alt+Shift+T)"
+	"NextXferMode" = "(Shift+=)"
+	"Offset" = "(Ctrl+Shift+P)"
+	"Opacity" = "(Ctrl+Shift+O)"
+	"Open" = "(Ctrl+O)"
+	"OpenEffectControls" = "()"
+	"OpenKeyboardShortcutsPanel" = "(Shift+K)(Ctrl+Alt+SingleQuote)"
+	"OpenLayerSourceWindow" = "(Alt+Enter)"
+	"Orientation" = "(Ctrl+Alt+Shift+R)"
+	"Paste" = "(Ctrl+V)"
+	"PrefsGeneral" = "(Ctrl+Alt+;)"
+	"PrevXferMode" = "(Shift+-)"
+	"ProjectSettings" = "(Ctrl+Alt+Shift+K)"
+	"PurgeAllMemory" = "(Ctrl+Alt+PadSlash)"
+	"Quit" = "(Ctrl+Q)"
+	"RecentFavorite00" = "(Ctrl+Alt+Shift+F)"
+	"RecentProject00" = "(Ctrl+Alt+Shift+P)"
+	"RecentScript00" = "(Ctrl+Alt+Shift+D)"
+	"Redo" = "(Ctrl+Y)(Ctrl+Shift+Z)"
+	"ReplaceFootage" = "(Ctrl+H)"
+	"RotateAll" = "(Ctrl+Shift+R)"
+	"Save" = "(Ctrl+S)"
+	"SaveAs" = "(Ctrl+Shift+S)"
+	"SaveFrameAs" = "(Ctrl+Alt+S)"
+	"SavePreviewCurrent" = "(Ctrl+Pad0)(Ctrl+PadInsert)"
+	"SavePreviewShiftNumpad0" = "(Ctrl+Shift+Pad0)(Ctrl+Shift+PadInsert)"
+	"ScanForChangedFootage" = "(Ctrl+Alt+Shift+Q)"
+	"SelectAll" = "(Ctrl+A)"
+	"SelectNextViewerContext" = "(Shift+.)"
+	"SelectPrevViewerContext" = "(Shift+Comma)"
+	"SendFarther" = "(Ctrl+Alt+DownArrow)(Ctrl+[)"
+	"SendToBack" = "(Ctrl+Alt+Shift+DownArrow)(Ctrl+Shift+-)(Ctrl+Shift+[)"
+	"SetProxyFile" = "(Ctrl+Alt+P)"
+	"SetSamplingQualityBicubic" = "(Alt+Shift+B)"
+	"SetSamplingQualityBilinear" = "(Alt+B)"
+	"ShowCompTree" = "(Ctrl+Shift+F11)"
+	"ShowFrameFileName" = "(Ctrl+Alt+E)"
+	"ShowHideAudio" = "(Ctrl+4)"
+	"ShowHideBrushPal" = "(Ctrl+9)"
+	"ShowHideCharPal" = "(Ctrl+6)"
+	"ShowHideFxPal" = "(Ctrl+5)"
+	"ShowHideInfo" = "(Ctrl+2)"
+	"ShowHidePaintPal" = "(Ctrl+8)"
+	"ShowHideParaPal" = "(Ctrl+7)"
+	"ShowHideProject" = "(Ctrl+0)"
+	"ShowHideRenderQueue" = "(Ctrl+Alt+0)"
+	"ShowHideTimePanel" = "(Ctrl+3)"
+	"ShowHideTools" = "(Ctrl+1)"
+	"ShowProjectTree" = "(Ctrl+F11)"
+	"ShowRulers" = "(Ctrl+R)"
+	"SplitLayer" = "(Ctrl+Shift+D)"
+	"SwitchTo3DViewA" = "(F10)(F10)"
+	"SwitchTo3DViewB" = "(F11)"
+	"SwitchTo3DViewC" = "(F12)"
+	"SwitchToLast3DView" = "(Esc)"
+	"SwitchToWorkspaceA" = "(Shift+F10)"
+	"SwitchToWorkspaceB" = "(Shift+F11)"
+	"SwitchToWorkspaceC" = "(Shift+F12)"
+	"ToggleCastsShadows" = "(Alt+Shift+C)"
+	"ToggleEffectControls" = "(Ctrl+Shift+T)(F3)"
+	"ToggleExpression" = "(Alt+Shift+=)"
+	"ToggleKeyframeHoldInterp" = "(Ctrl+Alt+H)"
+	"ToggleLayerControls" = "(Ctrl+Shift+H)"
+	"ToggleLock" = "(Ctrl+L)"
+	"ToggleLockGuides" = "(Ctrl+Alt+Shift+;)"
+	"ToggleShowGrid" = "(Ctrl+SingleQuote)"
+	"ToggleShowGuides" = "(Ctrl+;)"
+	"ToggleSnapGrid" = "(Ctrl+Shift+SingleQuote)"
+	"ToggleSnapGuides" = "(Ctrl+Shift+;)"
+	"ToggleSwitchesModes" = "(F4)"
+	"ToggleVideo" = "(F20)(Ctrl+Alt+Shift+V)"
+	"Undo" = "(Ctrl+Z)"
+	"Ungroup" = "(Ctrl+Shift+G)"
+	"UnlockAllLayers" = "(Ctrl+Shift+L)"
+	"WireframeQuality" = "(Ctrl+Alt+Shift+U)"
+	"WireframeQualityRecurse" = "()"
+	"XFactorPreview" = "()"
+	"XFactorPreviewMisc" = "()"
+	"XFactorPreviewStop" = "()"
+
+["CSwitchboardModal"]
+	"Clear" = "(PadClear)"
+	"Copy" = "(Ctrl+C)"
+	"Cut" = "(Ctrl+X)"
+	"Paste" = "(Ctrl+V)"
+	"Redo" = "(Ctrl+Shift+Z)"
+	"SelectAll" = "(Ctrl+A)"
+	"Undo" = "(Ctrl+Z)"
+
+["CTopic"]
+	"Twirl" = "()"
+	"TwirlExplode" = "(Ctrl+`)"
+	"TwirlPreserveSolo" = "(Shift+`)"
+	"TwirlPreserveSoloExplode" = "(Ctrl+Shift+`)"
+
+["CameraToolUI"]
+	"LookAtAll" = "(Ctrl+Shift+F)"
+	"LookAtSelected" = "(F)"
+
+["FloPano"]
+	"Clear" = "(Delete)(FwdDel)"
+	"ClearWithoutWarning" = "(Ctrl+Delete)"
+	"OpenComp" = "(Backslash)(Yen)"
+	"Zoom100Percent" = "(/)"
+	"ZoomIn" = "(.)"
+	"ZoomOut" = "(Comma)"
+
+["MacSysShortcutsAlt"]
+	"MacSysMenuHideMe" = "()"
+	"MacSysMenuHideOthers" = "()"
+	"MacSysMenuMinimize" = "()"
+
+["MacSysShortcutsStd"]
+	"MacSysMenuHideMe" = "()"
+	"MacSysMenuHideOthers" = "()"
+	"MacSysMenuMinimize" = "()"
+
+["POutlinePano"]
+	"AddItemToComp" = "(Ctrl+/)"
+	"AddItemToCompReplaceLayer" = "(Ctrl+Alt+/)"
+	"ApplyInterpretation" = "(Ctrl+Alt+V)"
+	"ClearWithoutWarning" = "(Ctrl+Delete)"
+	"NewFolder" = "(Ctrl+Alt+Shift+N)"
+	"OpenItemWindow" = "(Enter)"
+	"RememberInterpretation" = "(Ctrl+Alt+C)"
+	"SelectNext" = "(DownArrow)"
+	"SelectNextAdd" = "(Shift+DownArrow)"
+	"SelectPrevious" = "(UpArrow)"
+	"SelectPreviousAdd" = "(Shift+UpArrow)"
+	"TwirlClosed" = "(LeftArrow)"
+	"TwirlOpen" = "(RightArrow)"
+
+["RQOutlinePano"]
+	"SelectNext" = "(DownArrow)"
+	"SelectNextAdd" = "(Shift+DownArrow)"
+	"SelectPrevious" = "(UpArrow)"
+	"SelectPreviousAdd" = "(Shift+UpArrow)"
+	"StartRenderQueue" = "(Return)(Enter)"
+	"StopRenderQueue" = "(Ctrl+.)(Esc)"
+	"TwirlClosed" = "(LeftArrow)"
+	"TwirlOpen" = "(RightArrow)"
+
+["TLOutlinePano"]
+	"CompTimeZoomFrames" = "(;)"
+	"CompTimeZoomIn" = "(=)"
+	"CompTimeZoomOut" = "(-)"
+	"CompTimeZoomToggleFullCustom" = "(Shift+;)"
+	"TimeSetIn" = "()"
+	"TimeSetOut" = "()"
+	"TimeStretchIn" = "(Ctrl+Shift+Comma)"
+	"TimeStretchOut" = "(Ctrl+Alt+Comma)"
+	"TimeTrimIn" = "()"
+	"TimeTrimOut" = "()"
+	"ToggleGraph" = "(Shift+F3)"
+
+["TextLayerUI"]
+	"TextAlignCenter" = "(Ctrl+Shift+C)"
+	"TextAlignLeft" = "(Ctrl+Shift+L)"
+	"TextAlignRight" = "(Ctrl+Shift+R)"
+	"TextAllCaps" = "(Ctrl+Shift+K)"
+	"TextAutoLeading" = "(Ctrl+Alt+Shift+A)"
+	"TextCancel" = "(Esc)"
+	"TextCommit" = "(Enter)(Ctrl+Return)"
+	"TextCursorToDocumentEnd" = "(Ctrl+END)"
+	"TextCursorToDocumentStart" = "(Ctrl+HOME)"
+	"TextCursorToDown" = "(DownArrow)"
+	"TextCursorToLeft" = "(LeftArrow)"
+	"TextCursorToLineEnd" = "(END)"
+	"TextCursorToLineStart" = "(HOME)"
+	"TextCursorToRight" = "(RightArrow)"
+	"TextCursorToUp" = "(UpArrow)"
+	"TextCursorToWordDown" = "(Ctrl+DownArrow)"
+	"TextCursorToWordLeft" = "(Ctrl+LeftArrow)"
+	"TextCursorToWordRight" = "(Ctrl+RightArrow)"
+	"TextCursorToWordUp" = "(Ctrl+UpArrow)"
+	"TextDecreaseBaselineShift" = "(Alt+Shift+DownArrow)"
+	"TextDecreaseBaselineShiftALot" = "(Ctrl+Alt+Shift+DownArrow)"
+	"TextDecreaseFontSize" = "(Ctrl+Shift+Comma)"
+	"TextDecreaseFontSizeALot" = "(Ctrl+Alt+Shift+Comma)"
+	"TextDecreaseKerning" = "(Alt+LeftArrow)"
+	"TextDecreaseKerningALot" = "(Ctrl+Alt+LeftArrow)"
+	"TextDecreaseLeading" = "(Alt+UpArrow)"
+	"TextDecreaseLeadingALot" = "(Ctrl+Alt+UpArrow)"
+	"TextDeleteBackward" = "(Delete)"
+	"TextDeleteForward" = "(FwdDel)"
+	"TextIgnoreKey" = "(PadClear)(PageUP)(PageDOWN)(HELP)(Insert)(F1)(F2)(F3)(F4)(F5)(F6)(F7)(F8)(F9)(F"\
+		"10)(F11)(F12)(F13)(F14)(F15)(F16)(F17)(F18)(F19)(F20)(F21)(F22)(F23)(F24)(Alt+"\
+		"Shift+RightArrow)(Alt+Shift+LeftArrow)(Ctrl+Alt+Shift+RightArrow)(Ctrl+Alt+Shi"\
+		"ft+LeftArrow)"
+	"TextIncreaseBaselineShift" = "(Alt+Shift+UpArrow)"
+	"TextIncreaseBaselineShiftALot" = "(Ctrl+Alt+Shift+UpArrow)"
+	"TextIncreaseFontSize" = "(Ctrl+Shift+.)"
+	"TextIncreaseFontSizeALot" = "(Ctrl+Alt+Shift+.)"
+	"TextIncreaseKerning" = "(Alt+RightArrow)"
+	"TextIncreaseKerningALot" = "(Ctrl+Alt+RightArrow)"
+	"TextIncreaseLeading" = "(Alt+DownArrow)"
+	"TextIncreaseLeadingALot" = "(Ctrl+Alt+DownArrow)"
+	"TextJustifyAll" = "(Ctrl+Shift+F)"
+	"TextJustifyLeft" = "(Ctrl+Shift+J)"
+	"TextJustifyRight" = "(Ctrl+Alt+Shift+J)"
+	"TextResetHorizontalScale" = "(Ctrl+Shift+X)"
+	"TextResetTracking" = "(Ctrl+Shift+Q)"
+	"TextResetVerticalScale" = "(Ctrl+Alt+Shift+X)"
+	"TextSelectToDocumentEnd" = "(Ctrl+Shift+END)"
+	"TextSelectToDocumentStart" = "(Ctrl+Shift+HOME)"
+	"TextSelectToDown" = "(Shift+DownArrow)"
+	"TextSelectToLeft" = "(Shift+LeftArrow)"
+	"TextSelectToLineEnd" = "(Shift+END)"
+	"TextSelectToLineStart" = "(Shift+HOME)"
+	"TextSelectToRight" = "(Shift+RightArrow)"
+	"TextSelectToUp" = "(Shift+UpArrow)"
+	"TextSelectToWordDown" = "(Ctrl+Shift+DownArrow)"
+	"TextSelectToWordLeft" = "(Ctrl+Shift+LeftArrow)"
+	"TextSelectToWordRight" = "(Ctrl+Shift+RightArrow)"
+	"TextSelectToWordUp" = "(Ctrl+Shift+UpArrow)"
+	"TextSmallCaps" = "(Ctrl+Alt+Shift+K)"
+	"TextSubScript" = "(Ctrl+Alt+Shift+=)"
+	"TextSuperScript" = "(Ctrl+Shift+=)"
+	"TextToggleComposer" = "(Ctrl+Alt+Shift+T)"
+
+["Tracker"]
+	"MTNudgeDown" = "(DownArrow)"
+	"MTNudgeDownHoldPos" = "(Alt+DownArrow)"
+	"MTNudgeDownHoldPosMore" = "(Alt+Shift+DownArrow)"
+	"MTNudgeDownMore" = "(Shift+DownArrow)"
+	"MTNudgeLeft" = "(LeftArrow)"
+	"MTNudgeLeftHoldPos" = "(Alt+LeftArrow)"
+	"MTNudgeLeftHoldPosMore" = "(Alt+Shift+LeftArrow)"
+	"MTNudgeLeftMore" = "(Shift+LeftArrow)"
+	"MTNudgeRight" = "(RightArrow)"
+	"MTNudgeRightHoldPos" = "(Alt+RightArrow)"
+	"MTNudgeRightHoldPosMore" = "(Alt+Shift+RightArrow)"
+	"MTNudgeRightMore" = "(Shift+RightArrow)"
+	"MTNudgeUp" = "(UpArrow)"
+	"MTNudgeUpHoldPos" = "(Alt+UpArrow)"
+	"MTNudgeUpHoldPosMore" = "(Alt+Shift+UpArrow)"
+	"MTNudgeUpMore" = "(Shift+UpArrow)"
+	"MTSetEnd" = "(Alt+])"
+	"MTSetStart" = "(Alt+[)"
+
