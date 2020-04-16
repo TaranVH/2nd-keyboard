@@ -1189,96 +1189,41 @@ clickTransformIcon2()
 {
 Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it causes problems.
 
-; ;;;;;;;;;;;;;;;new stuff
 
-; dontrestart = 0
-; restartPoint:
-; blockinput, sendandMouse
-; blockinput, MouseMove
-; blockinput, on
-; ;-Sendinput ^!+5
-; prFocus("effect controls") ;essentially just hits CTRL ALT SHIFT 5 to highlight the effect controls panel.
-; sleep 10
+;result := untwirl()
+;it will return either "reset" or "untwirled"
+;either way, I think I'll ignore the output, lel.
 
-; ;ToolTip, A, , , 2
-; MouseGetPos Xbeginlol, Ybeginlol
-; global Xbegin = Xbeginlol
-; global Ybegin = Ybeginlol
-; ; MsgBox, "please verify that the mouse cannot move"
-; ; sleep 2000
-; ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro ;This is HOPEFULLY the ClassNN of the effect controls panel. Use Window Spy to figure it out.
+;msgbox,,, %result%,0.7
 
-; YY := Ycorner+66 ;ui 100%
-; XX := Xcorner+13 ;ui 100%
+;the code below serves to save a lot of time in determining if a clip is selected or not.
+;prFocus("Effect Controls")
+sendinput, {F10} ;highlights the effect controls
+sleep 10
 
-; MouseMove, XX, YY, 0
-; sleep 10
-
-; PixelGetColor, colorr, XX, YY
-
-; ; if (colorr = "0x353535") ;for 150% ui
-; if (colorr = "0x222222") ;for 100% ui
-; {
-	; tooltip, color %colorr% means closed triangle. Will click and then SCALE SEARCH
-	; blockinput, Mouse
-	; Click XX, YY
-	; sleep 5
-	; clickTransformIcon()
-	; findVFX(foobar)
-	; Return
-; }
-; ;else if (colorr = "0x757575") ;for 150% ui. again, this values could be different for everyone. check with window spy. This color simply needs to be different from the color when the triangle is closed. it also cannot be the same as a normal panel color (1d1d1d or 232323)
-; else if (colorr = "0x7A7A7A") ;for 100% ui
-; {
-	; ;tooltip, %colorr% means OPENED triangle. SEARCHING FOR SCALE
-	; blockinput, Mouse
-	; sleep 5
-	; clickTransformIcon()
+Send {tab}
+;msgbox,,, its after the tab,0.7
+if (A_CaretX = "")
+{
+	;No Caret (blinking vertical line) can be found. Therefore, no clip is selected.
+	;therefore, we will select the top clip at playhead using the code below:
 	
-	
-	; the GOTO goes HERE
-	
-	
-	
-	; ;untwirled = 1
-	; Return, untwirled
-; }
-; else if (colorr = "0x1D1D1D" || colorr = "0x232323")
-	; {
-	; tooltip, this is a normal panel color of 0x1d1d1d or %colorr%, which means NO CLIP has been selected ; assuming you didnt change your UI brightness. so we are going to select the top clip at playhead.
-	; ;I should experiement with putting a "deselect all clips on the timeline" shortcut here...
-	; Send ^p ;--- i have CTRL P set up to toggle "selection follows playhead," which I never use otherwise. ;this makes it so that only the TOP clip is selected.
-	; sleep 10
-	; Send ^p ;this disables "selection follows playhead." I don't know if there is a way to CHECK if it is on or not. 
-	; resetFromAutoVFX()
-	; ;play noise
-	; ;now you need to do all that again, since the motion menu is now open. But only do it ONCE more! 
-	; If (dontrestart = 0)
-		; {
-		; dontrestart = 1
-		; goto, restartPoint ;this is stupid but it works. Feel free to improve any of my code.
-		; }
-	; Return reset
-	; }
-; else
-	; {
-	; tooltip, %colorr% not expected
-	; ;play noise
-	; resetFromAutoVFX()
-	; Return reset
-	; }
-; }
-; Return ;from autoscaler part 1
+	;Send ^p ;"selection follows playhead," but this causes a windows mild error sound most of the time, wtf? So I'm gonna use another shortcut.
+	Sendinput ^{F8} ;"selection follows playhead," alternative mapping for macros to use. (CTRL F8)
+	sleep 15
+	;Send ^p
+	Sendinput ^{F8}
+}
+;msgbox,,, about to hit F5?,0.5
+sendinput, {F5} ;this is set to "show direct clip manipulation" or whatever in premiere. but it doens't work too well so this is just in case you've got a mogart sleected or something.
 
-
-
-; ;;;;;;;;;;;;;new stuff above
-sendinput, {F5} ;lol because premiere now has the shortcut but it SUCKS so this is in case it had failed.
 sleep 5
+
 
 BlockInput, On ;blocks keyboard and mouse input... I think.
 SetKeyDelay, 0
-sendinput ^!+5 ;highlights the effect controls
+;sendinput ^!+5 ;highlights the effect controls
+sendinput {F10} ;highlights the effect controls
 sleep 20
 MouseGetPos, xpos, ypos
 ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window ;This is the Effect controls panel. Info gotten from Window Spy. Your might be different. Be sure to check!!
@@ -1295,17 +1240,22 @@ MouseMove, %xpos%, %ypos%, 0
 BlockInput, Off
 
 sleep 10
-sendinput ^!+3 ;highlights the timeline
+sendinput, ^!+3 ;highlights the timeline
+;sendinput, 9 ;highlights the timeline
 sleep 10
-sendinput, {F5} ;lol because premiere now has the shortcut but it SUCKS so this is in case it had failed.
+sendinput, {F5} ;this is set to "show direct clip manipulation" or whatever in premiere. but it doens't work too well so this is just in case you've got a mogart sleected or something.
 ;the above line might not be needed and in fact is useless isnce the shortcut only works while on the timeline....
 sleep 10
-sendinput ^!+5 ;highlights the effect controls. This is so that if you hit COPY, it'll copy the motion effect, NOT a selected clip on the timeline.
+;sendinput ^!+5 ;highlights the effect controls. This is so that if you hit COPY, it'll copy the motion effect, NOT a selected clip on the timeline.
+sendinput {F10} ;highlights the effect controls
 
 }
 
 
-masterClipSelect() ;i htink i never use this one
+
+
+
+masterClipSelect() ;i think i never use this one
 {
 Tippy("masterClipSelect()")
 BlockInput, On
@@ -1360,8 +1310,9 @@ BlockInput, Off
 ; Return
 
 
-
+;obsolete.
 ;i should delete or merge this but i think it is used SOMEWHERE....
+;better not touch it.
 clickTransformIcon()
 {
 ControlGetPos, Xcorner, Ycorner, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro ;you will need to set this value to the window class of your own Effect Controls panel! Use window spy and hover over it to find that info.
@@ -1380,7 +1331,7 @@ MouseClick, left
 
 
 ;script to lock video and audio layers V1 and A1.
-;I don't recommend that anyone use this. It's really finnicky to set up. Requires a ton of very carefully taken screenshots in order to work...
+;I don't recommend that anyone else use this. It's really finnicky to set up. Requires a ton of very carefully taken screenshots in order to work...
 tracklocker()
 {
 BlockInput, on
@@ -1567,6 +1518,7 @@ else
 	Return "reset"
 	;resetFromAutoVFX()
 	}
+tooltip,
 } ;end of untwirl()
 
 
@@ -2030,15 +1982,15 @@ CoordGetControl(xCoord, yCoord, _hWin) ; _hWin should be the ID of the active wi
 
 
 ;this is assigned to G2,
-;which sends CTRL numpad0.
+;which was once CTRL numpad0.
+;It is currently F21 & F2::
 easeInAndOut(){
-
 ;NEW method in 2020 is below.
-send, {f10} ;shortcut is set in premiere to ease in
+;;sleep 11 isn't needed because it was done already.
+send, ^+{f10} ;shortcut is set in premiere to ease in
 sleep 10
 send, +{F10} ;shortcut is set in premiere to ease out
 sleep 5
-
 
 ; ;OLD EASE IN AND EASE OUT before the shortcuts were added for real in 2020
 ; ;This will click on the necessary menu items for you
@@ -2068,283 +2020,9 @@ sleep 5
 ; blockinput, MouseMoveOff
 ; ;sleep 100
 ; tooltip,
-
 }
 
-!+.::msgbox, A_workingDir should be %A_WorkingDir%
 
-
-
-;;;;;;;;;;begin WINDOWS REPLATED SHIT;;;;;;;;;;;;;;;;;;;
-
-
-; ;This ALSO WAS MOVED TO all windows functions
-; ;function to start, then activate any given application
-; openApp(theClass, theEXE, theTitle := ""){
-; ;Keyshower(theEXE, "openApp") ;leads to a function that shows the keypresses onscreen
-; if IsFunc("Keyshower") {
-	; Func := Func("Keyshower")
-	; RetVal := Func.Call(theEXE, "openApp") 
-; }
-; IfWinNotExist, %theClass%
-	; Run, % theEXE
-; if not WinActive(theClass)
-	; {
-	; WinActivate %theClass%
-	; ;WinGetTitle, Title, A
-	; WinRestore %theTitle%
-	; }
-; }
-
-
-
-
-
-
-
-
-;moved to windows functions ahk
-; runexplorer(foo){
-; send {SC0E8} ;scan code of an unassigned key. ;;sending even a single keystroke from the secondary keyboard will prevents the taskbar icon from sometimes flashing pointlessly rather than opening.
-; sleep 5
-; Run, %foo%
-; sleep 10
-; Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;windows shortcut to resize name feild to fit.
-; ;alt v o down enter will sort by date modified, but it is stupid...
-; ;keyShower(foo, "runExplorer")
-; if IsFunc("Keyshower") {
-	; Func := Func("Keyshower")
-	; RetVal := Func.Call(foo, "runExplorer") 
-	; }
-; }
-; ;; end of runexplorer()
-
-
-
-
-
-
-; saveLocation2(){
-; f_text = 0
-; SetTitleMatchMode Slow
-; WinGet, f_window_id, ID, A
-; WinGetClass, f_class, ahk_id %f_window_id%
-; ;;msgbox,,,%f_class%, 1
-; if f_class in ExploreWClass,CabinetWClass ; if the window class is an Explorer window of either kind.
-	; {
-	; ; WinGetTitle, Title, ahk_class CabinetWClass
-	; WinGetTitle, title, ahk_id %f_window_id% ;super lame way to do this, does not always work.
-	; ;msgbox, address is `n%title%
-
-	; FileDelete, C:\AHK\2nd-keyboard\Taran's Windows Mods\SavedExplorerAddress.txt
-	; FileAppend, %title% , C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
-	; SavedExplorerAddress = %title%
-	; msgbox, , , %title%`n`nwas saved as root, 1
-	; }
-; else
-	; msgbox,,, this is not an explorer window you chump,1
-; }
-; ;for further reading:
-; ;https://autohotkey.com/board/topic/60985-get-paths-of-selected-items-in-an-explorer-window/
-; ;end of savelocation2()
-
-
-
-; ;;;; SCRIPT TO ALWAYS OPEN THE MOST RECENTLY SAVED OR AUTOSAVED FILE OF A GIVEN FILETYPE, IN ANY GIVEN FOLDER (AND ALL SUBFOLDERS.);;;;
-; ;;script partially obtained from https://autohotkey.com/board/topic/57475-open-most-recent-file-date-created-in-a-folder/
-; openlatestfile(directory, filetype)
-; {
-; if directory = 1
-	; {
-	; FileRead, SavedExplorerAddress, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
-	; ;msgbox, current directory is`n%directory%
-	; directory = %SavedExplorerAddress%
-	; ;msgbox, new directory is`n%directory%
-	; }
-; ;filetype := """" . filetype . """" ;this ADDS quotation marks around a string in case you need that.
-; StringReplace, directory,directory,", , All ;" ; this REMOVES the quotation marks around the a string if they are present.
-
-; ;Keyshower(directory,"openlatestfile")
-; if IsFunc("Keyshower") {
-	; Func := Func("Keyshower")
-	; RetVal := Func.Call(directory,"openlatestfile") 
-; }
-
-; ;I need some method of excluding ~$ files, since those clutter everything up (MS Word .docx ...)
-
-; ;msgbox, directory is %directory%`n and filetype is %filetype%
-; Loop, Files,%directory%\*%filetype%, FR
-; {
-
-; If (A_LoopFileTimeModified>Rec)
-  ; {
-  ; IfNotInString, A_LoopFileFullPath, ~$
-	; FPath=%A_LoopFileFullPath%
-  ; Rec=%A_LoopFileTimeModified%
-  ; }
-; }
-
-; MsgBox 4,, Select YES to open the latest %filetype% at Fpath:`n`n%Fpath%
-; IfMsgBox Yes
-	; {
-	; Run %Fpath%
-	; }
-
-; ; ; USING THE SCRIPT
-; ; !n::
-; ; examplePath = "Z:\Linus\6. Channel Super Fun\Flicking football"
-; ; openlatestfile(examplePath, ".prproj") ;<--- notice how i INCLUDE the period in the parameters. IDK if it might be better to add the period later.
-; ; return
-; }
-; ; end of openlatestfile()
-
-
-
-
-
-; ;BEGIN savage-folder-navigation CODE!
-; ;I got MOST of this code from https://autohotkey.com/docs/scripts/FavoriteFolders.htm
-; ;and modified it to work with any given keypress, rather than middle mouse click as it had before.
-
-; InstantExplorer(f_path,pleasePrepend := 0)
-; {
-; if pleasePrepend = 1
-	; {
-	; FileRead, SavedExplorerAddress, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
-	; ;msgbox, current f_path is %f_path%
-	; f_path = %SavedExplorerAddress%\%f_path% ;no need to use . to concatenate
-	; ;msgbox, new f_path is %f_path%
-	; }
-; ;for Keyshower, put code here to find the first / and remove the string before it. otherwise you can't see the final folder name
-; ;Keyshower(f_path,"InstExplor")
-; if IsFunc("Keyshower") {
-	; Func := Func("Keyshower")
-	; RetVal := Func.Call(f_path,"InstExplor") 
-; }
-; f_path := """" . f_path . """" ;this adds quotation marks around everything so that it works as a string, not a variable.
-; ;msgbox, f_path is now finally %f_path%
-; ;SoundBeep, 900, 400
-; ; These first few variables are set here and used by f_OpenFavorite:
-; WinGet, f_window_id, ID, A
-; WinGetClass, f_class, ahk_id %f_window_id%
-; if f_class in #32770,ExploreWClass,CabinetWClass  ; if the window class is a save/load dialog, or an Explorer window of either kind.
-	; ControlGetPos, f_Edit1Pos, f_Edit1PosY,,, Edit1, ahk_id %f_window_id%
-
-; /*
-; if f_AlwaysShowMenu = n  ; The menu should be shown only selectively.
-; {
-	; if f_class in #32770,ExploreWClass,CabinetWClass  ; Dialog or Explorer.
-	; {
-		; if f_Edit1Pos =  ; The control doesn't exist, so don't display the menu
-			; return
-	; }
-	; else if f_class <> ConsoleWindowClass
-		; return ; Since it's some other window type, don't display menu.
-; }
-; ; Otherwise, the menu should be presented for this type of window:
-; ;Menu, Favorites, show
-; */
-
-; ; msgbox, A_ThisMenuItemPos %A_ThisMenuItemPos%
-; ; msgbox, A_ThisMenuItem %A_ThisMenuItem%
-; ; msgbox, A_ThisMenu %A_ThisMenu%
-
-; ;;StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
-; ; msgbox, f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
-
-; ; f_OpenFavorite:
-; ;msgbox, BEFORE:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
-
-; ; Fetch the array element that corresponds to the selected menu item:
-; ;;StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
-; if f_path =
-	; return
-; if f_class = #32770    ; It's a dialog.
-; {
-	; if f_Edit1Pos <>   ; And it has an Edit1 control.
-	; {
-		; ; IF window Title is NOT "export settings," with the exe "premiere pro.exe"
-			; ;go to the end or do something else, since you are in Premiere's export media dialouge box... which has the same #23770 classNN for some reason...
-		
-
-		; ControlFocus, Edit1, ahk_id %f_window_id% ;this is really important.... it doesn't work if you don't do this...
-		; tippy("DIALOUGE WITH EDIT1`n`nLE controlfocus of edit1 for f_window_id was just engaged.", 1000)
-		; ; msgbox, is it in focus?
-		; ; MouseMove, f_Edit1Pos, f_Edit1PosY, 0
-		; ; sleep 10
-		; ; click
-		; ; sleep 10
-		; ; msgbox, how about now? x%f_Edit1Pos% y%f_Edit1PosY%
-		; ;msgbox, edit1 has been clicked maybe
-		
-		; ; Activate the window so that if the user is middle-clicking
-		; ; outside the dialog, subsequent clicks will also work:
-		; WinActivate ahk_id %f_window_id%
-		; ; Retrieve any filename that might already be in the field so
-		; ; that it can be restored after the switch to the new folder:
-		; ControlGetText, f_text, Edit1, ahk_id %f_window_id%
-		; ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
-		; ControlSend, Edit1, {Enter}, ahk_id %f_window_id%
-		; Sleep, 100  ; It needs extra time on some dialogs or in some cases.
-		; ControlSetText, Edit1, %f_text%, ahk_id %f_window_id%
-		; ;msgbox, AFTER:`n f_path: %f_path%`n f_class:  %f_class%`n f_Edit1Pos:  %f_Edit1Pos%
-		; return
-	; }
-	; ; else fall through to the bottom of the subroutine to take standard action.
-; }
-; ;for some reason, the following code just doesn't work well at all.
-; /*
-; else if f_class in ExploreWClass,CabinetWClass  ; In Explorer, switch folders.
-; {
-	; tooltip, f_class is %f_class% and f_window_ID is %f_window_id%
-	; if f_Edit1Pos <>   ; And it has an Edit1 control.
-	; {
-		; tippy("EXPLORER WITH EDIT1 only 2 lines of code here....", 1000)
-		; ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
-		; msgbox, ControlSetText happened. `nf_class is %f_class% and f_window_ID is %f_window_id%`nAND f_Edit1Pos is %f_Edit1Pos%
-		; ; Tekl reported the following: "If I want to change to Folder L:\folder
-		; ; then the addressbar shows http://www.L:\folder.com. To solve this,
-		; ; I added a {right} before {Enter}":
-		; ControlSend, Edit1, {Right}{Enter}, ahk_id %f_window_id%
-		; return
-	; }
-	; ; else fall through to the bottom of the subroutine to take standard action.
-; }
-; */
-
-; else if f_class = ConsoleWindowClass ; In a console window, CD to that directory
-; {
-	; WinActivate, ahk_id %f_window_id% ; Because sometimes the mclick deactivates it.
-	; SetKeyDelay, 0  ; This will be in effect only for the duration of this thread.
-	; IfInString, f_path, :  ; It contains a drive letter
-	; {
-		; StringLeft, f_path_drive, f_path, 1
-		; Send %f_path_drive%:{enter}
-	; }
-	; Send, cd %f_path%{Enter}
-	; return
-; }
-
-; ; Since the above didn't return, one of the following is true:
-; ; 1) It's an unsupported window type but f_AlwaysShowMenu is y (yes).
-; ; 2) It's a supported type but it lacks an Edit1 control to facilitate the custom
-; ;    action, so instead do the default action below.
-; tippy("end was reached.",333)
-; ;SoundBeep, 800, 300 ;this is nice but the whole damn script WAITS for the sound to finish before it continues...
-; ; Run, Explorer %f_path%  ; Might work on more systems without double quotes.
-
-; ;msgbox, f_path is %f_path%
-
-; ; SplitPath, f_path, , OutDir, , ,
-; ; var := InStr(FileExist(OutDir), "D")
-
-; ; if (var = 0)
-	; ; msgbox, directory does not exist
-; ; else if var = 1
-	; Run, %f_path%  ; I got rid of the "Explorer" part because it caused redundant windows to be opened, rather than just switching to the existing window
-; ;else
-; ;	msgbox,,,Directory does not exist,1
-; }
-; ;end of instantexplorer()
+;!+.::msgbox, A_workingDir should be %A_WorkingDir%
 
 

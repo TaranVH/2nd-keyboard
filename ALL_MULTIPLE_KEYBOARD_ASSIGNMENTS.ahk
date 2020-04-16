@@ -116,7 +116,8 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; shift 2               toggle track targeting for AUDIO LAYER 2. And so on up to 8.
 ; alt 1                 toggle track targeting for VIDEO LAYER 1
 ; alt 2                 toggle track targeting for VIDEO LAYER 2. And so on up to 8. I wish there were DEDICATED shortcuts to enable and disable ALL layers
-; ctrl p                toggle "selection follows playhead"
+; ctrl p                toggle "selection follows playhead" (for human to use)
+; ctrl F8               toggle "selection follows playhead" (for macros to use)
 ; ctrl alt shift 3      Application > Window > Timeline (default is shift 3)
 ; ctrl alt shift 1      Application > Window > Project  (This sets the focus onto a BIN.) (default is SHIFT 1)
 ; ctrl alt shift 4      Application > Window > program monitor (Default is SHIFT 4)
@@ -126,9 +127,9 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; F3                    audio channels --- To be pressed manually by the user. (this might change in the future.)
 ; ctrl alt shift a      audio channels --- (I will NOT change this, so that it can always be reliably triggered using AutoHotKey.)
 ; shift F               From source monitor, match frame.
-; ctrl /                Overwrite (default is "." (period))
-; ctrl b                select find box --- This is such a useful function when you pair it the the effects panel!!
-; ctrl alt F            select find box 
+; ctrl /                Overwrite (the default is "." (period))
+; ctrl b                select find box - This is such a useful function when you pair it the the effects panel!!
+; ---ctrl alt F         select find box —OBSOLETE ---
 ; ctrl shift 6			Apply source assignment preset 1 (set to V5 and A3)
 ; ctrl ; (semicolon)	Add Marker
 ; ctrl alt k			Remove selected marker
@@ -1060,7 +1061,11 @@ right::tooltip, you pressed F24 then %A_thishotkey%
 
 numpad0::
 if WinActive("ahk_class Premiere Pro")
+	{
 	sendinput, ^!+9 ;activate lumetri scopes
+	sleep 25
+	prFocus("timeline")
+	}
 return
 
 numpad1::monitorKeys("source","^!+[",0) ;Safe margins (source monitor)
@@ -1202,29 +1207,8 @@ F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^w 
 F4::F2 ;this is to regain what I lost when I used F2 and F3 for tab navigation.
 
-#IfWinActive ahk_exe Photoshop.exe
-;;U CAN GET TO PHOTOSHOP SHORTCUTS BY HITTING CTRL SHIFT K
-F1::send ^+{tab} ;control shift tab, which goes to the next tab
-F2::send ^{tab} ;control tab, which goes to the previous tab
-F3::send ^o ;this WAS ctrl W instead, but i wanted to use that for duplicating layers. so i do. Also note that CTRL E is combining layers.
+;Photoshop shortcuts were here, but they've been moved further down.
 
-;F4 is AVAILABLE
-
-;F5 super rasterize layer. move that code here.
-;F6 convert to sRGB
-;F7 convert to LAB
-
-;F8 is now LENS BLUR (default is INFO window.)
-;F9 is AVAILABLE
-
-;F10 is SMOOTH SELECTION? I don't feel great about it.
-;F11 is EXPAND SELECTION by 1
-;+F11 should make CONTRACT SELECTION by 1
-
-; F12 is 200% nearest
-; ^F12 is 300% Nearest
-; +F12 is 50% bicubic sharper?
-; ^+F12 is 50% Nearest? Maybe switch with the previous one.
 ;
 ;;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1352,9 +1336,9 @@ Return
 
 ;F9:: unused currently
 
-;F10:: "Activate the Menu bar in the active app." This is the same as ALT menu acceleration, which i hate of course.
+F10::return ; "Activate the Menu bar in the active app." This is the same as ALT menu acceleration, which i hate of course.
 
-;F11:: unused currently. But in fact it acts as a full screen-ifier. Don't need that.
+F11::return ; It acts as a full screen-ifier. Don't need that.
 
 ;F12:: unused currently
 
@@ -1511,28 +1495,37 @@ Joy3::msgbox you hit Joy3
 ; Xbutton2::F20
 ;but they do do stuff in premiere now.
 
+
 ;---------------------BEGIN ASSIGNMENT OF ALL 18 K95 MACRO KEYS---------------------
 
+;----FIRST WE DO GLOBAL APPLICATION ASSIGNMENTS.-------
 #IfWinActive
-;macro key G1 on K95. universal SEARCH EVERYTHINGER
-; this used to have a ~ to let it pass through... not sure why. it was creating an ENTER keypress effect in notepad++ so i removed it.
-;uh actually this is G9?
 
-;^+J:: ;this is the old shortcut that would require the 11ms delay.
-F21 & F8::search()
+F21::return ;I didn't have this here until 2020 04 15, so idk if I actually need it...
+
+;macro key G1 on K95. IT'S MY UNIVERSAL SEARCH EVERYTHING-ER
+;^+J::search() ;old shortcut
+F21 & F1::search()
 
 
 #ifWinActive
 ;MACRO KEY G2 on the K95
-^numpad0::
+;^numpad0:: ;old shortcut
+F21 & F2::
 IfWinActive, ahk_exe Adobe Premiere Pro.exe
 	{
+	;Note that i have other premiere super function key assignments somewhere around line 2090. Yeah it's a bit of a mess.
 	sleep 11 ;this sleep for 11 milliseconds is to avoid the infamous STUCK MODIFIERS error, because i have my K95 command holding this down for 10 ms, and it would release ctrl at some arbitrary point during the AHK script execution! Makes perfect sense now...
 	;might wanna reduce the delay all to 5ms if 10ms feels too long. and YES i can feel time differences in incremements of 10ms... but no lower.
 	easeInAndOut()
 	}
 else
-	return ;for now, this key does nothing in other applications
+	{
+	;TBD (to be developed)
+	tooltip, "F21 and F2 - for now this key does nothing outside of Premiere"
+	sleep 150
+	tooltip,
+	}
 return
 
 
@@ -1540,107 +1533,55 @@ return
 ;~^+=::effectsPanelType("presets") ;this WAS macro key G3. ;Types in "presets," which reveals my own entire list of presets. ;;I have canceled this one in favor of a global pause/play. 
 
 #ifWinActive
-;macro key G3
-^+L::
+;Macro key G3 on the K95
+;^+L::
+F21 & F3::
 sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
 stopPlaying()
 return
 ;Outside of premiere, it will STILL work to pause/play the timeline, due to some other code somewhere else...
 ;;NOTE that this shows up also as a huge bit of script when premiere is NOT in focus, must be moved to All Premiere Functions.
 
-#ifWinActive ahk_exe Adobe Premiere Pro.exe
-
-;macro key G4.
-;I've removed the ~ that was in front of them.
-;;;^+,::audioMonoMaker("left") ;this function doesn't work as well anymore and I don't need it as much lately.
-^+,::
-sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
-preset("50%")
-return
-
-; macro key G5.
-;;;;^+.::audioMonoMaker("right")
-^+.::
-sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
-preset("50%") ;this is a temporary assignment until I can get a better thing for this key.
-return
-
-;note that i have capslock remapped to F20
-F20::home
-; and "home" is set to "disable (clip)" in premiere.
-;you can actually do this directly. I'm not sure why I set it up that way....
-
-
-
-; #ifWinActive ahk_exe Adobe Premiere Pro.exe
-
-
-; !f::f
-; !e::e
-; !c::c
-; !s::s
-; !m::m
-; !g::g
-; !v::v
-; !w::w
-; !h::h
-
-
 
 #ifWinNotActive ahk_exe Adobe Premiere Pro.exe
-;macro key G4.
-^+,::msgbox,,,Macro G4 not yet assigned outside premiere,0.7
-; macro key G5.
-^+.::msgbox,,,Macro G5 not yet assigned outside premiere,0.7
+;macro key G4
+F21 & F4::msgbox,,,TBD. Macro G4 not yet assigned outside premiere,0.7 ;It was CTRL SHIFT ,
 
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
-;Macro key G6
-;modifiers -- I removed the ~
-^+U::
-sleep 11 ;I need this because I put a 10ms delay before the key UP events in iCue. I had to do THAT because otherwise it would go too fast for AHK to even notice. Without this delay, those up events will happen while the function is running, which can lead to modifier keys that are virtually stuck DOWN, which is super bad and annoying.
-reSelect() ;formerly ^+9
-;;;in premiere, ctrl shift u is now assigned to SUPER PURPLE temporarily at least.
-return
+;macro key G5
+F21 & F5::msgbox,,,TBD. Macro G5 not yet assigned outside premiere,0.7 ;It was CTRL SHIFT .
 
-;G6 is assigned to single left click in iCue if the "All" profile is active, which it is (automatically) unless Premiere is active. I only have the two profiles - premiere, and everything else.
+;macro key G6
+F21 & F6::Lbutton
+;G6 is assigned to single left click when not in premiere. I mostly use it in Firefox when perusing the apmmusic.ca library, since my hand is over there anyway. Gotta save my hands from RSI!
 
+;Macro key G10
 #IfWinActive ahk_exe firefox.exe
 F18::Send, !+5 ;alt shift 5 is "strikethrough" in Google docs...
 
 #IfWinActive ahk_exe chrome.exe
 F18::Send, !+5 ;alt shift 5 is "strikethrough" in Google docs...
 
-/*
-G7:  F17 - rotation
-G8:  F19 - V1 A1 locker
-G9:  ctrl shift ] - add 7 gain
-G10: F18 - Horizontal Anchor
-G11: F15 - Vertical Anchor
-G12: F14 - Scale
-*/
 
 ;;note to self - try to get this script here working
-;Macro Key G12
+;Macro Key G12 (labeled "scale")
 #IfWinActive ahk_exe winword.exe
 ~F14::F2 ;F2 is set to "go to previous comment" in Word.
-;;all the below code CANNOT work as long as there is ~VK7DSC065:: present. this needs to be done NOT with the # thingies. will improve this code later.
-; tooltip, wat
-; sendinput, {F2} ;set to "go to previous comment" in Word.
-; ; IfWinExist, Microsoft Office Word, OK ;checks to see if the annoying "do you want to continue searching from the beginning of the document" dialouge box is present.
-	; ; sendinput, {escape}
-; return
 
-;Script to put a word comment into a lengthend marker in Premiere.
-;note to self, move this to where it belongs
+
+
+#IfWinActive ahk_exe winword.exe
 F12::
-sendinput, ^a
+;Script to put a Word comment into a lengthend marker in Premiere.
+;note to self, move this to where it belongs
+sendinput, ^a ;select all (of the text inside of the Word comment)
 sleep 80
-sendinput, ^c
+sendinput, ^c ;copy to clipboard
 sleep 15
 WinActivate ahk_class Premiere Pro
 sleep 20
 prFocus("timeline")
 sleep 30
+;unstick modifier keys.
 Send,{LCtrl up}
 Send,{RCtrl up}
 sleep 1
@@ -1673,7 +1614,7 @@ send, 00:00:04:00
 sleep 10
 send, ^!+k ;ctrl alt shift K is  "shuttle stop"
 sleep 10
-;unstick any modifier keys, UGH what a pain this is to deal with
+;unstick any modifier keys.
 Send,{LCtrl up}
 Send,{RCtrl up}
 sleep 1
@@ -1686,6 +1627,7 @@ sleep 10
 send, {enter}
 sleep 10
 send, ^!+k ;ctrl alt shift K is  "shuttle stop"
+sleep 1
 return
 
 #IfWinActive
@@ -1701,7 +1643,90 @@ G18: Activate/switch to Premiere
 */
 
 
-; #IfWinActive ahK_exe Adobe Premiere Pro.exe
+
+
+
+
+
+
+;;------PREMIERE ONLY F21 ASSIGNMENTS--------
+
+#ifWinActive ahk_exe Adobe Premiere Pro.exe
+
+;Note that i have other premiere super function key assignments somewhere around line 2090. Yeah it's a bit of a mess.
+
+
+
+#ifWinActive ahk_exe Adobe Premiere Pro.exe
+;macro key G4.
+;^+,::
+F21 & F4::
+sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error. Edit: this may or may not be necessary now that I'm no longer using the traditional modifier keys.
+;audioMonoMaker("left") ;this function doesn't work as well anymore and I don't need it as much lately.
+preset("50%")
+return
+
+
+#ifWinActive ahk_exe Adobe Premiere Pro.exe
+; macro key G5.
+;^+.::
+F21 & F5::
+sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
+;audioMonoMaker("right")
+preset("50%") ;TBD. this is a TEMPORARY assignment until I can get a better thing for this key.
+return
+
+
+;Macro key G6
+F21 & F6::
+sleep 11 
+sendinput, ^+U ;TBD. In premiere, ctrl shift u is now assigned to SUPER PURPLE temporarily at least.
+;;reSelect() ;TBD. idk what happened, but i guess this function stopped working or I stopped needing it as much. I'll replace G6 with something else.
+return
+
+
+/*
+G7:  F17 - rotation
+G8:  F19 - V1 A1 locker
+G9:  F21 & F9 - add 7 gain
+G10: F18 - Horizontal Anchor
+G11: F15 - Vertical Anchor
+G12: F14 - Scale
+*/
+
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
+
+F20::home ;yes, this does actaully press the HOME key, rather than hitting the 4 letters that make up thw WORD "home." I think.
+;note that in iCue, I have capslock remapped to F20
+; and "home" is set to "Disable (clip)" in premiere's keyboard shortcuts panel.
+; But you can actually assign Disable (clip) to F20 directly. So I'm not sure why I set it up that way... But I'm definitely not going to change it meow!
+
+F21::return
+
+;Macro key G1
+;This used to be ^+J:: (CTRL SHIFT J) but that led to a bug where modifier keys would remain stuck in the DOWN state, which screws up a lot of other stuff as you might imagine. I'm talking about virtually stuck, not physically stuck. Just so we're clear.
+F21 & F1::
+sleep 11 ;;this may or may not be necessary
+search()
+return
+
+;Macro key G9
+F21 & F9::
+sleep 11 ;this may not be necessary to avoid the stuck keys bug, as neither F21, nor F7 are used in this macro. However, I guess it's possible that F7 could get stuck down? which would be bad, i guess? Hmmmm.
+Send {F2}7{enter} ;adds 7 gain. ; +7db 
+
+;note to self, maybe have some code here to fix a stuck shift or CTRL key...
+;update to note, that is no longer needed!
+return
+
+;;------END PREMIERE ONLY F21 ASSIGNMENTS--------
+
+
+
+;;0000000000 obsolete premiere functions 0000000000000000000
+
+; #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ; ;TITLE BAR REMOVER
 ; ;;ctrl backslash is a nice shortcut in MACINTOSH Premiere for hiding the title bar. There is no Windows equivalent... unless you use autohotKey!
 ; ;;WARNING THOUGH - i think this script makes premiere less stable. I hardly use it...
@@ -1712,91 +1737,11 @@ G18: Activate/switch to Premiere
   ; else
     ; WinSet, Style, +0xC00000, A
 ; Return
-
 ;UPDATE:
-;Premiere in Windows now HAS this feature by default!! But there is no visible shortcut for it in the shortcuts mapper, strangely enough. anyway, that makes my script obsolete. yay!
+;Premiere in Windows now HAS this feature by default!! But there is no visible shortcut for it in the shortcuts mapper, strangely enough. Anyway, that makes my script obsolete. yay!
 
-
-#IfWinActive ahK_exe Adobe Premiere Pro.exe
-;tab::7 ;"7" is set to enable/disable for now. just testing stuff
-appskey::sendinput, ^!k ;in premiere's shortcuts panel, CTRL ALT K is set to "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
-
-^w::closeTitler()
-
-;;;below thing is no longer needed. Premiere now has this feature by default.
+;;;the below function is no longer needed. Premiere now has this feature by default.
 ;~+K::KbShortcutsFindBox() ;this one DOES need the ~ so that capital Ks will work in the titler, and so that the keyboard shortcuts panel will actually launch when it is pressed.
-;Note, if you don't arealdy know —the ~ is dangerous since it can lead to stuck modifier keys. I still don't know exactly why, or how to stop it.
-
-;no longer used:
-;!]::preset("DeHummer Preset") ;This uses the Dehummer effect, and its 120 Hz notch preset, to get rid of any electrical hum noise in the audio.
-
-;Pressing ALT W will send CTRL ALT SHIFT W, which is set to "Trim Next Edit to Playhead" in Premiere. This is to get around Premiere's menu acceleration, and annoying warning noise. Otherwise, I could have just assigned these commands directly to ALT Q and ALT W.
-!w::^!+w ;"Trim Next Edit to Playhead" (not RIPPLE trim.)
-!q::^!+q ;"Trim Previous Edit to Playhead" (not RIPPLE trim.)
-; for more information: https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/Alt_menu_acceleration_DISABLER.ahk
-
-
-; !f::f
-; !e::e
-; !c::c
-; !s::s
-; !m::m
-; !g::g
-; !v::v
-;;!w::w
-; !h::h
-
-!f::return
-!e::return
-!c::return
-!s::return
-!m::return
-!g::return
-!v::return
-
-!h::return
-
-
-
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
-
-F21::return
-;^+]:: ;I decided that if a trigger key uses certain modifiers,
-;then those same modifiers must not turn up in in the macro itself... this is troublesome...
-;update - turns out i need 11ms of delay instead.
-F21 & F7::
-sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
-Send {F2}7{enter} ;adds 7 gain. ; +7db 
-
-;note to self, maybe have some code here to fix a stuck shift or CTRL key...
-;update to note, that is no longer needed!
-return
-
-F21 & F8::
-sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
-search()
-return
-
-; control shift r = reverse selected clip
-^+r::Send ^r{tab}{tab}{space}{enter}
-
-
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
-
-
-;This script is to stop, rewind 3 seconds, and then play. Premiere's version of this SUCKS because it brings you back to where you started
-; the ~ is only there so that the keystroke visualizer can see this keypress. Otherwise, it should not be used.
-;Lwin::
-;~!space:: ;note, the ~ might result in stuck modifier keys, so i am not using it anymore...
-!space::
-Rwin::
-Send s ;"stop" command (From JKL remapped to ASD.)
-Send +{left}
-Send +{left}
-Send +{left}
-sleep 10
-Send d ;"shuttle right" command. Might be best to instead have it on a key combo that includes CTRL....
-return
 
 ;;no longer used:
 ; control g = make 200% speed
@@ -1809,20 +1754,79 @@ return
 ;Send ^r50{Enter}
 ;return
 
+;;00000000000 obsolete premiere functions 00000000000000
 
-;----ALL STANDARD FUNCTION KEYS IN PREMIERE------
+
+
+;;;vvvvvvvvv VARIOUS PREMIEREKEYS that are not function keys! vvvvvvvvvvvvv
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
+;tab::7 ;"7" is set to enable/disable for now. just testing stuff
+appskey::sendinput, ^!k ;in premiere's shortcuts panel, CTRL ALT K is set to "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
+
+^w::closeTitler()
+
+;Pressing ALT W will send CTRL ALT SHIFT W, which is set to "Trim Next Edit to Playhead" in Premiere. This is to get around Premiere's horrible menu acceleration, and annoying warning noise. Otherwise, I would have just assigned these commands directly to ALT Q and ALT W.
+!w::^!+w ;"Trim Next Edit to Playhead" (not RIPPLE trim.)
+!q::^!+q ;"Trim Previous Edit to Playhead" (not RIPPLE trim.)
+; for more information: https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/Alt_menu_acceleration_DISABLER.ahk
+
+!f::return
+!e::return
+!c::return
+!s::return
+!m::return
+!g::return
+!v::return
+;!w::return ;ALT W is used for Trim Next Edit to Playhead, though indirectly. See above.
+!h::return
+
+; control shift r = reverse selected clip
+; no need for 11ms of delay, since I am pressing this one myself.
+;though it does also use the CTRL key, so i dunno! maybe it shouldn't.
+^+r::Send ^r{tab}{tab}{space}{enter}
+
+
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
+;This script is to stop, rewind 3 seconds, and then play. Premiere's version of this SUCKS because it brings you back to where you started
+; the ~ is only there so that the keystroke visualizer can see this keypress. Otherwise, it should not be used.
+;Lwin::
+;~!space:: ;note, the ~ might result in stuck modifier keys, so i am not using it anymore...
+!space:: ;oh i forgot i assigned it to this too! hah...
+Rwin::
+Send s ;"stop" command (From JKL remapped to ASD.)
+Send +{left}
+Send +{left}
+Send +{left}
+sleep 10
+Send d ;"shuttle right" command. Might be best to instead have it on a key combo that includes CTRL....
+return
+
+
+
+
+
+
+
+
+;;---------------- ALL STANDARD FUNCTION KEYS IN PREMIERE --------------------
 ;;;PREMIEREKEYS;;; <--for easy searching
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
+;Ripple delete clip at playhead!! This was the first AHK script I ever wrote, I think!
 F1::
 Send ^!s ;ctrl alt s  is assigned to [select clip at playhead]
-;Send ^c ;ctrl c is [copy] ;was just testing a thing for a guy.
+sleep 1
 Send ^+!d ;ctrl alt shift d  is [ripple delete]
+sleep 1
 return
+
 ;F2 is set in premiere to the [GAIN] panel.
+
 ;F3 is set in premiere to the [MODIFY CLIP] panel. 
 
-#IfWinActive ahK_exe Adobe Premiere Pro.exe
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;; instant cut at cursor (UPON KEY RELEASE) -- super useful! even respects snapping!
 ;note to self, move this to premiere_functions already
 ;this is NOT suposed to stop the video playing when you use it, but now it does for some reason....
@@ -1850,7 +1854,9 @@ return
 F5::clickTransformIcon2()
 F6::cropClick()
 
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
+;F7:: is export frame (to .png)
+;F8:: is... nothing, apparently! it's free.
+
 ;;DELETE SINGLE CLIP AT CURSOR
 F9::
 prFocus("timeline") ; you can't just send ^+!3 because it'll change the sequence if you do. you have to go to the effect controls fiurst. that is what this function does.
@@ -1862,8 +1868,18 @@ send, {alt up}
 send, c ;delete
 return
 
-;this code is to remind me to do a thing, when i am rendering anyway.
+; F10:: is Frame interpolation - Ease in. (+F10:: is frame interpolation, ease OUT, and then they are combined together later on macro key G2. There's gotta be a better way to do this. WILL DO SOMETHING BETTER WITH THIS LATER.
+
+;F11:: is Toggle Full Screen
+
+;F12:: is Enable Transmit. This pushes a copy of the program monitor onto my top right monitor, full screen. It's configured to be perfectly RGB, so it acts as a reference monitor. As best as it can, at least.
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
 ~^e::
+;The following is to remind me to do a thing, when i am rendering anyway.
+;CTRL E is my shortcut to Export > Media... , so this will pop up and remind me to make an EDL, which we then submit to APMmusic.ca because they like to know what music tracks we've used in our videos. It's a huge pain, but now that I have the EDL export settings configured just how I like them, (by exporting a mostly empty EDL in my premiere project template, kinda like a dry run,) this whole process only takes me like 2 seconds each time.
+; Remember that the ~ character allows the key combo to pass through, so this does NOT block the actual Export Media window from appearing.
+;also it's a traytip because a messagebox woudl require me to click on it or press ENTER to dismiss it, which is a pain. Also this makes a noise, which i like.
 TrayTip, Make an EDL, Hey did you export an EDL yet, 2, 32
 return
 
@@ -1901,12 +1917,6 @@ send, %currentTool%
 return
 
 
-
-
-;~F9::masterClipSelect() ;this has not been fully programmed yet
-;F10:: ;unused for now. Acts as a menu accelerator in Windows applications!! why the heck do they think they also need ALT, then???
-;F11:: ;unused. "Full screen" in Firefox and chrome.
-;F12:: ;unused. "Inspector" in Firefox and chrome.
 
 ;============== CURRENT TOOL REMEMBERER ================
 
@@ -1953,18 +1963,40 @@ Media_Play_Pause::k
 Media_Prev::+,
 
 
-;;&&&&&&&&&&&&&& KEY ASSIGNMENTS FOR PHOTOSHOP &&&&&&&&&&&&&&&&&&&&&
+;;&&&&&&&&&&& MORE KEY ASSIGNMENTS FOR PHOTOSHOP &&&&&&&&&&&&&&&&&&
 #IfWinActive ahk_exe Photoshop.exe
 
-;;-----------------IMPORTANT NOTE--------------------:
-;;In Photoshop,
-;;alt F13 rotates 15 degrees clockwise
-;;alt F14 rotates 15 degrees counter clockwise
-;;alt F15 is zoom out
-;;alt F16 is zoom in
-;;They cannot be remapped in Photoshop. Nor do they show up in the list you get when you press the Summarize button in Photoshop's shortcuts menu.
-;;https://twitter.com/TaranVH/status/1129206615515705344
-;;https://forums.adobe.com/thread/1453594
+;;YOU CAN GET TO PHOTOSHOP SHORTCUTS BY HITTING CTRL SHIFT K
+F1::send ^+{tab} ;control shift tab, which goes to the next tab
+F2::send ^{tab} ;control tab, which goes to the previous tab
+F3::send ^o ;this WAS ctrl W instead, but i wanted to use that for duplicating layers. so i do. Also note that CTRL E is combining layers.
+
+;F4 is AVAILABLE
+
+;F5 is to SUPER rasterize a layer. It does 3 things to flatten/rasterize a layer instead of one.
+F5::
+sendinput, {F5} ;this is my PS shortcut command for "Rasterize > Layer." You may think it's odd to nest a lesser command inside of itself, sort of, but trust me, it actually works great!
+sleep 1
+sendinput, ^!+{F5} ;this is my shortcut for "Rasterize > Layer style"
+;You're not allowed to put both of these commands on the same shortcut, but to that I say BULLSHIT, I DO WHAT I WANT.
+sleep 10
+sendinput, ^!k ;ctrl alt K is my photoshop shortcut for Layer Mask > Apply.
+return
+
+;F6 convert to sRGB
+;F7 convert to LAB
+;F8 is now LENS BLUR (default is Info window.)
+
+;F9 is AVAILABLE
+
+;F10 is SMOOTH SELECTION? I don't feel great about it.
+;F11 is EXPAND SELECTION by 1
+;+F11 should make CONTRACT SELECTION by 1
+
+; F12 is 200% nearest
+; ^F12 is 300% Nearest
+; +F12 is 50% bicubic sharper?
+; ^+F12 is 50% Nearest? Maybe switch with the previous one.
 
 
 ;anyway, f14 is labeled "scale" already on my Corsair K95, so I'm going to use it for brush resizing in Photoshop.
@@ -1980,36 +2012,74 @@ sendinput {Lalt up}
 tooltip,
 return
 
-;This will work, but ONLY if you don't have some OTHER AutoHotKey script running, even one that has nothing to do with Photoshop specifically. .... in THAT case, the keys end up being not fully blocked, and can slip through.
-
-;actually, just to keep things safe, I'm going to manually block them.
-!F14::
-!F15::
-;!F16::
-;!F17::
-;do nothing.
-return
-
-;;ATTENTION WACOM TABLET USERS. I APOLOGISE FOR BREAKING YOUR SHIT. WACOM/ADOBE COULD THINK OF NO WAY TO LIKE, INTERFACE DIRECTLY. THEY HAD TO GO AND STEAL SOME OBSCURE SHORTCUTS THAT THEY THOUGHT NOBODY WOULD USE. WELL THEY DIDN'T KNOW THAT TARAN "MACRO" VAN HEMERT WAS ON THE CASE.
-;;ANYWAY, YOU CAN JUST REMOVE THE ABOVE STUFF AND GET YOUR WACOM SHORTCUTS BACK. (Thread about wacom stuff: https://forums.adobe.com/thread/1453594)
-
-F5::
-sendinput, {F5} ;this is my shortcut for "Rasterize > Layer"
+;and this is for the color picker HUD in photoshop. NICE!
+;i just wish it worked when i am on the canvas even while NOT above the actual image, but also on the dark grey edges.
+F15::
+;tooltip, f15
+sendinput {Lalt down}
+sendinput {Lshift down}
+sendinput {Rbutton down}
+sleep 1 ;just because. Maybe this is a bad idea though.
+keywait, F15 ;waits for F15 to be released
 sleep 1
-sendinput, ^!+{F5} ;this is my shortcut for "Rasterize > Layer style"
-;You're not allowed to put both of these commands on the same shortcut, but to that I say BULLSHIT, I DO WHAT I WANT.
-sleep 10
-sendinput, ^!k ;ctrl alt K is my photoshop shortcut for Layer Mask > Apply.
+sendinput {Rbutton up}
+sendinput {Lshift up}
+sendinput {Lalt up}
+;tooltip,
+return
+
+; zoom using your mouse movement.
+F20::
+;note that I've rebound my capslock to be F20, using iCue. So it becomes a very useful extra key right on homerow.
+;in this case, I'm gonna use it for zooming around in photoshop using the mouse. usually you have to press ctrl, space, and left click, all at the same time, and THEN moving the mouse will do stuff. With this macro, you press one key instead of 3.
+sendinput {Rctrl down}
+sendinput {space down}
+sendinput {Lbutton down}
+sleep 1 ;just because. Maybe this is a bad idea though.
+keywait, F20 ;waits for F20 to be released
+sleep 1
+sendinput {Lbutton up}
+sendinput {space up}
+sendinput {Rctrl up}
+return
+
+; zoom using your mouse movement, again.
+F18::
+;My Corsiar K95 RGB macro key G7 is set to F18. I'm just trying this macro here as well.
+sendinput {Rctrl down}
+sendinput {space down}
+sendinput {Lbutton down}
+sleep 1 ;just because. Maybe this is a bad idea though.
+keywait, F18 ;waits for F18 to be released
+sleep 1
+sendinput {Lbutton up}
+sendinput {space up}
+sendinput {Rctrl up}
 return
 
 
 
-;This is absolutely bizarre. When I had the below shortcuts in their own separate script,, F15 and F14 when paired with alt and right mouse button clicks, and manual LEFT mouse button clicks,, would zoom in and rotate the canvas, respectively. IDK wtf is going on with that.
+;The following will circumvent Photoshop's stupid requirement to hold CTRL for zooming...
 
-;fix stupid requirement to hold CTRL for photoshop zooming...
+;;OLD CODE FOR - key:
+; -::
+; send, ^- ;zoom out
+; sleep 5
+; ;send, {ctrl up} ;I've had issues with modifier keys getting stuck
+; return
+
+;;;NEW CODE FOR - KEY:
+;Taran note: This new code will fix this so that it still DOES work when "the Save As" dialouge window is open, since i do want to use the - key to type stuff in those cases.
 -::
-send, ^- ;zoom out
+if WinActive("ahk_class #32770") and WinActive("ahk_exe Photoshop.exe") and WinActive("Save As")
+{
+	send, - ;normal - keystroke
+}
+else
+{
+	send, ^- ;zoom out
 sleep 5
+}
 ;send, {ctrl up} ;I've had issues with modifier keys getting stuck
 return
 
@@ -2020,10 +2090,37 @@ sleep 5
 return
 
 
+;#IfWinActive ahk_exe Photoshop.exe
+
+
+;;---FYI----
+;;In Photoshop,
+;;alt F13 rotates 15 degrees clockwise
+;;alt F14 rotates 15 degrees counter clockwise
+;;alt F15 is zoom out
+;;alt F16 is zoom in
+;;They cannot be remapped in Photoshop. Nor do they show up in the list you get when you press the Summarize button in Photoshop's shortcuts menu.
+;;https://twitter.com/TaranVH/status/1129206615515705344
+;;https://forums.adobe.com/thread/1453594
+
+
+;actually, just to keep things safe, I'm going to manually block some of them.
+!F14::
+!F15::
+;!F16::
+;!F17::
+;;do nothing.
+return
+
+;;ATTENTION WACOM TABLET USERS. I APOLOGISE FOR BREAKING YOUR SHIT. WACOM/ADOBE COULD THINK OF NO WAY TO LIKE, INTERFACE DIRECTLY. THEY HAD TO GO AND STEAL SOME OBSCURE SHORTCUTS THAT THEY THOUGHT NOBODY WOULD USE. WELL THEY DIDN'T KNOW THAT TARAN "MACRO" VAN HEMERT WAS ON THE CASE.
+;;ANYWAY, YOU CAN JUST REMOVE THE ABOVE STUFF AND GET YOUR WACOM SHORTCUTS BACK. (Thread about wacom stuff: https://forums.adobe.com/thread/1453594)
 
 ;;&&&&&&&&&&&&&&&&&&&& PHOTOSHOP END &&&&&&&&&&&&&&&&&&&&&
 
-;;^^^^^^^^^^PREMIERE SUPER FUCTION KEYS (F13 and up)^^^^^^^^^^^^^^^
+
+
+;;vvvvvvvvvvvv PREMIERE SUPER FUCTION KEYS (F13 and up)vvvvvvvvvvv
+;PREMIEREKEYS
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 
@@ -2059,10 +2156,13 @@ return
 
 ;Macro key G8
 ~F19::tracklocker()
-~+F19::tracklocker()
+~+F19::tracklocker() ;idk why i have this working for SHIFT as well, but i suspect it actually works differently within the function, if shift is being held down? IDK MAN.
+
+
+;;;;;;;^^^^^^END of PREMIERE SUPER FUCTION KEYS (F13 and up)^^^^^^^^
+
 
 #IfWinActive
-
 
 ;
 ;;I can't use ~ thingies or these keys can very easily get stuck...
@@ -2075,7 +2175,7 @@ Lshift & Rshift::capslock
 ;capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
 
 ;F20 is triggered by capslock, and adds a 2nd layer to keyboard #1.
-;F21 - reserved for a 4th and probably final keyboard
+;F21 - being used as a modifier key to avoid the stuck modifiers bug.
 ;F22 - FREE FOR NOW, PROBABLY
 ;F23 is for the 2nd keyboard, the Logitech K120. Will maintain for sake of tutorials.
 ;F24 (SC076) is the FULL AZIO KEYBOARD. ;F24 used to be used for LuaMacros.
@@ -2166,7 +2266,8 @@ F15::Lbutton
 ; ;experimental caps lock to full screen for firefox:
 ; F20::send, {F11}
 
-;"scale" key will fullscreen firefox now. (macro G12)
+;"scale" key will fullscreen firefox now. (macro key G12)
+;I don't use this one much, I keep forgetting i have it.
 F14::send, {F11}
 
 
@@ -2179,7 +2280,7 @@ msgbox, %ActiveId%
 ;returns 0x1c0b9c ... and only 3 unique codes for each of the 3 Premiere windows I have on my 3 monitors. Does NOT consider subwindows, though maaaaybe it can get that going....
 ControlGetFocus, OutputVar, A
 msgbox, %OutputVar%
-return
+Return
 
 ^+end::checkFullness()
 
@@ -2190,9 +2291,13 @@ return
 ^r::
 send ^s
 sleep 10
-SoundBeep, 1000, 500
-reload
-return
+Soundbeep, 1000, 500
+Reload
+Return
+
+F10::RETURN ;gets rid of stupid menu acceleration thing.
+F11::RETURN ;gets rid of stupid full screen thing
+F12::RETURN ;gets rid of stupid top bar removal thing
 
 
 ;#IfWinActive
@@ -2332,6 +2437,13 @@ ConvertSentence()
 
 ^+!Escape::ExitApp
 
-^+/::sendinput, !{F9}
+;^+/::sendinput, !{F9}
 ;
 ;
+
+~=::
+~VK3D::
+tooltip, what
+sleep 50
+tooltip,
+return

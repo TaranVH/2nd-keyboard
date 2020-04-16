@@ -441,7 +441,9 @@ If (A_LoopFileTimeModified>Rec)
   }
 }
 
-Run %Fpath%
+;Run %Fpath%
+run, firefox.exe %Fpath%
+;unfortunately, since I don't already know the tab NAME, (which is required for JEE_FirefoxFocusTabByName) I can't make it so that it'll merely switch to that tab if it's already open. Instead, it'll always open a new tab with this URL. Unfortunate, but fixing it is beyond my capabilities for now.
 
 ; ; USING THE SCRIPT
 ; !n::
@@ -583,7 +585,15 @@ if pleasePrepend = 1 ;i think this is for the changeable stream deck folder shor
 	{
 	FileRead, SavedExplorerAddress, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
 	;msgbox, current f_path is %f_path%
-	f_path = %SavedExplorerAddress%\%f_path% ;there is no need to use . to concatenate
+	if f_path =
+		{
+		; if f_path is BLANK, then we don't want to add a \ onto the end just by itself, as that will be done later!
+		;msgbox, I did not add a blank f_path.
+		f_path = %SavedExplorerAddress%
+		}
+	else
+		f_path = %SavedExplorerAddress%\%f_path% ;there is no need to use . to concatenate
+		
 	;msgbox, new f_path is %f_path%
 	;SUPER IMPORTANT NOTE - you must have explorer show the entire path in the title bar, or this doesn't work. I do need a better way to get that information. Something DLL based or whatever.
 	}
@@ -944,11 +954,37 @@ if WinActive("ahk_class OpusApp")
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
 
 switchToFirefox(){
-sleep 11 ;this is to avoid the stuck modifiers bug
-; ; sleep 16 ;So this is here because I think that with the way I have iCUE set up, it won't always get to the Right CTRL UP event because it's no longer on that profile, you know what I mean? So this gives it a bit more time to do that.
+sleep 12 ;;I need this because I put a 10ms delay before the key UP events in iCue. I had to do THAT because otherwise it would go too fast for AHK to even notice. Without this delay, those up events will happen while the function is running, which can lead to modifier keys that are virtually stuck DOWN, which is super bad and annoying.
 
-sendinput, {SC0E8} ;scan code of an unassigned key. Do I NEED this?
 
+;sendinput, {SC0E8} ;scan code of an unassigned key. Do I NEED this?
+
+;;look at the below to diagnose MODS error later. i think it double tapped? bad omen...
+/*
+01  000	 	d	3.56	LButton        	Loupedeck Configuration
+01  000	 	u	0.13	LButton        	Adobe Premiere Pro 2020 - Z:\Linus\5. Fast As Possible\1. Pending\what happened to toslink\Project\
+01  000	 	d	2.02	LButton        	
+01  000	 	u	0.11	LButton        	N/A
+A3  11D	 	d	5.11	RControl       	Loupedeck Configuration
+70  03B	h	d	0.00	F1             	
+A3  11D	i	u	0.02	RControl       	
+00  0E8	i	d	0.00	not found      	
+70  03B	s	u	0.00	F1             	
+00  0E8	i	u	0.00	not found      	
+A3  11D	i	d	0.00	RControl       	
+A3  11D	 	u	0.00	RControl       	
+01  000	 	d	0.77	LButton        	Loupedeck Taran - Google Docs - Mozilla Firefox
+01  000	 	u	0.11	LButton        	
+0D  01C	#	d	0.59	Enter          	
+0D  01C	#	u	0.11	Enter          	
+49  017	#	d	0.84	i              	
+20  039	#	d	0.09	Space          	
+49  017	 	u	0.01	i              	
+20  039	 	u	0.06	Space          	
+57  011	#	d	0.16	w              	
+57  011	 	u	0.08	w            
+
+*/
 
 
 IfWinNotExist, ahk_class MozillaWindowClass
@@ -1110,8 +1146,9 @@ Process, Exist, WINWORD.EXE
 sleep 2
 send, {Rctrl up}
 send, {Lctrl up}
-;IDK if that even works...
+
 }
+
 
 
 switchWordWindow()
@@ -1850,7 +1887,8 @@ WinActivate ahk_class MozillaWindowClass ;so i use the CLASS instead.
 sleep 15
 WinGet, the_current_id, ID, A
 vRet := JEE_FirefoxFocusTabByName(the_current_id, name, alternativeName)
-;The alternative name is for Gmail which sometimes flashes "MEssage from Nick Light" or whatever. It has to be nonsense text so it won't activate any other tab in cases where it's not needed.
+;So if the tab's NAME is already open as one of Firefox's tabs, it'll simply switch to that tab. Unfortunately, we can't do this based upon  just the URL, which would be so much easier...
+;The alternative name is for Gmail which sometimes flashes "Message from Nick Light" or whatever. It has to be nonsense text so it won't activate any other tab in cases where it's not needed.
 ;tooltip, vret is %vRet%
 if (vRet = 0)
 	run, firefox.exe %URL%

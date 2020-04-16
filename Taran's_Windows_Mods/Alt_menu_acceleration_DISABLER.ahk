@@ -14,10 +14,11 @@ SendMode Input
 #MenuMaskKey vk07  ; vk07 is unassigned. 
 #UseHook
 
+;; take this tutorial if you don't know how AHK works. https://www.autohotkey.com/docs/Tutorial.htm
 
 
-;;;; THE READ ME IS BELOW. TRUST ME, YOU SHOULD READ IT. ;;;;
 
+;;;; THE READ ME IS BELOW. TRUST ME, YOU SHOULD READ IT. BUT FIRST... ;;;;
 
 
 ; *********** IS THE WINDOWS / XBOX GAME BAR GETTING IN YOUR WAY? ************
@@ -66,7 +67,7 @@ SendMode Input
 ; ===== TO USE THE SCRIPT: ===== (This applies to the .exe and .ahk -- they are exactly the same.)
 
 
-;Note that the script will add a little red 🚫 to your task bar, which can be right clicked to be disabled or exited from the menu.
+;Note that the script will add a little red 🚫 to your taskbar, which can be right clicked to be disabled or exited from the menu.
 
 ; You can hold down both ALT keys whenever you want to easily toggle this script on and off. This is useful for things like Premiere's keyboard shortcuts menu, which has ALT-nullification of its own.
 
@@ -78,7 +79,7 @@ SendMode Input
 
 ;  C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
 
-;  C:\Users\TaranWORK\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+;  C:\Users\Taran\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
 
 ;Here's a video about this script: https://www.youtube.com/watch?v=vRld4bVFrpU
@@ -132,6 +133,9 @@ SendMode Input
 
 ; THE SOLUTION:
 
+
+/*
+
 ~LAlt::
 sendinput, {SC0E9 down} ;this is the scan code of an unassigned key. As long as you nor the system never use it for anything else, it can be used in THIS way to cancel the menu acceleration.
 KeyWait, LAlt
@@ -141,7 +145,6 @@ return
 sendinput, {SC0E9 up}
 return
 
-;it was 0E9 before...
 
 
 ~RAlt::
@@ -158,17 +161,26 @@ sendinput, {SC0E9 up}
 ;;tooltip, 
 return
 
+*/
 
-Lalt & Ralt::suspend ;hit both ALT keys simultaneously to toggle the functonality of this script. The tray icon will also change visually, so you will always know.
+;;;;;;;alternatively, it might be as just 2 lines:
+
+~LAlt::Send {Blind}{vk07}
+~RAlt::Send {Blind}{vk07}
+
+
+
+Lalt & Ralt::suspend ;hit both ALT keys simultaneously to toggle the functonality of this script. The tray icon will also change visually, so you will always know. You might want to delete this line if it's messing you up!
+
 
 
 ;;comment in the code below if you wish to reassign alt modifier combinations:
-;; take this tutorial if you don't know how AHK works. https://www.autohotkey.com/docs/Tutorial.htm
+
 
 
 ;!f::msgbox,,,To block modifier key use of alt you can do it like this,0.7
-; !e::msgbox,,,replace msgbox with whatever code you want,0.7
-; !w::msgbox,,,horray for having control of your own computer,0.7
+;!e::msgbox,,,replace msgbox with whatever code you want,0.7
+;!w::msgbox,,,horray for having control of your own computer,0.7
 ;#ifWinActive ahk_exe Adobe Premiere Pro.exe
 
 
@@ -181,3 +193,9 @@ Lalt & Ralt::suspend ;hit both ALT keys simultaneously to toggle the functonalit
 ; !v::v
 ; !w::w
 ; !h::h
+
+;or you could just use RETURN to block the key combo completely.
+
+;I have done all this in ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk
+;It's on line 1726 at the time of this writring, but that will change.
+;To find that, search for: !f::return
