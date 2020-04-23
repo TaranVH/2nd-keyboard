@@ -22,7 +22,7 @@ https://docs.google.com/spreadsheets/d/18e6-OlUzc_1wbGvm9zqMOwtC4oysm6C7XMU1bOf8
 
 #### Other potential methods that I have not personally tested
 - There's also MacroMyKBD - (NEW, UNTESTED, I have no idea if it works. If someone could try it out and report back to me, that'd be greeeaaat) https://github.com/lal12/macroMyKBD
-- There's also 2key, which uses a Raspberry Pi. - (UNTESTED, I also have no idea if this works. Lemme know, if you try it!) https://github.com/Gum-Joe/2Keys/blob/v0.3.5/docs/SETUP.md
+- There's also 2Keys, which uses a Raspberry Pi. - (UNTESTED, I also have no idea if this works. Lemme know, if you try it!) https://github.com/Gum-Joe/2Keys/blob/master/docs/SETUP.md
 
 If all of this just seems like a huge PITA, try the Stream Deck instead: https://youtu.be/vhPLhfP1b_s
 
