@@ -56,10 +56,12 @@ SetKeyDelay, 0 ;warning ---this was absent for some reason. i just added it back
 ; Lots of other explanatory videos other AHK scripts can be found on my youtube channel! https://www.youtube.com/user/TaranVH/videos 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-; Also, I will put shortcuts to all the AHK scripts that I use into my startup folder... which is here for all users:
+; Also, I will put windows shortcuts to all the AHK scripts that I use into my startup folder... which is here for all users:
 ;  C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
 ;  Or here for just one user:
 ;  C:\Users\YOUR_USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+;  There is also one here??
+;  C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
 
 
 ;For some of the firefox/chrome shortcuts, you have to install the ACC library into AutoHotKey (it's pretty easy, just follow the instructions on this page.)
@@ -87,7 +89,8 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 
 ;Avoid using stupid CTRL when alt is released https://autohotkey.com/boards/viewtopic.php?f=76&t=57683
 ;#MenuMaskKey vk07  ; vk07 is (was) unassigned. See my full list of scan codes and virtual keys to see what else is available: 
-#MenuMaskKey sc08A  ; vk07 is (was) unassigned. See my full list of scan codes and virtual keys to see what else is available: https://docs.google.com/spreadsheets/d/1GSj0gKDxyWAecB3SIyEZ2ssPETZkkxn67gdIwL1zFUs/edit#gid=0
+;#MenuMaskKey sc08A  ; vk07 is (was) unassigned. See my full list of scan codes and virtual keys to see what else is available: https://docs.google.com/spreadsheets/d/1GSj0gKDxyWAecB3SIyEZ2ssPETZkkxn67gdIwL1zFUs/edit#gid=0
+#MenuMaskKey vk07
 
 ;_________________________________________________________________________________________
 ;                                                                                                                       
@@ -102,6 +105,9 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ;----------------------------------------------------------------------------------
 ; RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE'S BUILT IN KEYBOARD SHORTCUTS MENU
 ; THESE ARE ESSENTIAL FOR THE SCRIPTS TO WORK PROPERLY.
+
+; YOU CAN SEE/USE ALL MY PREMEIRE SHORTCUTS, THEY ARE HERE! https://github.com/TaranVH/2nd-keyboard/blob/master/Settings_and_shortcuts/
+
 ;----------------------------------------------------------------------------------
 ; KEYS                  PREMIERE FUNCTIONS
 ;----------------------------------------------------------------------------------
@@ -172,10 +178,12 @@ currentTool = "v" ;This is super useful and important for a Premiere script, you
 #if
 
 ;this is pause/break. I'm using it for debugging...
-sc045::
-^sc045::
-+sc045::
-!sc045::
+
+; ^sc045::
+; +sc045::
+; !sc045::
+;scratch that, I think the * (hook??) makes it insensitive to modifiers.
+*sc045::
 ctrlbreak::
 ^ctrlbreak::
 tooltip, pause break
@@ -219,7 +227,8 @@ F9::insertSFX("SimpleWhoosh3")
 F8::insertSFX("SimpleWhoosh8")
 F10::insertSFX("woosh2")
 F11::insertSFX("woosh1")
-F12::instantExplorer("N:\Team_Documents\N_TARAN_THINGS\prompter and cutting_room_floor") ;"FLOOR"
+;F12::instantExplorer("N:\Team_Documents\N_TARAN_THINGS\prompter and cutting_room_floor") ;"FLOOR"
+F12::instantExplorer("Z:\Linus\17. Short Circuit\Transcode\_SC Delivery") ;"FLOOR"
 
 
 
@@ -265,19 +274,19 @@ return
 
 tab::msgbox,,,K120 - you pressed tab. :P,0.8
 
-q::preset("T wipe straight 135")
-w::preset("T wipe straight 225")
+q::preset("T wipe straight 315")
+w::preset("T wipe straight 45")
 
-e::preset("T wipe soft 135")
-r::preset("T wipe soft 225")
+e::preset("T wipe soft 315")
+r::preset("T wipe soft 45")
 
-+q::preset("T wipe WHITE LINE 135")
-+w::preset("T wipe WHITE LINE 225")
++q::preset("T wipe WHITE LINE 315")
++w::preset("T wipe WHITE LINE 45")
 
-+e::preset("T wipe exposure 135")
-+r::preset("T wipe exposure 225")
++e::preset("T wipe exposure 315")
++r::preset("T wipe exposure 45")
 
-;t::preset("T wipe WHITE LINE 315")
+
 t::recallClipboard("t")
 +t::saveClipboard("t")
 
@@ -307,17 +316,17 @@ return
 ; capslock::msgbox, , ,i hate capslock!, 1000
 ;capslock::capslock
 
-a::preset("T wipe straight 45")
-s::preset("T wipe straight 315")
+a::preset("T wipe straight 225")
+s::preset("T wipe straight 135")
 
-d::preset("T wipe soft 45")
-f::preset("T wipe soft 315")
+d::preset("T wipe soft 225")
+f::preset("T wipe soft 135")
 
-+a::preset("T wipe WHITE LINE 45")
-+s::preset("T wipe WHITE LINE 315")
++a::preset("T wipe WHITE LINE 225")
++s::preset("T wipe WHITE LINE 135")
 
-+d::preset("T wipe exposure 45")
-+f::preset("T wipe exposure 315")
++d::preset("T wipe exposure 225")
++f::preset("T wipe exposure 135")
 
 
 
@@ -1039,10 +1048,10 @@ SC061::msgbox,,, scancode061,1
 ;pause::msgbox, is this the PAUSE key?? IDK
 ;Break::msgbox, Maybe THIS is the pause/break key???
 
-pgdn::tooltip, you pressed F24 then %A_thishotkey%
+pgdn::Volume_Down
 end::tooltip, you pressed F24 then %A_thishotkey%
 delete::sendinput, ^!+j ;lock/unlock all audio tracks
-pgup::tooltip, you pressed F24 then %A_thishotkey%
+pgup::Volume_Up
 home::tooltip, you pressed F24 then %A_thishotkey%
 insert::sendinput, ^!+l ;lock/unlock all video tracks
 
@@ -1466,7 +1475,7 @@ windowSwitcher(savedCLASS, savedEXE)
 return
 
 ;No K95 macro key assigned:
-^F9::windowSwitcher("ahk_exe AfterFX.exe","C:\Program Files\Adobe\Adobe After Effects CC 2017\Support Files\AfterFX.exe") ;NOTE: was used for toggle all video tracks in premiere.
+; ^F8::windowSwitcher("ahk_exe AfterFX.exe","C:\Program Files\Adobe\Adobe After Effects CC 2017\Support Files\AfterFX.exe") ;NOTE: was used for toggle all video tracks in premiere.
 
 ; ; ^F10::windowSwitcher("ahk_exe StreamDeck.exe","C:\Program Files\Elgato\StreamDeck\StreamDeck.exe")
 
@@ -1501,7 +1510,25 @@ Joy3::msgbox you hit Joy3
 ;----FIRST WE DO GLOBAL APPLICATION ASSIGNMENTS.-------
 #IfWinActive
 
-F21::return ;I didn't have this here until 2020 04 15, so idk if I actually need it...
+; ;F21::return ;I didn't have this here until 2020 04 15, so idk if I actually need it...
+
+; ;;;update for the above line: "F21::Return" MAY cause the stuck modifiers error? Here's the keyhistory:
+; 84  06C	s	d	0.48	F21            	
+; 71  03C	h	d	0.00	F2             	
+; 71  03C	s	u	0.02	F2             	
+; A2  01D	i	d	0.00	LControl      <? AHK automatic 	
+; 84  06C	s	u	0.00	F21           < it gets tangled inside F21...
+; A0  02A	i	d	0.00	LShift         	
+; 79  044	i	d	0.00	F10            	
+; 79  044	i	u	0.00	F10            	
+; A0  02A	i	u	0.00	LShift         	
+;										<Lcontrol should have been sent UP.
+; A0  02A	i	d	0.02	LShift         	<and this is the next command to be sent, and it is behaving normally.
+; 79  044	i	d	0.00	F10            	
+; 79  044	i	u	0.00	F10            	
+; A0  02A	i	u	0.00	LShift         	
+; ;and then notice how Lcontrol is NOT sent back up. Only down.
+
 
 ;macro key G1 on K95. IT'S MY UNIVERSAL SEARCH EVERYTHING-ER
 ;^+J::search() ;old shortcut
@@ -1556,16 +1583,46 @@ F21 & F6::Lbutton
 
 ;Macro key G10
 #IfWinActive ahk_exe firefox.exe
-F18::Send, !+5 ;alt shift 5 is "strikethrough" in Google docs...
+F18::Sendinput, !+5 ;alt shift 5 is "strikethrough" in Google docs...
+; F18::
+; sendinput, {Ralt down}
+; sleep 2
+; sendinput, {Rshift down}
+; sleep 2
+; Sendinput, 5 ;alt shift 5 is "strikethrough" in Google docs...
+; sleep 2
+; sendinput, {Rshift up}
+; sleep 2
+; sendinput, {Ralt up}
+; ;this now causes a super annoying BEEDLEDEBOOO windows noise, even with alt nullifier closed, and i have no idea how to fix it.
+; ;;okay i figured something out. it happens when you hit ALT and then hit 5. so i think it IS my new alt nullifier not working as well as the old one?
+
+; ; 1B  001	#	d	0.17	Escape         	
+; ; 1B  001	 	u	0.13	Escape         	
+; ; 81  069	h	d	0.26	F18            	
+; ; A4  038	i	d	0.00	LAlt           	
+; ; A0  02A	i	d	0.02	LShift         	
+; ; 35  006	i	d	0.00	5              	
+; ; 35  006	i	u	0.00	5              	
+; ; A0  02A	i	u	0.00	LShift         	
+; ; A4  038	i	u	0.01	LAlt           	
+; ; 81  069	s	u	0.11	F18            	
+; ; 13  045	h	d	1.98	Pause          	
+; ; 13  045	s	u	0.06	Pause     
+
+return
 
 #IfWinActive ahk_exe chrome.exe
-F18::Send, !+5 ;alt shift 5 is "strikethrough" in Google docs...
+F18::Sendinput, !+5 ;alt shift 5 is "strikethrough" in Google docs...
 
 
 ;;note to self - try to get this script here working
 ;Macro Key G12 (labeled "scale")
+
 #IfWinActive ahk_exe winword.exe
 ~F14::F2 ;F2 is set to "go to previous comment" in Word.
+;;;;NEW assignment: Macro key G6, currently labeled "reselect."
+;;;;F21 & F6::F2 ;F2 is set to "go to previous comment" in Word.
 
 
 
@@ -1971,7 +2028,7 @@ F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^o ;this WAS ctrl W instead, but i wanted to use that for duplicating layers. so i do. Also note that CTRL E is combining layers.
 
-;F4 is AVAILABLE
+;F4 is AVAILABLE for photoshop!?
 
 ;F5 is to SUPER rasterize a layer. It does 3 things to flatten/rasterize a layer instead of one.
 F5::
@@ -2441,9 +2498,14 @@ ConvertSentence()
 ;
 ;
 
-~=::
-~VK3D::
-tooltip, what
-sleep 50
-tooltip,
-return
+
+; ~VK3D::
+; tooltip, what
+; sleep 50
+; tooltip,
+; return
+
+#ifwinactive
+
+; SC0EB::tooltip, gonna see if keys can be tirggered when i am inside of another function.
+; SC0E8::tooltip, sc0e8 EIGHT

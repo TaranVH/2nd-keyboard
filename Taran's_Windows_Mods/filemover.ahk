@@ -4,9 +4,12 @@ Menu, Tray, Icon, shell32.dll, 156
 #SingleInstance force ;only one instance of this script may run at a time!
 
 #IfWinActive ahk_exe explorer.exe
+^F9::Filemover("Z:\Linus\17. Short Circuit\SC Transcode\SC Match Source")
 ^F10::Filemover("Z:\Linus\2. Tech Linked\5. Transcode\TL Match Source")
 ^F11::Filemover("Z:\Linus\5. Fast As Possible\_FAP Transcoding\FAP Match Source")
 ^F12::Filemover("Z:\Linus\1. Linus Tech Tips\Transcode\LTT Match Source")
+
+;^F8::Filemover("C:\Users\Taran\Documents\move test again")
 
 ; ^+F11::Filemover("Z:\Linus\5. Fast As Possible\_FAP Transcoding\FAP 1920 x 1080")
 ; ^+F12::Filemover("Z:\Linus\5. Fast As Possible\_FAP Transcoding\FAP Match Source")
@@ -67,7 +70,8 @@ nlines = 0
 
 ;BEGIN FUNCTION DEFINITION:
 FileMover(publishLOC){
-;msgbox,,,filemover,1
+
+;msgbox,,,Location is %publishLOC%,2
 
 
 ;https://www.autohotkey.com/docs/misc/Threads.htm
@@ -100,14 +104,24 @@ StringTrimLeft,file2move,filetomovePATH, %slashposition%
 ;msgbox, file2move = `n%file2move% `n`nfiletomovePATH =`n%filetomovePATH%
 
 ;https://www.autohotkey.com/docs/commands/LoopFile.htm the following code does work to list files in a given directory!
+
+;msgbox,Location is %publishLOC%
+
+;IMPORTANT NOTE:
+;If your target folder is EMPTY, then this script will not work!
+;IDK how to fix it. AHG!
+
 FileList =  ; Initialize to be blank.
 Loop, Files, %publishLOC%\*.*, DFR
     FileList = %FileList%%A_LoopFileName%`n
 Loop, Files, %publishLOC%\*.*, DFR
     FileListLocations = %FileListLocations%%A_LoopFileFullPath%`n ;A_LoopFileDir -or- A_LoopFileFullPath
 
-;;msgbox, FileListLocations = `n%FileListLocations%
-;;msgbox, FileList = `n%FileList%
+;if the location does not exist, both of these are blank.
+;OR something else bizzare has happened, IDK what or how...
+
+;msgbox, FileListLocations = `n%FileListLocations%
+;msgbox, FileList = `n%FileList%
 
 counter = 0
 nlines = 0

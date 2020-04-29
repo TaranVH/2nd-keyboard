@@ -131,9 +131,14 @@ SendMode Input
 ;ALT still works normally for everything else.
 ;ALT I R and other key combos stil work, but now you must be holding ALT down the whole time.
 
-; THE SOLUTION:
+; THE SOLUTION IS LITERALLY JUST TWO LINES:
 
+~LAlt::Sendinput {Blind}{vk07}
+~RAlt::Sendinput {Blind}{vk07}
 
+;Shoutouts to Joshua Elek for sending me the above, improved script!
+
+;;BELOW IS MY OLD SOLUTION THAT IS PRETTY GOOD, BUT DOESN'T WORK IF YOU HOLD DOWN ALT FOR MORE THAN A SECOND:
 /*
 
 ~LAlt::
@@ -165,8 +170,7 @@ return
 
 ;;;;;;;alternatively, it might be as just 2 lines:
 
-~LAlt::Send {Blind}{vk07}
-~RAlt::Send {Blind}{vk07}
+
 
 
 
@@ -199,3 +203,69 @@ Lalt & Ralt::suspend ;hit both ALT keys simultaneously to toggle the functonalit
 ;I have done all this in ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk
 ;It's on line 1726 at the time of this writring, but that will change.
 ;To find that, search for: !f::return
+
+
+
+;uh ignore this.
+;this resulted in the error noise...
+
+; 7B  058	#	d	0.64	F12            	
+; 7B  058	 	u	0.08	F12            	
+; 7B  058	#	d	0.41	F12            	
+; 7B  058	 	u	0.08	F12            	
+; A4  038	 	d	0.77	LAlt           	
+; 07  000	i	d	0.00	not found      	
+; 07  000	i	u	0.00	not found      	
+; A4  038	i	u	0.00	LAlt           	
+; 00  0E9	i	d	0.00	not found      	
+; 07  000	i	d	0.00	not found      	
+; A4  038	i	d	0.00	LAlt           	
+; 07  000	i	u	0.00	not found      	
+; A4  038	 	d	0.50	LAlt           	
+; A4  038	 	d	0.03	LAlt           	
+; A4  038	 	d	0.03	LAlt           	
+; A4  038	 	d	0.03	LAlt           	
+; A4  038	 	d	0.03	LAlt           	
+; A4  038	 	u	0.03	LAlt           	
+; 00  0E9	i	u	0.00	not found      	
+; 35  006	#	d	2.48	5              	
+; 35  006	 	u	0.06	5              	
+; 13  045	h	d	1.72	Pause          	
+; 13  045	s	u	0.06	Pause        
+
+; with the new alt killer code that is only 2 lines... it doens't even show up in here...
+   	; ;no noise:
+; 81  069	h	d	0.08	F18            	
+; A4  038	i	d	0.00	LAlt           	
+; A0  02A	i	d	0.00	LShift         	
+; 35  006	i	d	0.00	5              	
+; 35  006	i	u	0.00	5              	
+; A4  038	i	u	0.00	LAlt           	
+; A0  02A	i	u	0.00	LShift         	
+; 1B  001	#	d	0.09	Escape         	
+; 81  069	s	u	0.01	F18            	
+; 1B  001	 	u	0.06	Escape         	
+; 1B  001	#	d	0.06	Escape         	
+; 1B  001	 	u	0.08	Escape         	
+; 1B  001	#	d	0.06	Escape         
+
+; ;;;and YES a noise:	
+; 1B  001	 	u	0.09	Escape         	
+; 1B  001	#	d	0.06	Escape         	
+; 1B  001	 	u	0.06	Escape         	
+; 1B  001	#	d	0.05	Escape         	
+; 1B  001	 	u	0.08	Escape         	
+; 81  069	h	d	0.09	F18            	
+; A4  038	i	d	0.00	LAlt           	
+; A0  02A	i	d	0.00	LShift         	
+; 35  006	i	d	0.00	5              	
+; 35  006	i	u	0.00	5              	
+; A4  038	i	u	0.00	LAlt           	
+; A0  02A	i	u	0.00	LShift         	
+; 81  069	s	u	0.09	F18            	
+; 13  045	h	d	1.64	Pause          	
+; 13  045	s	u	0.08	Pause          	
+; Press [F5] to refresh.
+
+;;biggest differeence is that the firs tone has an escape down event still inside the F18 events. idk why.
+;also the 2nd one has more milliseconds on the f18 up event. that's pretty much it.

@@ -1,14 +1,14 @@
 # 2nd-keyboard
 ALL of Taran's scripts - (not just for the 2nd keyboard.)
 
-I'm the main video editor for Linus Media Group. We put out 1 or more videos every day, so I had to learn how to work quickly, without sacrificing quality.
+I'm the main video editor for Linus Media Group. We put out multiple videos every day, so I had to learn how to work quickly, without sacrificing quality.
 These AutoHotKey scripts speed up my workflow significantly. (Mostly for Premiere Pro and Explorer)
 
 I pioneered the use of a 2nd keyboard purely for macros, and later, the concept of "wrapping" keystrokes inside of other keystrokes, (ideally, the super-function keys (F13-F24)) as a means of massively multiplying the number of unique available keys.
 
 ------------
 
-Adding a 2nd, independent keyboard is remarkably difficult, as Windows has no native support for distinguishing between multiple keyboards. There are many possible solutions, which vary greatly in difficulty, functionality, stability, and price. Here's a spreadsheet that breaks it all down for you. My preferred solution might not be best for you:
+Adding a 2nd, independent keyboard is remarkably difficult, as Windows has no native support for distinguishing between multiple keyboards. There are many possible solutions, which vary greatly in difficulty, functionality, stability, and price. Here's a spreadsheet that breaks it all down for you. My preferred solution (QMK) might not be best for you:
 
 https://docs.google.com/spreadsheets/d/18e6-OlUzc_1wbGvm9zqMOwtC4oysm6C7XMU1bOf8Nrc/edit?usp=sharing
 
@@ -20,11 +20,13 @@ https://docs.google.com/spreadsheets/d/18e6-OlUzc_1wbGvm9zqMOwtC4oysm6C7XMU1bOf8
 - Razer Synapse (Cyonosa Chroma) https://youtu.be/GttedCcyxa4
 - QMK (Hasu USB converter, my current solution.) https://youtu.be/GZEoss4XIgc
 
-#### Other potential methods that I have not personally tested
-- There's also MacroMyKBD - (NEW, UNTESTED, I have no idea if it works. If someone could try it out and report back to me, that'd be greeeaaat) https://github.com/lal12/macroMyKBD
-- There's also 2key, which uses a Raspberry Pi. - (UNTESTED, I also have no idea if this works. Lemme know, if you try it!) https://github.com/Gum-Joe/2Keys/blob/v0.3.5/docs/SETUP.md
 
-If all of this just seems like a huge PITA, try the Stream Deck instead: https://youtu.be/vhPLhfP1b_s
+#### Other potential methods that I have not personally tested
+- https://mediachance.com/multikeyboard/ (This might be driver-based!)
+- MacroMyKBD https://github.com/lal12/macroMyKBD
+- 2key, which uses a Raspberry Pi. https://github.com/Gum-Joe/2Keys/blob/v0.3.5/docs/SETUP.md
+
+If all of this just seems like a huge PITA, just buy a Stream Deck instead: https://youtu.be/vhPLhfP1b_s
 
 NOTE: You do not need a 2nd keyboard to use AutoHotKey. Most poeple don't. By the time you need to add a 2nd keyboard, you should already be quite familiar with how AutoHotKey works. You can probably use your function keys for AHK macros, and if your main keyboard has dedicated macro keys, you can also use those.
 
@@ -43,6 +45,8 @@ Some of the scripts are #include-d in other scripts. The MAIN script from which 
 Some scripts can stand entirely on their own, like this one: https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/Both_Accelerated_Scrolling_1.3_AND_Cursor_click_visualizer.ahk
 
 To see most of these scripts in action during a real workday, check out my "World's Most Advanced Editing Tutorial" https://www.youtube.com/watch?v=O6ERELse_QY
+
+All my custom Premiere, Photoshop, and After Effects keyboard shortcuts can be found here: https://github.com/TaranVH/2nd-keyboard/tree/master/Settings_and_shortcuts
 
 Please note, I'm not a real programmer (in this lifetime.) My organization can be bad, and my code can be spaghetti-y. I have, however, done extensive commenting... so if you know how to code, it should be pretty easy to figure out what's going on.
 
@@ -78,13 +82,17 @@ The only disadvantage is that these AHK scripts will be available to ALL users o
 
 Make sure to populate your startup folder with file shortcuts, to launch all the scripts you want as soon as the computer boots up. KEEP IN MIND that there are TWO startup folders - one for your user account, and one for ALL users. Here they are:
 
+*C:\Users\[YOUR_USERNAME]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup*
+
 *C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp*
 
-*C:\Users\TaranWORK\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup*
+And apparently there's another one here??
+
+*C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
 
 ---
 
-**If you're ready to kick it up a notch, check out these interesting related repositories**
+**Some interesting-looking related repositories**
 
 https://github.com/TaranVH/2nd-keyboard/pull/27 (easier install of Interception)
 

@@ -1,6 +1,6 @@
 ﻿
 
-StringToSend = preset("crop full")
+StringToSend = preset: crop full
 Send_WM_COPYDATA(StringToSend)
 preset("crop full")
 exitapp

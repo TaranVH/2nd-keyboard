@@ -441,8 +441,12 @@ If (A_LoopFileTimeModified>Rec)
   }
 }
 
-;Run %Fpath%
-run, firefox.exe %Fpath%
+msgbox, %Fpath%
+
+Run %Fpath%
+;run, firefox.exe %Fpath% ;;if you use this, it'll open up tons of firefox tabs, each one with a different word from the title. kind of interesting, but not at all what i want, lol.
+
+
 ;unfortunately, since I don't already know the tab NAME, (which is required for JEE_FirefoxFocusTabByName) I can't make it so that it'll merely switch to that tab if it's already open. Instead, it'll always open a new tab with this URL. Unfortunate, but fixing it is beyond my capabilities for now.
 
 ; ; USING THE SCRIPT
@@ -577,11 +581,11 @@ InstantExplorer(f_path,pleasePrepend := 0)
 {
 ;this has been heavily modified from https://autohotkey.com/docs/scripts/FavoriteFolders.htm
 
-send {SC0E8} ;scan code of an unassigned key. This is needed to prevent the item from merely FLASHING on the task bar, rather than opening the folder. Don't ask me why, but this works.
+sendinput, {blind}{SC0E8} ;scan code of an unassigned key. This is needed to prevent the item from merely FLASHING on the task bar, rather than opening the folder. Don't ask me why, but this works. Also, this is helpful for debugging.
 
 ;msgbox, hello
 
-if pleasePrepend = 1 ;i think this is for the changeable stream deck folder shortcuts
+if pleasePrepend = 1 ;his is for the changeable per-project folder shortcuts
 	{
 	FileRead, SavedExplorerAddress, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
 	;msgbox, current f_path is %f_path%
@@ -954,18 +958,21 @@ if WinActive("ahk_class OpusApp")
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
 
 switchToFirefox(){
-sleep 12 ;;I need this because I put a 10ms delay before the key UP events in iCue. I had to do THAT because otherwise it would go too fast for AHK to even notice. Without this delay, those up events will happen while the function is running, which can lead to modifier keys that are virtually stuck DOWN, which is super bad and annoying.
+;sleep 12 ;;I need this because I put a 10ms delay before the key UP events in iCue. I had to do THAT because otherwise it would go too fast for AHK to even notice. Without this delay, those up events will happen while the function is running, which can lead to modifier keys that are virtually stuck DOWN, which is super bad and annoying.
 
 
-;sendinput, {SC0E8} ;scan code of an unassigned key. Do I NEED this?
+sendinput, {blind}{SC0E9} ;scan code of an unassigned key. Do I NEED this?
+;hmmm, this will force a sending of RCTRL UP because this thing itself does NOT have any modifier keys assigned to it. which means if we use BLIND instead, then that should not happen, right? hmmm.
+;And then it sends rCTRL DOWN just after, because it's trying not to mess stuff up, oh i see what's going on there, okay....
 
+;sleep 100
 ;;look at the below to diagnose MODS error later. i think it double tapped? bad omen...
 /*
 01  000	 	d	3.56	LButton        	Loupedeck Configuration
 01  000	 	u	0.13	LButton        	Adobe Premiere Pro 2020 - Z:\Linus\5. Fast As Possible\1. Pending\what happened to toslink\Project\
 01  000	 	d	2.02	LButton        	
 01  000	 	u	0.11	LButton        	N/A
-A3  11D	 	d	5.11	RControl       	Loupedeck Configuration
+A3  11D	 	d	5.11	RControl       	Loupedeck Configuration <----------i think it happened right here
 70  03B	h	d	0.00	F1             	
 A3  11D	i	u	0.02	RControl       	
 00  0E8	i	d	0.00	not found      	
@@ -997,7 +1004,9 @@ if WinActive("ahk_exe firefox.exe")
 	}
 if WinActive("ahk_exe firefox.exe")
 	{
-	Send ^{tab}
+	Sendinput, {blind}^{tab} ;this one seems to be best. If Rctrl is still being held down by iCue, then AHK doesn't bother sending its own CTRL event, nor does it try to undo the effects of an existing modifier key by sending it up and then down again real quickly... all possible because of {blind} !
+	;Sendinput, {blind}<^{tab} ; this does not work, it just sends (SHIFT ,) instead.
+	;Sendinput, {blind}{rctrl down}{tab}{rctrl up} ;this WILL work to use rCONTROL even if Lcontrol is already being held down. Interesting, but not neccessary in this script.
 	}
 else
 	{
@@ -1032,8 +1041,9 @@ sleep 2
 ;Press SHIFT and macro key 16, and it'll switch between different WINDOWS of firefox.
 
 switchToOtherFirefoxWindow(){
-sleep 11 ;this is to avoid the stuck modifiers bug
-;sendinput, {SC0E8} ;scan code of an unassigned key
+;holy shit this code actually works now for some reason, IDK why!!!
+;sleep 11 ;this is to avoid the stuck modifiers bug ; just kidding, I just needed {blind}
+sendinput, {blind}{SC0E8} ;scan code of an unassigned key
 Process, Exist, firefox.exe
 ;msgbox errorLevel `n%errorLevel%
 	If errorLevel = 0
@@ -1119,15 +1129,14 @@ else
 
 ;maybe need to unstick modifiers
 sleep 2
-send, {Rctrl up}
-send, {Lctrl up}
-;IDK if that even works...
+sendinput {Rctrl up}{Lctrl up}
+;idk if it helps or not.
 }
 
 
 switchToWord()
 {
-sleep 11 ;this is to avoid the stuck modifiers bug
+sleep 11 ;this is to try to avoid the stuck modifiers bug
 ;tooltip, why
 Process, Exist, WINWORD.EXE
 ;msgbox errorLevel `n%errorLevel%
@@ -1142,11 +1151,12 @@ Process, Exist, WINWORD.EXE
 	else
 		WinActivate ahk_class OpusApp
 	}
+
 ;maybe need to unstick modifiers
 sleep 2
-send, {Rctrl up}
-send, {Lctrl up}
-
+sendinput {Rctrl up}{Lctrl up}
+;idk if it helps or not.
+sendinput, {SC0EA} ;scan code of an unassigned key. used for debugging.
 }
 
 
@@ -1184,19 +1194,20 @@ WinActivate, | Microsoft Teams
 
 switchToChrome()
 {
-sleep 11 ;this is to avoid the stuck modifiers bug
+sleep 11 ;this is to avoid the stuck modifiers bug?
 IfWinNotExist, ahk_exe chrome.exe
 	Run, chrome.exe
 
 if WinActive("ahk_exe chrome.exe")
-	Sendinput ^{tab}
+	Sendinput {blind}^{tab}
 else
 	WinActivate ahk_exe chrome.exe
+	
 ;maybe need to unstick modifiers
 sleep 2
-send, {Rctrl up}
-send, {Lctrl up}
-;IDK if that even works...
+sendinput {Rctrl up}{Lctrl up}
+;idk if it helps or not.
+sendinput, {SC0EA} ;scan code of an unassigned key. used for debugging.
 }
 
 switchToStreamDeck(){
@@ -1222,7 +1233,7 @@ if theClass = ahk_class Notepad++
 	if WinActive("ahk_class Notepad++")
 		{
 		sleep 5
-		Send ^{tab}
+		Send {blind}^{tab}
 		}
 	}
 

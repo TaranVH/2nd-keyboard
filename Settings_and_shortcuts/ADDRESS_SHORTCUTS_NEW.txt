@@ -10,6 +10,11 @@ PREMIERE SHORTCUTS LOCATION
 C:\Users\Taran\Documents\Adobe\Premiere Pro\14.0\Profile-Taran\Win
 Taran_PR_keys_2020-04.kys
 
+LUTS FOR EVERYONE
+C:\Program Files\Adobe\Common\LUTs\Technical
+C:\Program Files\Adobe\Common\LUTs\Creative
+---but Windows requires administrative permissions to make changes here, and won't even let you move stuff to here from the server - must be moved to your own C: first.
+
 AFTER EFFECTS SHORTCUTS LOCATION
 C:\Users\Taran\AppData\Roaming\Adobe\After Effects\17.0\aeks
 Taran AE keys 2020-04.txt

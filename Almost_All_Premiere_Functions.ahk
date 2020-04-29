@@ -55,18 +55,21 @@ msgbox, the recallTransition function was deleted cause it never worked very wel
 ;;;;;;temporary tooltip maker;;;;;;
 Tippy(tipsHere, wait:=-333)
 {
-ToolTip, %tipsHere% TP,,,8
+ToolTip, %tipsHere% TIP,,,8
 SetTimer, noTip, %wait% ;--in 1/3 seconds by default, remove the tooltip
 ;return
 }
 
+;goto, goAround
 
 ;;;;;;/temporary tooltip maker;;;;;;
-
+;um I am trying this because i think the tooltip was being deleted like every bazillionth of a second?
 noTip:
 ToolTip,,,,8
 ;removes the tooltip
-return
+
+;goAround:
+
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO! (until canceled with a lone "#IfWinActive")
 
@@ -1187,7 +1190,7 @@ else
 ;EFFECT CONTROLS PANEL ---TRANSFORM ICON CLICKER ;F5::
 clickTransformIcon2()
 {
-Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it causes problems.
+;Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it causes problems.
 
 
 ;result := untwirl()
@@ -1196,24 +1199,28 @@ Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it
 
 ;msgbox,,, %result%,0.7
 
-;the code below serves to save a lot of time in determining if a clip is selected or not.
-;prFocus("Effect Controls")
-sendinput, {F10} ;highlights the effect controls
-sleep 10
+; ; ;the code below serves to save a lot of time in determining if a clip is selected or not.
+; ; ;prFocus("Effect Controls")
+; ; sendinput, {F10} ;highlights the effect controls
+; ; sleep 10
 
-Send {tab}
-;msgbox,,, its after the tab,0.7
-if (A_CaretX = "")
-{
-	;No Caret (blinking vertical line) can be found. Therefore, no clip is selected.
-	;therefore, we will select the top clip at playhead using the code below:
+; ; Send {tab}
+; ; ;msgbox,,, its after the tab,0.7
+; ; if (A_CaretX = "")
+; ; {
+	; ; ;No Caret (blinking vertical line) can be found. Therefore, no clip is selected.
+	; ; ;therefore, we will select the top clip at playhead using the code below:
 	
-	;Send ^p ;"selection follows playhead," but this causes a windows mild error sound most of the time, wtf? So I'm gonna use another shortcut.
-	Sendinput ^{F8} ;"selection follows playhead," alternative mapping for macros to use. (CTRL F8)
-	sleep 15
-	;Send ^p
-	Sendinput ^{F8}
-}
+	; ; ;Send ^p ;"selection follows playhead," but this causes a windows mild error sound most of the time, wtf? So I'm gonna use another shortcut.
+	; ; Sendinput ^{F8} ;"selection follows playhead," alternative mapping for macros to use. (CTRL F8)
+	; ; sleep 15
+	; ; ;Send ^p
+	; ; Sendinput ^{F8}
+; ; }
+
+
+
+
 ;msgbox,,, about to hit F5?,0.5
 sendinput, {F5} ;this is set to "show direct clip manipulation" or whatever in premiere. but it doens't work too well so this is just in case you've got a mogart sleected or something.
 
@@ -1239,8 +1246,8 @@ MouseClick, left
 MouseMove, %xpos%, %ypos%, 0
 BlockInput, Off
 
-sleep 10
-sendinput, ^!+3 ;highlights the timeline
+sleep 20
+sendinput, ^!+3 ;highlights the timeline. Danger, this can sometimes change the sequence IF the effect controls were somehow not yet highlighted, or if some other script highlighted the timeline iguess?
 ;sendinput, 9 ;highlights the timeline
 sleep 10
 sendinput, {F5} ;this is set to "show direct clip manipulation" or whatever in premiere. but it doens't work too well so this is just in case you've got a mogart sleected or something.
@@ -1854,7 +1861,12 @@ tooltip,,,12
 stopPlaying()
 {
 sleep 12 ;this is because all my macros in icue are set to spend 10ms held down before they release. This adds 10ms of latency, but it's worth it to ensure that the keystroke(s) are actually seen by Windows. I should add this to a lot of my other macros. Also, I might reduce it to 5ms in the future.
-send {SC081} ; this is for debugging. it does nothing but show up in the Key History and Script info.
+send {blind}{SC081} ; this is for debugging. it does nothing but show up in the Key History and Script info.
+
+sendevent, {blind}{lshift up}{lctrl up}{rshift up}{rctrl up}{ralt up}{lalt up} ;i have no idea if this will work.
+
+send {blind}{SC082}
+
 if WinActive("ahk_exe Adobe Premiere Pro.exe")
 	{
 	sendinput, {space}
@@ -1903,25 +1915,15 @@ sleep 30
 
 ;now that we have a panel highlighted, we can send keystokes to premiere. But the panel itself is sometimes random. so it's best to use this to FORCE a specific panel that won't screw stuff up.
 
-
+;NOTE: the "5" keystroke is sent to Premiere, but it will NOT show up in the keyhistory. I'm not sure why... i guess it has to do with ControlSend. Just FYI for debugging.
 ControlSend,DroverLord - Window Class3, ^+!5,ahk_exe Adobe Premiere Pro.exe ;this shortcut will highlight the EFFECT CONTROLS, which will NOT also stop playback of the source monitor, if it is already playing.
 sleep 40
 ;msgbox,,, srsly wtf,0.5
 ;msgbox,srsly wtf
 ControlSend,DroverLord - Window Class3, ^+!5,ahk_exe Adobe Premiere Pro.exe
 sleep 10 ;this asn't here at all for a long time. dunno if i really need it.
-; ;just in case these keys get stuck down due to some window making itself the top one, or some autosave somewhere that does the same thing, or something...
-; sleep 30
-; Send,{LCtrl up}
-; Send,{RCtrl up}
-; sleep 1
-; Send,{RAlt up}
-; Send,{RAlt up}
-; sleep 1
-; Send,{LShift up}
-; Send,{RShift up}
-; sleep 2
 
+;FYI, {space} also doesn't show up in the keyhistory.
 ControlSend,,{space}, ahk_exe Adobe Premiere Pro.exe
 ;;;use either the ABOVE line, or the line BELOW. Can't say right now which is better...
 ;ControlSend,DroverLord - Window Class1,{space},ahk_exe Adobe Premiere Pro.exe
@@ -1936,7 +1938,7 @@ if not WinActive(lolClass)
 }
 
 ;end of Premiere play/pause when not in focus.
-send {SC082} ; only used as a sort of a debugging flag thingy. will comment out later. maybe.
+send {blind}{SC083} ; used as a sort of a debugging flag thingy. Always wise to use BLIND on these. ;also probably terrible if you have windows game bar still enabled, lol.
 stopPlayEND:
 }
 
@@ -1986,11 +1988,39 @@ CoordGetControl(xCoord, yCoord, _hWin) ; _hWin should be the ID of the active wi
 ;It is currently F21 & F2::
 easeInAndOut(){
 ;NEW method in 2020 is below.
-;;sleep 11 isn't needed because it was done already.
-send, ^+{f10} ;shortcut is set in premiere to ease in
+;;sleep 11 isn't needed because it was done already....?
+sendevent, {blind}{lshift up}{lctrl up}{rshift up}{rctrl up}{ralt up}{lalt up} ;i have no idea if this will work.
+
+sendinput, {blind}{SC0EB} ;this might send a tooltip. ; edit: nope.
+
+send, {blind}^+{f10} ;shortcut is set in premiere to ease in
 sleep 10
-send, +{F10} ;shortcut is set in premiere to ease out
+sendinput, {blind}{SC0EB} ;this might send a tooltip.
 sleep 5
+send, {blind}+{F10} ;shortcut is set in premiere to ease out
+sleep 5
+
+;sooo, that CTRL SHIFT F10 event has resulted in CTRL being stuck DOWN on more than one occasion. I'm not sure... how... or why...
+; https://autohotkey.com/board/topic/94091-sometimes-modifyer-keys-always-down/
+
+; https://www.autohotkey.com/boards/viewtopic.php?f=5&t=26760
+; ;--- PREVENT KEYS STICKING ---;
+	; KeyList := "Shift|Win|CTRL|alt|Escape|ScrollLock|CapsLock|NumLock|Tab"
+	; Loop, Parse, KeyList, |
+	; {
+		; If GetKeystate(A_Loopfield, "P")
+			; Send % "{" A_Loopfield " Up}"
+	; }
+	; reload
+; ;--- /PREVENT KEYS STICKING ---;
+
+;https://www.autohotkey.com/docs/commands/_HotkeyModifierTimeout.htm
+
+
+sendevent, {blind}{lshift up}{lctrl up}{rshift up}{rctrl up}{ralt up}{lalt up} ;i have no idea if this will work.
+
+sendinput, {blind}{SC0E8} ;scan code of an unassigned key
+
 
 ; ;OLD EASE IN AND EASE OUT before the shortcuts were added for real in 2020
 ; ;This will click on the necessary menu items for you
@@ -2021,7 +2051,7 @@ sleep 5
 ; ;sleep 100
 ; tooltip,
 }
-
+;end of easeinandeaseout()
 
 ;!+.::msgbox, A_workingDir should be %A_WorkingDir%
 
