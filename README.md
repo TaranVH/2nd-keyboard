@@ -82,13 +82,11 @@ The only disadvantage is that these AHK scripts will be available to ALL users o
 
 Make sure to populate your startup folder with file shortcuts, to launch all the scripts you want as soon as the computer boots up. KEEP IN MIND that there are TWO startup folders - one for your user account, and one for ALL users. Here they are:
 
-*C:\Users\[YOUR_USERNAME]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup*
+*C:\Users\\[YOUR_USERNAME]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup*
+(you can open up this by typing "shell:startup" in the explorer bar.) 
 
 *C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp*
-
-And apparently there's another one here??
-
-*C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
+(you can open up this by typing "shell:Common Startup" in the explorer bar.)
 
 ---
 
