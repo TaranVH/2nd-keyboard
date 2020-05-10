@@ -4,7 +4,7 @@ ALL of Taran's scripts - (not just for the 2nd keyboard.)
 I'm the main video editor for Linus Media Group. We put out multiple videos every day, so I had to learn how to work quickly, without sacrificing quality.
 These AutoHotKey scripts speed up my workflow significantly. (Mostly for Premiere Pro and Explorer)
 
-I pioneered the use of a 2nd keyboard purely for macros, and later, the concept of "wrapping" keystrokes inside of other keystrokes, (ideally, the super-function keys (F13-F24)) as a means of massively multiplying the number of unique available keys.
+I pioneered the use of a 2nd keyboard purely for macros, and later, the concept of "wrapping" keystrokes inside of other keystrokes, (ideally, the super-function keys (`F13`-`F24`)) as a means of massively multiplying the number of unique available keys.
 
 ------------
 
@@ -28,7 +28,7 @@ https://docs.google.com/spreadsheets/d/18e6-OlUzc_1wbGvm9zqMOwtC4oysm6C7XMU1bOf8
 
 If all of this just seems like a huge PITA, just buy a Stream Deck instead: https://youtu.be/vhPLhfP1b_s
 
-NOTE: You do not need a 2nd keyboard to use AutoHotKey. Most poeple don't. By the time you need to add a 2nd keyboard, you should already be quite familiar with how AutoHotKey works. You can probably use your function keys for AHK macros, and if your main keyboard has dedicated macro keys, you can also use those.
+NOTE: You do not need a 2nd keyboard to use AutoHotKey. Most people don't. By the time you need to add a 2nd keyboard, you should already be quite familiar with how AutoHotKey works. You can probably use your function keys for AHK macros, and if your main keyboard has dedicated macro keys, you can also use those.
 
 Basically, don't just add a 2nd keyboard because you think it's cool! Make sure you actually need it, because you've run out of space on your main keyboard.
 
@@ -40,7 +40,7 @@ https://autohotkey.com/docs/Tutorial.htm
 I know there's a lot of scripts in this repository. Look here to see what launches when I start my computer:
 https://github.com/TaranVH/2nd-keyboard/blob/master/INFO_and_PROFILES/startup_folder_TARAN_Aug_2018.png
 
-Some of the scripts are #include-d in other scripts. The MAIN script from which most others are run, is this one - so, you can start here: https://github.com/TaranVH/2nd-keyboard/blob/master/ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk
+Some of the scripts are `#include`d in other scripts. The MAIN script from which most others are run, is this one - so, you can start here: https://github.com/TaranVH/2nd-keyboard/blob/master/ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk
 
 Some scripts can stand entirely on their own, like this one: https://github.com/TaranVH/2nd-keyboard/blob/master/Taran's_Windows_Mods/Both_Accelerated_Scrolling_1.3_AND_Cursor_click_visualizer.ahk
 
@@ -48,7 +48,7 @@ To see most of these scripts in action during a real workday, check out my "Worl
 
 All my custom Premiere, Photoshop, and After Effects keyboard shortcuts can be found here: https://github.com/TaranVH/2nd-keyboard/tree/master/Settings_and_shortcuts
 
-Please note, I'm not a real programmer (in this lifetime.) My organization can be bad, and my code can be spaghetti-y. I have, however, done extensive commenting... so if you know how to code, it should be pretty easy to figure out what's going on.
+Please note, I'm not a real programmer (in this lifetime). My organization can be bad, and my code can be spaghetti-y. I have, however, done extensive commenting... so if you know how to code, it should be pretty easy to figure out what's going on.
 
 Help with this repository is appreciated, but don't feel bad if I never officially merge your scripts. I can't trust anything that I haven't fully tested myself, or something with code that I don't recognise or understand. These are my real day-to-day working scripts, so I can't compromise them for anybody. 
 
@@ -68,11 +68,11 @@ To see all my currently assigned scan codes and virual keys, take a look at this
 
 As of August 2018, I've changed the root directory from this:
 
-**C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard**
+`C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard`
 
 to this:
 
-**C:\AHK\2nd-keyboard**
+`C:\AHK\2nd-keyboard`
 
 which is an enormous improvement, since users no longer have to change all the scattered instances of "TaranWORK" to their own username. Now, a huge amount of the scripts are turn-key, as long as you don't move anything or change any file paths.
 
@@ -82,13 +82,13 @@ The only disadvantage is that these AHK scripts will be available to ALL users o
 
 Make sure to populate your startup folder with file shortcuts, to launch all the scripts you want as soon as the computer boots up. KEEP IN MIND that there are TWO startup folders - one for your user account, and one for ALL users. Here they are:
 
-*C:\Users\[YOUR_USERNAME]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup*
+`C:\Users\[YOUR_USERNAME]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup`
 
-*C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp*
+`C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp`
 
 And apparently there's another one here??
 
-*C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
+`C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp`
 
 ---
 
@@ -100,7 +100,7 @@ https://github.com/evilC/AutoHotInterception
 
 https://github.com/sebinside/AHK2PremiereCEP
 
-More info on how to use Adobe CEP:
+**More info on how to use Adobe CEP**
 
 https://www.youtube.com/channel/UCmq_t_-4GLFu_nYaEDDModw/videos
 
