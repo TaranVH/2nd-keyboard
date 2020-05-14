@@ -133,8 +133,10 @@ SendMode Input
 
 ; THE SOLUTION IS LITERALLY JUST TWO LINES:
 
-~LAlt::Sendinput {Blind}{vk07}
-~RAlt::Sendinput {Blind}{vk07}
+~LAlt::Sendinput {Blind}{sc0E9}
+~RAlt::Sendinput {Blind}{sc0E9}
+
+;this was VK07, but i want to be able to distinguish between this, and menu masking, seperately, in my debugging.
 
 ;Shoutouts to Joshua Elek for sending me the above, improved script!
 

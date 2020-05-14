@@ -254,9 +254,11 @@ prFocus(panel) ;this function allows you to have ONE spot where you define your 
 Send ^!+7 ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
 sleep 12
 Send ^!+7 ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
-sleep 7
+sleep 5
+sendinput, {blind}{SC0EA} ;scan code of an unassigned key
+sleep 2
 if (panel = "effects")
-	goto theEnd ;Send ^!+7 ;do nothing. the shortcut has already been pressed.
+	goto theEnd ;do nothing. the shortcut has already been pressed.
 else if (panel = "timeline")
 	Send ^!+3 ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
 else if (panel = "program") ;program monitor
@@ -272,7 +274,7 @@ else if (panel = "effect controls")
 	Send ^!+5
 
 theEnd:
-
+sendinput, {blind}{SC0EB}
 }
 ;end of prFocus()
 
@@ -283,31 +285,52 @@ theEnd:
 
 effectsPanelType(item := "lol")
 {
+;we have already slept.
+MODSL()
 
-;Keyshower(item,"effectsPanelType")
-; if IsFunc("Keyshower") {
-	; Func := Func("Keyshower")
-	; RetVal := Func.Call(item,"effectsPanelType") 
-	; }
-
-
+;msgbox now
 ;prFocus("effects") ;reliably brings focus to the effects panel
 Send ^+!7 ;CTRL SHIFT ALT 7 -- set in premiere to "effects" panel
 sleep 20
 Send ^b ;CTRL B --set in premiere to "select find box." Makes a windows noise if you do it again.
-sleep 20
+;sleep 20
 Send +{backspace} ;shift backspace deletes any text that may be present.
 Sleep, 10
 Send %item%
 ;now this next part re-selects the field in case you want to type anything different
-sleep 10
-send ^!b ;ctrl alt B is ALSO select find box, but doesn't have the annoying windows sound.
+;sleep 10
+send ^!b ;ctrl alt B is ALSO select find box, but doesn't have the annoying windows sound. I may wish to change this to something else, as ALT is inherently dangerous.
 }
 
+#if
 
+MODSL()
+{
+;UNSTICK LEFT MODIFIERS
+sendinput, {blind}{SC0E2} ;scan code of an unassigned key. Used for debugging. Warning: may activate windows Game Bar if you didn't disable it.
 
+sleep, 1 ;okay soooooooooo apparently this is always at LEAST 10 to 15 milliseconds no matter what i do. uuuuugh.
 
+; ; https://www.autohotkey.com/docs/commands/Sleep.htm
 
+sendinput,{blind}{LCtrl up}{LAlt up}{LShift up}
+
+;sendinput, {blind}{SC0E3} ;scan code of an unassigned key. Used for debugging. Warning: may activate windows Game Bar if you didn't disable it.
+
+}
+
+MODSR()
+{
+;UNSTICK RIGHT MODIFIERS
+sendinput, {blind}{SC0E3} ;scan code of an unassigned key. Used for debugging. Warning: may activate windows Game Bar if you didn't disable it.
+
+sleep 1
+
+sendinput, {blind}{RCtrl up}{RAlt up}{RShift up}
+
+sendinput, {blind}{SC0E4} ;scan code of an unassigned key. Used for debugging. Warning: may activate windows Game Bar if you didn't disable it.
+
+}
 
 
 ;;;;;;;;;;FUNCTION FOR DIRECTLY APPLYING A PRESET EFFECT TO A CLIP!;;;;;;;;;;;;
@@ -319,11 +342,11 @@ preset(item)
 {
 
 ;Keyshower(item,"preset") ;YOU DO NOT NEED THIS LINE. -- it simply displays keystrokes on the screen for the sake of tutorials...
-if IsFunc("Keyshower")
-	{
-	Func := Func("Keyshower")
-	RetVal := Func.Call(item,"preset") 
-	}
+; if IsFunc("Keyshower")
+	; {
+	; Func := Func("Keyshower")
+	; RetVal := Func.Call(item,"preset") 
+	; }
 
 ifWinNotActive ahk_exe Adobe Premiere Pro.exe
 	goto theEnding ;and this line is here just in case the function is called while not inside premiere.
@@ -1247,7 +1270,8 @@ MouseMove, %xpos%, %ypos%, 0
 BlockInput, Off
 
 sleep 20
-sendinput, ^!+3 ;highlights the timeline. Danger, this can sometimes change the sequence IF the effect controls were somehow not yet highlighted, or if some other script highlighted the timeline iguess?
+sendinput, {F16} ;highlights the timeline, alternative assignement.
+;sendinput, ^!+3 ;highlights the timeline. Danger, this can sometimes change the sequence IF the effect controls were somehow not yet highlighted, or if some other script highlighted the timeline iguess?
 ;sendinput, 9 ;highlights the timeline
 sleep 10
 sendinput, {F5} ;this is set to "show direct clip manipulation" or whatever in premiere. but it doens't work too well so this is just in case you've got a mogart sleected or something.
@@ -1341,6 +1365,7 @@ MouseClick, left
 ;I don't recommend that anyone else use this. It's really finnicky to set up. Requires a ton of very carefully taken screenshots in order to work...
 tracklocker()
 {
+;sleep 15 ;modifiers?
 BlockInput, on
 BlockInput, MouseMove
 MouseGetPos xPosCursor, yPosCursor

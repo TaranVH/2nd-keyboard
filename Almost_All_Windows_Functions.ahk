@@ -206,8 +206,9 @@ Return, xxOutputVar
 
 ;=============
 
-
+;Macro Key G1, probably.
 search(){
+sleep 13
 if winactive("ahk_exe Adobe Premiere Pro.exe")
 	{
 	if IsFunc("effectsPanelType") {
@@ -441,7 +442,7 @@ If (A_LoopFileTimeModified>Rec)
   }
 }
 
-msgbox, %Fpath%
+;msgbox, %Fpath%
 
 Run %Fpath%
 ;run, firefox.exe %Fpath% ;;if you use this, it'll open up tons of firefox tabs, each one with a different word from the title. kind of interesting, but not at all what i want, lol.

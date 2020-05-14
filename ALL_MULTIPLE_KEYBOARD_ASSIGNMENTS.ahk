@@ -1071,9 +1071,19 @@ right::tooltip, you pressed F24 then %A_thishotkey%
 numpad0::
 if WinActive("ahk_class Premiere Pro")
 	{
+	sleep 1
+	sendinput, {blind}{SC0EE} ;scan code of an unassigned key
+	sleep 1
 	sendinput, ^!+9 ;activate lumetri scopes
 	sleep 25
 	prFocus("timeline")
+	sleep 2
+	;NOTE TO SELF: see MODS NEW left alt while still in premiere.txt for debugging info about when this caused a problem. Left alt was never sent back UP becvause it was interrupted by numpad0 or F24 being released, and i don't know how to prevent that issue.
+	sendinput, {blind}{SC0ED}
+	; sendinput, {lAlt up}
+	; sendinput, {lCtrl up}
+	; sendinput, {lShift up}
+	MODSL()
 	}
 return
 
@@ -1532,7 +1542,7 @@ Joy3::msgbox you hit Joy3
 
 ;macro key G1 on K95. IT'S MY UNIVERSAL SEARCH EVERYTHING-ER
 ;^+J::search() ;old shortcut
-F21 & F1::search()
+F21 & F1::search() ;it will go straight to effectsPanelType() if Premiere is active.
 
 
 #ifWinActive
@@ -1612,6 +1622,8 @@ F18::Sendinput, !+5 ;alt shift 5 is "strikethrough" in Google docs...
 
 return
 
+
+
 #IfWinActive ahk_exe chrome.exe
 F18::Sendinput, !+5 ;alt shift 5 is "strikethrough" in Google docs...
 
@@ -1623,7 +1635,7 @@ F18::Sendinput, !+5 ;alt shift 5 is "strikethrough" in Google docs...
 ~F14::F2 ;F2 is set to "go to previous comment" in Word.
 ;;;;NEW assignment: Macro key G6, currently labeled "reselect."
 ;;;;F21 & F6::F2 ;F2 is set to "go to previous comment" in Word.
-
+F18::^k ;this is strikethrough now.
 
 
 #IfWinActive ahk_exe winword.exe
@@ -2012,7 +2024,7 @@ Media_Next::^numpadMult
 
 ;===================================================================
 #ifWinActive ahk_exe firefox.exe
-!x::!+x ;this is the shortcut for Nuke Anything Enhanced.
+;!x::!+x ;this is the shortcut for Nuke Anything Enhanced.
 
 ;these are shortcuts for youtube's interface to slow down, pause/play, and speed up.
 Media_Next::+.
@@ -2196,6 +2208,8 @@ global VFXkey = "F15" ;the VFXkey variable has to be defined NOW. IDK why.
 instantVFX("anchor_point_vertical")
 return
 
+;F16 is not currently used for anything
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Macro key G7
 ~F17::
@@ -2203,7 +2217,7 @@ global VFXkey = "F17"
 instantVFX("rotation")
 return
 
-;F16 is not currently used for anything
+
 
 ;Macro key G10
 ~F18::
@@ -2247,20 +2261,6 @@ Lshift & Rshift::capslock
 
 #IfWinActive
 
-
-
-<#WheelUp::
-sendinput, {Volume_Up}
-sendinput, {SC0E9}
-return
-
-<#WheelDown::
-sendinput, {Volume_Down}
-sendinput, {SC0E9}
-return
-;;holding the windows key and scrolling will now change the volume.
-;;I'm only gonna use this for laptops that don't have dedicated volume keys.
-;;also this script sucks because it still launches the windows menu but IDK how to resolve that right now and it's just not worth figuring out.
 
 ;;https://jacksautohotkeyblog.wordpress.com/2016/03/08/windows-volume-control-using-your-mouse-wheel-and-the-autohotkey-if-directive-beginning-hotkeys-part-6/
 

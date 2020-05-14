@@ -52,6 +52,8 @@ SendMode Input
 ;; familiar with how AutoHotkey works. I recommend that you at least take this tutorial:
 ;; https://autohotkey.com/docs/Tutorial.htm
 
+;; The point of these is that THE TOOLTIPS ARE MERELY PLACEHOLDERS. When you add a function of your own, you should delete or comment out the tooltip.
+
 ;; You should probably use something better than Notepad for your scripting. (Do NOT use Word.)
 ;; I use Notepad++. "Real" programmers recoil from it, but it's fine for my purposes.
 ;; https://notepad-plus-plus.org/
@@ -67,9 +69,17 @@ SendMode Input
 #if (getKeyState("F24", "P")) ;<--Everything after this line will only happen on the secondary keyboard that uses F24.
 F24::return ;this line is mandatory for proper functionality
 
-escape::tooltip, "[F24] You might wish to not give a command to escape. Could cause problems. IDK."
-F1::coolFunction("Hello World. From F1") ;<--This is just serving as an example of how you would assign functions to these keys
-F2::coolFunction("Hello World. From F2")
+escape::tooltip, "[F24] You might wish to not give a command to escape. Could cause problems. IDK." 
+
+F1::coolFunction("Hello World. From F1") ;<--This is just serving as an example of how you would assign a function to a key
+
+F2::
+; tooltip, You pressed F2 on the F24 keyboard! ; This line is commented out! That's similar to deleting it, but it's still here in case you want to bring it back later!
+coolFunction("Hello World. From F2")
+sleep 10
+msgbox, This is how you do a multi-line key assigment. Leave the first line blank after the ::, and then you have to put a RETURN as the last line.
+return
+
 F3::
 F4::
 F5::
@@ -80,7 +90,7 @@ F8::
 F10::
 F11::
 F12::tooltip, you pressed the function key %A_thishotkey% on the [F24] keyboard
-;;Note that the assignment on the above line will apply to ALL prior lines ending in "::"
+;;NOTE that the assignment on the above line will apply to ALL prior lines ending in "::"
 ;;...which you should know from the AHK tutorial I linked you to.
 
 ;;------------------------NEXT ROW--------------------------;;
