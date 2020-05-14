@@ -77,7 +77,7 @@ F2::
 ; tooltip, You pressed F2 on the F24 keyboard! ; This line is commented out! That's similar to deleting it, but it's still here in case you want to bring it back later!
 coolFunction("Hello World. From F2")
 sleep 10
-msgbox, This is how you do a multi-line key assigment. Leave the first line blank after the ::, and then you have to put a RETURN as the last line.
+msgbox, "This is how you do a multi-line key assigment. For the first line, leave the space after the :: blank, and then use a RETURN as the last line."
 return
 
 F3::

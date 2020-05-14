@@ -58,6 +58,8 @@ SendMode Input
 ;; familiar with how AutoHotkey works. I recommend that you at least take this tutorial:
 ;; https://autohotkey.com/docs/Tutorial.htm
 
+;; The point of these is that THE TOOLTIPS ARE MERELY PLACEHOLDERS. When you add a function of your own, you should delete or comment out the tooltip.
+
 ;; You should probably use something better than Notepad for your scripting. (Do NOT use Word.)
 ;; I use Notepad++. "Real" programmers recoil from it, but it's fine for my purposes.
 ;; https://notepad-plus-plus.org/
@@ -73,8 +75,15 @@ F24::return ;this line is mandatory for proper functionality
 escape::tooltip, "[F24] You might wish to not give a command to escape. Could cause problems. IDK."
 ;escape::return ;<--to disable a key, just use a "return", like so.
 
-F1::coolFunction("Hello World. From F1") ;<--This is just serving as an example of how you would assign functions to these keys
-F2::coolFunction("Hello World. From F2")
+F1::coolFunction("Hello World. From F1") ;<--This is just serving as an example of how you would assign a function to a key
+
+F2::
+; tooltip, You pressed F2 on the F24 keyboard! ; This line is commented out! That's similar to deleting it, but it's still here in case you want to bring it back later!
+coolFunction("Hello World. From F2")
+sleep 10
+msgbox, "This is how you do a multi-line key assigment. For the first line, leave the space after the :: blank, and then use a RETURN as the last line."
+return
+
 F3::
 F4::
 F5::

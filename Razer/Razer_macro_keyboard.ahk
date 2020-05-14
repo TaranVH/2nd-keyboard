@@ -189,7 +189,7 @@ if WinActive("ahk_exe Adobe Premiere Pro.exe")
 else
 	{
 	msgbox, Horray, you pressed`n%par%`n on your Razer keyboard!
-	
+	; Remember to comment out any and all tooltips and messageboxes, once you have your functions working!
 	}
 }
 
