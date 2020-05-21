@@ -256,7 +256,7 @@ sleep 12
 Send ^!+7 ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
 sleep 5
 sendinput, {blind}{SC0EA} ;scan code of an unassigned key
-sleep 2
+;sleep 2
 if (panel = "effects")
 	goto theEnd ;do nothing. the shortcut has already been pressed.
 else if (panel = "timeline")
@@ -340,7 +340,9 @@ sendinput, {blind}{SC0E4} ;scan code of an unassigned key. Used for debugging. W
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 preset(item)
 {
+keywait, %A_PriorHotKey% ;this is probably WAY cleaner than allowing the physical key UP events to just happen WHENEVER during the following function. I'm gonna add this to a LOT of my functions... It'll be a bit slower, but also should have way fewer issues, making it worth it.
 
+sendinput, {blind}{SC0EC} ;for debugging
 ;Keyshower(item,"preset") ;YOU DO NOT NEED THIS LINE. -- it simply displays keystrokes on the screen for the sake of tutorials...
 ; if IsFunc("Keyshower")
 	; {
@@ -380,7 +382,7 @@ sendinput, {mButton} ;this will MIDDLE CLICK to bring focus to the panel underne
 sleep 5
 prFocus("effects") ;brings focus to the effects panel
 ;Alternative -->;;Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to the "effects" panel
-
+sendinput, {blind}{SC0EC} ;for debugging
 sleep 15 ;"sleep" means the script will wait for 20 milliseconds before the next command. This is done to give Premiere some time to load its own things.
 Sendinput, ^b ;CTRL B ------------------------- set in premiere to "select find box"
 sleep 5
@@ -404,9 +406,9 @@ loop
 		tooltip, CARET WAS FOUND
 		break
 		}
-	if (waiting2 > 30)
+	if (waiting2 > 40)
 		{
-		tooltip, FAIL - no caret found. `nIf your cursor will not move`, hit the button to call the preset() function again.`nTo remove this tooltip`, refresh the script using its icon in the taskbar.
+		tooltip, FAIL - no caret found. `nIf your cursor will not move`, hit the button to call the preset() function again.`nTo remove this tooltip`, refresh the script using its icon in the taskbar.`n`nIt's possible Premiere tried to AUTOSAVE at just the wrong moment!
 		;Note to self, need much better way to debug this than screwing the user
 		sleep 200
 		;tooltip,
@@ -1885,12 +1887,12 @@ tooltip,,,12
 ;play/pause premiere even when not in focus
 stopPlaying()
 {
-sleep 12 ;this is because all my macros in icue are set to spend 10ms held down before they release. This adds 10ms of latency, but it's worth it to ensure that the keystroke(s) are actually seen by Windows. I should add this to a lot of my other macros. Also, I might reduce it to 5ms in the future.
+keywait, %A_priorhotkey% ;avoid stuck modifiers
 send {blind}{SC081} ; this is for debugging. it does nothing but show up in the Key History and Script info.
 
-sendevent, {blind}{lshift up}{lctrl up}{rshift up}{rctrl up}{ralt up}{lalt up} ;i have no idea if this will work.
+;sendevent, {blind}{lshift up}{lctrl up}{rshift up}{rctrl up}{ralt up}{lalt up} ;i have no idea if this will work.
 
-send {blind}{SC082}
+;send {blind}{SC082}
 
 if WinActive("ahk_exe Adobe Premiere Pro.exe")
 	{

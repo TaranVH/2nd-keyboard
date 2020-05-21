@@ -131,16 +131,39 @@ SendMode Input
 ;ALT still works normally for everything else.
 ;ALT I R and other key combos stil work, but now you must be holding ALT down the whole time.
 
+
 ; THE SOLUTION IS LITERALLY JUST TWO LINES:
 
-~LAlt::Sendinput {Blind}{sc0E9}
-~RAlt::Sendinput {Blind}{sc0E9}
+
+; ~LAlt::Sendinput {Blind}{sc0E9}
+; ~RAlt::Sendinput {Blind}{sc0E9}
+
+
+
+;;;Shoutouts to Joshua Elek for sending me the above, improved script! I had not really known about {BLIND} before then!
+
+;;;The "BLIND" is quite important. It works without it, but dang it makes it smoother, because now it doens't have to move around other modifiers before and after the SC0E9 scan code is fired off. It's great. Trust me. Use it.
+
+
+
+;;;UPDATE: Those two lines totally work, but I am now trying a slightly different thing instead:
+
+~LAlt::
+Sendinput {Blind}{sc0E9}
+KeyWait, LAlt ; so that it doesn't keep spamming SC0E9 (as seen from an AHK window Key history and script info... window.)
+return
+
+~RAlt::
+Sendinput {Blind}{sc0E9}
+KeyWait, RAlt ; so that it doesn't keep spamming SC0E9
+return
 
 ;this was VK07, but i want to be able to distinguish between this, and menu masking, seperately, in my debugging.
 
-;Shoutouts to Joshua Elek for sending me the above, improved script!
 
-;;BELOW IS MY OLD SOLUTION THAT IS PRETTY GOOD, BUT DOESN'T WORK IF YOU HOLD DOWN ALT FOR MORE THAN A SECOND:
+
+;;BELOW IS MY OLD SOLUTION THAT IS PRETTY GOOD, BUT DOESN'T WORK IF YOU HOLD DOWN ALT FOR MORE THAN A SECOND, because Windows actaully fires ALT DOWN over and over again, hah:
+
 /*
 
 ~LAlt::

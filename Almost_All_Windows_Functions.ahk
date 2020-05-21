@@ -208,7 +208,9 @@ Return, xxOutputVar
 
 ;Macro Key G1, probably.
 search(){
-sleep 13
+;sleep 13
+keywait, %A_PriorKey% ;waits for the key that called this function to be RELEASED.
+; the time to wait is supposed to be 5ms, but WHO KNOWS what iCue might actaully do.
 if winactive("ahk_exe Adobe Premiere Pro.exe")
 	{
 	if IsFunc("effectsPanelType") {
@@ -491,6 +493,7 @@ if not WinActive(theClass)
 ;this should probably all be replaced with instantexplorer, since that will work to change any existing Save as dialogs or whatever.
 runexplorer(foo)
 {
+keywait, %A_PriorHotKey% ;to avoid stuck modifiers as usual
 send {SC0E7} ;the scan code of an unassigned key ;;sending even a single keystroke like this, which comes "from" the secondary keyboard, will prevent the taskbar icon from sometimes flashing pointlessly rather than opening.
 sleep 5
 Run, % foo
@@ -581,6 +584,9 @@ NavRun(Path) {
 InstantExplorer(f_path,pleasePrepend := 0)
 {
 ;this has been heavily modified from https://autohotkey.com/docs/scripts/FavoriteFolders.htm
+
+;I feel ambivilant about this line. It'll be more stable, but it'll be a bit sloooowerrrr!
+keywait, %A_priorhotkey% ;should there be a timeout clause? this still works even when launched with no hotkey, hmm.
 
 sendinput, {blind}{SC0E8} ;scan code of an unassigned key. This is needed to prevent the item from merely FLASHING on the task bar, rather than opening the folder. Don't ask me why, but this works. Also, this is helpful for debugging.
 

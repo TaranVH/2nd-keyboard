@@ -277,8 +277,15 @@ tab::msgbox,,,K120 - you pressed tab. :P,0.8
 q::preset("T wipe straight 315")
 w::preset("T wipe straight 45")
 
-e::preset("T wipe soft 315")
+e::
+KeyWait, e ;waits for E to be RELEASED!
+;NOTE, this worked great, so it is now a part of preset(), so it is no longer needed here.
+;I'm keeping it here as a LESSON FOR YOU ALL because it doens't actually do anything bad.
+preset("T wipe soft 315")
+return
+
 r::preset("T wipe soft 45")
+
 
 +q::preset("T wipe WHITE LINE 315")
 +w::preset("T wipe WHITE LINE 45")
@@ -1547,13 +1554,14 @@ F21 & F1::search() ;it will go straight to effectsPanelType() if Premiere is act
 
 #ifWinActive
 ;MACRO KEY G2 on the K95
-;^numpad0:: ;old shortcut
+
+;Note that i have other premiere super function key assignments somewhere around line 2090. Yeah it's a bit of a mess.
+	
+;^numpad0:: ;this was the old shortcut
 F21 & F2::
+keywait, %A_priorhotkey% ;avoid stuck modifiers
 IfWinActive, ahk_exe Adobe Premiere Pro.exe
 	{
-	;Note that i have other premiere super function key assignments somewhere around line 2090. Yeah it's a bit of a mess.
-	sleep 11 ;this sleep for 11 milliseconds is to avoid the infamous STUCK MODIFIERS error, because i have my K95 command holding this down for 10 ms, and it would release ctrl at some arbitrary point during the AHK script execution! Makes perfect sense now...
-	;might wanna reduce the delay all to 5ms if 10ms feels too long. and YES i can feel time differences in incremements of 10ms... but no lower.
 	easeInAndOut()
 	}
 else
@@ -1573,7 +1581,6 @@ return
 ;Macro key G3 on the K95
 ;^+L::
 F21 & F3::
-sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
 stopPlaying()
 return
 ;Outside of premiere, it will STILL work to pause/play the timeline, due to some other code somewhere else...
