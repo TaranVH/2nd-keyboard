@@ -78,6 +78,8 @@ ToolTip,,,,8
 
 monitorKeys(whichMonitor,shortcut,useSpace := 1)
 {
+;this function has proven to be shockingly robust.
+keywait, %A_priorhotkey% ;hopefully that doesn't break it.
 ;msgbox,,, useSpace is %useSpace%,1
 if WinActive("ahk_exe Adobe Premiere Pro.exe") ;AHA, it is better to use the EXE, because if you are in a secondary monitor window, then the CLASS is not active even though the EXE still is, mildly interesssstting.
 {
@@ -158,6 +160,8 @@ sendinput, %shortcut%
 	; sleep 10
 	; }
 
+
+
 ;THE CODE BELOW IS SUPER OPTIONAL
 if (windowWidth > 2000) ;if the monitor in question IS maximized...
 {
@@ -171,12 +175,10 @@ if (windowWidth > 2000) ;if the monitor in question IS maximized...
 if (shortcut = "^{numpad1}")
 	{
 	;sleep 30
-	;tooltip, yeah ctrl numpad 1
 	sendinput, ^+1
 	}
 if (shortcut = "^{numpad2}")
 	{
-	;tooltip, seriously wtf is %shortcut%
 	sendinput, ^+2
 	}
 if (shortcut = "^{numpad5}")
@@ -212,6 +214,7 @@ if (shortcut = "^!+]")
 }
 ;THE CODE ABOVE IS SUPER OPTIONAL
 
+
 ;i might have to comment this back in vvvvv
 if (windowWidth < 2000) ;again, if the monitor in question is NOT already maximized...
 	if not (whichMonitor = "source") ;stay on the source (program?) monitor if it is active
@@ -243,7 +246,7 @@ if (useSpace = "1")
 
 
 
-prFocus(panel) ;this function allows you to have ONE spot where you define your personal shortcuts that "focus" panels in premiere.
+prFocus(panel) ;this function allows you to have ONE place where you define your personal shortcuts to "focus" panels in Premiere. Also it ensures that they actaully get into focus, and don't rotate the sequences or anything like that.
 {
 ;panel := """" . panel . """" ;this adds quotation marks around the parameter so that it works as a string, not a variable.
 ; ; ; if (panel = "effect controls")
@@ -255,7 +258,7 @@ Send ^!+7 ;bring focus to the effects panel, in order to "clear" the current foc
 sleep 12
 Send ^!+7 ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
 sleep 5
-sendinput, {blind}{SC0EA} ;scan code of an unassigned key
+sendinput, {blind}{SC0EA} ;scan code of an unassigned key. Used for debugging.
 ;sleep 2
 if (panel = "effects")
 	goto theEnd ;do nothing. the shortcut has already been pressed.

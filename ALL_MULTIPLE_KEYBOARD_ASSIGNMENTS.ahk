@@ -144,8 +144,22 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; ctrl alt shift K 	 	"shuttle stop"
 ; CTRL SEMICOLON 		"(add) marker."
 ; ctrl shift alt R		is "reset to saved layout" (workspace)
-; Media_Stop::^numpad7 ;select label group
-;                                                                                                                      
+; Media_Stop::^numpad7  select label group
+; ctrl alt P            pin to clip
+; ^!+j 					lock/unlock all audio tracks
+; ^!+l 					lock/unlock all video tracks
+; ^!+, 					show audio keyframes (on timeline)
+; ^!+n 					toggle audio names (on timeline)
+; ^!+/ 					Show through edits
+; ^+6					Source Assignment Preset 1
+; ^+7					Source Assignment Preset 2 (reserved)
+; ^+8					Source Assignment Preset 3 (reserved)
+; ^+9					Source Assignment Preset 4 (reserved)
+; ^+m					Time interpolation > Frame sampling
+; ^+k					Time interpolation > Frame blending
+; ^+o		 			Time interpolation > optical flow
+
+
 ; Be aware that sometimes other programs like PUUSH can overlap/conflict with your customized shortcuts.                          
 ;_______________________________________________________________________________________________
 ;
@@ -256,8 +270,17 @@ return
 -::audioMonoMaker("left")
 =::audioMonoMaker("right")
 backspace::
-if WinActive("New TightVNC Connection") ;if we are at the thingy that asks for a password or whatever
+if WinActive("New TightVNC Connection") ;if we are at the thingy that asks for the server IP (already inputted)
 	{
+	Sendinput, {enter}
+	goto tvnEND ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!! DESPAIR!!!!
+	}
+if WinActive("Vnc Authentication") ;if we are at the thingy that asks for the PASSWORD!
+	{
+	FileRead, SECRET_SERVER_PASS, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SECRET_SERVER_PASS_NOT_ON_GITHUB.txt
+	;msgbox, pass is %SECRET_SERVER_PASS%
+	Sendinput, %SECRET_SERVER_PASS%
+	sleep 10
 	Sendinput, {enter}
 	goto tvnEND ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!! DESPAIR!!!!
 	}
@@ -403,7 +426,7 @@ SC077::instantExplorer("N:\Team_Documents\N_TARAN_THINGS") ;;tooltip, [F23] RAlt
 SC078::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\LOGOS") ;;tooltip, [F23] RWin -to-> SC078-Language 3
 SC079::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\BGs") ;tooltip, [F23] AppsKey -to-> SC079-International 4
 SC07B::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\Screenshots") ;K120 rCTRL:: -to-> SC07B:International5 
-;;Rshift is staying as Rshift for the time being.
+
 
 SC07D::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS") ;K120 RShift -to-> SC07D: International3 --to--> \TARAN ASSETS\
 
@@ -521,9 +544,10 @@ else
 	search()
 return
 
-numpadins::
+numpadins:: ;(this is SHIFT NUMPAD0)
 numpad0::SendKey("numpad0", , "sky blue")
-numpadend::
+
+numpadend:: ;(this is SHIFT NUMPAD1)
 numpad1::
 ;openApp("", ahk_exe waifu2x-caffe.exe, waifu2x-caffe)
 ;SendKey(A_thishotkey, ,"blue-green")
@@ -542,15 +566,18 @@ numpaddown::
 numpad2::SendKey(A_thishotkey, ,"nudge down")
 numpadpgdn::
 numpad3::
+;The following code is obsolete now that Premiere allows you to create markers of any color, using shortcuts. horray!
+; if WinActive("ahk_exe Adobe Premiere Pro.exe"){
+	; Keyshower("add marker color 4 (taran mod)")
+	; marker()
+	; send ^!{numpad4} ;set marker color 3
+	; sleep 5
+	; marker() ;Go inside that marker so that you can start typing a comment
+	; ;;SendKey(A_thishotkey, ,"orange")
+	; }
 if WinActive("ahk_exe Adobe Premiere Pro.exe"){
-	Keyshower("add marker color 4 (taran mod)")
-	marker()
-	send ^!{numpad4} ;set marker color 3
-	sleep 5
-	marker() ;Go inside that marker so that you can start typing a comment
-	;;SendKey(A_thishotkey, ,"orange")
+	sendinput, +{numpad3}
 	}
-	
 if WinActive("ahk_exe chrome.exe")
 	sendinput, ^+{tab} ;go to previous tab in chrome
 return
@@ -929,7 +956,7 @@ j::sendinput, ^!o ;render audio
 k::sendinput, ^!i ;render entire work area (in to out)
 l::return
 `;::tooltip, you pressed  %A_thishotkey% ;fun fact, the syntax highlighting gets this wrong. ";" is escaped, and therefore is not actually a comment.
-'::send, ^+!, ;this is the premiere shortcut for "show audio keyframes" (on timeline)
+'::send, ^!+, ;this is the premiere shortcut for "show audio keyframes" (on timeline)
 enter::
 if WinActive("ahk_class Premiere Pro")
 	{
@@ -953,19 +980,24 @@ return
 ;;;this is the azio F24 keyboard;;;
 ;;;oh god the chaos of my code. it's awful but it works somehow
 
+;these are to zoom and reset the source monitor.
+z::sendinput, ^!+z
+x::sendinput, ^!+x
+c::sendinput, ^!+c
+
 ;Lshift::tooltip, you pressed F24 then %A_thishotkey%
-z::
-if WinActive("ahk_class Premiere Pro")
-	send ^+6 ;track targeting presets in premiere.
-return
-x::
-if WinActive("ahk_class Premiere Pro")
-	send ^+7 ;track targeting presets in premiere.
-return
-c::
-if WinActive("ahk_class Premiere Pro")
-	send ^+8 ;track targeting presets in premiere.
-return
+; z::
+; if WinActive("ahk_class Premiere Pro")
+	; send ^+6 ;track targeting presets in premiere.
+; return
+; x::
+; if WinActive("ahk_class Premiere Pro")
+	; send ^+7 ;track targeting presets in premiere.
+; return
+; c::
+; if WinActive("ahk_class Premiere Pro")
+	; send ^+8 ;track targeting presets in premiere.
+; return
 v::
 if WinActive("ahk_class Premiere Pro")
 	send ^+9 ;track targeting presets in premiere.
@@ -987,7 +1019,7 @@ m::send, ^r ;in premiere, the Speed/duration panel
 
 ;l control    Linus Media Group Inc. Mail
 
-Lwin::msgbox, LEFT win. ;but this won't happen, it was swapped with another key...
+Lwin::msgbox, LEFT win. you should NEVER be seeing this messagebox ;but this won't happen, it was swapped with another key...
 
 ;Lalt has been remapped to SC064, which is F13.
 ;NOTE that this can interfere with normal F13 keypresses elsewhere in this script...
@@ -1001,15 +1033,14 @@ Lwin::msgbox, LEFT win. ;but this won't happen, it was swapped with another key.
 
 ;;;this is the azio F24 keyboard;;;
 
-space::tooltip,
+space::tooltip, ;this murders tooltips, lol.
 ; Ralt::msgbox, Ralt - doesnt work
 ; Rwin::msgbox, Right Win 
 ; Rshift::msgbox RIGHT SHIFT lol
 
-;Lwin -to-> SC072:Lang1
+;Lwin -to-> SC072:Lang1. It MUST be done as an UP event. It does not manifest any other way. Bizzare.
 SC072 up::
 switchToTeams()
-
 ;switchToSavedApp(ahk_class Chrome_WidgetWin_1)
 ;windowSwitcher(ahk_class Chrome_WidgetWin_1, ahk_exe Teams.exe)
 ;ahk_class Chrome_WidgetWin_1
@@ -1022,7 +1053,6 @@ switchToTeams()
 	; Run, C:\Program Files\TightVNC\tvnviewer.exe
 ; if WinExist("ahk_exe tvnviewer.exe")
 	; WinActivate ahk_exe tvnviewer.exe
-	
 return
 
 
@@ -1032,21 +1062,44 @@ appskey::msgbox, "this is the appskey KEY maybe. You should never see this messa
 
 ;AZIO Ralt -to-> SC077:Lang4 -to-> pin to clip
 SC077::
+if WinActive("ahk_class Premiere Pro")
+{
 tippy("pin to clip")
 prFocus("effect controls")
-send, ^!p ;my premiere shortcut for pin to clip is ctrl alt P
-sleep 20
+send, ^!p ;my premiere shortcut for pin to clip: CTRL ALT P
+}
+else
+{
+msgbox, you are not in premiere but you pressed Ralt on the AZIO keyboard.
+}
 return
 
 
 ;RWin -to->> sc078:Lang3 -to->> OBS
 SC078::
-tooltip, rightWin -> SC078:Lang3 -> OBS
-IfWinNotExist, ahk_class Qt5QWindowIcon ;this is broken, plz fix
-	Run, C:\Program Files (x86)\obs-studio\bin\64bit\obs64.exe
-if WinExist("ahk_exe tvnviewer.exe")
+;This doesn't work because the AZIO keyboard does not HAVE a RWIN key, HAH!!
+return
+
+SC079::
+tooltip, "[AZIO] AppsKey -to-> SC079-International 4"
+sleep 200
+tooltip,
+return
+
+SC07B:: ;rCTRL:: -to-> SC07B:International5
+;tooltip, rightCTRL -> SC078:Lang3 -> OBS
+if Not WinExist("ahk_exe obs64.exe")
+	{
+	msgbox,,, OBS is opening`, hold your horses.,0.8
+	;Run, C:\Program Files\obs-studio\bin\64bit\obs64.exe
+	Run, C:\ProgramData\Microsoft\Windows\Start Menu\Programs\OBS Studio\OBS Studio (64bit)
+	}
+if WinExist("ahk_exe obs64.exe")
 	WinActivate ahk_exe obs64.exe
 return
+
+
+
 
 PrintScreen::return
 ScrollLock::return
@@ -1055,19 +1108,18 @@ SC061::msgbox,,, scancode061,1
 ;pause::msgbox, is this the PAUSE key?? IDK
 ;Break::msgbox, Maybe THIS is the pause/break key???
 
-pgdn::Volume_Down
+pgdn::
 end::tooltip, you pressed F24 then %A_thishotkey%
 delete::sendinput, ^!+j ;lock/unlock all audio tracks
-pgup::Volume_Up
+
+pgup::
 home::tooltip, you pressed F24 then %A_thishotkey%
 insert::sendinput, ^!+l ;lock/unlock all video tracks
 
-up::
-tooltip, uppp
-WinGetPos,,, Width, Height, A
-WinMove, A,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2)
-return
 
+
+
+up::
 down::
 left::
 right::tooltip, you pressed F24 then %A_thishotkey%
@@ -1076,12 +1128,13 @@ right::tooltip, you pressed F24 then %A_thishotkey%
 ;;;this is the azio F24 keyboard;;;
 
 numpad0::
+keywait, %A_priorhotkey% 
 if WinActive("ahk_class Premiere Pro")
 	{
 	sleep 1
 	sendinput, {blind}{SC0EE} ;scan code of an unassigned key
 	sleep 1
-	sendinput, ^!+9 ;activate lumetri scopes
+	sendinput, ^!+9 ;activate lumetri scopes panel
 	sleep 25
 	prFocus("timeline")
 	sleep 2
@@ -1090,17 +1143,18 @@ if WinActive("ahk_class Premiere Pro")
 	; sendinput, {lAlt up}
 	; sendinput, {lCtrl up}
 	; sendinput, {lShift up}
-	MODSL()
+	;MODSL()
 	}
 return
 
+numpadend:: ;this is SHIFT NUMPAD1, just in case i guess.
 numpad1::monitorKeys("source","^!+[",0) ;Safe margins (source monitor)
 
 numpad2::monitorKeys("program","^!+]",0)  ;safe margins (program monitor)
 
 ;WE ARE STILL INSIDE THE AZIO KEYBOARD
 
-numpad3::return
+numpad3::tooltip, you pressed F24 then %A_thishotkey%
 
 numpad4::monitorKeys("source","^{numpad1}") ;source monitor res to 1/1
 
@@ -1119,16 +1173,22 @@ SC05C::monitorKeys("source","^{numpad3}") ;source monitor res to 1/4
 
 numpadDiv::monitorKeys("program","^+3") ;program monitor res to 1/4
 
-numpadMult::send, +`` ;premiere shortcut for "Maximize (program?) Monitor"
+numpadMult::tooltip, you pressed F24 then %A_thishotkey%
+
+;send, +`` ;premiere shortcut for "Maximize or restore ACTIVE FRAME." Note that ` is the "escape character," so i have to use it twice.
+
+
 numpadSub::tooltip, you pressed F24 then %A_thishotkey%
-numpadAdd::sendinput, +!{F10} ;default is shift alt F10, and i hate thingies that dont use the ctrl key
+numpadAdd::sendinput, +!{F10} ;default is shift alt F10. Shadowplay toggle instant replay on/off
+
+
 numpadEnter::
 sendinput, ^!m ;mute/unmute mic - shadowplay ;unfortunately ctrl alt m is also NEW COMMENT in google sheets... i might wish to change it
-tippy("this should work")
+;tippy("this should work")
 return
 
 numpadDot::
-sendinput, !{F9}
+sendinput, !{F9} ;shadowplay record. (temporary assignment.)
 return
 ;tooltip, you pressed F24 then %A_thishotkey%
 
