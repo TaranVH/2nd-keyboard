@@ -22,9 +22,11 @@ https://docs.google.com/spreadsheets/d/18e6-OlUzc_1wbGvm9zqMOwtC4oysm6C7XMU1bOf8
 
 
 #### Other potential methods that I have not personally tested
-- https://mediachance.com/multikeyboard/ (This might be driver-based!)
 - MacroMyKBD https://github.com/lal12/macroMyKBD
 - 2key, which uses a Raspberry Pi. https://github.com/Gum-Joe/2Keys/blob/v0.3.5/docs/SETUP.md
+- https://mediachance.com/multikeyboard/ More info: https://twitter.com/weirdoyt/status/1257282783044493312 and https://twitter.com/iamnottani/status/1271130978195591170
+- Here is an alternative to the Hasu USB converter: https://github.com/oschwartz10612/Scanner-Pro-MK3
+
 
 If all of this just seems like a huge PITA, just buy a Stream Deck instead: https://youtu.be/vhPLhfP1b_s
 
