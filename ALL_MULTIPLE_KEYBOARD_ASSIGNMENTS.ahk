@@ -1,20 +1,21 @@
 SetWorkingDir, C:\AHK\2nd-keyboard\support_files
 ;the above will set A_WorkingDir. It must be done in the autoexecute area.
-;SetNumLockState, on ;This doesn't work, needs to be done in admin mode.
-;SetScrollLockState, off
+; ; ;SetNumLockState, on ;This doesn't work, needs to be done in admin mode.
+; ; ;SetScrollLockState, off
+
 Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece of paper or something
-;when you get to #include, it means the END of the autoexecute section.
-;gui must be #included first, or it does not work, for some reason...
-;YOU probably do NOT need the GUI at all. Delete the line below:
 
 ; global savedCLASS = "ahk_class Notepad++"
-; global savedEXE = "notepad++.exe" ;BEFORE the #include is apparently the only place these can go.
+; global savedEXE = "notepad++.exe" 
 ;This has now been changed to Teams (Hangouts replacement) since I use that a lot mroe now, and Notepad++ already has a button on numpad+ on the K120 keyboard.
 ;This is for macro key G14 by the way.
 global savedCLASS = "ahk_class Chrome_WidgetWin_1"
-global savedEXE = "Teams.exe"
+global savedEXE = "Teams.exe" ;BEFORE the #include is apparently the only place these can go.
+psApp := ComObjActive("Photoshop.Application") ;This is AMAZING and allows me to directly trigger photoshop actions using AHK scripts. Game changer! search "psApp" to see them all.
 
-
+;when you get to #include, it means the END of the autoexecute section.
+;gui must be #included first, or it does not work, for some reason...
+;YOU probably do NOT need the GUI at all. Delete the line below:
 #Include C:\AHK\2nd-keyboard\gui.ahk
 #include C:\AHK\2nd-keyboard\Almost_All_Premiere_Functions.ahk
 #include C:\AHK\2nd-keyboard\Almost_All_Windows_Functions.ahk
@@ -160,9 +161,15 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; ^+o		 			Time interpolation > optical flow
 
 
+;----------------------------------------------------------------------------------
+; KEYS                  PHOTOSHOP FUNCTIONS
+;----------------------------------------------------------------------------------
+;^!h 					vertical flip
+;^h 					horizontal flip
+
+
 ; Be aware that sometimes other programs like PUUSH can overlap/conflict with your customized shortcuts.                          
-;_______________________________________________________________________________________________
-;
+;___________________________________________________________________________________
 ;
 ; NOTE:
 ; SC0E8: "scan code of an unassigned key" that I use to tell the computer "yeah, treat this like a keyboard,"
@@ -189,6 +196,9 @@ SC121::SendInput %ClipBoard_3% 	;launch (1)
 
 currentTool = "v" ;This is super useful and important for a Premiere script, you'll see...
 
+; psApp := ComObjActive("Photoshop.Application") ;This is AMAZING and allows me to directly trigger photoshop actions using AHK scripts. Game changer! search "psApp" to see them all.
+; ;edit: apoparently defining the variable here doesn't work... hmm...
+
 #if
 
 ;this is pause/break. I'm using it for debugging...
@@ -198,14 +208,18 @@ currentTool = "v" ;This is super useful and important for a Premiere script, you
 ; !sc045::
 ;scratch that, I think the * (hook??) makes it insensitive to modifiers.
 *sc045::
-ctrlbreak::
-^ctrlbreak::
 tooltip, pause break
 sleep 100
 tooltip,
 KeyHistory
 sleep 10
 return 
+
+; ; ctrlbreak::
+; ; ^ctrlbreak::
+;both removed from here because they're useless.
+;https://autohotkey.com/board/topic/110524-how-to-create-a-hot-key-for-ctrl-scrolllock-vs-ctrl-pause/
+
 ;____________________________________________________________________
 ;                                                                    
 ;		  2ND KEYBOARD USING HASU USB TO USB (Logitech K120)  
@@ -327,17 +341,30 @@ t::recallClipboard("t")
 y::preset("autogate -25")
 u::preset("90 IRE")
 i::preset("multiply")
-o::preset("flip vertical")
-p::preset("flip horizontal")
+
+o::
+if WinActive("ahk_exe adobe premiere pro.exe")
+	preset("flip vertical")
+if WinActive("ahk_exe Photoshop.exe")
+	sendinput, ^!h ;my photoshop shortcut for vertical flip
+return
+
+p::
+if WinActive("ahk_exe adobe premiere pro.exe")
+	preset("flip horizontal")
+if WinActive("ahk_exe Photoshop.exe")
+	sendinput, ^h ;my photoshop shortcut for horizontal flip
+return
+
 [::preset("T impact flash MED")
 ]::preset("T Impact Pop")
 
 \::
 instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\SFX")
-sleep 20
-search() ;immediately highlights the search bar so you can search for a sound effect. Sadly this does not always seem to work...
-sleep 250
-search() ;so i do it again here. still doesn't always work.
+; sleep 20
+; search() ;immediately highlights the search bar so you can search for a sound effect. Sadly this does not always seem to work...
+; sleep 250
+; search() ;so i do it again here. still doesn't always work.
 return
 
 ;;;;;next line;;;;;;;;
@@ -369,7 +396,7 @@ j::preset("110 to 100 zoom")
 k::preset("100 to 120 zoom")
 l::preset("25% blur and darkener")
 `;::preset("blur with edges") ;lol, it's not a comment until here -- the syntax highlighting gets this one wrong.
-'::preset("Warp Stabilizer Preset")
+'::preset("a0p0 pan down")
 enter::enter
 
 ;;;;;next line, still inside the K120;;;;;;;;
@@ -392,7 +419,7 @@ b::preset("Drop Shadow Preset")
 
 
 n::preset("anchor and position to 0") ;no panning involved here.
-m::preset("a0p0 pan down")
+m::preset("Warp Stabilizer Preset")
 ,::preset("crop 50 LEFT")
 .::preset("crop 50 RIGHT")
 /::preset("crop full")
@@ -869,8 +896,9 @@ return
 
 
 1::gotofiretab("AHK needed","https://docs.google.com/document/d/1xsjjKYggXYig_4lfBMJ6LDGRZ9VOvDd7SCSTSi7GwN8/edit")
-2::gotofiretab("LTT note","https://docs.google.com/document/d/1CWjC7DWyXGIFDaSwXzUsdHmdktvgV0kdgNOFEK7wf7U/edit")
-3::gotofiretab("LTT To Do - Google Docs","https://docs.google.com/document/d/1Gi8sruMEBEQG3WHPM2jaFOQ1oR1A8bSz47vSxB9NfBQ/edit")
+2::gotofiretab("LTT To Do - Google Docs","https://docs.google.com/document/d/1Gi8sruMEBEQG3WHPM2jaFOQ1oR1A8bSz47vSxB9NfBQ/edit")
+3::gotofiretab("LTT note","https://docs.google.com/document/d/1CWjC7DWyXGIFDaSwXzUsdHmdktvgV0kdgNOFEK7wf7U/edit")
+
 4::gotofiretab("Music Hypercube - Google Docs","https://docs.google.com/document/d/11hIiENqLMtuQRLV4FjZMRY2uNFLtPw5QW6fivMix9VE/edit")
 
 5::
@@ -900,17 +928,37 @@ tab::gotofiretab("Fast As Possible | Trello","https://trello.com/b/yUSFtaXn/fast
 ;;;this is the azio F24 keyboard;;;
 
 q::
-;controlsend, Qt5QWindowIcon2, ^!+r, ahk_exe obs64.exe
-;tooltip, did that work?6
-;return
-w:: ;sendinput, +{F12}^w
+;HUGE SHOUT OUT TO MICHAEL BUNZEL FOR EMAILING ME WITH THE FANTASTIC CODE!
+if WinActive("ahk_class Photoshop")
+{
+	psApp := ComObjActive("Photoshop.Application")
+	psApp.DoAction("50% smaller - bilinear", "taran actions")
+}
+return
+
+w::
+psApp := ComObjActive("Photoshop.Application")
+psApp.DoAction("50% smaller NN", "taran actions")
+return
+
 e::
+psApp := ComObjActive("Photoshop.Application")
+psApp.DoAction("200% nearest neighbor", "taran actions")
+return
 r::
+psApp := ComObjActive("Photoshop.Application")
+psApp.DoAction("300% Nearest Neighbor", "taran actions")
+return
 t::
+psApp := ComObjActive("Photoshop.Application")
+psApp.DoAction("Surface blur - dejpeg", "taran actions")
+return
+
 y::
 u::
-i::
-o::
+i::tooltip, you pressed F24 then %A_thishotkey%
+;o::sendinput, ° ;; this will send Â°
+o::sendinput, {ASC 0176} ;the degree symbol!
 p::
 [::
 ]::tooltip, you pressed F24 then %A_thishotkey%
@@ -927,7 +975,7 @@ capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOu
 ;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 
 ;;;this is(was) Lshift::
-SC070::gotofiretab("Calendar - April 2020","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+SC070::gotofiretab("Calendar - July 2020","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
 ;em dash –
@@ -946,11 +994,36 @@ SC071 up::gotofiretab("Linus Media Group Inc. Mail","https://mail.google.com/mai
 ; +d::saveClipboard("d")
 ; f::recallClipboard("f")
 ; +f::saveClipboard("f")
+
 a::
+;this is amazing. I can launch photoshop actions DIRECTLY from AHK, without needing to go through one of the 44 very restricted shortcuts!!
+psApp := ComObjActive("Photoshop.Application")
+psApp.DoAction("WHITE TO ALPHA", "taran actions")
+return
+
 s::
+; psApp is actaully defined already in the autoexecute part of this AHK script.
+psApp := ComObjActive("Photoshop.Application")
+psApp.DoAction("expand selection 1px", "taran actions")
+return
+
 d::
+psApp := ComObjActive("Photoshop.Application")
+psApp.DoAction("smooth selection", "taran actions")
+return
+
 f::
+psApp := ComObjActive("Photoshop.Application")
+psApp.DoAction("invert selection", "taran actions")
+;this is BETTER than going through the keyboard shortcut CTRL SHIFT I. I'll probably start doing more and more stuff this way...
+return
+
 g::
+
+psApp := ComObjActive("Photoshop.Application")
+psApp.DoAction("add layer mask action", "taran actions")
+return
+
 h::return
 j::sendinput, ^!o ;render audio
 k::sendinput, ^!i ;render entire work area (in to out)
@@ -980,10 +1053,17 @@ return
 ;;;this is the azio F24 keyboard;;;
 ;;;oh god the chaos of my code. it's awful but it works somehow
 
-;these are to zoom and reset the source monitor.
-z::sendinput, ^!+z
-x::sendinput, ^!+x
-c::sendinput, ^!+c
+;these were to zoom and reset the source monitor. now i use numpad - + and enter for both source and program monitors, since it's panel dependant anyway.
+; z::sendinput, ^!+z
+; x::sendinput, ^!+x
+; c::sendinput, ^!+c
+z::^z ;undo
+x::
+sendinput, ^y ;redo
+;tooltip, redo
+return
+
+c::return
 
 ;Lshift::tooltip, you pressed F24 then %A_thishotkey%
 ; z::
@@ -1032,6 +1112,9 @@ Lwin::msgbox, LEFT win. you should NEVER be seeing this messagebox ;but this won
 ; return
 
 ;;;this is the azio F24 keyboard;;;
+
+
+SC073 up::preset("L 90 IRE websites") ;tooltip, AZIO [F24] LAlt -to-> SC073-International 1
 
 space::tooltip, ;this murders tooltips, lol.
 ; Ralt::msgbox, Ralt - doesnt work
@@ -1264,13 +1347,14 @@ PgDn::send ^{tab} ;control tab, which goes to the previous tab
 
 PgUp::send ^w ;control w, which closes a tab
 
-;these are also for music surfing.
+;these are also for APMmusic.ca surfing.
 ;macro key G8
 F19::up
 ;macro key G11
 F15::down
+
 ;macro key G9
-^+J::enter ;not particularly stable, but I'm out of function keys...
+F17::enter ;idk if this is the corect assignment now that i moved keys.
 
 F3::send ^w ;control w, which closes a tab
 F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
@@ -1293,17 +1377,24 @@ F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^w 
 F4::F2 ;this is to regain what I lost when I used F2 and F3 for tab navigation.
 
-;Photoshop shortcuts were here, but they've been moved further down.
-
-;
-;;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-; ;RIP Monty Oum https://youtu.be/qSuTnCFqMkw?t=1m21s
-; #IfWinActive ahk_exe Photoshop.exe
-; F1::sendinput {alt down}iac{alt up}
+;;;;;;;;;;;;;SCREENSHOT RELATED KEYS;;;;;;;;;;;;
+;;;;;;;;;;;;;SCREENSHOT RELATED KEYS;;;;;;;;;;;;
+;;;;;;;;;;;;;SCREENSHOT RELATED KEYS;;;;;;;;;;;;
 
+#IfWinActive
 
+;I had the scroll lock key set to shareX's "copy region to clipboard," and used it constantly.
+;(printscreen will save region to file as...)
+;but the trouble is that the scroll lock state is acctually used by two programs: Excel, and teracopy.
+;In excel, having it on will cause the arrow keys to scroll the view, rather than moving from one cell to the other.
+;in Teracopy, scroll lock can be used to bypass teracopy and use normal Explorer-based copying, which i prefer for smaller operations.
+; Anyway, so that i can actually toggle the scroll lock state, I'm gonna make the scroll lock key send SHIFT PRINTSCREEN, and I'll have SHIFT SCROLL LOCK actually send a normal scroll lock key event.
+
+scrolllock::+printscreen ;shareX's "copy region to clipboard." I had it on ALT, but this would open and then close the top menu bar quickly, which is just something I don't wanna have to deal with if it ever goes wrong.
++scrolllock::scrolllock ;toggles the true scroll lock state.
+^scrolllock::scrolllock ;also toggles the true scroll lock state.
 
 
 
@@ -1474,7 +1565,10 @@ Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field. wish i knew how to do
 return
 ;sort by name
 
-pgdn::sortByDate()
+pgdn::
+sortByDate()
+;Send,{LCtrl down}{NumpadAdd}{LCtrl up}
+return
 ;sort by date modified
 
 ; ; ^F12:: ;test SHGetNameFromPropertyKey
@@ -1623,6 +1717,10 @@ keywait, %A_priorhotkey% ;avoid stuck modifiers
 IfWinActive, ahk_exe Adobe Premiere Pro.exe
 	{
 	easeInAndOut()
+	}
+else IfWinActive, ahk_exe AfterFX.exe
+	{
+	sendinput, {F9} ;F9 is 'ease in and out' in after effects.
 	}
 else
 	{
@@ -2099,8 +2197,9 @@ Media_Play_Pause::k
 Media_Prev::+,
 
 
-;;&&&&&&&&&&& MORE KEY ASSIGNMENTS FOR PHOTOSHOP &&&&&&&&&&&&&&&&&&
-#IfWinActive ahk_exe Photoshop.exe
+;;&&&&&&&&&&& KEY ASSIGNMENTS FOR PHOTOSHOP &&&&&&&&&&&&&&&&&&
+;#IfWinActive ahk_exe Photoshop.exe ;kinda obsolete code
+#if WinActive("ahk_exe Photoshop.exe")
 
 ;;YOU CAN GET TO PHOTOSHOP SHORTCUTS BY HITTING CTRL SHIFT K
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
@@ -2180,9 +2279,23 @@ sendinput {Rctrl up}
 return
 
 ; zoom using your mouse movement, again.
-F18::
+F17::
 ;My Corsiar K95 RGB macro key G7 is set to F18. I'm just trying this macro here as well.
 sendinput {Rctrl down}
+sendinput {space down}
+sendinput {Lbutton down}
+sleep 1 ;just because. Maybe this is a bad idea though.
+keywait, F17 ;waits for F17 to be released
+sleep 1
+sendinput {Lbutton up}
+sendinput {space up}
+sendinput {Rctrl up}
+return
+
+
+; instant hand tool using your mouse movement
+F18::
+;My Corsiar K95 RGB macro key G9 is set to F17.
 sendinput {space down}
 sendinput {Lbutton down}
 sleep 1 ;just because. Maybe this is a bad idea though.
@@ -2190,9 +2303,9 @@ keywait, F18 ;waits for F18 to be released
 sleep 1
 sendinput {Lbutton up}
 sendinput {space up}
-sendinput {Rctrl up}
 return
 
+;note to self, must make video complaining about how when photoshop flick panning is on, the hand tool is WAY smoother than when it is off. I turn it off because of a very simple premise: when I am not scrolling or moving, I don't want photoshop to be scrolling or moving. I also turn off animated zoom for that reason. KEEP IT SIMPLE.
 
 
 ;The following will circumvent Photoshop's stupid requirement to hold CTRL for zooming...
@@ -2251,7 +2364,13 @@ return
 ;;ATTENTION WACOM TABLET USERS. I APOLOGISE FOR BREAKING YOUR SHIT. WACOM/ADOBE COULD THINK OF NO WAY TO LIKE, INTERFACE DIRECTLY. THEY HAD TO GO AND STEAL SOME OBSCURE SHORTCUTS THAT THEY THOUGHT NOBODY WOULD USE. WELL THEY DIDN'T KNOW THAT TARAN "MACRO" VAN HEMERT WAS ON THE CASE.
 ;;ANYWAY, YOU CAN JUST REMOVE THE ABOVE STUFF AND GET YOUR WACOM SHORTCUTS BACK. (Thread about wacom stuff: https://forums.adobe.com/thread/1453594)
 
+;; RIP Monty Oum - https://youtu.be/O6ERELse_QY?t=13933
+;; https://youtu.be/qSuTnCFqMkw?t=1m21s <-- the original video is no longer available. (Infonaut: Red vs Blue Hollywood (part 2 of 3))
+; #IfWinActive ahk_exe Photoshop.exe
+; F1::sendinput, {alt down}iac{alt up}
+
 ;;&&&&&&&&&&&&&&&&&&&& PHOTOSHOP END &&&&&&&&&&&&&&&&&&&&&
+
 
 
 
@@ -2275,7 +2394,7 @@ global VFXkey = "F15" ;the VFXkey variable has to be defined NOW. IDK why.
 instantVFX("anchor_point_vertical")
 return
 
-;F16 is not currently used for anything
+;F16 is not currently used for anything. free.
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Macro key G7
@@ -2350,6 +2469,8 @@ Lshift & Rshift::capslock
 
 ;Macro key G7 i think
 F17::
+
+;;update: this is supposed to put the shot BEFORE the other stuff on the comment, but word 365 doesn't work thatway., will fix later.
 doAnEnter := 1
 sendinput, ^c
 sleep 100
@@ -2357,18 +2478,22 @@ sleep 100
 ; send ^{F4} ;shortcut for activate word, and if active, move to next comment.
 ; msgbox, EXTREMELY WEIRD - the above code would CLOSE THE TAB. IDK what kind of cross-talk was going on... will look into that later.
 if WinActive("ahk_exe EXCEL.exe")
-	doAnEnter := 0 ;sooo if you're copying out of Excel rather than google sheets, the copied cell has it's own "return," so you don't need to add one.
+	;doAnEnter := 0 ;sooo if you're copying out of Excel rather than google sheets, the copied cell has it's own "return," so you don't need to add one.
+	doAnEnter := 0 ;testing thigns...
 switchToWord()
 sleep 100
+if (doAnEnter = 1)
+	sendinput, {enter}
+	
+
 send ^v
 sleep 100
-if (doAnEnter = 1)
-	send {enter}
+
 sleep 10
 ; send ^{F4} ;only use this line if switchToWord() is not directly available.
 ;;;;msgbox,,, just before,0.5
 ; switchToWord()
-sendinput, {F2} ;in word, "go to previous comment."
+sendinput, {F3} ;in word, "go to next comment."
 sleep 10
 ;;;;msgbox,,, thingy is over,0.5
 ;WinActivate ahk_class MozillaWindowClass
@@ -2576,3 +2701,13 @@ ConvertSentence()
 
 ; SC0EB::tooltip, gonna see if keys can be tirggered when i am inside of another function.
 ; SC0E8::tooltip, sc0e8 EIGHT
+
+
+; ; ; testing a thing.
+;;;;;https://autohotkey.com/board/topic/56123-horizontal-scroll-wheelleftwheelright-in-windows-2003xp/
+; ; WheelDown::
+; ; send, {WheelRight}
+; ; return
+; ; WheelUp::
+; ; send, {WheelLeft}
+; ; return

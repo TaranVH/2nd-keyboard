@@ -340,6 +340,7 @@ sendinput, {blind}{SC0E4} ;scan code of an unassigned key. Used for debugging. W
 ; preset() is my most used, and most useful AHK function! There is no good reason why Premiere doesn't have this functionality.
 ;keep in mind, I use 150% UI scaling, so your pixel distances for commands like mousemove WILL be different!
 ;to use this script yourself, carefully go through  testing the script and changing the values, ensuring that the script works, one line at a time. use message boxes to check on variables and see where the cursor is. remove those message boxes later when you have it all working!
+;NOTE: you also need to get the PrFocus() function.
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 preset(item)
 {
@@ -1564,6 +1565,7 @@ tooltip,
 
 
 ;how to use instantVFX: https://www.youtube.com/watch?v=Bi3zBqO74ms
+;NOTE: DO NOT CHANGE YOUR WINDOWS CLEARTYPE SETTINGS, OR THE TEXT WILL BE SLIGHTLY DIFFERENT, AND IMAGESEARCH WILL NO LONGER WORK!
 
 ;UPDATE:
 ;I had overwritten the high DPI scaling behaviour of Premiere, by following THESE instructions: https://forums.adobe.com/message/10081059#10081059 , which changes the look of text and other elements of Premiere.
@@ -1919,7 +1921,10 @@ if IsFunc("Keyshower") {
 }
 
 ;Trying to bring focus to the TIMELINE itself is really dangerous and unpredictable, since its Class# is always changing, based upon how many sequences, and other panels, that might be open.
-ControlFocus, DroverLord - Window Class3,ahk_exe Adobe Premiere Pro.exe
+
+;ControlFocus, DroverLord - Window Class3,ahk_exe Adobe Premiere Pro.exe ;the problem wiht this is that a project panel on the 2nd monitor also can qualify
+ControlFocus, DroverLord - Window Class3,Adobe Premiere Pro 2020 ;this works because "Adobe Premiere Pro 2020" is found on the MAIN premiere window, but not the one on the 2nd or 3rd monitors.
+
 ; Window Class14 is the Program monitor, at least on my machine.
 ; well, now it's Window Class13. it really does change around a lot.
 ; Window Class3 seems to fairly consistently be the Effect Controls panel.
@@ -1946,11 +1951,13 @@ sleep 30
 ;now that we have a panel highlighted, we can send keystokes to premiere. But the panel itself is sometimes random. so it's best to use this to FORCE a specific panel that won't screw stuff up.
 
 ;NOTE: the "5" keystroke is sent to Premiere, but it will NOT show up in the keyhistory. I'm not sure why... i guess it has to do with ControlSend. Just FYI for debugging.
-ControlSend,DroverLord - Window Class3, ^+!5,ahk_exe Adobe Premiere Pro.exe ;this shortcut will highlight the EFFECT CONTROLS, which will NOT also stop playback of the source monitor, if it is already playing.
+;ControlSend,DroverLord - Window Class3, ^+!5,ahk_exe Adobe Premiere Pro.exe ;this shortcut will highlight the EFFECT CONTROLS, which will NOT also stop playback of the source monitor, if it is already playing.
+ControlSend,DroverLord - Window Class3, ^+!5,Adobe Premiere Pro 2020 ;this shortcut will highlight the EFFECT CONTROLS, which will NOT also stop playback of the source monitor, if it is already playing.
 sleep 40
 ;msgbox,,, srsly wtf,0.5
 ;msgbox,srsly wtf
-ControlSend,DroverLord - Window Class3, ^+!5,ahk_exe Adobe Premiere Pro.exe
+;ControlSend,DroverLord - Window Class3, ^+!5,ahk_exe Adobe Premiere Pro.exe
+ControlSend,DroverLord - Window Class3, ^+!5,Adobe Premiere Pro 2020
 sleep 10 ;this asn't here at all for a long time. dunno if i really need it.
 
 ;FYI, {space} also doesn't show up in the keyhistory.

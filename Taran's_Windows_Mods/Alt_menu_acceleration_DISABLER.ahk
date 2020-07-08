@@ -17,6 +17,8 @@ SendMode Input
 ;; take this tutorial if you don't know how AHK works. https://www.autohotkey.com/docs/Tutorial.htm
 
 
+;; If this script isn't working for you, try Alt_menu_acceleration_DISABLER_using_F13.ahk
+
 
 ;;;; THE READ ME IS BELOW. TRUST ME, YOU SHOULD READ IT. BUT FIRST... ;;;;
 
@@ -150,12 +152,14 @@ SendMode Input
 
 ~LAlt::
 Sendinput {Blind}{sc0E9}
-KeyWait, LAlt ; so that it doesn't keep spamming SC0E9 (as seen from an AHK window Key history and script info... window.)
+KeyWait, LAlt ; this wasit for the key to be RELEASED. So that it doesn't keep spamming SC0E9 (as seen from an AHK window Key history and script info... window.)
+Sendinput {Blind}{sc0EA}
 return
 
 ~RAlt::
 Sendinput {Blind}{sc0E9}
 KeyWait, RAlt ; so that it doesn't keep spamming SC0E9
+Sendinput {Blind}{sc0EA}
 return
 
 ;this was VK07, but i want to be able to distinguish between this, and menu masking, seperately, in my debugging.

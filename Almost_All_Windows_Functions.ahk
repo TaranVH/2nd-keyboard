@@ -1504,7 +1504,41 @@ JEE_IFV2SetSortColumns(ifv2, vList, vSep="`n")
 
 ;;HOW TO ACTUALLY CALL THESE FUNCTIONS:
 ;/*
+
 sortByDate()
+{
+	WinGet, hWnd, ID, A
+	oWin := JEE_ExpWinGetObj(hWnd)
+	JEE_ExpGetInterfaces(oWin, isp, isb, isv, ifv2, icm)
+	;above must load up the complex structures with black magic
+	;clipboard:=JEE_IFV2GetSortColumns(ifv2)
+	;System.DateModified -1
+	;System.DateModified 1
+	;;if RegExMatch(JEE_IFV2GetSortColumns(ifv2),"System.DateModified ?:-1")
+	;regexesllwork but not straightforward
+	curCol:=JEE_IFV2GetSortColumns(ifv2)
+	;dont call it twice - maybe you wouldnt need to but im not seeing a superb way to avoid it below
+	if InStr(curCol,"System.DateModified")
+	{
+		;test if it is ascending or descending and let's flip 'em
+		If InStr(curCol,"-")
+		{
+			vList := "System.DateModified 1" 
+		}
+		;no alternate cases right?
+		else {
+			vList := "System.DateModified 1" 
+		}
+	}
+	;no alternate cases right?
+	else {
+		vList := "System.DateModified 1"
+	}
+	JEE_IFV2SetSortColumns(ifv2, vList)
+	isp := isb := isv := ifv2 := icm := ""
+}
+
+sortByDateOLD()
 {
 	WinGet, hWnd, ID, A
 	oWin := JEE_ExpWinGetObj(hWnd)

@@ -32,8 +32,9 @@ twirlAE(open := 1)
 BlockInput, on
 BlockInput, MouseMove
 
-CoordMode Pixel ;, screen  ; IDK why but it works like this...
-CoordMode Mouse, screen
+CoordMode Pixel, window 
+CoordMode Mouse, window
+; https://www.autohotkey.com/docs/commands/CoordMode.htm
 
 MouseGetPos xPos, yPos
 ;I currently work on a 4k, 100% UI scaled screen. You might have to change these  values to fit your own screen, if you use a different UI.
@@ -41,11 +42,8 @@ rightedge = 200 ;250 for 150% UI
 expanseUp = 13  ;32 for 150% UI
 expanseDown = 13 ;10 for 150% UI
 
-CoordMode Pixel ;, screen  ; IDK why but it works like this...
-CoordMode Mouse, screen
-; CoordMode, mouse, window
-; CoordMode, pixel, window
-; coordmode, Caret, window
+CoordMode Pixel, window 
+CoordMode Mouse, window
 
 ;you might need to take your own screenshot (look at mine to see what is needed) and save as .png.
 
