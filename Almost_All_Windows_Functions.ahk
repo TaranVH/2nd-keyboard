@@ -1102,12 +1102,44 @@ else
 ;closes all explorer windows :/
 ;^!F2 -- for searchability
 
-closeAllExplorers()
-{
-WinClose,ahk_group taranexplorers
+;closeAllExplorers()
+;{
+;WinClose,ahk_group taranexplorers
 ; i want to improve this so that the bottom (most recently active) explorer window does NOT close. IDK how to do that yet though.
 ; https://stackoverflow.com/questions/39601787/close-windows-explorer-window-with-auto-hotkey
 ; https://autohotkey.com/board/topic/88648-close-all-explorer-windows/
+;}
+
+;- Using an ahk_group we have no ability to remove objects from the group after it is created before closing it.
+;  Instead we can just create an array of the window ahk_id's in ahk_class CabinetWClass and close each, 
+;  one at a time while not closing the most recently active.
+;  I wanted to get something like this for myself, it worked and I think this is what you were wanting to do.
+;  Aug 23 2020 - github.com/paul-dab
+closeAllExplorers()
+{
+	sleep 11
+	;Initialize the array
+	Array := []
+	Array[j] := A_LoopField
+	Array[j, k] := A_LoopReadLine
+	ArrayCount := 0
+	WinGet,list,list, ahk_class CabinetWClass
+	;create a list of windows of ahk_class CabinetWClass from WinGet, loop through it and add each ahk_id to the array.
+	Loop % list 
+	{
+		ArrayCount += 1
+		Array[ArrayCount] := list%A_Index%
+	}
+	;loop through the array we just made and close the associated window if it is not the first in the array.
+	;the windows are added to the array in the order in which they were most recently brought into focus.
+	Loop % ArrayCount 
+	{
+		element := Array[A_Index]
+		if (A_Index > 1)
+		{
+			WinClose % "ahk_id " Array[A_Index]
+		}
+	}
 }
 
 
