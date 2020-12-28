@@ -7,7 +7,7 @@ Menu, Tray, Icon, shell32.dll, 16 ;this changes the icon into a little laptop th
 
 ;######## THIS IS THE BEST SCRIPT I'VE EVER WRITTEN. #########
 
-;And also one of the simplest. Basically, If you press the "explorer" key (F1) it will instantly:
+;And also one of the simplest. Basically, If you press the "explorer" key (F2) it will instantly:
 ; 1. Create an explorer window if one is not already running.
 ; 2. Open the LAST ACTIVE explorer window if Explorer is not already active
 ; 3. If you keep pressing the key, it will cycle through Explorer windows in the order they were last activated

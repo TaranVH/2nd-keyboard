@@ -1,6 +1,6 @@
-﻿StringToSend = Short Circuit Vault 2 
+﻿StringToSend = TechLinked VAULT 2
 Send_WM_COPYDATA(StringToSend)
-InstantExplorer("V:\17. SC vault 2")
+InstantExplorer("V:\02. TL vault 2")
 Exitapp
 SetWorkingDir %A_ScriptDir%
 #Include %A_ScriptDir%/REDIRECTOR Windows.ahk

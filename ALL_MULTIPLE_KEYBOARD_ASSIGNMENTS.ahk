@@ -11,7 +11,7 @@ Menu, Tray, Icon, shell32.dll, 283 ;tray icon is now a little keyboard, or piece
 ;This is for macro key G14 by the way.
 global savedCLASS = "ahk_class Chrome_WidgetWin_1"
 global savedEXE = "Teams.exe" ;BEFORE the #include is apparently the only place these can go.
-psApp := ComObjActive("Photoshop.Application") ;This is AMAZING and allows me to directly trigger photoshop actions using AHK scripts. Game changer! search "psApp" to see them all.
+;psApp := ComObjActive("Photoshop.Application") ;This is AMAZING and allows me to directly trigger photoshop actions using AHK scripts. Game changer! search "psApp" to see them all.
 
 ;when you get to #include, it means the END of the autoexecute section.
 ;gui must be #included first, or it does not work, for some reason...
@@ -177,7 +177,7 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; VK07:  #menumaskkey https://autohotkey.com/docs/commands/_MenuMaskKey.htm
 
 
-
+;;;;OLD CLIPBOARD METHOD IS BELOW;;;;;;;;
 ;these are sent from the stream deck.
 ;I didn't use CTRL and SHIFT and stuff because I wanted NO CROSS TALK!!
 ;COPY 1 2 and 3
@@ -191,13 +191,30 @@ SC16D::SendInput {Raw}%ClipBoard_1%		;launch_media
 vk2B::SendInput {Raw}%ClipBoard_2%		;Execute
 SC121::SendInput %ClipBoard_3% 	;launch (1)
 
+
+
+
+; SC062::Copy(1)		;zoom
+; vk2A::Copy(2)		;Printer
+; SC16B::Copy(3)		;launch (0)
+
+; SC16D::paste(1)		;launch_media
+; vk2B::paste(2)		;Execute
+; SC121::paste(3) 	;launch (1)
+
 ;note to self, this is where to go for tap dance stuff
 ; https://autohotkey.com/board/topic/35566-rapidhotkey/
 
+
+
+
 currentTool = "v" ;This is super useful and important for a Premiere script, you'll see...
 
+
+
 ; psApp := ComObjActive("Photoshop.Application") ;This is AMAZING and allows me to directly trigger photoshop actions using AHK scripts. Game changer! search "psApp" to see them all.
-; ;edit: apoparently defining the variable here doesn't work... hmm...
+; ;edit: apoparently defining the variable HERE doesn't work... hmm...
+
 
 #if
 
@@ -244,7 +261,12 @@ F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it
 
 escape::msgbox,,, you pressed escape. this might cause like problems maybe, 0.9
 
-F1::return
+F1::
+FileRead, SECRET_TEXT, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SECRET_TEXT_NOT_ON_GITHUB.txt
+Sendinput, %SECRET_TEXT%
+; sleep 10
+return
+
 F2::insertSFX("Whoosh19-Short") ;you may not use spaces for filenames of sounds that you want to retreive in this way... since searching in premiere will disregard spaces in a a weird way... returning multiple wrong results....
 F3::insertSFX("Whoosh7-Short")
 F4::insertSFX("Whoosh2-Short")
@@ -267,27 +289,30 @@ F12::instantExplorer("Z:\Linus\17. Short Circuit\Transcode\_SC Delivery") ;"FLOO
 ;;;;K120 keyboard;;;;;
 
 `::msgbox tilde or weird quote thing?? K120
-1::insertSFX("bleep")
-2::
-3::return
-4::
-tooltip, this happens on key down
-keywait, 4 ;waits for the key to go up
-tooltip, and this happens on key up. dang
-return
+1::preset("T wipe straight left")
+2::preset("T wipe straight down")
+3::preset("T wipe straight up")
+4::preset("T wipe straight right")
+; 4::
+; tooltip, this happens on key down
+; keywait, 4 ;waits for the key to go up
+; tooltip, and this happens on key up. dang
+; return
 5::insertSFX("")
 6::insertSFX("record scratch")
 7::preset("180 hue angle")
 8::preset("PAINT WHITE")
 9::preset("PAINT BLACK")
-0::insertSFX("pop")
+0::preset("MOVE IN A0")
+; 0::insertSFX("pop")
 -::audioMonoMaker("left")
 =::audioMonoMaker("right")
+
 backspace::
 if WinActive("New TightVNC Connection") ;if we are at the thingy that asks for the server IP (already inputted)
 	{
 	Sendinput, {enter}
-	goto tvnEND ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!! DESPAIR!!!!
+	goto tvnEND ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!
 	}
 if WinActive("Vnc Authentication") ;if we are at the thingy that asks for the PASSWORD!
 	{
@@ -296,7 +321,7 @@ if WinActive("Vnc Authentication") ;if we are at the thingy that asks for the PA
 	Sendinput, %SECRET_SERVER_PASS%
 	sleep 10
 	Sendinput, {enter}
-	goto tvnEND ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!! DESPAIR!!!!
+	goto tvnEND ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!
 	}
 IfWinNotExist, ahk_class TvnWindowClass
 	Run, C:\Program Files\TightVNC\tvnviewer.exe
@@ -445,7 +470,8 @@ F20::msgbox,,, K120 capslock to F20,0.5
 ;;Lshift -to-> SC070-International 2 -back-to-> Lshift. This is easier than having to re-flash the QMK chip...
 SC070::Lshift
 
-SC071 up::tooltip, [F23] LCtrl -to-> SC071-Language 2
+SC071 up::instantExplorer("Z:\Linus\1. Linus Tech Tips\Assets\Product Shots") ;[F23] LCtrl -to-> SC071-Language 2
+; SC071 up::tooltip, [F23] LCtrl -to-> SC071-Language 2
 SC072 up::tooltip, [F23] LWin -to-> SC072-Language 1
 SC073 up::tooltip, [F23] LAlt -to-> SC073-International 1
 
@@ -455,13 +481,14 @@ SC079::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\BGs") 
 SC07B::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\Screenshots") ;K120 rCTRL:: -to-> SC07B:International5 
 
 
-SC07D::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS") ;K120 RShift -to-> SC07D: International3 --to--> \TARAN ASSETS\
+SC07D::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS\TARAN ASSETS\GRAPHICS") ;K120 RShift -to-> SC07D: International3 --to--> \TARAN ASSETS\
 
 space::InstantExplorer("Z:\Linus\10. Ad Assets & Integrations")
++space::InstantExplorer("V:\10. Assets & Integrations vault 2")
 
 ;;;;;;;-----------------------------------------
 
-PrintScreen::InstantExplorer("V:\1. LTT vault 2") ;will make tapdance keys one day...
+PrintScreen::InstantExplorer("V:\17. SC vault 2") ;will make tapdance keys one day...
 ScrollLock::InstantExplorer("N:\Fast As Possible")
 ;scroll lock WAS reassigned to SC061 back when i used interception
 SC07E::InstantExplorer("N:\Linus Tech Tips")
@@ -471,12 +498,12 @@ SC07E::InstantExplorer("N:\Linus Tech Tips")
 ; pause::msgbox, is this the PAUSE key?? IDK
 ; Break::msgbox, Maybe THIS is the pause/break key?? WHAT CAN I BELEVE ANYMORE??
 
-insert::InstantExplorer("Z:\Linus\2. Tech Linked\5. Transcode\_TL Delivery")
+insert::InstantExplorer("Z:\Linus\17. Short Circuit\SC Transcode\_SC Delivery")
 home::InstantExplorer("Z:\Linus\5. Fast As Possible\_FAP Transcoding\_FAP Delivery") 
 pgup::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\_LTT DELIVERY")
 
-delete::InstantExplorer("Z:\Linus\2. Tech Linked\3. Pending")
-end::InstantExplorer("Z:\Linus\5. Fast As Possible\1. Pending")
+delete::InstantExplorer("Z:\Linus\17. Short Circuit\Pending")
+end::InstantExplorer("Z:\Linus\5. Fast As Possible\1. TQ Pending")
 pgdn::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Pending")
 
 up::preset("push up")
@@ -592,22 +619,35 @@ return
 numpaddown::
 numpad2::SendKey(A_thishotkey, ,"nudge down")
 numpadpgdn::
+
 numpad3::
-;The following code is obsolete now that Premiere allows you to create markers of any color, using shortcuts. horray!
-; if WinActive("ahk_exe Adobe Premiere Pro.exe"){
-	; Keyshower("add marker color 4 (taran mod)")
-	; marker()
-	; send ^!{numpad4} ;set marker color 3
-	; sleep 5
-	; marker() ;Go inside that marker so that you can start typing a comment
-	; ;;SendKey(A_thishotkey, ,"orange")
-	; }
-if WinActive("ahk_exe Adobe Premiere Pro.exe"){
-	sendinput, +{numpad3}
-	}
-if WinActive("ahk_exe chrome.exe")
-	sendinput, ^+{tab} ;go to previous tab in chrome
+;tooltip, hewwo3
+; dothisCLASS = "ahk_class Chrome_WidgetWin_1"
+; dothisEXE = "vivaldi.exe"
+windowSwitcher("ahk_class Chrome_WidgetWin_1", "vivaldi.exe")
+
+; windowSwitcher(theClass, theEXE)
+; ahk_class Chrome_WidgetWin_1
+; ahk_exe vivaldi.exe
+; ahk_pid 24096
 return
+
+; numpad3::
+; ;The following code is obsolete now that Premiere allows you to create markers of any color, using shortcuts. horray!
+; ; if WinActive("ahk_exe Adobe Premiere Pro.exe"){
+	; ; Keyshower("add marker color 4 (taran mod)")
+	; ; marker()
+	; ; send ^!{numpad4} ;set marker color 3
+	; ; sleep 5
+	; ; marker() ;Go inside that marker so that you can start typing a comment
+	; ; ;;SendKey(A_thishotkey, ,"orange")
+	; ; }
+; if WinActive("ahk_exe Adobe Premiere Pro.exe"){
+	; sendinput, +{numpad3}
+	; }
+; if WinActive("ahk_exe chrome.exe")
+	; sendinput, ^+{tab} ;go to previous tab in chrome
+; return
 
 numpadleft::
 numpad4::SendKey(A_thishotkey, ,"nudge left")
@@ -627,24 +667,50 @@ numpad9::SendKey(A_thishotkey, ,"yellow")
 ;numpadDiv::SendKey("numpadDiv", ,"clip blue")
 ;numpadMult::SendKey("numpadmult", ,"pink")
 
+
 numpadSub::
-
-
-If Not WinExist("ahk_class AU3Reveal")
-	openApp("ahk_class AU3Reveal", "C:\Program Files\AutoHotkey\WindowSpy.ahk", "Active Window Info")
-; else
-	; msgbox, heyyyy ;doesn't work for some raisin.
-; if WinExist("ahk_class AU3Reveal")
-	; msgbox, heyyo
-	;WinClose, Window Spy
-
+;open tight VNC
+if WinActive("New TightVNC Connection") ;if we are at the thingy that asks for the server IP (already inputted)
+	{
+	Sendinput, {enter}
+	goto tvnEND2 ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!
+	}
+if WinActive("Vnc Authentication") ;if we are at the thingy that asks for the PASSWORD!
+	{
+	FileRead, SECRET_SERVER_PASS, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SECRET_SERVER_PASS_NOT_ON_GITHUB.txt
+	;msgbox, pass is %SECRET_SERVER_PASS%
+	Sendinput, %SECRET_SERVER_PASS%
+	sleep 10
+	Sendinput, {enter}
+	goto tvnEND2 ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!
+	}
+IfWinNotExist, ahk_class TvnWindowClass
+	Run, C:\Program Files\TightVNC\tvnviewer.exe
+if WinExist("ahk_exe tvnviewer.exe")
+	WinActivate ahk_exe tvnviewer.exe
+tvnEND2:
+;all done
 return
+
+
+
+
+; numpadSub::
+; If Not WinExist("ahk_class AU3Reveal")
+	; openApp("ahk_class AU3Reveal", "C:\Program Files\AutoHotkey\WindowSpy.ahk", "Active Window Info")
+; ; else
+	; ; msgbox, heyyyy ;doesn't work for some raisin.
+; ; if WinExist("ahk_class AU3Reveal")
+	; ; msgbox, heyyo
+	; ;WinClose, Window Spy
+; return
 
 
 
 ; numpadAdd::openApp("ahk_class Adobe Media Encoder CC", "Adobe Media Encoder.exe") ;msgbox, , , num ADD, 0.5
 numpadAdd::openApp("ahk_class Notepad++", "notepad++.exe") ;msgbox, , , num ADD, 0.5
-numpadEnter::switchToChrome()
+; numpadEnter::switchToChrome()
+numpadEnter::switchToFirefox()
 
 numpaddel::
 numpadDot::openApp("ahk_class Photoshop", "Photoshop.exe") ;msgbox, , , num dot, 0.5
@@ -861,15 +927,7 @@ numpadDot::
 		
 #IfWinActive
  
- 
- ;;;;testing shit
- 
- 
 
-;+F12::gotofiretab("Calendar - April 2019","https://calendar.google.com/calendar/b/0/r") 
-
- 
- ;;;;;okay done with testing
 
 ;BEGIN KEYBOARD 4, FULL AZIO KEYBOARD
 #if (getKeyState("F24", "P")) ;and WinActive("ahk_exe Adobe Premiere Pro.exe") ;; bad idea to have the "and [something]", this means the keyboard behaves normally, any time you are NOT in Premiere...
@@ -891,15 +949,15 @@ F12::tooltip, you pressed F24 then %A_thishotkey%
 
 ;`::tooltip, tilde thing 
 `::
-gotofiretab("ADDENDUM to 4hr","https://docs.google.com/document/d/1YRr5O2PN10PRtAMZHUJJhh6_2FXANjaHTGYH0RadTaI/edit")
+gotoChromeTab("ADDENDUM - Google Docs","https://docs.google.com/document/d/1YRr5O2PN10PRtAMZHUJJhh6_2FXANjaHTGYH0RadTaI/edit")
 return
 
 
-1::gotofiretab("AHK needed","https://docs.google.com/document/d/1xsjjKYggXYig_4lfBMJ6LDGRZ9VOvDd7SCSTSi7GwN8/edit")
-2::gotofiretab("LTT To Do - Google Docs","https://docs.google.com/document/d/1Gi8sruMEBEQG3WHPM2jaFOQ1oR1A8bSz47vSxB9NfBQ/edit")
-3::gotofiretab("LTT note","https://docs.google.com/document/d/1CWjC7DWyXGIFDaSwXzUsdHmdktvgV0kdgNOFEK7wf7U/edit")
+1::gotoChromeTab("AHK needed","https://docs.google.com/document/d/1xsjjKYggXYig_4lfBMJ6LDGRZ9VOvDd7SCSTSi7GwN8/edit")
+2::gotoChromeTab("LTT To Do - Google Docs","https://docs.google.com/document/d/1Gi8sruMEBEQG3WHPM2jaFOQ1oR1A8bSz47vSxB9NfBQ/edit")
+3::gotoChromeTab("Lnotes - Google Docs","https://docs.google.com/document/d/1CWjC7DWyXGIFDaSwXzUsdHmdktvgV0kdgNOFEK7wf7U/edit")
 
-4::gotofiretab("Music Hypercube - Google Docs","https://docs.google.com/document/d/11hIiENqLMtuQRLV4FjZMRY2uNFLtPw5QW6fivMix9VE/edit")
+4::gotoChromeTab("Music Hypercube - Google Docs","https://docs.google.com/document/d/11hIiENqLMtuQRLV4FjZMRY2uNFLtPw5QW6fivMix9VE/edit")
 
 5::
 6::tooltip, you pressed F24 then %A_thishotkey%
@@ -915,7 +973,8 @@ backspace::send, ^+!r ;ctrl shift alt r is "reset workspace"
 
 ; tab::msgbox,,, you pressed tab. :P,0.8
 ;VIDEO TRACKER
-tab::gotofiretab("Fast As Possible | Trello","https://trello.com/b/yUSFtaXn/fast-as-possible")
+tab::gotoChromeTab("Techquickie | Trello","https://trello.com/b/yUSFtaXn/fast-as-possible")
+; tab::gotoFireTab("Fast As Possible | Trello","https://trello.com/b/yUSFtaXn/fast-as-possible")
 ; WinActivate ahk_exe firefox.exe
 ; sleep 10
 ; WinGet, the_current_id, ID, A
@@ -925,7 +984,7 @@ tab::gotofiretab("Fast As Possible | Trello","https://trello.com/b/yUSFtaXn/fast
 	; run, firefox.exe https://docs.google.com/spreadsheets/d/1FmuWOCKHxZbxS5XbwpVDP4M27BjTAJJ67B0yoSXUN9k/edit#gid=0
 ;return
 
-;;;this is the azio F24 keyboard;;;
+;;;this is the Azio keyboard that is wrapped in F24;;;
 
 q::
 ;HUGE SHOUT OUT TO MICHAEL BUNZEL FOR EMAILING ME WITH THE FANTASTIC CODE!
@@ -959,7 +1018,9 @@ u::
 i::tooltip, you pressed F24 then %A_thishotkey%
 ;o::sendinput, ° ;; this will send Â°
 o::sendinput, {ASC 0176} ;the degree symbol!
-p::
+;p::sendinput, {ASC 0}
+p::sendinput, {U+00A0}
+;p::msgbox, % asc(⠀)
 [::
 ]::tooltip, you pressed F24 then %A_thishotkey%
 \::run, C:\Program Files (x86)\Corsair\Corsair Utility Engine\CUE.exe
@@ -969,22 +1030,27 @@ p::
 ;F20 IS CAPSLOCK
 ;CAPSLOCK IS TRELLO
 F20::
-capslock::gotofiretab("Production Planner | Trello","https://trello.com/b/NevTOux8/ltt-production-planner")
-
-;LEFTSHIFT > SC070 / International2 > Firefox calendar open
-;SC070::gotofiretab("Linus Media Group Inc. – Calendar","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+capslock::gotoChromeTab("Production Planner | Trello","https://trello.com/b/NevTOux8/ltt-production-planner")
 
 ;;;this is(was) Lshift::
-SC070::gotofiretab("Calendar - July 2020","https://calendar.google.com/calendar/b/0/r") ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
+;Lshift:: / LEFTSHIFT -to-> SC070 / International2 -to-> Chrome calendar open
+; SC070::gotofiretab("Calendar - October 2020","https://calendar.google.com/calendar/b/0/r")
+SC070::gotoChromeTab("Calendar - January 2021","https://calendar.google.com/calendar/u/0/r")
+;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
 ;em dash –
 ;; ask about URLs: https://autohotkey.com/boards/viewtopic.php?f=6&t=26947&p=139114#p139114
 
-;;;this is still the azio F24 keyboard;;;
+
+;;;***this is still the azio F24 keyboard***;;;
+
 
 ;LEFTCTRL -> SC071/Lang2 -> GMAIL INBOX
-SC071 up::gotofiretab("Linus Media Group Inc. Mail","https://mail.google.com/mail/u/0/#inbox","says...")
+SC071 up::
+;tooltip, hewwo test
+gotoChromeTab("Linus Media Group Inc. Mail","https://mail.google.com/mail/u/0/#inbox","says...")
+return
 ;or a tab that says "says..."
 ; a::recallClipboard("a")
 ; +a::saveClipboard("a")
@@ -1202,10 +1268,55 @@ insert::sendinput, ^!+l ;lock/unlock all video tracks
 
 
 
+;up::tooltip, you pressed F24 then %A_thishotkey%
 up::
-down::
+	While(GetKeyState("up","P")){
+		Mousemove,25,0,,R
+		sleep 1
+	}
+return
+
+down:: 
+MouseClick, left,,, 1, 0, D ; Hold down the left mouse button. 
+;tooltip, hi
+Loop 
+{ 
+Sleep, 30
+MouseMove, 1, 0, 0, R
+GetKeyState, state, down, P 
+if state = U
+	break
+} 
+MouseClick, left,,, 1, 0, U
+return
+
+
+
+; left::tooltip, you pressed F24 then %A_thishotkey%
 left::
-right::tooltip, you pressed F24 then %A_thishotkey%
+MouseClick, left,,, 1, 0, D ; Hold down the left mouse button. 
+;tooltip, hi
+Loop 
+{ 
+Sleep, 10
+MouseMove, 1, 0, 0, R
+GetKeyState, state, left, P 
+if state = U
+	break
+} 
+MouseClick, left,,, 1, 0, U
+return
+
+
+
+
+return
+
+right::
+click down
+MouseMove, 800, 0, 100, R
+click up
+return
 
 ;;;;;next area;;;;;;;;
 ;;;this is the azio F24 keyboard;;;
@@ -1261,8 +1372,9 @@ numpadMult::tooltip, you pressed F24 then %A_thishotkey%
 ;send, +`` ;premiere shortcut for "Maximize or restore ACTIVE FRAME." Note that ` is the "escape character," so i have to use it twice.
 
 
-numpadSub::tooltip, you pressed F24 then %A_thishotkey%
-numpadAdd::sendinput, +!{F10} ;default is shift alt F10. Shadowplay toggle instant replay on/off
+numpadSub::sendinput, !{F9} ;alt F9 is shadowplay record
+numpadAdd::sendinput, !{F10} ;shadowplay retroactive record last X minutes.
+;SHIFT ALT F10 is to toggle the ability of the replay to go on and off. that's not confusing right? Shadowplay toggle instant replay on/off
 
 
 numpadEnter::
@@ -1348,13 +1460,14 @@ PgDn::send ^{tab} ;control tab, which goes to the previous tab
 PgUp::send ^w ;control w, which closes a tab
 
 ;these are also for APMmusic.ca surfing.
-;macro key G8
-F19::up
-;macro key G11
+;macro key G8, labeled as horizontal anchor.
+F18::up
+;macro key G11, labeled as vertical anchor.
 F15::down
 
-;macro key G9
+;macro key G9: labeled as rotation.
 F17::enter ;idk if this is the corect assignment now that i moved keys.
+;also i dont remember why i did that
 
 F3::send ^w ;control w, which closes a tab
 F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
@@ -1362,6 +1475,7 @@ F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
 
 
 #IfWinActive ahk_exe AfterFX.exe
+;super useful, and a feature that AE should definteily have. PRIMARY [GAMEPLAY] LOOP!!
 F1::twirlAE(1)
 F2::twirlAE(0)
 
@@ -1370,6 +1484,15 @@ F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^w ;control w, which closes a tab
 F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
+
+F14::send, {F11} ;scale key is fullscreen key meow.
+
+;these are also for APMmusic.ca surfing.
+;macro key G8, labeled as horizontal anchor.
+F18::up
+;macro key G11, labeled as vertical anchor.
+F15::down
+
 
 #IfWinActive ahk_exe notepad++.exe
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
@@ -1446,6 +1569,7 @@ return
 
 ~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
 
+
 home::
 send {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
 tippy("sort Explorer by date")
@@ -1461,16 +1585,18 @@ return
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe firefox.exe") ;An Explorer window as launched by Firefox
 `::Send !{up} ;DOWN one folder level in explorer
 ~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
+Media_Next::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
 F6::RemoveDashes() ;when saving Audioblocks sound effects, because filenames with dashes or underscores in them cannot be searched for in Windows' fole system, which is also stupid. So this makes it so  that i don't have to manaully remove those or retype the filenames.
 
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe 4kvideodownloader.exe") 
 `::Send !{up} ;DOWN one folder level in 4k video downloader
 ~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
+Media_Next::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
 
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe WINWORD.exe")
 `::Send !{up} ;DOWN one folder level 
 ~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
-
+Media_Next::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
 
 
 #IfWinActive ahk_exe explorer.exe ;IDK if there is any meaningful difference for using the ahk_exe rather than the ahk_CLASS
@@ -1479,7 +1605,7 @@ F6::RemoveDashes() ;when saving Audioblocks sound effects, because filenames wit
 
 
 
-#IfWinActive, ahk_class CabinetWClass ;this is also explorer
+#IfWinActive, ahk_class CabinetWClass ;this is also WINDOWS EXPLORER
 
 ; https://www.winhelponline.com/blog/master-list-keyboard-shortcuts-windows-10/
 
@@ -1519,7 +1645,7 @@ F11::return ; It acts as a full screen-ifier. Don't need that.
 
 ;F12:: unused currently
 
-
+;I USE THIS ALL THE TIME:
 ;;`::Send !{up} ;go DOWN one folder level in explorer. Discontinued.
 ;;The script above worked fine 99% of the time. But if you have a FILE selected, and that file has a preview thingy showing, it would NOT work -- instead, it would highlight the menu acceleration. Sad!! Manually hitting ALT UP  would still work in that situation, though.
 ;;After some experimentation, I discovered that adding a small delay between virtual keystrokes is essential for this to work in those situations.
@@ -1532,7 +1658,7 @@ sleep 5
 Sendinput, {alt Up} ;this is just the virtual ALT keystroke going up.
 return
 
-
+;I USE THIS RARELY
 +`::Send !{left} ;shift tilde will go "back" in explorer
 
 ~left & right::
@@ -1541,6 +1667,7 @@ return
 Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field - very useful!!
 return
 
+Media_Next::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
 
 home::
 If (exphWnd := WinActive("ahk_class CabinetWClass"))
@@ -1613,8 +1740,11 @@ return
 SC064::back()
 
 ;macro key G16
-^F1::switchToFirefox()
-+^F1::switchToOtherFirefoxWindow() ;^+F1 ^+{F1}
+;This WAS firefox, but I'm switching to Chrome, purely because it has a better multi-page screenshot function. (My old solution for multi-page screenshots in Firefox is no longer teneble.) And it DOES now have smart upscale, and has the nuke anything plugin working properly. Otherwise, I'd stick with firefox. 
+; ; ^F1::switchToFirefox()
+; ; +^F1::switchToOtherFirefoxWindow() ;^+F1 ^+{F1}
+^F1::switchToChrome()
++^F1::switchToOtherChromeWindow() ;^+F1 ^+{F1}
 
 ;macro key G17
 ^F2::switchToExplorer()
@@ -1631,11 +1761,6 @@ SC064::back()
 ^F5::switchToChrome()
 ;also, CTRL works a little funny when the function uses CTRL TAB to switch tabs. This might be better assigned to ALT F5 or something.
 
-;SHIFT and then macro key G14
-+^F6::
-windowSaver()
-msgbox,,, savedCLASS = %savedCLASS% `nsavedEXE = %savedEXE%, 0.6
-Return
 
 ;Macro key G14
 ^F6::
@@ -1644,6 +1769,13 @@ Return
 ;switchToSavedApp(savedCLASS, savedEXE) ;obsolete
 windowSwitcher(savedCLASS, savedEXE) 
 return
+
+;SHIFT and then macro key G14
++^F6::
+windowSaver()
+msgbox,,, savedCLASS = %savedCLASS% `nsavedEXE = %savedEXE%, 0.6
+Return
+
 
 ;No K95 macro key assigned:
 ; ^F8::windowSwitcher("ahk_exe AfterFX.exe","C:\Program Files\Adobe\Adobe After Effects CC 2017\Support Files\AfterFX.exe") ;NOTE: was used for toggle all video tracks in premiere.
@@ -1758,7 +1890,8 @@ F21 & F6::Lbutton
 
 ;Macro key G10
 #IfWinActive ahk_exe firefox.exe
-F18::Sendinput, !+5 ;alt shift 5 is "strikethrough" in Google docs...
+;f19 is tracklocker in premiere 
+F19::Sendinput, !+5 ;alt shift 5 is "strikethrough" in Google docs...
 ; F18::
 ; sendinput, {Ralt down}
 ; sleep 2
@@ -1790,7 +1923,7 @@ return
 
 
 #IfWinActive ahk_exe chrome.exe
-F18::Sendinput, !+5 ;alt shift 5 is "strikethrough" in Google docs...
+F19::Sendinput, !+5 ;alt shift 5 is "strikethrough" in Google docs...
 
 
 ;;note to self - try to get this script here working
@@ -1804,7 +1937,69 @@ F18::^k ;this is strikethrough now.
 
 
 #IfWinActive ahk_exe winword.exe
+F11::
+;Word absolutely sucks at following URLs. Rather than just open them in your default browser, it first tries to load the URL itself to see if it CAN be followed. sometimes this fails. It locks up Word for anywhere from 2 to 30 seconds. Miserable. so I'm making my own macro to opwn links instead.
+
+;first we need to deselect any text. word doesn't seem to have a proper way to do this. CTRL D doesn't do it.
+;https://answers.microsoft.com/en-us/msoffice/forum/all/my-esc-key-wont-deselect-text-in-word-although-it/4f8020cf-f565-e011-8dfc-68b599b31bf5
+;shift F5 is some weird bullshit that ISN'T deselect.
+sendinput, {escape}
+sleep 10
+sendinput, {left}
+sleep 10
+
+;then, highlight the "sentance," (which turns out to be a full URL, as forward slashes are treated like spaces) then copy, change to red, then go to chrome and paste the URL in a new tab.
+send, ^{click} ;CTRL left click to make sure se have the carat on the URL in the comments, but the CTRL is used so that the link is NOT follwed, as I changed that settins so that ctrl is NOT needed to follow the links normally. uh, yeah.
+sleep 10
+send, {F8} ;once gets into the mode
+;F8 is "extend mode. https://www.zdnet.com/pictures/six-clicks-microsoft-word-tricks-to-make-you-an-instant-expert/4/
+sleep 10
+send, {F8} ;twice highlights the word with the carat
+sleep 10
+send, {F8} ;three times highlights the "sentence" (full URL).
+;four times would be the whole paragraph
+;five times is the whole document I think.
+sleep 10
+send ^c ;copy to clipboard
+
+sleep 10
+sleep 10
+send ^r ;ctrl r - I set this up in word's keyboard shortcuts to change text to red. This is my alternative for how the text wont be purple otherwise.
+;to do that, go to word logo, options (at the bottom) customize ribbon, keyboard shortcuts:custon, select "all commands," find "color" and then choose color: red. ugh, so complicated.
+sleep 10
+sleep 10
+send, {escape} ;to get out of extend mode. But your selection is still active.
+;msgbox, okay hows it look?
+sleep 10
+;open default browser
+switchToChrome()
+;switchToFirefox()
+
+;make new tab
+sendinput, ^t ;ctrl T
+sleep 30
+
+;possibly select address bar.
+sendinput, ^l ;ctrl L
+sleep 30
+
+;paste
+sendinput, ^v ;ctrl V
+
+;enter
+sendinput, {enter}
+
+
+
+return
+
+
+
+
+#IfWinActive ahk_exe winword.exe
 F12::
+BlockInput, On
+BlockInput, SendandMouse
 ;Script to put a Word comment into a lengthend marker in Premiere.
 ;note to self, move this to where it belongs
 sendinput, ^a ;select all (of the text inside of the Word comment)
@@ -1818,13 +2013,11 @@ sleep 30
 ;unstick modifier keys.
 Send,{LCtrl up}
 Send,{RCtrl up}
-sleep 1
 Send,{RAlt up}
 Send,{RAlt up}
-sleep 1
 Send,{LShift up}
 Send,{RShift up}
-sleep 2
+sleep 10
 send, ^!d ;ctrl alt D is  "deselect all" (clips on the timeline)
 sleep 20
 send, ^!+k ;ctrl alt shift K is  "shuttle stop"
@@ -1851,10 +2044,8 @@ sleep 10
 ;unstick any modifier keys.
 Send,{LCtrl up}
 Send,{RCtrl up}
-sleep 1
 Send,{RAlt up}
 Send,{RAlt up}
-sleep 1
 Send,{LShift up}
 Send,{RShift up}
 sleep 10
@@ -1862,6 +2053,9 @@ send, {enter}
 sleep 10
 send, ^!+k ;ctrl alt shift K is  "shuttle stop"
 sleep 1
+
+BlockInput, MouseMoveOff
+BlockInput, Off
 return
 
 #IfWinActive
@@ -1880,81 +2074,6 @@ G18: Activate/switch to Premiere
 
 
 
-
-
-
-;;------PREMIERE ONLY F21 ASSIGNMENTS--------
-
-#ifWinActive ahk_exe Adobe Premiere Pro.exe
-
-;Note that i have other premiere super function key assignments somewhere around line 2090. Yeah it's a bit of a mess.
-
-
-
-#ifWinActive ahk_exe Adobe Premiere Pro.exe
-;macro key G4.
-;^+,::
-F21 & F4::
-sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error. Edit: this may or may not be necessary now that I'm no longer using the traditional modifier keys.
-;audioMonoMaker("left") ;this function doesn't work as well anymore and I don't need it as much lately.
-preset("50%")
-return
-
-
-#ifWinActive ahk_exe Adobe Premiere Pro.exe
-; macro key G5.
-;^+.::
-F21 & F5::
-sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
-;audioMonoMaker("right")
-preset("50%") ;TBD. this is a TEMPORARY assignment until I can get a better thing for this key.
-return
-
-
-;Macro key G6
-F21 & F6::
-sleep 11 
-sendinput, ^+U ;TBD. In premiere, ctrl shift u is now assigned to SUPER PURPLE temporarily at least.
-;;reSelect() ;TBD. idk what happened, but i guess this function stopped working or I stopped needing it as much. I'll replace G6 with something else.
-return
-
-
-/*
-G7:  F17 - rotation
-G8:  F19 - V1 A1 locker
-G9:  F21 & F9 - add 7 gain
-G10: F18 - Horizontal Anchor
-G11: F15 - Vertical Anchor
-G12: F14 - Scale
-*/
-
-
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
-
-F20::home ;yes, this does actaully press the HOME key, rather than hitting the 4 letters that make up thw WORD "home." I think.
-;note that in iCue, I have capslock remapped to F20
-; and "home" is set to "Disable (clip)" in premiere's keyboard shortcuts panel.
-; But you can actually assign Disable (clip) to F20 directly. So I'm not sure why I set it up that way... But I'm definitely not going to change it meow!
-
-F21::return
-
-;Macro key G1
-;This used to be ^+J:: (CTRL SHIFT J) but that led to a bug where modifier keys would remain stuck in the DOWN state, which screws up a lot of other stuff as you might imagine. I'm talking about virtually stuck, not physically stuck. Just so we're clear.
-F21 & F1::
-sleep 11 ;;this may or may not be necessary
-search()
-return
-
-;Macro key G9
-F21 & F9::
-sleep 11 ;this may not be necessary to avoid the stuck keys bug, as neither F21, nor F7 are used in this macro. However, I guess it's possible that F7 could get stuck down? which would be bad, i guess? Hmmmm.
-Send {F2}7{enter} ;adds 7 gain. ; +7db 
-
-;note to self, maybe have some code here to fix a stuck shift or CTRL key...
-;update to note, that is no longer needed!
-return
-
-;;------END PREMIERE ONLY F21 ASSIGNMENTS--------
 
 
 
@@ -2089,7 +2208,8 @@ F5::clickTransformIcon2()
 F6::cropClick()
 
 ;F7:: is export frame (to .png)
-;F8:: is... nothing, apparently! it's free.
+
+;F8:: IS FREE. I had it on "selection follows playhead" but that's not useful enough.
 
 ;;DELETE SINGLE CLIP AT CURSOR
 F9::
@@ -2102,11 +2222,169 @@ send, {alt up}
 send, c ;delete
 return
 
-; F10:: is Frame interpolation - Ease in. (+F10:: is frame interpolation, ease OUT, and then they are combined together later on macro key G2. There's gotta be a better way to do this. WILL DO SOMETHING BETTER WITH THIS LATER.
+; F10:: IS FREE, but it was "effect controls" for awhile to debug a stuck modifiers issue.
+;;NOTE that F10 will induce menu acceleration if you DON'T have it assigned to anything, so you gotta make sure to avoid that.
 
 ;F11:: is Toggle Full Screen
 
 ;F12:: is Enable Transmit. This pushes a copy of the program monitor onto my top right monitor, full screen. It's configured to be perfectly RGB, so it acts as a reference monitor. As best as it can, at least.
+
+
+;;;;;;----------------------------------------;;;;;;;;;;;;;
+
+
+;;vvvvvvvvvvvv PREMIERE SUPER FUCTION KEYS (F13 and up)vvvvvvvvvvv
+;PREMIEREKEYS
+
+/*
+;Premiere, Sorted by Macro key
+G7:  F17 - rotation
+G8:  F19 - V1 A1 locker
+G9:  F21 & F9 - add 7 gain
+G10: F18 - Horizontal Anchor
+G11: F15 - Vertical Anchor
+G12: F14 - Scale
+G13: F13 - "Back" in a bin
+*/
+
+/*
+;Premiere, sorted by Function key.
+G13: F13 - "Back" in a bin
+G12: F14 - Scale
+G11: F15 - Vertical Anchor
+	;F16 is free
+G7:  F17 - rotation
+G10: F18 - Horizontal Anchor
+G8:  F19 - V1 A1 locker
+	;F20 is "Disable."
+G9:  F21 & F9 - add 7 gain. There are others.
+	;F22 is free??
+
+	;F23 is the K120 keyboard
+	;F24 is the Azio macro keyboard
+*/
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
+
+;F13 - from macro key G13, "back" in windows mods script.
+
+;~VK7DSC065:: ;Use this for F14 instead, if you have issues with cross-talk
+~F14::
+global VFXkey = "F14"
+instantVFX("scale")
+return
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
+;Macro key G11
+~F15::
+global VFXkey = "F15" ;the VFXkey variable has to be defined NOW. IDK why.
+instantVFX("anchor_point_vertical")
+return
+
+;F16 is not currently used for anything. free.
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
+;Macro key G7
+~F17::
+global VFXkey = "F17"
+instantVFX("rotation")
+return
+
+
+
+;Macro key G10
+~F18::
+global VFXkey = "F18"
+instantVFX("anchor_point")
+return
+
+
+;Macro key G8
+~F19::tracklocker()
+~+F19::tracklocker() ;idk why i have this working for SHIFT as well, but i suspect it actually works differently within the function, if shift is being held down? IDK MAN.
+
+F20::home ;yes, this does actually press the HOME key, rather than hitting the 4 letters that make up the WORD "home."
+;note that in iCue, I have capslock remapped to F20
+; and in premiere's keyboard shortcuts panel, "home" is set to "Disable (clip)" 
+; But you can actually assign Disable (clip) to F20 directly. So I'm not sure why I set it up that way... I may change this later.
+
+;;taran note: END is still free inside of premiere.
+
+
+;F21 is used as a function key in premiere and elsewhere. this is to avoid the stuck modifiers bug associated with pairing keystrokes with CTRL, SHIFT, and/or ALT.
+
+
+
+
+;;------PREMIERE ONLY F21 ASSIGNMENTS--------
+
+#ifWinActive ahk_exe Adobe Premiere Pro.exe
+
+;Note that i have other premiere super function key assignments somewhere around line 2090. Yeah it's a bit of a mess.
+
+
+
+#ifWinActive ahk_exe Adobe Premiere Pro.exe
+;macro key G4.
+;^+,::
+F21 & F4::
+sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error. Edit: this may or may not be necessary now that I'm no longer using the traditional modifier keys.
+;audioMonoMaker("left") ;this function doesn't work as well anymore and I don't need it as much lately.
+preset("50%")
+return
+
+
+#ifWinActive ahk_exe Adobe Premiere Pro.exe
+; macro key G5.
+;^+.::
+F21 & F5::
+sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
+;audioMonoMaker("right")
+preset("50%") ;TBD. this is a TEMPORARY assignment until I can get a better thing for this key.
+return
+
+
+;Macro key G6
+F21 & F6::
+sleep 11 
+sendinput, ^+U ;TBD. In premiere, ctrl shift u is now assigned to SUPER PURPLE temporarily at least.
+;;reSelect() ;TBD. idk what happened, but i guess this function stopped working or I stopped needing it as much. I'll replace G6 with something else.
+return
+
+
+
+
+
+#IfWinActive ahk_exe Adobe Premiere Pro.exe
+
+F21::return
+;Macro key G1
+;This used to be ^+J:: (CTRL SHIFT J) but that led to a bug where modifier keys would remain stuck in the DOWN state, which screws up a lot of other stuff as you might imagine. I'm talking about virtually stuck, not physically stuck. Just so we're clear.
+F21 & F1::
+sleep 11 ;;this may or may not be necessary
+search()
+return
+
+;Macro key G9
+F21 & F9::
+sleep 11 ;this may not be necessary to avoid the stuck keys bug, as neither F21, nor F7 are used in this macro. However, I guess it's possible that F7 could get stuck down? which would be bad, i guess? Hmmmm.
+Send {F2}7{enter} ;adds 7 gain. ; +7db 
+
+;note to self, maybe have some code here to fix a stuck shift or CTRL key...
+;update to note, that is no longer needed!
+return
+
+;;------END PREMIERE ONLY F21 ASSIGNMENTS--------
+
+;F22... is free?
+
+;F23 is the K120 keyboard
+;F24 is the Azio macro keyboard
+
+;;;;;;;^^^^^^END of PREMIERE SUPER FUCTION KEYS (F13 and up)^^^^^^^^
+
+
+
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ~^e::
@@ -2114,8 +2392,28 @@ return
 ;CTRL E is my shortcut to Export > Media... , so this will pop up and remind me to make an EDL, which we then submit to APMmusic.ca because they like to know what music tracks we've used in our videos. It's a huge pain, but now that I have the EDL export settings configured just how I like them, (by exporting a mostly empty EDL in my premiere project template, kinda like a dry run,) this whole process only takes me like 2 seconds each time.
 ; Remember that the ~ character allows the key combo to pass through, so this does NOT block the actual Export Media window from appearing.
 ;also it's a traytip because a messagebox woudl require me to click on it or press ENTER to dismiss it, which is a pain. Also this makes a noise, which i like.
-TrayTip, Make an EDL, Hey did you export an EDL yet, 2, 32
+
+;UPDATE: So, only Linus Tech Tips, and Tech Linked videos, use APM music. So Tech Quickie, LMG Clips, and other channels, don't use them. So I never need to export EDLs for those videos.
+;Therefore, I should not be reminded to export an EDL unless I'm editing an LTT or TL video.
+;I've been ignoring the notification because it's usually wrong, because I'm usually editing other channels these days.
+;Therefore, it is less effective.
+;It's far, far better for me to have ONLY relevant notifications coming to me. I turn off everything else. You would not believe how many apps try to send you notifications.
+;Anyway, this is an easy fix. I can just look at the premiere title name, since it has the server address, which never changes.
+;For reference, here are the server folder paths I'm looking for:
+;Z:\Linus\2. Tech Linked\3. TL Pending
+;Z:\Linus\1. Linus Tech Tips\Pending
+SetTitleMatchMode Slow
+WinGetTitle, title, A
+itsLTT := InStr(title, "1. Linus Tech Tips")
+itsTL := InStr(title, "2. Tech Linked")
+;msgbox, title is %title% `n`n%itsLTT%`n%itsTL% ;;debugging.
+
+if (itsLTT or itsTL) ;if either of these is NOT a zero, it will result in TRUE. I think.
+	{
+	TrayTip, Make an EDL, Hey did you export an EDL yet, 2, 32 ;THIS IS THE NOTIFICAITON
+	}
 return
+
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;cut single clip at cursor.
@@ -2170,20 +2468,31 @@ return
 ;;**********************MEDIA KEYS IN PREMIERE**********************
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;;the top rightmost keys on my K95.
-Media_Stop::^numpad7 ;select label group
-;Media_Prev::^numpad8
-Media_Prev::
-send {down}
-sleep 1
-send u
-sleep 1
-send 0
-sleep 1
+
+
+Media_Stop::
+;;note to self, make sure all the stuff is first UNLINKED from all other stuff, or this won't work.
+;Also, be sure that LINKED SELECTION, the timeline option from the top right, is ON. only tyhen will you know this actually worked.
+;the other one, "insert or overwrite sequences as nests or induvidual clips," I usually leave OFF, but it doens't matter for this thingy.
+tooltip, down
+;instant audio and video re-linker. press rapidly or hold down for a little while.
+send, {down} ;go to next edit point
+sleep 10
+tooltip, u
+send, u ;select clip at playhead
+sleep 10
+tooltip, 0 to link
+send, 0 ;link
+sleep 10
+tooltip,
 return
 
-Media_Play_Pause::^numpad9
-Media_Next::^numpadMult
-;Volume_Mute::^numpadDiv
+Media_Prev::^numpad7 ;select label group
+
+Media_Play_Pause::^numpad9 ;super green color
+Media_Next::^numpadMult ;magenta color
+
+;Volume_Mute::^numpadDiv ;nah, I'm keeping this as mute.
 ;These are assigned to some of the new LABEL COLORS in premiere, using Premiere's own shortcut assignment panel.
 
 
@@ -2236,7 +2545,7 @@ return
 
 ;anyway, f14 is labeled "scale" already on my Corsair K95, so I'm going to use it for brush resizing in Photoshop.
 F14::
-tooltip, f14
+tooltip, f14, brush resize
 sendinput {Lalt down}
 sendinput {Rbutton down}
 sleep 1 ;just because. Maybe this is a bad idea though.
@@ -2263,20 +2572,35 @@ sendinput {Lalt up}
 ;tooltip,
 return
 
-; zoom using your mouse movement.
-F20::
-;note that I've rebound my capslock to be F20, using iCue. So it becomes a very useful extra key right on homerow.
-;in this case, I'm gonna use it for zooming around in photoshop using the mouse. usually you have to press ctrl, space, and left click, all at the same time, and THEN moving the mouse will do stuff. With this macro, you press one key instead of 3.
+; zoom using your mouse movement. alternative assignment.
+F19::
 sendinput {Rctrl down}
 sendinput {space down}
 sendinput {Lbutton down}
 sleep 1 ;just because. Maybe this is a bad idea though.
-keywait, F20 ;waits for F20 to be released
+keywait, F19 ;waits for F19 to be released
 sleep 1
 sendinput {Lbutton up}
 sendinput {space up}
 sendinput {Rctrl up}
 return
+
+
+F20::return ;this caused issues with capslock being rapidly toggled on and off... meaning photoshop might have hardware level access to know what key I'm actually pressing; weird.
+; ; zoom using your mouse movement.
+; F20::
+; ;note that I've rebound my capslock to be F20, using iCue. So it becomes a very useful extra key right on homerow.
+; ;in this case, I'm gonna use it for zooming around in photoshop using the mouse. usually you have to press ctrl, space, and left click, all at the same time, and THEN moving the mouse will do stuff. With this macro, you press one key instead of 3.
+; sendinput {Rctrl down}
+; sendinput {space down}
+; sendinput {Lbutton down}
+; ;sleep 1 ;just because. Maybe this is a bad idea though.
+; keywait, F20 ;waits for F20 to be released
+; sleep 1
+; sendinput {Lbutton up}
+; sendinput {space up}
+; sendinput {Rctrl up}
+; return
 
 ; zoom using your mouse movement, again.
 F17::
@@ -2374,49 +2698,6 @@ return
 
 
 
-;;vvvvvvvvvvvv PREMIERE SUPER FUCTION KEYS (F13 and up)vvvvvvvvvvv
-;PREMIEREKEYS
-
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
-
-;F13 - from macro key G13, "back" in windows mods script.
-
-;~VK7DSC065:: ;Use this for F14 instead, if you have issues with cross-talk
-~F14::
-global VFXkey = "F14"
-instantVFX("scale")
-return
-
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
-;Macro key G11
-~F15::
-global VFXkey = "F15" ;the VFXkey variable has to be defined NOW. IDK why.
-instantVFX("anchor_point_vertical")
-return
-
-;F16 is not currently used for anything. free.
-
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
-;Macro key G7
-~F17::
-global VFXkey = "F17"
-instantVFX("rotation")
-return
-
-
-
-;Macro key G10
-~F18::
-global VFXkey = "F18"
-instantVFX("anchor_point")
-return
-
-;Macro key G8
-~F19::tracklocker()
-~+F19::tracklocker() ;idk why i have this working for SHIFT as well, but i suspect it actually works differently within the function, if shift is being held down? IDK MAN.
-
-
-;;;;;;;^^^^^^END of PREMIERE SUPER FUCTION KEYS (F13 and up)^^^^^^^^
 
 
 #IfWinActive
@@ -2448,6 +2729,11 @@ Lshift & Rshift::capslock
 #IfWinActive
 
 
+
+MouseClick, left,,, 1, 0, U ; Release the mouse button. 
+
+return
+
 ;;https://jacksautohotkeyblog.wordpress.com/2016/03/08/windows-volume-control-using-your-mouse-wheel-and-the-autohotkey-if-directive-beginning-hotkeys-part-6/
 
 
@@ -2469,7 +2755,7 @@ Lshift & Rshift::capslock
 
 ;Macro key G7 i think
 F17::
-
+tooltip, F17 comment copier
 ;;update: this is supposed to put the shot BEFORE the other stuff on the comment, but word 365 doesn't work thatway., will fix later.
 doAnEnter := 1
 sendinput, ^c
@@ -2481,15 +2767,14 @@ if WinActive("ahk_exe EXCEL.exe")
 	;doAnEnter := 0 ;sooo if you're copying out of Excel rather than google sheets, the copied cell has it's own "return," so you don't need to add one.
 	doAnEnter := 0 ;testing thigns...
 switchToWord()
-sleep 100
-if (doAnEnter = 1)
-	sendinput, {enter}
-	
 
+sleep 100
 send ^v
 sleep 100
 
-sleep 10
+if (doAnEnter = 1)
+	sendinput, {enter}
+sleep 100
 ; send ^{F4} ;only use this line if switchToWord() is not directly available.
 ;;;;msgbox,,, just before,0.5
 ; switchToWord()
@@ -2498,6 +2783,7 @@ sleep 10
 ;;;;msgbox,,, thingy is over,0.5
 ;WinActivate ahk_class MozillaWindowClass
 ;sometimes this code activates the paragraph thingy, which is CTRL SHIFT 8. will look for other cross talk.
+tooltip,
 return
 
 
@@ -2684,7 +2970,7 @@ ConvertSentence()
 ; send {enter}
 ; return
 
-^+!Escape::ExitApp
+; ^+!Escape::ExitApp
 
 ;^+/::sendinput, !{F9}
 ;
@@ -2711,3 +2997,19 @@ ConvertSentence()
 ; ; WheelUp::
 ; ; send, {WheelLeft}
 ; ; return
+
+
+;testing...
+
+^+F12::
+WinGet, the_current_id, ID, A
+
+msgbox,,,the_current_id = %the_current_id%, 2.5
+
+; ("AHK needed","https://docs.google.com/document/d/1xsjjKYggXYig_4lfBMJ6LDGRZ9VOvDd7SCSTSi7GwN8/edit")
+
+vRet := JEE_ChromeFocusTabByName(, "AHK needed", 2)
+
+msgbox,,,vRet = %vRet%, 0.5
+
+return

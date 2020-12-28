@@ -10,10 +10,12 @@ Menu, Tray, Icon, imageres.dll, 90
 ;THIS IS A GREAT FIRST SCRIPT FOR AHK NOOBS! IT WORKS WITH VERY LITTLE SETUP. JUST READ THE STUFF BELOW! YAY! 
 ;VIDEO EXPLANATION:  https://youtu.be/O6ERELse_QY?t=23m40s
 
+
 ; +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-; NOTE THAT YOU MUST ASSIGN \ (backslash) to "Move playhead to cursor" in Premiere's keyboard shortcuts panel!
+; NOTE THAT YOU MUST ASSIGN \ (backslash) TO "Move playhead to cursor" IN PREMIERE'S KEYBOARD SHORTCUTS PANEL!
 ; YOU SHOULD ALSO ASSIGN CTRL ALT D to "DESELECT ALL" 
 ; +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
 ;NOTE: I use the right mouse button for this because my current mouse does not have macro keys on it. I could use the middle mouse button, but it requires too much pressure to push down so often, and you have to be careful not to accidentally scroll it.
 ;But if you want to use a button other than the right mouse button, the script becomes a lot simpler. Scroll down to the bottom for that script.

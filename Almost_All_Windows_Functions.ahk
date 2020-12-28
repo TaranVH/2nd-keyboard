@@ -66,7 +66,7 @@ return
 ; oh just kidding, they are in the TO DO section... they don't actually exist...
 
 
-
+;this is (was?) my multiple clipboard function.
 GetFromClipboard()
 { 
   ClipSaved := ClipboardAll ;Save the clipboard
@@ -85,6 +85,71 @@ GetFromClipboard()
   ClipSaved = ;Free the memory in case the clipboard was very large.
   return NewClipboard
 }
+
+
+;this is the new way I'm gonna do multiple clipboards:
+;  code is from:
+;  https://autohotkey.com/board/topic/32265-multiple-clipboards/
+
+; ; Hotkeys
+; ^Numpad1::Copy(1)
+; ^Numpad4::Paste(1)
+
+Copy(clipboardID)
+{
+	global ; All variables are global by default
+	local oldClipboard := ClipboardAll ; Save the (real) clipboard
+	
+	Clipboard = ; Erase the clipboard first, or else ClipWait does nothing
+	Send ^c
+	ClipWait, 2, 1 ; Wait 1s until the clipboard contains any kind of data
+	if ErrorLevel 
+	{
+		Clipboard := oldClipboard ; Restore old (real) clipboard
+		return
+	}
+	
+	ClipboardData%clipboardID% := ClipboardAll
+	
+	Clipboard := oldClipboard ; Restore old (real) clipboard
+}
+
+Cut(clipboardID)
+{
+	global ; All variables are global by default
+	local oldClipboard := ClipboardAll ; Save the (real) clipboard
+	
+	Clipboard = ; Erase the clipboard first, or else ClipWait does nothing
+	Send ^x
+	ClipWait, 2, 1 ; Wait 1s until the clipboard contains any kind of data
+	if ErrorLevel 
+	{
+		Clipboard := oldClipboard ; Restore old (real) clipboard
+		return
+	}
+	ClipboardData%clipboardID% := ClipboardAll
+	
+	Clipboard := oldClipboard ; Restore old (real) clipboard
+}
+
+Paste(clipboardID)
+{
+	global
+	local oldClipboard := ClipboardAll ; Save the (real) clipboard
+
+	Clipboard := ClipboardData%clipboardID%
+	Send ^v
+
+	Clipboard := oldClipboard ; Restore old (real) clipboard
+	oldClipboard = 
+}
+
+
+
+
+
+
+
 
 
 RemoveDashes()
@@ -310,12 +375,25 @@ if f_class in ExploreWClass,CabinetWClass ;;,#32770 ; if the window class is an 
 	
 	;msgbox, the address is `n`n%title%
 
-	;sorry, I tried to NOT have to refer to these folder paths directly, but it always failed spectacularly:
-	FileDelete, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
-	FileAppend, %title% , C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
+	;;; OLD METHOD. The trouble with this is that by deleting the file, github constantly thinks there's a new .txt file and wants to upload it, no matter how many times I say to ignore the file. Because technically it's a new .txt file. IDK how it even knows that. File metadata??
+	; ;sorry, I tried to NOT have to refer to these folder paths directly, but it always failed spectacularly:
+	; FileDelete, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
+	; FileAppend, %title% , C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
+	; SavedExplorerAddress = %title%
+	; ;checkForFile("Thumbnail","Template.psd")
+	;;;;/OLD METHOD
+	
+	;;;NEW METHOD IS BELOW:
+	; Info:
+	; https://www.autohotkey.com/boards/viewtopic.php?t=62917
+	; https://www.autohotkey.com/boards/viewtopic.php?t=61853
+	file := FileOpen("C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt", "w") 
+	file.write(title)
+	file.close()
 	SavedExplorerAddress = %title%
-	;checkForFile("Thumbnail","Template.psd")
-	msgbox, , , %title%`n`nwas saved as root, 0.3
+	;;;/NEW METHOD
+	
+	msgbox, , , %title%`n`nwas saved as root!, 0.3
 	}
 else
 	msgbox,,, this is PROBABLY not an explorer window you chump,0.5
@@ -592,7 +670,7 @@ sendinput, {blind}{SC0E8} ;scan code of an unassigned key. This is needed to pre
 
 ;msgbox, hello
 
-if pleasePrepend = 1 ;his is for the changeable per-project folder shortcuts
+if pleasePrepend = 1 ;this is for the changeable per-project folder shortcuts
 	{
 	FileRead, SavedExplorerAddress, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SavedExplorerAddress.txt
 	;msgbox, current f_path is %f_path%
@@ -616,7 +694,7 @@ if IsFunc("Keyshower") {
 }
 
 ;;;SUPER IMPORTANT: YOU NEED TO GO INTO WINDOWS' FOLDER OPTIONS > VIEW > AND CHECK "DISPLAY THE FULL PATH IN THE TITLE BAR" OR THIS WON'T WORK.
-;;;UPDATE: THE INSTRUCTION ABOVE MIGHT BE OBSOLETE NOW, I'VE FIGURED OUT A BETTER WAY TO DO THIS SHIT
+;;;UPDATE: THE INSTRUCTION ABOVE *MIGHT* BE OBSOLETE NOW, I'VE FIGURED OUT A BETTER WAY TO DO THIS SHIT
 
 
 instantExplorerTryAgain:
@@ -702,6 +780,33 @@ if f_AlwaysShowMenu = n  ; The menu should be shown only selectively.
 ;;StringTrimLeft, f_path, f_path%A_ThisMenuItemPos%, 0
 if f_path =
 	return
+
+if f_class = EVERYTHING    ; It's Everything search. I want to put the fodler name in quotes in the main field, because that's how you search a subdirectory.
+{
+ControlGetPos, f_Edit1Pos, f_Edit1PosY,,, Edit1, ahk_id %f_window_id%
+;msgbox, this is Everything search`nf_Edit1Pos = %f_Edit1Pos%
+
+if f_Edit1Pos <>   ; we know it should have an Edit1 control.
+	{
+	ControlFocus, Edit1, ahk_id %f_window_id%
+	
+	WinActivate ahk_id %f_window_id%
+	
+	f_path := f_path . " " ;this adds a space to the end, so i can type the actual thing to search for afterwards.
+
+	ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
+	;(it adds a space to the end too.)
+	sleep 2
+	ControlFocus, DirectUIHWND2, ahk_id %f_window_id% ;to try to get the focus back into the center area, so you can now type letters and have it go to a file or fodler, rather than try to SEARCH or try to change the FILE NAME by default.
+	send, {end} ;to get to the end of the search box. best place to search for the actual thing i want to find.
+	return
+	}
+
+GOTO, instantExplorerEnd 
+}
+
+
+
 if f_class = #32770    ; It's a dialog.
 	{
 
@@ -966,10 +1071,11 @@ if WinActive("ahk_class OpusApp")
 
 switchToFirefox(){
 ;sleep 12 ;;I need this because I put a 10ms delay before the key UP events in iCue. I had to do THAT because otherwise it would go too fast for AHK to even notice. Without this delay, those up events will happen while the function is running, which can lead to modifier keys that are virtually stuck DOWN, which is super bad and annoying.
+; i don't remember why I removed this delay. but i also removed the 5ms of delay in icue, sooooo this might not be necceessary anymore?
 
 
 sendinput, {blind}{SC0E9} ;scan code of an unassigned key. Do I NEED this?
-;hmmm, this will force a sending of RCTRL UP because this thing itself does NOT have any modifier keys assigned to it. which means if we use BLIND instead, then that should not happen, right? hmmm.
+;hmmm, this can force a sending of RCTRL UP because this thing itself does NOT have any modifier keys assigned to it. which means if we use BLIND instead, then that should not happen, right? hmmm.
 ;And then it sends rCTRL DOWN just after, because it's trying not to mess stuff up, oh i see what's going on there, okay....
 
 ;sleep 100
@@ -1201,7 +1307,9 @@ WinActivate, | Microsoft Teams
 
 switchToChrome()
 {
-sleep 11 ;this is to avoid the stuck modifiers bug?
+;Even getting rid of the "sleep" commands, there's still a noticable delay when I switch to chrome for the first time. this is... annoying. It makes itself the window on top, but is not actaully ACTIVATED for about 300 milliseconds... meaning my next command or two will not work, until chrome is ACTUALLY active. AGH i might need to talk directly to the AHK forums about this. find out if there really is a difference between on top and active, because I sure as hell am noticing one.
+
+;sleep 11 ;this is to avoid the stuck modifiers bug?
 IfWinNotExist, ahk_exe chrome.exe
 	Run, chrome.exe
 
@@ -1211,11 +1319,29 @@ else
 	WinActivate ahk_exe chrome.exe
 	
 ;maybe need to unstick modifiers
-sleep 2
+;sleep 2
 sendinput {Rctrl up}{Lctrl up}
 ;idk if it helps or not.
 sendinput, {SC0EA} ;scan code of an unassigned key. used for debugging.
 }
+
+switchToOtherChromeWindow(){
+sendinput, {blind}{SC0E8} ;scan code of an unassigned key
+
+Process, Exist, chrome.exe
+;msgbox errorLevel `n%errorLevel%
+	If errorLevel = 0
+		Run, chrome.exe
+	else
+	{
+	GroupAdd, taranChromes, ahk_exe chrome.exe
+	if WinActive("ahk_class Chrome_WidgetWin_1 ahk_exe chrome.exe")
+		GroupActivate, taranChromes, r
+	else
+		WinActivate, ahk_class Chrome_WidgetWin_1 ahk_exe chrome.exe,, Microsoft Teams ;the last one is explicitly telling it NOT to open Microsoft Teams.
+	}
+}
+
 
 switchToStreamDeck(){
 sleep 11 ;this is to avoid the stuck modifiers bug
@@ -1231,9 +1357,15 @@ else
 
 
 #IfWinActive
+
+
 windowSwitcher(theClass, theEXE)
 {
-sleep 11 ;this is to avoid the stuck modifiers bug
+;to CALL this function with specific parameters:
+;windowSwitcher("ahk_class Chrome_WidgetWin_1", "vivaldi.exe")
+;;YOU MIGHT WANT TO USE openApp() INSTEAD, lol
+
+sleep 10 ;this is to avoid the stuck modifiers bug
 if theClass = ahk_class Notepad++
 	{
 	;msgbox,,, is notepad++,0.5
@@ -1249,6 +1381,13 @@ if theCLASS = ahk_class Chrome_WidgetWin_1
 	{
 	;tooltip, it is a chrome thingy
 	;msgbox % theEXE
+	if theEXE = vivaldi.exe
+		{
+		;tooltip, we have arrived
+		SetTitleMatchMode, 2
+		WinActivate, - Vivaldi
+		;WinActivate ahk_exe %theEXE%
+		}
 	if theEXE = Teams.exe
 		{
 		;tooltip, we have arrived
@@ -1276,7 +1415,7 @@ switchEND:
 
 #IfWinActive, ahk_exe explorer.exe
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE, AND POSSIBLY DON'T USE IT ============
 
 JEE_ExpWinGetObj(hWnd)
 {
@@ -1286,7 +1425,7 @@ JEE_ExpWinGetObj(hWnd)
 	return oWin
 }
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE, AND POSSIBLY DON'T USE IT ============
 
 ;e.g. JEE_ExpGetInterfaces(oWin, isp, isb, isv, ifv2, icm)
 ;e.g. isp := isb := isv := ifv2 := icm := ""
@@ -1300,7 +1439,7 @@ JEE_ExpGetInterfaces(oWin, ByRef isp="", ByRef isb="", ByRef isv="", ByRef ifv2=
 	icm := ComObjQuery(ifv2, "{d8ec27bb-3f3b-4042-b10a-4acfd924d453}")
 }
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE, AND POSSIBLY DON'T USE IT ============
 
 ;custom abbreviation to canonical property name
 JEE_ExpColAbbrevToName(vList, vDelim="`n")
@@ -1328,7 +1467,7 @@ JEE_ExpColAbbrevToName(vList, vDelim="`n")
 ;https://msdn.microsoft.com/en-us/library/windows/desktop/bb776149(v=vs.85).aspx
 ;methods (8): C:\Program Files (x86)\Windows Kits\8.1\Include\um\ShObjIdl.h
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE, AND POSSIBLY DON'T USE IT ============
 
 JEE_ICMGetColumnCount(icm, vMode="")
 {
@@ -1338,7 +1477,7 @@ JEE_ICMGetColumnCount(icm, vMode="")
 	return vCountCol
 }
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE, AND POSSIBLY DON'T USE IT ============
 
 ;mode: n (get name), c (get CLSID and property identifier), a (get all)
 JEE_ICMGetColumns(icm, vSep="`n", vMode="n")
@@ -1376,7 +1515,7 @@ JEE_ICMGetColumns(icm, vSep="`n", vMode="n")
 	return vOutput
 }
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE, AND POSSIBLY DON'T USE IT ============
 
 JEE_ICMSetColumns(icm, vList, vSep="`n")
 {
@@ -1394,7 +1533,7 @@ JEE_ICMSetColumns(icm, vList, vSep="`n")
 	return
 }
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE, AND POSSIBLY DON'T USE IT ============
 
 ;not working (error 0x8000FFFF)
 ;is 'ideal' width, the autosize width?
@@ -1411,7 +1550,7 @@ JEE_ICMGetColumnWidth(icm, vName, ByRef vWidthIdeal="")
 	return NumGet(CM_COLUMNINFO, 12, "UInt") ;uWidth
 }
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE, AND POSSIBLY DON'T USE IT ============
 
 JEE_ICMSetColumnWidth(icm, vName, vWidth)
 {
@@ -1431,7 +1570,7 @@ JEE_ICMSetColumnWidth(icm, vName, vWidth)
 ;https://msdn.microsoft.com/en-us/library/windows/desktop/bb775541(v=vs.85).aspx
 ;methods (42): C:\Program Files (x86)\Windows Kits\8.1\Include\um\ShObjIdl.h
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE, AND POSSIBLY DON'T USE IT ============
 
 JEE_IFV2GetSortColumnCount(ifv2)
 {
@@ -1439,7 +1578,7 @@ JEE_IFV2GetSortColumnCount(ifv2)
 	return vCountCol
 }
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE, AND POSSIBLY DON'T USE IT ============
 
 JEE_IFV2GetSortColumns(ifv2, vSep="`n", vMode="n")
 {
@@ -1472,7 +1611,7 @@ JEE_IFV2GetSortColumns(ifv2, vSep="`n", vMode="n")
 	return vOutput
 }
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE ============
 
 JEE_IFV2SetSortColumns(ifv2, vList, vSep="`n")
 {
@@ -1493,7 +1632,7 @@ JEE_IFV2SetSortColumns(ifv2, vList, vSep="`n")
 	DllCall(NumGet(NumGet(ifv2+0)+27*A_PtrSize), Ptr,ifv2, Ptr,&vArraySORTCOLUMN, Int,vCountCol) ;SetSortColumns
 }
 
-;==================================================
+;========== I, TARAN, DID NOT WRITE THIS CODE ============
 	;1: ascending, -1: descending
 	;vList := "System.ItemNameDisplay 1" ;Name
 	;vList := "System.ItemDate 1" ;Date
@@ -1663,6 +1802,7 @@ sortByName()
 	isp := isb := isv := ifv2 := icm := ""
 }
 
+;========== I, TARAN, DID NOT WRITE THE ABOVE CODE ============
 
 ;;#IfWinActive
 ;*/
@@ -1714,42 +1854,42 @@ ExplorerViewChange_Window(explorerHwnd)
 	;sFolder.SORTCOLUMNS := PKEY_ItemNameDisplay, SORT_DESCENDING, bsssssss
 }
 
-;;;must look through that thread to find the direct "sort by name, sort by date" thingies.
+; ;;;must look through that thread to find the direct "sort by name, sort by date" thingies.
 
-ExplorerViewChange_List(explorerHwnd)
-{
-	if (!explorerHwnd)
-		return
-	;msgbox,,, % explorerHwnd, 0.5
-	Windows := ComObjCreate("Shell.Application").Windows
-	for window in Windows
-		if (window.hWnd == explorerHwnd)
-			sFolder := window.Document
-	if (sFolder.CurrentViewMode == 8)
-		sFolder.CurrentViewMode := 6 ; Tiles
-	else if (sFolder.CurrentViewMode == 6)
-		sFolder.CurrentViewMode := 4 ; Details
-	else if (sFolder.CurrentViewMode == 4)
-		sFolder.CurrentViewMode := 3 ; List
-	else if (sFolder.CurrentViewMode == 3) {
-		sFolder.CurrentViewMode := 2 ; Small icons
-		sFolder.IconSize := 16 ; Actually make the icons small...
-	} else if (sFolder.CurrentViewMode == 2) {
-		sFolder.CurrentViewMode := 1 ; Icons
-		sFolder.IconSize := 48 ; Medium icon size
-	} else if (sFolder.CurrentViewMode == 1) {
-		if (sFolder.IconSize == 256)
-			sFolder.CurrentViewMode := 8 ; Go back to content view
-		else if (sFolder.IconSize == 48)
-			sFolder.IconSize := 96 ; Large icons
-		else
-			sFolder.IconSize := 256 ; Extra large icons
-	}
-	ObjRelease(Windows)
-	tooltip % sFolder.CurrentViewMode
-}
+; ExplorerViewChange_List(explorerHwnd)
+; {
+	; if (!explorerHwnd)
+		; return
+	; ;msgbox,,, % explorerHwnd, 0.5
+	; Windows := ComObjCreate("Shell.Application").Windows
+	; for window in Windows
+		; if (window.hWnd == explorerHwnd)
+			; sFolder := window.Document
+	; if (sFolder.CurrentViewMode == 8)
+		; sFolder.CurrentViewMode := 6 ; Tiles
+	; else if (sFolder.CurrentViewMode == 6)
+		; sFolder.CurrentViewMode := 4 ; Details
+	; else if (sFolder.CurrentViewMode == 4)
+		; sFolder.CurrentViewMode := 3 ; List
+	; else if (sFolder.CurrentViewMode == 3) {
+		; sFolder.CurrentViewMode := 2 ; Small icons
+		; sFolder.IconSize := 16 ; Actually make the icons small...
+	; } else if (sFolder.CurrentViewMode == 2) {
+		; sFolder.CurrentViewMode := 1 ; Icons
+		; sFolder.IconSize := 48 ; Medium icon size
+	; } else if (sFolder.CurrentViewMode == 1) {
+		; if (sFolder.IconSize == 256)
+			; sFolder.CurrentViewMode := 8 ; Go back to content view
+		; else if (sFolder.IconSize == 48)
+			; sFolder.IconSize := 96 ; Large icons
+		; else
+			; sFolder.IconSize := 256 ; Extra large icons
+	; }
+	; ObjRelease(Windows)
+	; tooltip % sFolder.CurrentViewMode
+; }
 
-
+;========== I, TARAN, DID NOT WRITE THIS CODE, but I do use it! ============
 
 ExplorerViewChange_ICONS(explorerHwnd)
 {
@@ -1795,38 +1935,6 @@ ExplorerViewChange_ICONS(explorerHwnd)
 }
 
 
-; ExplorerViewChange_ICONS(explorerHwnd)
-; {
-
-	; if (!explorerHwnd)
-	; {
-		; tooltip, exiting.
-		; sleep 100
-		; return
-	; }
-	; ;msgbox,,, % explorerHwnd, 0.5
-	; Windows := ComObjCreate("Shell.Application").Windows
-	; for window in Windows
-		; if (window.hWnd == explorerHwnd)
-			; sFolder := window.Document
-	; if (sFolder.CurrentViewMode >= 2) {
-		; sFolder.CurrentViewMode := 1 ; Small icons
-		; sFolder.IconSize := 48 ; Actually make the icons small...
-	; } else if (sFolder.CurrentViewMode == 1) {
-		; if (sFolder.IconSize == 256){
-			; sFolder.CurrentViewMode := 2 ; Go back to small icons
-			; sFolder.IconSize := 48
-			; }
-		; else if (sFolder.IconSize == 48)
-			; sFolder.IconSize := 96 ; Large icons
-		; else
-			; sFolder.IconSize := 256 ; Extra large icons
-	; }
-	; ;tooltip % sFolder.IconSize
-	; ;tooltip, %explorerHwnd%
-	; ;sleep 100
-	; ;tooltip, % sFolder.CurrentViewMode
-; }
 
 
 
@@ -1848,61 +1956,61 @@ ExplorerViewChange_ICONS(explorerHwnd)
 ^!+numpad2::JEE_FirefoxFocusTabByName(hWnd, "Linus Media Group Inc. Mail")
 ;==================================================
 
-JEE_FirefoxGetTabCount(hWnd)
-{
-oAcc := Acc_Get("Object", "4", 0, "ahk_id " hWnd)
-vRet := 0
-for each, oChild in Acc_Children(oAcc)
-	if (oChild.accName(0) == "Browser tabs")
-	{
-		oAcc := Acc_Children(oChild)[1], vRet := 1
-		break
-	}
-if !vRet
-{
-	oAcc := oChild := ""
-	return
-}
+; JEE_FirefoxGetTabCount(hWnd)
+; {
+; oAcc := Acc_Get("Object", "4", 0, "ahk_id " hWnd)
+; vRet := 0
+; for each, oChild in Acc_Children(oAcc)
+	; if (oChild.accName(0) == "Browser tabs")
+	; {
+		; oAcc := Acc_Children(oChild)[1], vRet := 1
+		; break
+	; }
+; if !vRet
+; {
+	; oAcc := oChild := ""
+	; return
+; }
 
-vCount := 0
-for each, oChild in Acc_Children(oAcc)
-	if !(oChild.accName(0) == "")
-		vCount++
-oAcc := oChild := ""
-return vCount
-}
+; vCount := 0
+; for each, oChild in Acc_Children(oAcc)
+	; if !(oChild.accName(0) == "")
+		; vCount++
+; oAcc := oChild := ""
+; return vCount
+; }
 
 ;==================================================
 
-JEE_FirefoxGetTabNames(hWnd, vSep="`n")
-{
-oAcc := Acc_Get("Object", "4", 0, "ahk_id " hWnd)
-vRet := 0
-for each, oChild in Acc_Children(oAcc)
-	if (oChild.accName(0) == "Browser tabs")
-	{
-		oAcc := Acc_Children(oChild)[1], vRet := 1
-		break
-	}
-if !vRet
-{
-	oAcc := oChild := ""
-	return
-}
+; JEE_FirefoxGetTabNames(hWnd, vSep="`n")
+; {
+; oAcc := Acc_Get("Object", "4", 0, "ahk_id " hWnd)
+; vRet := 0
+; for each, oChild in Acc_Children(oAcc)
+	; if (oChild.accName(0) == "Browser tabs")
+	; {
+		; oAcc := Acc_Children(oChild)[1], vRet := 1
+		; break
+	; }
+; if !vRet
+; {
+	; oAcc := oChild := ""
+	; return
+; }
 
-vOutput := ""
-for each, oChild in Acc_Children(oAcc)
-{
-	vTabText := oChild.accName(0)
-	if !(vTabText == "")
-	;&& !(vTabText == "New Tab")
-	;&& !(vTabText == "Open a new tab")
-		vOutput .= vTabText vSep
-}
-vOutput := SubStr(vOutput, 1, -StrLen(vSep)) ;trim right
-oAcc := oChild := ""
-return vOutput
-}
+; vOutput := ""
+; for each, oChild in Acc_Children(oAcc)
+; {
+	; vTabText := oChild.accName(0)
+	; if !(vTabText == "")
+	; ;&& !(vTabText == "New Tab")
+	; ;&& !(vTabText == "Open a new tab")
+		; vOutput .= vTabText vSep
+; }
+; vOutput := SubStr(vOutput, 1, -StrLen(vSep)) ;trim right
+; oAcc := oChild := ""
+; return vOutput
+; }
 
 ;==================================================
 
@@ -2000,27 +2108,198 @@ return vRet
 
 
 
-JEE_FirefoxFocusTabByNum(hWnd, vNum)
+; JEE_FirefoxFocusTabByNum(hWnd, vNum)
+; {
+
+
+; oAcc := Acc_Get("Object", "4", 0, "ahk_id " hWnd)
+; vRet := 0
+; for each, oChild in Acc_Children(oAcc)
+	; if (oChild.accName(0) == "Browser tabs")
+	; {
+		; oAcc := Acc_Children(oChild)[1], vRet := 1
+		; break
+	; }
+; if !vRet || !Acc_Children(oAcc)[vNum]
+	; vNum := ""
+; else
+	; Acc_Children(oAcc)[vNum].accDoDefaultAction(0)
+; oAcc := oChild := ""
+; return vNum
+; }
+
+
+;==================================================
+;==================================================
+;==================================================
+;==================================================
+;==================================================
+
+
+
+
+
+
+
+
+gotoChrometab(name,URL,alternativeName := "cwifhladirhs")
 {
+;;OKAY SO THIS CODE IS PRETTY GOOD, BUT it will (sometimes?!) return a vRet value of 0 if a tab is currently loading. it's bizzare. idk how to fix it.
+;anyway, this code will basically open a tab of a given URL, unless it is already open, in which case, it'll switch to that tab.
 
 
-oAcc := Acc_Get("Object", "4", 0, "ahk_id " hWnd)
-vRet := 0
-for each, oChild in Acc_Children(oAcc)
-	if (oChild.accName(0) == "Browser tabs")
-	{
-		oAcc := Acc_Children(oChild)[1], vRet := 1
-		break
-	}
-if !vRet || !Acc_Children(oAcc)[vNum]
-	vNum := ""
-else
-	Acc_Children(oAcc)[vNum].accDoDefaultAction(0)
-oAcc := oChild := ""
-return vNum
+;unfortunately, I cannot use the CLASS to activate Chrome, since so many other chrome-based applications use it.... so i am forced to use the .exe, which seems to be less reliable...
+
+;WinActivate, ahk_class Chrome_WidgetWin_1 ahk_exe chrome.exe, Google Chrome, Microsoft Teams
+;WinActivate, ahk_class Chrome_WidgetWin_1 ahk_exe chrome.exe, Google Chrome, Microsoft Teams
+; WinActivate, ahk_exe chrome.exe, Google Chrome, Microsoft Teams
+WinActivate, ahk_class Chrome_WidgetWin_1 ahk_exe chrome.exe,, Microsoft Teams ;the last one is explicitly telling it NOT to open Microsoft Teams.
+
+;TOOLTIP, ARE YOU THERE
+; MSGBOX, ARE YOU THERE
+
+;FORTUNATELY, it looks like you can include the exe AND the class in the same line. nice. Not clear from the documentation.
+; https://www.autohotkey.com/docs/commands/WinActivate.htm 
+
+;tooltip, FIRETAB
+sleep 15
+WinGet, the_current_id, ID, A
+; MsgBox the_current_id is %the_current_id%
+; MsgBox % "The active window's ID is " . WinExist("A")
+
+; vRet := JEE_FirefoxFocusTabByName(the_current_id, name, alternativeName)
+vRet := JEE_ChromeFocusTabByName(the_current_id, name, , alternativeName)
+
+
+;JEE_ChromeFocusTabByNum(hWnd, 3)
+
+;So if the tab's NAME is already open as one of Chrome's tabs, it'll simply switch to that tab. Unfortunately, we can't do this based upon  just the URL, which would be so much easier...
+;The "alternative name" is for Gmail's tab, which sometimes flashes "Nick Light says..." or whatever, if you use Hangouts, which I guess we don't anymore. Hmm. Anyway, it has to be nonsense text by default so it won't activate any other tab in cases where it's not needed.
+
+tooltip, vret = %vRet%
+;Tippy2(ultimately vret was %vRet%)
+sleep 200
+if (vRet = 0) ;if the tab you want has not ALREADY been opened,
+	run, chrome.exe %URL% ;this is the line to actaully open the given URL.
+sleep 100
+tooltip,
 }
 
 
+
+
+;==================================================
+;; https://www.autohotkey.com/boards/viewtopic.php?f=6&t=26947&p=294316#p294316 ;;
+
+
+;;;;;;;THIS CODE IS OBSOLETE;;;;;;
+; JEE_ChromeFocusTabByName(hWnd, vTitle, vNum:=1)
+; {
+	; oAcc := Acc_Get("Object", "4.1.2.2.2", 0, "ahk_id " hWnd)
+	; vCount := 0, vRet := 0
+	; for _, oChild in Acc_Children(oAcc)
+	; {
+		; vTabText := oChild.accName(0)
+		; if (vTabText = vTitle)
+			; vCount++
+		; if (vCount = vNum)
+		; {
+			; oChild.accDoDefaultAction(0), vRet := A_Index
+			; break
+		; }
+	; }
+	; oAcc := oChild := ""
+	; return vRet
+; }
+;;;;;;;THE ABOVE CODE IS OBSOLETE;;;;;;
+
+JEE_ChromeFocusTabByName(hWnd:="", vTitle:="", vNum:="", vTitle2:="")
+{
+
+	local
+	
+	; tooltip, you are inside JEE_ChromeFocusTabByName
+	; sleep 500
+	
+	
+	static vAccPath := JEE_ChromeAccInit("T")
+	if (hWnd = "")
+		hWnd := WinExist("A")
+	if (vNum = "")
+		vNum := 1 ;this means, use the very first match you find.
+	oAcc := Acc_Get("Object", vAccPath, 0, "ahk_id " hWnd)
+	
+	vCount := 0, vRet := 0
+	for _, oChild in Acc_Children(oAcc)
+	{
+		vTabText := oChild.accName(0)
+		;;; if (vTabText = vTitle)
+			;;; vCount++
+		If InStr(vTabText, vTitle) ;TARAN NOTE: I changed the above line so that only a PARTIAL tab title match is required.
+			vCount++
+		If InStr(vTabText, vTitle2) ;also i added the option for an alternative title
+			vCount++
+		;msgbox, vTabText is %vTabText% and vCount is %vCount%
+		if (vCount = vNum)
+		{
+			oChild.accDoDefaultAction(0), vRet := A_Index
+			break
+		}
+	}
+	oAcc := oChild := ""
+	
+	; tooltip, hWnd = %hWnd%
+	; sleep 1000
+	; tooltip, vTitle = %vTitle%
+	; sleep 1000
+	; tooltip, vNum = %vNum%
+	; sleep 1000
+	
+	return vRet
+}
+
+;=====THE CODE BELOW IS SUPPORT FOR THE CODE ABOVE==========
+
+;note: these Acc paths often change:
+;Acc paths determined via:
+;[JEE_AccGetTextAll function]
+;Acc: get text from all window/control elements - AutoHotkey Community
+;https://autohotkey.com/boards/viewtopic.php?f=6&t=40615
+
+JEE_ChromeAccInit(vValue)
+{
+	if (vValue = "U1")
+		return "4.1.2.1.2.5.2" ;address bar
+	if (vValue = "U2")
+		return "4.1.2.2.2.5.2" ;address bar
+	if (vValue = "T")
+		return "4.1.2.1.1.1" ;tabs (append '.1' to get the first tab)
+}
+
+
+;==================================================
+
+JEE_ChromeFocusTabByNum(hWnd:="", vNum:="")
+{
+	local
+	static vAccPath := JEE_ChromeAccInit("T")
+	if (hWnd = "")
+		hWnd := WinExist("A")
+	if !vNum
+		return
+	oAcc := Acc_Get("Object", vAccPath, 0, "ahk_id " hWnd)
+	if !Acc_Children(oAcc)[vNum]
+		vNum := ""
+	else
+		Acc_Children(oAcc)[vNum].accDoDefaultAction(0)
+	oAcc := ""
+	return vNum
+}
+
+;==================================================
+;==================================================
+;==================================================
+;==================================================
 ;==================================================
 
 

@@ -24,7 +24,9 @@ Send_WM_COPYDATA(ByRef StringToSend, ByRef TargetScriptTitle := "C:\AHK\2nd-keyb
     TimeOutTime = 6000  ; Optional. Milliseconds to wait for response from receiver.ahk. Default is 5000
     ; Must use SendMessage not PostMessage.
     SendMessage, 0x4a, 0, &CopyDataStruct,, %TargetScriptTitle%,,,, %TimeOutTime% ; 0x4a is WM_COPYDATA.
-    tooltip, %errorlevel%
+	if (errorlevel = "FAIL")
+		tooltip, %StringToSend%
+	;tooltip, Send_WM_COPYDATA's errorlevel is %errorlevel%
 	DetectHiddenWindows %Prev_DetectHiddenWindows%  ; Restore original setting for the caller.
     SetTitleMatchMode %Prev_TitleMatchMode%         ; Same.
     return ErrorLevel  ; Return SendMessage's reply back to our caller.

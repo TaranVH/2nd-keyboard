@@ -746,7 +746,7 @@ if ErrorLevel = 0
 	}
 else
 	{
-	tooltip, fail
+	tooltip, image search failed
 	goto resetTrackTargeter
 	}
 ;tooltip, continuing...
@@ -1219,8 +1219,12 @@ else
 ;EFFECT CONTROLS PANEL ---TRANSFORM ICON CLICKER ;F5::
 clickTransformIcon2()
 {
-;Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it causes problems.
 
+;This function actually does everything that "Activate Direct Manipulation in Program Monitor" SHOULD do.
+
+
+
+;Tippy("transform icon - F5") ;optional. Used to aid debugging. Delete this if it causes problems.
 
 ;result := untwirl()
 ;it will return either "reset" or "untwirled"
@@ -1251,15 +1255,21 @@ clickTransformIcon2()
 
 
 ;msgbox,,, about to hit F5?,0.5
-sendinput, {F5} ;this is set to "show direct clip manipulation" or whatever in premiere. but it doens't work too well so this is just in case you've got a mogart sleected or something.
+sendinput, {F5} ;this is set to "activate Direct Manipulation in Program Monitor" in premiere. this is just in case you've got a mogart selected or something.
 
 sleep 5
 
 
 BlockInput, On ;blocks keyboard and mouse input... I think.
+BlockInput, MouseMove
 SetKeyDelay, 0
-;sendinput ^!+5 ;highlights the effect controls
-sendinput {F10} ;highlights the effect controls
+
+;sendinput ^!+5 ;highlights the effect controls. This seems to result in ALT not being properly released, or otherwise occuring at the end of the macro when it triggers menu acceleration. That is unacceptable.
+
+; sendinput {F10} ;highlights the effect controls. F10 can be used to avoid the stuck modifiers bug. But It's best to put it on a higher function key that isn't actaully present on the keyboard. at the time of writing, F16 and F22 are still available.
+
+sendinput, {F22} ;In premiere's shortcuts, F22 is assigned to Application > Window > Effect Controls. This will bring focus to the Effect Controls panel, which is the same as clicking or middle clicking on it.
+
 sleep 20
 MouseGetPos, xpos, ypos
 ControlGetPos, X, Y, Width, Height, DroverLord - Window Class3, ahk_class Premiere Pro, DroverLord - TabPanel Window ;This is the Effect controls panel. Info gotten from Window Spy. Your might be different. Be sure to check!!
@@ -1274,9 +1284,10 @@ MouseMove, X, Y, 0
 MouseClick, left
 MouseMove, %xpos%, %ypos%, 0
 BlockInput, Off
+BlockInput, MouseMoveOff
 
 sleep 20
-sendinput, {F16} ;highlights the timeline, alternative assignement.
+sendinput, {F16} ;highlights the timeline, alternative key assignement. Note that this gets messed up if you have more than one timeline window!!
 ;sendinput, ^!+3 ;highlights the timeline. Danger, this can sometimes change the sequence IF the effect controls were somehow not yet highlighted, or if some other script highlighted the timeline iguess?
 ;sendinput, 9 ;highlights the timeline
 sleep 10
@@ -1284,7 +1295,7 @@ sendinput, {F5} ;this is set to "show direct clip manipulation" or whatever in p
 ;the above line might not be needed and in fact is useless isnce the shortcut only works while on the timeline....
 sleep 10
 ;sendinput ^!+5 ;highlights the effect controls. This is so that if you hit COPY, it'll copy the motion effect, NOT a selected clip on the timeline.
-sendinput {F10} ;highlights the effect controls
+sendinput {F22} ;highlights the effect controls
 
 }
 
@@ -1292,7 +1303,7 @@ sendinput {F10} ;highlights the effect controls
 
 
 
-masterClipSelect() ;i think i never use this one
+masterClipSelect() ; i never use this one
 {
 Tippy("masterClipSelect()")
 BlockInput, On
@@ -2020,21 +2031,21 @@ CoordGetControl(xCoord, yCoord, _hWin) ; _hWin should be the ID of the active wi
 
 
 
-;this is assigned to G2,
+;this is assigned to Macro key G2,
 ;which was once CTRL numpad0.
 ;It is currently F21 & F2::
 easeInAndOut(){
 ;NEW method in 2020 is below.
 ;;sleep 11 isn't needed because it was done already....?
-sendevent, {blind}{lshift up}{lctrl up}{rshift up}{rctrl up}{ralt up}{lalt up} ;i have no idea if this will work.
+sendevent, {blind}{lshift up}{lctrl up}{rshift up}{rctrl up}{ralt up}{lalt up} ;i have no idea if this will work. This is to try to prevent any stuck modifier keys
 
 sendinput, {blind}{SC0EB} ;this might send a tooltip. ; edit: nope.
 
-send, {blind}^+{f10} ;shortcut is set in premiere to ease in
+send, {blind}^+{f10} ;shortcut is set in premiere to "ease in"
 sleep 10
 sendinput, {blind}{SC0EB} ;this might send a tooltip.
 sleep 5
-send, {blind}+{F10} ;shortcut is set in premiere to ease out
+send, {blind}+{F10} ;shortcut is set in premiere to "ease out"
 sleep 5
 
 ;sooo, that CTRL SHIFT F10 event has resulted in CTRL being stuck DOWN on more than one occasion. I'm not sure... how... or why...

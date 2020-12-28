@@ -3,6 +3,10 @@
 ;SetWorkingDir C:\AHK\2nd-keyboard\2nd_keyboard_support_files
 ; the above is what the variable %A_WorkingDir% refers to.
 
+;NOTE: THIS IS NOT THE SAME THING AS KEYSTROKE_VIZ.ahk EVEN THOUGH IS HAS A LOT OF THE SAME CODE. THIS IS FOR DISPLAYING COMMANDS THAT ARE SENT BY THE STREAM DECK AND OTHER DIRECT LAUNCH KEYS.
+;BUT FOR IT TO WORK, IT NEEDS TO BE RUNNING AT ALL TIMES SO THAT THOSE DIRECT LAUNCH SCRIPTS CAN SEND TEXT TO IT.
+;ALSO THIS IS TOTALLY OPTIONAL. USEFUL FOR TUTORIALS, MOSTLY.
+
 ;Menu, Tray, Icon, shell32.dll, 284
 #SingleInstance force
 SendMode Input ;needed for script that #includes this one

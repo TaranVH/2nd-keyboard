@@ -1,8 +1,8 @@
 # Creating a secondary, macro keyboard with the Hasu USB keyboard converter
 
-Main video is here: https://youtu.be/GZEoss4XIgc
+MAIN TUTORIAL VIDEO IS HERE - YOU MUST WATCH THIS FIRST!: https://youtu.be/GZEoss4XIgc
 
-An accompanying video tutorial can be found here: https://youtu.be/kTXK8kZaZ8c
+An accompanying video tutorial for creating the hex file is here: https://youtu.be/kTXK8kZaZ8c
 
 The converter: https://www.1upkeyboards.com/shop/controllers/usb-to-usb-converter/
 The K120: (But any cheap keyboard will work) https://www.logitech.com/en-ca/product/k120
@@ -10,7 +10,7 @@ The K120: (But any cheap keyboard will work) https://www.logitech.com/en-ca/prod
 What follows is the alternative to using this incomplete online TMK tool: 
 http://www.tmk-kbd.com/tmk_keyboard/editor/unimap/?usb_usb
 
-Oh, there's also a QMK one, but IDK if it has full functionality either:
+Oh, there's also a QMK one, but I don't know if it has full functionality either:
 https://config.qmk.fm/#/converter/usb_usb/hasu/LAYOUT_all
 
 As another alternative, you can just use this .hex file that I already created for you:
