@@ -21,7 +21,7 @@ targetfile = %A_ScriptDir%\clipboards
 targetfile = %targetfile%\clippy%numberResult%.txt
 ;msgbox, final targetfile string is `n`n%targetfile%
 
-
+SetKeyDelay, -1 ;INSTANT
 ;multiClipboardPaste(targetfile)
 contentsClipboard := multiClipboardPaste(targetfile)
 

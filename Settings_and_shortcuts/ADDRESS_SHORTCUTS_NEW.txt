@@ -13,6 +13,10 @@ PREMIERE SHORTCUTS LOCATION
 C:\Users\Taran\Documents\Adobe\Premiere Pro\14.0\Profile-Taran\Win
 Taran_PR_keys_2020-04.kys
 
+PREMIERE PRESETS LOCATION
+C:\Users\Taran\Documents\Adobe\Premiere Pro\14.0\Profile-Taran\Effect Presets and Custom Items.prfpset
+But that's probably not how you should import and export presets... just use the Effects panel inside of Premiere.
+
 
 LUTS FOR EVERYONE
 C:\Program Files\Adobe\Common\LUTs\Technical

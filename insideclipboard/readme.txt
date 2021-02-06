@@ -1,5 +1,5 @@
 
-
+TARAN NOTE: I NO LONGER USE THIS
 
 InsideClipboard v1.12
 Copyright (c) 2007 - 2011 Nir Sofer

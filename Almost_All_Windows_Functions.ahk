@@ -197,6 +197,7 @@ RemoveDashes()
 
 
 
+
 checkFullness()
 {
 ; DriveSpaceFree, OutputVar, Z:\
@@ -1069,6 +1070,35 @@ if WinActive("ahk_class OpusApp")
 
 ;macro key 16 on my logitech G15 keyboard. It will activate firefox,, and if firefox is already activated, it will go to the next window in firefox.
 
+openTightVNC()
+{
+if WinActive("bm-export-1 - TightVNC Viewer") ;if we are at the "Failed to recv data from socket." dialouge box
+	{
+	Sendinput, {enter}
+	goto tvnEND2 ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!
+	}
+if WinActive("New TightVNC Connection") ;if we are at the thingy that asks for the server IP (already inputted)
+	{
+	Sendinput, {enter}
+	goto tvnEND2 ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!
+	}
+if WinActive("Vnc Authentication") ;if we are at the thingy that asks for the PASSWORD!
+	{
+	FileRead, SECRET_SERVER_PASS, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SECRET_SERVER_PASS_NOT_ON_GITHUB.txt
+	;msgbox, pass is %SECRET_SERVER_PASS%
+	Sendinput, %SECRET_SERVER_PASS%
+	sleep 10
+	Sendinput, {enter}
+	goto tvnEND2 ;LOL ARE YOU TRIGGERED BY THIS!!? DESPAIR!
+	}
+IfWinNotExist, ahk_class TvnWindowClass
+	Run, C:\Program Files\TightVNC\tvnviewer.exe
+if WinExist("ahk_exe tvnviewer.exe")
+	WinActivate ahk_exe tvnviewer.exe
+tvnEND2:
+;all done
+}
+
 switchToFirefox(){
 ;sleep 12 ;;I need this because I put a 10ms delay before the key UP events in iCue. I had to do THAT because otherwise it would go too fast for AHK to even notice. Without this delay, those up events will happen while the function is running, which can lead to modifier keys that are virtually stuck DOWN, which is super bad and annoying.
 ; i don't remember why I removed this delay. but i also removed the 5ms of delay in icue, sooooo this might not be necceessary anymore?
@@ -1339,6 +1369,34 @@ Process, Exist, chrome.exe
 		GroupActivate, taranChromes, r
 	else
 		WinActivate, ahk_class Chrome_WidgetWin_1 ahk_exe chrome.exe,, Microsoft Teams ;the last one is explicitly telling it NOT to open Microsoft Teams.
+	}
+}
+
+switchToWindowSpy()
+{
+If Not WinExist("ahk_class AU3Reveal")
+	openApp("ahk_class AU3Reveal", "C:\Program Files\AutoHotkey\WindowSpy.ahk", "Active Window Info")
+; else
+	; msgbox, heyyyy ;doesn't work for some raisin.
+; if WinExist("ahk_class AU3Reveal")
+	; msgbox, heyyo
+	; WinClose, Window Spy
+}
+
+
+switchToAudacity()
+{
+; Audacity
+; ahk_class wxWindowNR
+; ahk_exe audacity.exe
+; ahk_pid 80600
+IfWinNotExist, ahk_exe audacity.exe
+	{
+	Run, C:\Program Files (x86)\Audacity\audacity.exe
+	}
+else
+	{
+	WinActivate ahk_exe audacity.exe
 	}
 }
 
@@ -2015,15 +2073,15 @@ ExplorerViewChange_ICONS(explorerHwnd)
 ;==================================================
 
 #ifwinactive
-^!+F12::
-tooltip, here we goooo
-Title := GetTitle("https://calendar.google.com/calendar/b/0/r")
-Title := GetTitle("https://www.google.com/")
-Title := GetTitle("https://www.autohotkey.com/")
-msgbox, title is %title%
+; ^!+F12::
+; tooltip, here we goooo
+; Title := GetTitle("https://calendar.google.com/calendar/b/0/r")
+; Title := GetTitle("https://www.google.com/")
+; Title := GetTitle("https://www.autohotkey.com/")
+; msgbox, title is %title%
 
-;gotofiretab("Calendar - April 2019","https://calendar.google.com/calendar/b/0/r") 
-return
+; ;gotofiretab("Calendar - April 2019","https://calendar.google.com/calendar/b/0/r") 
+; return
 
 
 ;===
@@ -2356,7 +2414,7 @@ else
 	Run, %TPath% ;Command for running target if conditions are satisfied
 }
 
-;---------------------------------------------------------------------------------
+;-----------------------------------------------------------------
 ;Switch Function - Switching between different instances of the same executable or running it if missing
 F_Switch(Target,TClass,TGroup,TPath = 0)
 {

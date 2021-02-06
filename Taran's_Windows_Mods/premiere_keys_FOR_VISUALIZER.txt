@@ -623,7 +623,7 @@ Overlays
 Play Around
 Play Audio In to Out
 Play In to Out&Ctrl Shift Space
-Play In to Out with Preroll/Postroll&Shift Space
+Open Excalibur&Shift Space
 Play Video In to Out
 Play from Playhead to Audio Out Point
 Play from Playhead to Out Point

@@ -18,6 +18,8 @@
 
 #SingleInstance force
 #InstallKeybdHook
+#InstallMouseHook
+#UseHook On
 #KeyHistory 500
 
 Menu, Tray, Icon, imageres.dll, 262 ;makes the icon into two window things
@@ -68,9 +70,30 @@ If (class2 = "Premiere Pro")
 	goto skipitfull
 	}
 
+If (class2 = "SUMATRA_PDF_FRAME")
+	{
+	; tooltip, it's SumatraPDF`, just hit F11.
+	; sleep 100
+	; tooltip,
+	;sendinput, {F11}
+	
+	if (taranStyle = 0x00000000) ;if it is full screen
+		{
+		tooltip, 0x00000000 SUMATRA!
+		sleep 100
+		tooltip,
+		sendinput, {F11} ;this MURDERS firefox's "full screen" mode, but does not induce it, because otherwise it would have been 0x00000100 or 0x00000110
+
+		sleep 10
+		;This i gotta say is GOOD ENOUGH, though I'd prefer to not have to use F11. I'd prefer to send whatever command is being sent by F11 (in firefox and Chrome.)
+		goto skipitfull
+		return ;just in case
+		}
+	goto skipitfull
+	return
+	;still needs work but this is decent.
+	}
 ;WinRestore, A ;which means the active window, which is no bueno for my needs.
-
-
 
 ;WinActivate, ahk_id %id% ;first, we need to activate that window. unfortunately, this also brings it to the foreground? again, those are NOT the same thing, but they are stuck together in this particular thing...
 ; ; ; MouseGetPos,,, WinUMID
@@ -93,6 +116,7 @@ sendinput, {F11} ;this MURDERS firefox's "full screen" mode, but does not induce
 
 sleep 10
 ;This i gotta say is GOOD ENOUGH, though I'd prefer to not have to use F11. I'd prefer to send whatever command is being sent by F11 (in firefox and Chrome.)
+return
 }
 
 ;i DO need a check here to be sure it's actaully chrome that's active.
@@ -123,8 +147,6 @@ sleep 10 ;without this, chrome will instantly become whatever full screen SIZE i
 ;0x00000110 is the style of WINDOWed mode i think
 ; https://www.autohotkey.com/docs/misc/Styles.htm#Common
 ; https://support.mozilla.org/en-US/questions/1255696
-
-
 
 
 ;run, %title% -k
@@ -206,7 +228,7 @@ or (WinActive("ahk_class DroverLord - Window Class") and WinActive("ahk_exe Adob
 
 
 Xbutton2::
-
+;tooltip, xbutton2
 ;;need to add code so that it will NOT make Explorer into full screen IF you click on a full screen firefox or chrome.
 
 killFullScreen()
@@ -282,9 +304,15 @@ skipit:
 return
 
 ;------------------------
+;------------------------
+;------------------------
+;------------------------
+;------------------------
+;------------------------
+;------------------------
 
 Xbutton1::
-
+;tooltip, xbutton1
 killFullScreen()
 
 ; If DoubleAlt
@@ -319,9 +347,32 @@ Else
     KDE_WinUp := -1
 Loop
 {
-    GetKeyState,KDE_Button,Xbutton1,P ; Break if button has been released.
-    If KDE_Button = U
+	;tooltip, xbutton1 loopy before break
+	
+	;;the below line DOES work, but not over parsec
+    GetKeyState,KDE_Button,Xbutton1,P ; Break if button has been released. Note that checking the physical state of a key will NOT work over applications like Parsec or (possibly) Teamviewer. (untested)
+	
+	
+    ; GetKeyState,KDE_Button,XButton1
+    ;GetKeyState,KDE_Button,VK05
+	;tooltip, KDE_Button is %KDE_button%
+	;sleep 300
+	
+	
+	If KDE_Button = U
         break
+	
+	; https://www.autohotkey.com/docs/commands/GetKeyState.htm#function
+	; KeyIsDown := GetKeyState(KeyName , P)
+	; KeyIsDown := GetKeyState(XButton1,P)
+	; tooltip, KeyIsDown is %KeyIsDown%
+	; Sleep 400
+	; If (KeyIsDown := 0)
+		; {
+		; msgbox, break
+        ; break
+		; }
+	
     MouseGetPos,KDE_X2,KDE_Y2 ; Get the current mouse position.
     ; Get the current window position and size.
     WinGetPos,KDE_WinX1,KDE_WinY1,KDE_WinW,KDE_WinH,ahk_id %KDE_id%

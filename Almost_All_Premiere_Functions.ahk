@@ -1592,6 +1592,10 @@ restartPoint:
 blockinput, sendandMouse
 blockinput, MouseMove
 blockinput, on
+
+;fortunately, this whole thing is fast enough that i don't NEED to buffer keypresses. I can just fully block them while we wait. But here's a thread about that:
+;https://autohotkey.com/board/topic/59606-input-buffer-during-blockinput/
+
 ;-Sendinput ^!+5
 
 ;clickTransformIcon()
@@ -1723,12 +1727,14 @@ if ErrorLevel = 2
 	{
     msgbox,,, ERROR LEVEL 2`nCould not conduct the search,1
 	resetFromAutoVFX()
+	Return
 	}
 if ErrorLevel = 1
 	{
 	;msgbox, , , error level 1, .7
     msgbox,,, ERROR LEVEL 1`n%foobar% could not be found on the screeen,1
 	resetFromAutoVFX()
+	Return
 	}
 else
 	{
@@ -1738,6 +1744,7 @@ else
 	;msgbox,,,moved to located text,1
 	sleep 5
 	findHotText(foobar)
+	Return
 	}
 }
 
@@ -1777,7 +1784,7 @@ if ErrorLevel
     ;tooltip, blue not Found
 	sleep 100
 	resetFromAutoVFX()
-	;return ;i am not sure if this is needed.
+	return ;i am not sure if this is needed.
 	}
 else
 	{
@@ -1795,8 +1802,8 @@ else
 	{
 		;msgbox,,,, about to move,0.5
 		MouseMove, Px+80, Py-20, 0 ;relative to the unrelated 0.00 text (which I've never changed,) this moves the cursor onto the SECOND variable for the anchor point... the VERTICAL number, rather than horizontal.
-		tooltip, where am I?
-		;sleep 1000
+		;tooltip, where am I?
+		;sleep 2000
 	}
 	Click down left
 	
@@ -1804,11 +1811,12 @@ else
 		
 	if stateFirstCheck = U
 		{
+			;tooltip, you have already released the key.
 			;a bit of time has passed by now, so if the user is no longer holding the key down at this point, that means that they pressed it an immediately released it.
 			;I am going to take this an an indicaiton that the user just wants to RESET the value, rather than changing it.
 			Click up left
 			Sleep 10
-			;I am removing the clode below, which acts to reset the whole thing. instead, now this allows me to type in my own custom value.
+			;I am removing the clode below, which acts to set specific values automatically, which can be used to "reset" those values. Instead of that, I'm able to type in my own custom value.
 			
 			; if (foobar = "scale")
 			; {
@@ -1824,8 +1832,8 @@ else
 				; Send, {enter} ;"enter" can be a volatile and dangerous key, since it has so many other potential functions that might interfere somehow... in fact, I crashed the whole program once by using this and the anchor point script in rapid sucesssion.... but "ctrl enter" doesn't work... maybe numpad enter is a safer bet?
 				; sleep 20
 			; }
-			resetFromAutoVFX()
-			;return
+			resetFromAutoVFX(0) ;zero means, DO NOT click on the timeline to put the focus there.
+			return ;this return has to be here, or the function will continue on to the next loop! Agh, I didn't realize that for a long time, dumb!
 		}
 	;Now we start the official loop, which will continue as long as the user holds down the VFXkey. They can now simply move the mouse to change the value of the hot text which has been automatically selected for them.
 	Loop
@@ -1835,13 +1843,16 @@ else
 		;tooltip, %VFXkey% Instant %foobar% mod
 		tooltip, ;removes any tooltips that might exist.
 		sleep 15
-		GetKeyState, state, %VFXkey%, P
+		GetKeyState, state, %VFXkey%, P ;since this relies on the PHYSICAL state of the key on the attached keyboard, this and other functions do NOT work if you're using Parsec, Teamviewer, or other remote access software.
+		
+		;NOW is when the user moves their mouse around to change the value of the hot text. You can also use SHIFT or CTRL to make it change faster or slower. Then release the VFX key to return to normal.
+		
 		if state = U
 			{
 			Click up left
 			;tooltip, "%VFXkey% is now physically UP so we are exiting now"
 			sleep 15
-			resetFromAutoVFX()
+			resetFromAutoVFX(1) ;1 means, DO send a middle click to put focus onto the timeline (or wherever the cursor was.)
 			; MouseMove, Xbegin, Ybegin, 0
 			; tooltip,
 			; ToolTip, , , , 2
@@ -1855,14 +1866,23 @@ else
 
 ;;;--------------------------------------------------------------------------------------------
 
-resetFromAutoVFX()
+resetFromAutoVFX(clicky := 0)
 {
+	;tooltip, you're in RESET land
 	;msgbox,,, is resetting working?,1
 	global Xbegin
 	global Ybegin
 	MouseMove, Xbegin, Ybegin, 0
 	;MouseMove, global Xbegin, global Ybegin, 0
 	;MouseMove, Xbeginlol, Ybeginlol, 0
+	
+	if clicky = 1
+		{
+		;tooltip, WHY
+		send, {mbutton} ;sends middle click. This will bring the panel you were hovering over, back into focus. Alternatively, i could do this with a keyboard shortcut that highlights the timeline panel, but that is probably less reliable, for... reasons.
+		clicky = 0
+		}
+	;sleep 10
 	blockinput, off
 	blockinput, MouseMoveOff
 	ToolTip, , , , 2
@@ -2104,3 +2124,34 @@ sendinput, {blind}{SC0E8} ;scan code of an unassigned key
 ;!+.::msgbox, A_workingDir should be %A_WorkingDir%
 
 
+;;0000000000 obsolete premiere functions 0000000000000000000
+
+; #IfWinActive ahk_exe Adobe Premiere Pro.exe
+; ;TITLE BAR REMOVER
+; ;;ctrl backslash is a nice shortcut in MACINTOSH Premiere for hiding the title bar. There is no Windows equivalent... unless you use autohotKey!
+; ;;WARNING THOUGH - i think this script makes premiere less stable. I hardly use it...
+; ;;https://jacKsautohotKeyblog.wordpress.com/2016/05/27/autohotKey-toggles-and-the-ternary-operator-beginning-hotKeys-part-18/
+; ^\::
+  ; If (toggle := !toggle)
+    ; WinSet, Style, -0xC00000, A
+  ; else
+    ; WinSet, Style, +0xC00000, A
+; Return
+;UPDATE:
+;Premiere in Windows now HAS this feature by default!! But there is no visible shortcut for it in the shortcuts mapper, strangely enough. Anyway, that makes my script obsolete. yay!
+
+;;;the below function is no longer needed. Premiere now has this feature by default.
+;~+K::KbShortcutsFindBox() ;this one DOES need the ~ so that capital Ks will work in the titler, and so that the keyboard shortcuts panel will actually launch when it is pressed.
+
+;;no longer used:
+; control g = make 200% speed
+;^g::
+;Send ^r200{Enter}
+;return
+;;no longer used:
+; control h = make 50% speed
+;^h::
+;Send ^r50{Enter}
+;return
+
+;;00000000000 END of obsolete premiere functions 00000000000000

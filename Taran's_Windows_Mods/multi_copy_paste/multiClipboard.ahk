@@ -5,6 +5,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ; now the script directory is in the variable %A_WorkingDir%
 
+; https://www.autohotkey.com/docs/commands/SetKeyDelay.htm
+SetKeyDelay, -1 ;INSTANT
 
 ;;;OKAY so it works but it's kinda slow because it requires 8 actual .txt files. i hope there is a better way? probably a persistant script that stays in RAM. anyway, I'm done for today.
 
@@ -35,7 +37,9 @@ file.close()
 
 return NewClipboard
 	}
+	SetKeyDelay, -1 ;INSTANT
 	multiClipboardPaste(target)
+	; i have absolutely no clue where or how the multiClipboardPaste() function is defined. I can't find it. This makes no sense... and I wrote the damn thing!!
 	{
 
 ;msgbox, target is %target%
