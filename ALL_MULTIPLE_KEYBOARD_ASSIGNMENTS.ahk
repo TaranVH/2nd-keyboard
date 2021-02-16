@@ -15,11 +15,17 @@ global savedEXE = "Teams.exe" ;BEFORE the #include is apparently the only place 
 
 ;when you get to #include, it means the END of the autoexecute section.
 ;gui must be #included first, or it does not work, for some reason...
-;YOU probably do NOT need the GUI at all. Delete the line below:
+;YOU probably do NOT need the GUI at all. Delete the single line below:
 #Include C:\AHK\2nd-keyboard\gui.ahk
 #include C:\AHK\2nd-keyboard\Almost_All_Premiere_Functions.ahk
 #include C:\AHK\2nd-keyboard\Almost_All_Windows_Functions.ahk
 #include C:\AHK\2nd-keyboard\After_Effects_Functions.ahk
+
+;; #include causes the script to behave as though the specified file's contents are present at this exact position.
+;; https://www.autohotkey.com/docs/commands/_Include.htm
+
+
+
 SetKeyDelay, 0 ;warning ---this was absent for some reason. i just added it back in. IDK if I removed it for a reason or not...
 
 ;-------------------------------------------------------------------------
@@ -104,8 +110,8 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ;__________________________________________________________________________________________
 ; 
 ;----------------------------------------------------------------------------------
-; RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE'S BUILT IN KEYBOARD SHORTCUTS MENU
-; THESE ARE ESSENTIAL FOR THE SCRIPTS TO WORK PROPERLY.
+; RELEVANT SHORTCUTS I HAVE ASSIGNED IN PREMIERE'S BUILT IN KEYBOARD SHORTCUTS MENU.
+; YOU MUST ADD THESE ASSIGNMENTS TOO. THEY ARE ESSENTIAL FOR THE SCRIPTS TO WORK.
 
 ; YOU CAN SEE/USE ALL MY PREMEIRE SHORTCUTS, THEY ARE HERE! https://github.com/TaranVH/2nd-keyboard/blob/master/Settings_and_shortcuts/
 
@@ -213,19 +219,24 @@ currentTool = "v" ;This is super useful and important for a Premiere script, you
 
 #if
 
-;this is pause/break. I'm using it for debugging...
+; ;this is pause/break. I'm using it for debugging...
 
-; ^sc045::
-; +sc045::
-; !sc045::
-;scratch that, I think the * (hook??) makes it insensitive to modifiers.
-*sc045::
+^sc045::
++sc045::
+!sc045::
+sc045::
+; ;scratch that, I think the * (hook??) makes it insensitive to modifiers.
+;;;scratch THAT, turns out CTLR SHIFT numlock will trigger if I use the line below... so i'm back to using the 3 lines above.
+;*sc045::
 tooltip, pause break
 sleep 100
 tooltip,
 KeyHistory
 sleep 10
 return 
+
+
+
 
 ; ; ctrlbreak::
 ; ; ^ctrlbreak::
@@ -313,7 +324,8 @@ F12::instantExplorer("C:\Users\Taran\Downloads") ;open the downloads folder, yup
 -::audioMonoMaker("left")
 =::audioMonoMaker("right")
 
-backspace::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS")
+; backspace::instantExplorer("Z:\Linus\Team_Documents\TARAN THINGS")
+backspace::openTightVNC()
 
 ;;;;;next line;;;;;;;;
 ;;;;;K120 keyb;;;;;;;;
@@ -610,12 +622,24 @@ numpad2::SendKey(A_thishotkey, ,"nudge down")
 
 numpadpgdn:: ;(this is SHIFT numpad3, OR what happens with numlock enabled, i think. it's weird.)
 numpad3::
+
+IfWinNotExist, ahk_exe vivaldi.exe
+	Run, vivaldi.exe
+if WinActive("ahk_exe vivaldi.exe")
+	{
+	Sendinput, {blind}^{tab}
+	}
+else
+	{
+	windowSwitcher("ahk_class Chrome_WidgetWin_1", "vivaldi.exe")
+	}
+
 ;C:\Users\Taran\AppData\Local\Vivaldi\Application
 
 ;tooltip, switch to Vivaldi
 ; dothisCLASS = "ahk_class Chrome_WidgetWin_1"
 ; dothisEXE = "vivaldi.exe"
-windowSwitcher("ahk_class Chrome_WidgetWin_1", "vivaldi.exe")
+;windowSwitcher("ahk_class Chrome_WidgetWin_1", "vivaldi.exe")
 
 ; ; ahk_class Chrome_WidgetWin_1
 ; ; ahk_exe vivaldi.exe
@@ -1735,10 +1759,10 @@ If (exphWnd := WinActive("ahk_class CabinetWClass"))
 return
 
 
-end::
-If (exphWnd := WinActive("ahk_class CabinetWClass"))
-	ExplorerViewChange_ICONS(exphWnd) ;icon mode
-return
+; end::
+; If (exphWnd := WinActive("ahk_class CabinetWClass"))
+	; ExplorerViewChange_ICONS(exphWnd) ;icon mode
+; return
 
 ;;;YOU ARE STILL IN THE WINDOWS EXPLORER SHORTCUTS
 
@@ -3070,5 +3094,5 @@ return
 
 #ifwinactive
 END::sendinput, {numlock}
-
+;this is for PARSEC only. it's a temporary thing. gotta control numlock somehow!
 

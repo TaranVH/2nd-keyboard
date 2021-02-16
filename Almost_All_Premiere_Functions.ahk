@@ -24,6 +24,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 ;
 ; VERY IMPORTANT NOTE:
 ; This file works in tandem with ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk.
+; That script has this one 
 ; All the functions from HERE are actually CALLED from keyboard shortcuts
 ; in THAT script. I had to do it this way because of the Stream Deck(s)...
 ; But you can put your key bindings and functions in the same script if
@@ -32,7 +33,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 ; You also need to read from around line 90 of ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk.
 ; to see which keybaord shortcut assignements are necessary to make these scripts work.
 ;
-; I reccomend that you only copy the functions that you need.
+; I recommend that you only copy the functions that you need.
 ; Add one at a time or it will be overwhelming!
 ;
 ; All the code in my github repo is free for you to use and change as you please.
@@ -47,7 +48,7 @@ TargetScriptTitle = "C:\AHK\2nd-keyboard\gui.ahk ahk_class AutoHotkey"
 recallTransition(foo) ;this was a part of the luamacros scripts.
 {
 ;Do nothing.
-msgbox, the recallTransition function was deleted cause it never worked very well.
+msgbox, the recallTransition function was deleted cause it never worked very well. %foo%
 }
 
 ;;;;;;non luamacros stuff begins now.;;;;;
@@ -60,20 +61,17 @@ SetTimer, noTip, %wait% ;--in 1/3 seconds by default, remove the tooltip
 ;return
 }
 
-;goto, goAround
-
-;;;;;;/temporary tooltip maker;;;;;;
 ;um I am trying this because i think the tooltip was being deleted like every bazillionth of a second?
 noTip:
 ToolTip,,,,8
 ;removes the tooltip
+;I REALLY need to figure out how subroutines work...
 
-;goAround:
+;;;;;;/temporary tooltip maker;;;;;;
 
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO! (until canceled with a lone "#IfWinActive")
-
-;is the above line really necessary? i dont think so, but i am afraid to touch it.
+;however, that only applies to stuff like hotkey definitions. I'm pretty sure that functions can be defined anywhere.
 
 
 monitorKeys(whichMonitor,shortcut,useSpace := 1)
@@ -246,119 +244,125 @@ if (useSpace = "1")
 
 
 
-prFocus(panel) ;this function allows you to have ONE place where you define your personal shortcuts to "focus" panels in Premiere. Also it ensures that they actaully get into focus, and don't rotate the sequences or anything like that.
-{
-;panel := """" . panel . """" ;this adds quotation marks around the parameter so that it works as a string, not a variable.
-; ; ; if (panel = "effect controls")
-; ; ; {
-	; ; ; Send ^!+5
-	; ; ; return
-; ; ; }
-Send ^!+7 ;bring focus to the effects panel, in order to "clear" the current focus on the MAIN monitor
-sleep 12
-Send ^!+7 ;do it AGAIN, just in case a panel was full-screened... it would only have exited full screen, and not switched to the effects panel as it should have.
-sleep 5
-sendinput, {blind}{SC0EA} ;scan code of an unassigned key. Used for debugging.
-;sleep 2
-if (panel = "effects")
-	goto theEnd ;do nothing. the shortcut has already been pressed.
-else if (panel = "timeline")
-	Send ^!+3 ;if focus had already been on the timeline, this would have switched to the next sequence in some arbitrary order.
-else if (panel = "program") ;program monitor
-	Send ^!+4
-else if (panel = "source") ;source monitor
-{
-	Send ^!+2
-	;tippy("send ^!+2")
-}
-else if (panel = "project") ;AKA a "bin" or "folder"
-	Send ^!+1
-else if (panel = "effect controls")
-	Send ^!+5
-
-theEnd:
-sendinput, {blind}{SC0EB}
-}
-;end of prFocus()
 
 
-;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-;THIS IS A VERY SIMPLE FUNCTION FOR JUST TYPING STUFF INTO THE SEARCH BAR
-;but it doesn't apply them to the clips.
+
+
 
 effectsPanelType(item := "lol")
 {
-;we have already slept.
-MODSL()
+;THIS IS A VERY SIMPLE FUNCTION FOR JUST TYPING STUFF INTO THE SEARCH BAR
+;but it doesn't apply them to the clips, unlike preset()
 
-;msgbox now
-;prFocus("effects") ;reliably brings focus to the effects panel
-Send ^+!7 ;CTRL SHIFT ALT 7 -- set in premiere to "effects" panel
+MODSL() ;this is probably no longer needed, but IDK for sure.
+
+;prFocus("effects") ;reliably brings focus to the effects panel. This is an alternative to the next line.
+Sendinput, ^+!7 ;CTRL SHIFT ALT 7 -- set in premiere to "effects" panel
 sleep 20
-Send ^b ;CTRL B --set in premiere to "select find box." Makes a windows noise if you do it again.
+Sendinput, ^b ;CTRL B --set in premiere to "select find box." Makes a windows noise if you do it again.
 ;sleep 20
-Send +{backspace} ;shift backspace deletes any text that may be present.
+Sendinput, +{backspace} ;shift backspace deletes any text that may be present. It is much less dangerous than sending "delete" or "backspace" alone.
 Sleep, 10
-Send %item%
+Sendinput, %item%
 ;now this next part re-selects the field in case you want to type anything different
 ;sleep 10
-send ^!b ;ctrl alt B is ALSO select find box, but doesn't have the annoying windows sound. I may wish to change this to something else, as ALT is inherently dangerous.
+Sendinput, ^!b ;ctrl alt B is ALSO select find box, but doesn't have the annoying windows sound. I may wish to change this to something else, as ALT is inherently dangerous if it becomes stuck.
 }
+
+
 
 #if
 
 MODSL()
 {
-;UNSTICK LEFT MODIFIERS
+;UNSTICK LEFT MODIFIERS. I don't really use this anymore.
 sendinput, {blind}{SC0E2} ;scan code of an unassigned key. Used for debugging. Warning: may activate windows Game Bar if you didn't disable it.
-
 sleep, 1 ;okay soooooooooo apparently this is always at LEAST 10 to 15 milliseconds no matter what i do. uuuuugh.
-
 ; ; https://www.autohotkey.com/docs/commands/Sleep.htm
-
 sendinput,{blind}{LCtrl up}{LAlt up}{LShift up}
-
 ;sendinput, {blind}{SC0E3} ;scan code of an unassigned key. Used for debugging. Warning: may activate windows Game Bar if you didn't disable it.
-
 }
+
 
 MODSR()
 {
-;UNSTICK RIGHT MODIFIERS
+;UNSTICK RIGHT MODIFIERS. I don't use this anymore.
 sendinput, {blind}{SC0E3} ;scan code of an unassigned key. Used for debugging. Warning: may activate windows Game Bar if you didn't disable it.
-
 sleep 1
-
 sendinput, {blind}{RCtrl up}{RAlt up}{RShift up}
-
 sendinput, {blind}{SC0E4} ;scan code of an unassigned key. Used for debugging. Warning: may activate windows Game Bar if you didn't disable it.
-
 }
 
 
-;;;;;;;;;;FUNCTION FOR DIRECTLY APPLYING A PRESET EFFECT TO A CLIP!;;;;;;;;;;;;
-; preset() is my most used, and most useful AHK function! There is no good reason why Premiere doesn't have this functionality.
-;keep in mind, I use 150% UI scaling, so your pixel distances for commands like mousemove WILL be different!
-;to use this script yourself, carefully go through  testing the script and changing the values, ensuring that the script works, one line at a time. use message boxes to check on variables and see where the cursor is. remove those message boxes later when you have it all working!
-;NOTE: you also need to get the PrFocus() function.
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
+
+
 preset(item)
 {
-keywait, %A_PriorHotKey% ;this is probably WAY cleaner than allowing the physical key UP events to just happen WHENEVER during the following function. I'm gonna add this to a LOT of my functions... It'll be a bit slower, but also should have way fewer issues, making it worth it.
+;******FUNCTION FOR DIRECTLY APPLYING A PRESET EFFECT TO A CLIP!******
+; preset() is my most used, and most useful AHK function for Premiere Pro!
 
-sendinput, {blind}{SC0EC} ;for debugging
-;Keyshower(item,"preset") ;YOU DO NOT NEED THIS LINE. -- it simply displays keystrokes on the screen for the sake of tutorials...
+;===================================================================================
+; NEW TO AHK? READ ALL THE BELOW INSTRUCTIONS BEFORE YOU TRY TO USE THIS.
+; THIS WILL NOT WORK UNLESS YOU DO SOME SETUP FIRST!
+; Fortunately,
+; THERE IS A FULL VIDEO TUTORIAL THAT TEACHES YOU HOW TO USE THIS, STEP BY STEP.
+; [[[[[LINK TBD, IT'S NOT FINISHED JUST YET.]]]]]
+;
+; Even if Adobe does one day add this feature to Premiere, this tutorial will
+; still be very useful to anyone who is learning how to use AHK with Premiere,
+; especially if you're trying to use any of the other functions that I've created.
+; 
+; To call the function, use something like
+; F4::preset("crop 50")
+; Where "crop 50" is the exact, unique name of the preset you wish to apply.
+; 
+; For this function to work, you MUST go into Premiere's Keyboard Shortcuts panel,
+; find the following commands, and add these keyboard shortcut assignments to them:
+; 
+; Select Find Box ------- CTRL B
+; Shuttle Stop ---------- CTRL ALT SHIFT K
+; Window > Effects  ----- CTRL ALT SHIFT 7
+; 
+;====================================================================================
+
+;Keep in mind, I use 100% UI scaling on my primary monitor, so if you use 125% or 150% or anything else, your pixel distances for commands like Mousemove WILL be different. Therefore, you'll need to "comment in" the message boxes, change some numbers, and keep saving and refreshing and retrying the script until you've got it working!
+;To find out what UI scaling your screen uses, hit the windows key, type in "display," hit Enter, and then scroll down to "Scale and layout." Under "Change the size of text, apps, and other items," there will be a selection menu thing. Mine is set to "100%." I have NOT done anything in the "Advanced scaling settings" blue link just below that.
+
+;To use this script yourself, carefully go through  testing the script and changing the values, ensuring that the script works, one line at a time. use message boxes to check on variables and see where the cursor is. remove those message boxes later when you have it all working!
+
+;NOTE: I built this under the assumption that your Effects Panel will be on the same monitor as your timeline. I can't guarantee that it'll work if the Effects Panel is on another monitor.
+
+;NOTE: You also need to get the PrFocus() function.
+
+;NOTE: To use the preset() function, your cursor must first be hovering over the clip that you wish to apply your preset to. It also works to select multiple clips, again, as long as your cursor is hovering over one of the selected clips.
+
+
+keywait, %A_PriorHotKey% ;keywait is quite important.
+;Let's pretend that you called this function using the following line:
+;F4::preset("crop 50")
+;In that case, F4 is the prior hotkey, and the script will WAIT until F4 has been physically RELEASED (up) before it will continue. 
+;https://www.autohotkey.com/docs/commands/KeyWait.htm
+;Using keywait is probably WAY cleaner than allowing the physical key UP event to just happen WHENEVER during the following function, which can disrupt commands like sendinput, and cause cross-talk with modifier keys.
+
+
+;;---------You do not need the stuff BELOW this line.--------------
+
+sendinput, {blind}{SC0EC} ;for debugging. YOU DO NOT NEED THIS.
+;Keyshower(item,"preset") ;YOU DO NOT NEED THIS. -- it simply displays keystrokes on the screen for the sake of tutorials...
 ; if IsFunc("Keyshower")
 	; {
 	; Func := Func("Keyshower")
 	; RetVal := Func.Call(item,"preset") 
 	; }
-
-ifWinNotActive ahk_exe Adobe Premiere Pro.exe
-	goto theEnding ;and this line is here just in case the function is called while not inside premiere.
+ifWinNotActive ahk_exe Adobe Premiere Pro.exe ;the exe is more reliable than the class, since it will work even if you're not on the primary Premiere window.
+	{
+	goto theEnding ;and this line is here just in case the function is called while not inside premiere. In my case, this is because of my secondary keyboards, which aren't usually using #ifwinactive in addition to #if getKeyState(whatever). Don't worry about it.
+	}
+;;---------You do not need the stuff ABOVE this line.--------------
 
 
 ;Setting the coordinate mode is really important. This ensures that pixel distances are consistant for everything, everywhere.
+; https://www.autohotkey.com/docs/commands/CoordMode.htm
 coordmode, pixel, Window
 coordmode, mouse, Window
 coordmode, Caret, Window
@@ -367,39 +371,51 @@ coordmode, Caret, Window
 BlockInput, SendAndMouse
 BlockInput, MouseMove
 BlockInput, On
+;The mouse will be unfrozen at the end of this function. Note that if you do get stuck while debugging this or any other function, CTRL SHIFT ESC will allow you to regain control of the mouse. You can then end the AHK script from the Task Manager.
 
-SetKeyDelay, 0 ;NO DELAY BETWEEN TYPED STUFF! It might actually be best to put this at "1" though.
+SetKeyDelay, 0 ;NO DELAY BETWEEN STUFF sent using the "send"command! I thought it might actually be best to put this at "1," but using "0" seems to work perfectly fine.
+; https://www.autohotkey.com/docs/commands/SetKeyDelay.htm
 
-;prFocus("timeline") ;maybe not essential i think...
-Sendinput, ^!+k ;shuttle STOP
+
+Sendinput, ^!+k ;in Premiere's shortcuts panel, ASSIGN "shuttle stop" to CTRL ALT SHIFT K.
 sleep 10
-Sendinput, ^!+k ; another shortcut for Shuttle Stop. CTRL ALT SHIFT K. Set this in Premiere's shortcuts panel.
+Sendinput, ^!+k ; another shortcut for Shuttle Stop. Sometimes, just one is not enough.
 ;so if the video is playing, this will stop it. Othewise, it can mess up the script.
 sleep 5
 
 ;msgbox, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
-;;to check if there are lingering variables...
+;;This was my debugging to check if there are lingering variables from last time the script was run. You do not need that line.
 
 MouseGetPos, xposP, yposP ;------------------stores the cursor's current coordinates at X%xposP% Y%yposP%
-sendinput, {mButton} ;this will MIDDLE CLICK to bring focus to the panel underneath the cursor (the timeline). I forget exactly why, but if you create a nest, and immediately try to apply a preset to it, it doesn't work, because the timeline wasn't in focus...?
-;but i just tried that and it still didn't work...
+sendinput, {mButton} ;this will MIDDLE CLICK to bring focus to the panel underneath the cursor (which should be the timeline). I forget exactly why, but if you create a nest, and immediately try to apply a preset to it, it doesn't work, because the timeline wasn't in focus...? Or something. IDK.
 sleep 5
-prFocus("effects") ;brings focus to the effects panel
-;Alternative -->;;Send ^+!7 ;CTRL SHIFT ALT 7 --- you must set this in premiere's keyboard shortcuts menu to the "effects" panel
-sendinput, {blind}{SC0EC} ;for debugging
-sleep 15 ;"sleep" means the script will wait for 20 milliseconds before the next command. This is done to give Premiere some time to load its own things.
-Sendinput, ^b ;CTRL B ------------------------- set in premiere to "select find box"
+
+prFocus("effects") ;Brings focus to the effects panel. You must find, then copy/paste this function definition into your own .ahk script as well. ALTERNATIVELY, if you don't want to do that, you can delete this line, and comment in the 3 lines below:
+;Sendinput, ^+!7 ;CTRL SHIFT ALT 7 --- In Premiere's Keyboard Shortcuts panel, you nust find the "Effects" panel and assign the shortcut CTRL SHIFT ALT 7 to it. (The default shortcut is SHIFT 7. Because Premiere does allow multiple shortcuts per command, you can keep SHIFT 7 as well, or you can delete it. I have deleted it.)
+;sleep 12
+;Sendinput, ^!+7 ;you must send this shortcut again, because there are some edge cases where it may not have worked the first time.
+
+sendinput, {blind}{SC0EC} ;for debugging. YOU DO NOT NEED THIS LINE.
+
+sleep 15 ;"sleep" means the script will wait for 15 milliseconds before the next command. This is done to give Premiere some time to load its own things.
+
+Sendinput, ^b ;CTRL B ------- set in premiere's shortcuts panel to "select find box"
 sleep 5
-;Send ^b ;again... actually this will create the DOODLEDE DOOO noise if you do it twice.
+;Alternatively, it also works to click on the magnifying glass if you wish to select the find box... but this is unnecessary and sloppy.
 
+;The Effects panel's find box should now be activated.
+;If there is text contained inside, it has now been highlighted. There is also a blinking vertical line at the end of any text, which is called the "text insertion point", or "caret".
 
-;Any text in the Effects panel's find box has now been highlighted. There is also a blinking "text insertion point" at the end of that text. This is the vertical blinking line, or "caret."  
 if (A_CaretX = "")
 {
 ;No Caret (blinking vertical line) can be found.
+
+;The following loop is waiting until it sees the caret. THIS IS SUPER IMPORTANT, because Premiere is sometimes quite slow to actually select the find box, and if the function tries to proceed before that has happened, it will fail. This would happen to me about 10% of the time.
+;Using the loop is also way better than just ALWAYS waiting 60 milliseconds like I was before. With the loop, this function can continue as soon as Premiere is ready.
+
+;sleep 60 ;<—Use this line if you don't want to use the loop below. But the loop should work perfectly fine as-is, without any modification from you.
+
 waiting2 = 0
-;the following loop is waiting until it sees the caret. SUPER IMPORTANT. Without this, the function doesn't work 10% of the time.
-;This is also way better than just always waiting 60 milliseconds like it had been before. The function can continue as soon as Premiere is ready.
 loop
 	{
 	waiting2 ++
@@ -413,62 +429,79 @@ loop
 	if (waiting2 > 40)
 		{
 		tooltip, FAIL - no caret found. `nIf your cursor will not move`, hit the button to call the preset() function again.`nTo remove this tooltip`, refresh the script using its icon in the taskbar.`n`nIt's possible Premiere tried to AUTOSAVE at just the wrong moment!
-		;Note to self, need much better way to debug this than screwing the user
-		sleep 200
+		;Note to self, need much better way to debug this than screwing the user. As it stands, that tooltip will stay there forever.
+		;USER: Running the function again, or reloading the script, will remove that tooltip.
+		;sleep 200
 		;tooltip,
+		sleep 20
 		GOTO theEnding
-		;lol, are you triggered by this GOTO? lolol lololol
 		}
 	}
 sleep 1
 tooltip,
 }
-
+;The loop has now ended.
 ;yeah, I've seen this go all the way up to "8," which is 264 milliseconds
 
-MouseMove, %A_CaretX%, %A_CaretY%, 0
-sleep 5
-
+MouseMove, %A_CaretX%, %A_CaretY%, 0 ;this moves the cursor, instantly, to the position of the caret.
+sleep 5 ;waiting while Windows does this. Just in case it takes longer than 0 milliseconds.
 ;;;and fortunately, AHK knows the exact X and Y position of this caret. So therefore, we can find the effects panel find box, no matter what monitor it is on, with 100% consistency!
 
-;tooltip, 1 - mouse should be on the caret X= %A_CaretX% Y= %A_CaretY% now ;;this was super helpful in me solving this one!
+;tooltip, 1 - mouse should be on the caret X= %A_CaretX% Y= %A_CaretY% now ;;this debugging line was super helpful in me solving this one! Connent this line in if you want to use it, but comment it out after you've gotten the whole function working.
 
-;;;msgbox, carat X Y is %A_CaretX%, %A_CaretY%
+;;;msgbox, caret X Y is %A_CaretX%, %A_CaretY%
+
 MouseGetPos, , , Window, classNN
 WinGetClass, class, ahk_id %Window%
+
 ;tooltip, 2 - ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
-;sleep 10 ;do i need this??
-;;;I think ControlGetPos is not affected by coordmode??  Or at least, it gave me the wrong coordinates if premiere is not fullscreened... https://autohotkey.com/docs/commands/ControlGetPos.htm 
-ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
-;;my results:  59, 1229, 252, 21,      Edit1,    ahk_class Premiere Pro
 
+;;;note to self, I think ControlGetPos is not affected by coordmode??  Or at least, it gave me the wrong coordinates if premiere is not fullscreened... IDK. https://autohotkey.com/docs/commands/ControlGetPos.htm
+
+ControlGetPos, XX, YY, Width, Height, %classNN%, ahk_class %class%, SubWindow, SubWindow 
+
+;note to self, I tried to exclude subwindows but I don't think it works...?
+;;my results:  59, 1229, 252, 21,     Edit1,     ahk_class Premiere Pro
 ;tooltip, classNN = %classNN%
-;sleep 50
-;now we have found a lot of useful information about this find box. Turns out, we don't need most of it...
-;we just need the X and Y coordinates of the "upper left" corner...
 
-;comment in the following line to get a message box of your current variable values. The script will not advance until you dismiss the message box.
+;;Now we have found a lot of useful information about this find box. Turns out, we don't need most of it...
+;;we just need the X and Y coordinates of the "upper left" corner...
+
+;;Comment in the following line to get a message box of your current variable values. The script will not advance until you dismiss a message box. (Use the enter key.)
 ;MsgBox, xx=%XX% yy=%YY%
+
+;; https://www.autohotkey.com/docs/commands/MouseMove.htm
 
 ;MouseMove, XX-25, YY+10, 0 ;--------------------for 150% UI scaling, this moves the cursor onto the magnifying glass
 MouseMove, XX-15, YY+10, 0 ;--------------------for 100% UI scaling, this moves the cursor onto the magnifying glass
-;msgbox, should be in the center of the magnifying glass now.
-sleep 5 ;was sleep 50
-;This types in the text you wanted to search for. Like "pop in." We can do this because the entire find box text was already selected by Premiere. Otherwise, we could click the magnifying glass if we wanted to , in order to select that find box.
-Send %item%
+
+;msgbox, should be in the center of the magnifying glass now. ;;<--comment this in for help with debugging.
 
 sleep 5
-;MouseMove, 62, 95, 0, R ;----------------------(for 150% UI) relative to the position of the magnifying glass (established earlier,) this moves the cursor down and directly onto the preset's icon. In my case, it is inside the "presets" folder, then inside of another folder, and the written name should be completely unique so that it is the first and only item.
-MouseMove, 41, 63, 0, R ;----------------------(for 100% UI) 
+
+Sendinput, %item%
+;This types in the text you wanted to search for, like "crop 50". We can do this because the entire find box (and any included text) was already selected.
+;Premiere will now display your preset at the top of the list. There is no need to press "enter" to search.
+
+
+sleep 5
+
+;MouseMove, 62, 95, 0, R ;----------------------(for 150% UI.)
+MouseMove, 41, 63, 0, R ;----------------------(for 100% UI)
+;;relative to the position of the magnifying glass (established earlier,) this moves the cursor down and directly onto the preset's icon.
+
+;;In my case, all of my presets are contained inside of folders, which themselves are inside the "presets" folder. Your preset's written name should be completely unique so that it is the first and only item.
+
 ;msgbox, The cursor should be directly on top of the preset's icon. `n If not, the script needs modification.
+
 sleep 5
 MouseGetPos, iconX, iconY, Window, classNN ;---now we have to figure out the ahk_class of the current panel we are on. It used to be DroverLord - Window Class14, but the number changes anytime you move panels around... so i must always obtain the information anew.
 sleep 5
 WinGetClass, class, ahk_id %Window% ;----------"ahk_id %Window%" is important for SOME REASON. if you delete it, this doesn't work.
 ;tooltip, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
 ;sleep 50
-ControlGetPos, xxx, yyy, www, hhh, %classNN%, ahk_class %class%, SubWindow, SubWindow ;-I tried to exclude subwindows but I don't think it works...?
-MouseMove, www/4, hhh/2, 0, R ;-----------------moves to roughly the CENTER of the Effects panel. This clears the displayed presets from any duplication errors. VERY important. without this, the script fails 20% of the time. This is also where the script can go wrong, by trying to do this on the timeline, meaning it didn't get the Effects panel window information as it should have... IDK how to fix yet.
+ControlGetPos, xxx, yyy, www, hhh, %classNN%, ahk_class %class%, SubWindow, SubWindow ;;-I tried to exclude subwindows but I don't think it works...?
+MouseMove, www/4, hhh/2, 0, R ;-----------------moves to roughly the CENTER of the Effects panel. This clears the displayed presets from any duplication errors. VERY important. without this, the script fails 20% of the time. This is also where the script can go wrong, by trying to do this on the timeline, meaning it didn't get the Effects panel window information as it should have... IDK how to fix yet. Update: I haven't had that problem in ages.
 sleep 5
 MouseClick, left, , , 1 ;-----------------------the actual click
 sleep 5
@@ -479,29 +512,111 @@ sleep 5
 MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---clicks the left button down, drags this effect to the cursor's pervious coordinates and releases the left mouse button, which should be above a clip, on the TIMELINE panel.
 sleep 5
 MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great!
-blockinput, MouseMoveOff ;returning mouse movement ability
-BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL+ALT+DEL will still work if you get stuck!! Cool.
 
-;remove the following thingy if it makes no sense to you
+blockinput, MouseMoveOff ;returning mouse movement ability
+BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL ALT DELETE will still work if you get stuck!! Cool.
+
+;;----remove the code below if it makes no sense to you.----
 IfInString, item, CROP
-{
-	if IsFunc("cropClick") {
+	{
+	if IsFunc("cropClick") ;This checks to see if you have a function named "cropClick"
+		{
 		Func := Func("cropClick")
-		sleep 160 ;because it might take awhile to appear in Premiere
-		sleep 160 ;because it might take awhile to appear in Premiere
+		sleep 320 ;because it might take awhile to appear in Premiere,  and I'm not gonna do another loop think liek I did above...
 		RetVal := Func.Call() 
 		}
-	; sleep 160
-	; cropClick()
-	; ;msgbox, that had "CROP" in it.
-}
-;remove the above thingy if it makes no sense to you
+	;;If you don't have cropClick, then nothing happens. That's good!
+	
+	;;This code below is what I had used before, but it will complain that you haven't defined the function "cropClick", whereas, the code above will NOT!
+	;sleep 320
+	;cropClick()
+	;;msgbox, that had "CROP" in it.
+	}
+;;----remove the code above if it makes no sense to you----
 
 theEnding:
 }
-;END of preset()
+;END of preset(). The two lines above this one are super important.
 
 
+
+
+prFocus(panel)
+{
+;READ ALL THE COMMENTS BELOW OR SUFFER THE CONSEQUENCES.
+
+;PrFocus() allows you to have ONE place where you define your personal shortcuts to "focus" panels in Premiere. It also ensures that panels actually get into focus, and don't rotate through the sequences or anything like that.
+
+; THERE IS A FULL VIDEO TUTORIAL THAT TEACHES YOU HOW TO USE THIS, STEP BY STEP.
+; [[[[[LINK TBD, IT'S NOT FINISHED JUST YET.]]]]]
+
+;For this function to work, you MUST Go to Premiere's Keyboard Shortcuts panel, and add the following keyboard shortcuts to the following commands:
+
+; KEYBOARD SHORTCUT     PREMIERE COMMAND
+; ctrl alt shift 3      Application > Window > Timeline (The default is shift 3)
+; ctrl alt shift 1      Application > Window > Project  (Sets the focus onto a BIN.) (the default is SHIFT 1)
+; ctrl alt shift 4      Application > Window > Program Monitor (Default is SHIFT 4)
+; ctrl alt shift 5      Application > Window > Effect Controls (Default is SHIFT 5)
+; ctrl alt shift 7      Application > Window > Effects  (NOT the Effect Controls panel!) (Default is SHIFT 7)
+
+;(Note that ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk has the FULL list of keyboard shortcuts that you need to assign in order for my other functions to work.)
+
+
+;EXPLANATION: In Premiere, panel focus is very important. Many shortucts will only work if a specific panel is in focus. That is why those panels must be put into focus FIRST, which is what I built PrFocus() to do. (It's not always as simple as sending just the one keyboard shortcut to activate that panel.)
+
+;Right now, we do NOT know which panel is in focus, (or "active.") and AHK has no way to tell (that I know of.)
+;If a panel is ALREADY in focus, and you send the shortcut to bring it into focus again, that panel might then switch to a different sequence in the case of the timeline or program monitor,, or a different item in the case of the Source panel. IT's a nightmare!
+
+;Therefore, we must start with a clean slate. For that, I chose the EFFECTS panel. Sending its focus shortcut multiple times, has no ill effects.
+
+Sendinput, ^!+7 ;bring focus to the effects panel... OR, if any panel had been maximized (using the `~ key by default) this will unmaximize that panel, but sadly, that panel will still be the one in focus.
+;Note that if the effects panel is ALREADY maximized, then sending the shortcut to switch to it will NOT un-maximize it. This is OK, though, because I never maximize the Effects Panel. If you do, then you might want to switch to the Effect Controls panel first, and THEN the Effects panel after this line.
+
+sleep 12 ;waiting for Premiere to actaully do the above.
+
+Sendinput, ^!+7 ;Bring focus to the effects panel AGAIN. Just in case some panel somewhere was maximized, THIS will now guarantee that the Effects panel is ACTAULLY in focus.
+
+sleep 5 ;waiting for Premiere to actaully do the above.
+
+sendinput, {blind}{SC0EA} ;scan code of an unassigned key. Used for debugging. You do not need this.
+
+if (panel = "effects")
+	goto theEnd ;do nothing. The shortcut has already been sent.
+else if (panel = "timeline")
+	Sendinput, ^!+3 ;if focus had already been on the timeline, this would have switched to the "next" sequence (in some unpredictable order.)
+else if (panel = "program") ;program monitor. If focus had already been here, this would have switched to the "next" sequence.
+	Sendinput, ^!+4
+else if (panel = "source") ;source monitor. If focus had already been here, this would have switched to the next loaded item.
+{
+	Sendinput, ^!+2
+	;tippy("send ^!+2") ;tippy() was something I used for debugging. you don't need it.
+}
+else if (panel = "project") ;AKA a "bin" or "folder"
+	Sendinput, ^!+1
+else if (panel = "effect controls")
+	Sendinput, ^!+5
+
+theEnd:
+sendinput, {blind}{SC0EB} ;more debugging - you don't need this.
+}
+;end of prFocus()
+
+
+
+
+;;;Personal notes below:
+;panel := """" . panel . """" ;This adds quotation marks around the parameter so that it works as a string, not a variable.
+; ; ; if (panel = "effect controls")
+; ; ; {
+	; ; ; Send ^!+5
+	; ; ; return
+; ; ; }
+;;;Personal notes above^^
+
+
+
+
+;;you do NOT need the following function. Even I don't use it anymore.
 savepreset(presetname){
 SendInput, {Shift Down}{Shift Up}{Ctrl Down}{c Down}
 sleep 20
@@ -514,25 +629,29 @@ return presetname
 }
 
 
-#IfWinActive ahk_exe Adobe Premiere Pro.exe
+
 insertSFX(leSound)
 {
 ifWinNotActive ahk_exe Adobe Premiere Pro.exe
-	goto sfxEnding 
-;keyShower(leSound, "insertSFX")
-if IsFunc("Keyshower") {
+	goto sfxEnding
+	
+;keyShower(leSound, "insertSFX") ;the following is used instead of this line.
+if IsFunc("Keyshower") ;checks to see if you have the Keyshower function defined.
+	{
 	Func := Func("Keyshower")
 	RetVal := Func.Call(leSound, "insertSFX") 
-}
+	}
+
 CoordMode, mouse, Screen
 CoordMode, pixel, Screen
 coordmode, Caret, screen
 
-
 BlockInput, mouse
 blockinput, MouseMove
 BlockInput, On
+
 SetKeyDelay, 0 ;for instant writing of text
+
 MouseGetPos, xpos, ypos
 send ^+x ;ctrl shift x -- shortcut in premiere for "remove in/out points.
 sleep 10
@@ -1017,7 +1136,8 @@ monoEnding:
 
 
 
-;;;CLICK ON THE 'CROP' TRANSFORM BUTTON IN ORDER TO SELECT THE CROP ITSELF
+;;;CLICK ON THE 'CROP' TRANSFORM BUTTON IN ORDER TO SELECT THE CROP ITSELF.
+;;;THIS WAY, YOU INSTANTLY GET HANDLES ON TEH PROGRAM MONITOR, IT'S SO MUCH NICER.
 cropClick()
 {
 ;need something that wil toggle ^p if effect controls are not open.
@@ -1582,7 +1702,7 @@ tooltip,
 ;I had overwritten the high DPI scaling behaviour of Premiere, by following THESE instructions: https://forums.adobe.com/message/10081059#10081059 , which changes the look of text and other elements of Premiere.
 ;Doing this totally BROKE the functionality of instantVFX() because now the pixel colors were different, and the images to be searched for would have had to have been updated.
 ;THEREFORE, I switched back to Premiere's built-in UI scaling, and will just have to wait for adobe to fix the issues that come with it.
-;UPDATE: now that i have a 43" 4k monitor, I am back to 100% UI and it is wonderful. Will NEVER go back. 150% UI is just such a PITA to deal with.
+;UPDATE 2: now that i have a 43" 4k monitor, I am back to 100% UI and it is wonderful. Will NEVER go back. 150% UI is just such a PITA to deal with.
 
 
 instantVFX(foobar)
