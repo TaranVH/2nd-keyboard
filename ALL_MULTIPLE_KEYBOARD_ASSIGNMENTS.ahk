@@ -2241,14 +2241,14 @@ return
 F4::
 ;keywait, F4
 ;tooltip, |
-send, b ;selects the blade tool
+send, b ;This is my Premiere shortcut for the RAZOR tool. You can use another shortcut if you like, but you have to use that shortcut here.
 send, {shift down} ;makes the blade tool affect all (unlocked) tracks
 keywait, F4 ;waits for the key to go UP.
 ;tooltip, was released
 send, {lbutton} ;makes a CUT
 send, {shift up}
 sleep 10
-send, v ;selection tool
+send, v ;This is my Premiere shortcut for the SELECTION tool. again, you can use whatever shortcut you like.
 return
 ;;the code below turned out to not be necessary.
 ; F4 Up::
@@ -2268,13 +2268,13 @@ F6::cropClick()
 
 ;;DELETE SINGLE CLIP AT CURSOR
 F9::
-prFocus("timeline") ; you can't just send ^+!3 because it'll change the sequence if you do. you have to go to the effect controls fiurst. that is what this function does.
-send, ^!d ;ctrl alt d is DESELECT. this only works if the timeline is in focus.
-send, v ;selection tool
+prFocus("timeline") ; you can't just send ^+!3 because it'll change the sequence if you do. You have to go to the effect controls first. That is what this function does.
+send, ^!d ;ctrl alt d is my Premiere shortcut for DESELECT. This only works if the timeline is in focus.
+send, v ;This is my Premiere shortcut for the SELECTION tool.
 send, {alt down}
 send, {lbutton}
 send, {alt up}
-send, c ;delete
+send, c ;I have C assigned to "CLEAR" in Premiere's shortcuts panel.
 return
 
 ; F10:: IS FREE, but it was "effect controls" for awhile to debug a stuck modifiers issue.
@@ -2282,7 +2282,7 @@ return
 
 ;F11:: is Toggle Full Screen
 
-;F12:: is Enable Transmit. This pushes a copy of the program monitor onto my top right monitor, full screen. It's configured to be perfectly RGB, so it acts as a reference monitor. As best as it can, at least.
+;F12:: is Enable Transmit. This displays a copy of the program monitor onto another, even more accurate monitor. Sadly, it does suffer from screen tearing...
 
 
 ;;;;;;----------------------------------------;;;;;;;;;;;;;

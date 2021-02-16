@@ -308,7 +308,7 @@ preset(item)
 ; THERE IS A FULL VIDEO TUTORIAL THAT TEACHES YOU HOW TO USE THIS, STEP BY STEP.
 ; [[[[[LINK TBD, IT'S NOT FINISHED JUST YET.]]]]]
 ;
-; Even if Adobe does one day add this feature to Premiere, this tutorial will
+; Even if Adobe does one day add this feature to Premiere, this video tutorial will
 ; still be very useful to anyone who is learning how to use AHK with Premiere,
 ; especially if you're trying to use any of the other functions that I've created.
 ; 
@@ -322,6 +322,9 @@ preset(item)
 ; Select Find Box ------- CTRL B
 ; Shuttle Stop ---------- CTRL ALT SHIFT K
 ; Window > Effects  ----- CTRL ALT SHIFT 7
+;
+; (You can use different shortcuts if you like, as long
+; as those are the ones you send with your AHK script.)
 ; 
 ;====================================================================================
 
@@ -387,10 +390,13 @@ sleep 5
 ;;This was my debugging to check if there are lingering variables from last time the script was run. You do not need that line.
 
 MouseGetPos, xposP, yposP ;------------------stores the cursor's current coordinates at X%xposP% Y%yposP%
-sendinput, {mButton} ;this will MIDDLE CLICK to bring focus to the panel underneath the cursor (which should be the timeline). I forget exactly why, but if you create a nest, and immediately try to apply a preset to it, it doesn't work, because the timeline wasn't in focus...? Or something. IDK.
+;KEEP IN MIND that this function should only be called when your cursor is hovering over a clip, or a group of selected clips, on the timeline. That's because the cursor will be returned to that exact location, carrying the desired preset, which it will drop there. MEANING, that this function won't work if you select clips, but don't have the cursor hovering over them.
+
+sendinput, {mButton} ;this will MIDDLE CLICK to bring focus to the panel underneath the cursor (which must be the timeline). I forget exactly why, but if you create a nest, and immediately try to apply a preset to it, it doesn't work, because the timeline wasn't in focus...? Or something. IDK.
 sleep 5
 
-prFocus("effects") ;Brings focus to the effects panel. You must find, then copy/paste this function definition into your own .ahk script as well. ALTERNATIVELY, if you don't want to do that, you can delete this line, and comment in the 3 lines below:
+prFocus("effects") ;Brings focus to the effects panel. You must find, then copy/paste the prFocus() function definition into your own .ahk script as well. ALTERNATIVELY, if you don't want to do that, you can delete this line, and "comment in" the 3 lines below:
+
 ;Sendinput, ^+!7 ;CTRL SHIFT ALT 7 --- In Premiere's Keyboard Shortcuts panel, you nust find the "Effects" panel and assign the shortcut CTRL SHIFT ALT 7 to it. (The default shortcut is SHIFT 7. Because Premiere does allow multiple shortcuts per command, you can keep SHIFT 7 as well, or you can delete it. I have deleted it.)
 ;sleep 12
 ;Sendinput, ^!+7 ;you must send this shortcut again, because there are some edge cases where it may not have worked the first time.
@@ -495,20 +501,26 @@ MouseMove, 41, 63, 0, R ;----------------------(for 100% UI)
 ;msgbox, The cursor should be directly on top of the preset's icon. `n If not, the script needs modification.
 
 sleep 5
-MouseGetPos, iconX, iconY, Window, classNN ;---now we have to figure out the ahk_class of the current panel we are on. It used to be DroverLord - Window Class14, but the number changes anytime you move panels around... so i must always obtain the information anew.
+
+
+;;At this point in the function, I used to use the line "MouseClickDrag, Left, , , %xposP%, %yposP%, 0" to drag the preset back onto the clip on the timeline. HOWEVER, because of a Premiere bug (which may or may not still exist) involving the duplicated displaying of single presets (in the wrong positions) I have to click on the Effects panel AGAIN, which will "fix" it, bringing it back to normal.
+;+++++++ If this bug is ever resolved, then the lines BELOW are no longer necessary.+++++
+MouseGetPos, iconX, iconY, Window, classNN ;---now we have to figure out the ahk_class of the current panel we are on. It might be "DroverLord - Window Class14", but the number changes anytime you move panels around... so i must always obtain the information anew.
 sleep 5
 WinGetClass, class, ahk_id %Window% ;----------"ahk_id %Window%" is important for SOME REASON. if you delete it, this doesn't work.
 ;tooltip, ahk_class =   %class% `nClassNN =     %classNN% `nTitle= %Window%
 ;sleep 50
 ControlGetPos, xxx, yyy, www, hhh, %classNN%, ahk_class %class%, SubWindow, SubWindow ;;-I tried to exclude subwindows but I don't think it works...?
-MouseMove, www/4, hhh/2, 0, R ;-----------------moves to roughly the CENTER of the Effects panel. This clears the displayed presets from any duplication errors. VERY important. without this, the script fails 20% of the time. This is also where the script can go wrong, by trying to do this on the timeline, meaning it didn't get the Effects panel window information as it should have... IDK how to fix yet. Update: I haven't had that problem in ages.
+MouseMove, www/4, hhh/2, 0, R ;-----------------moves to roughly the CENTER of the Effects panel. Clicking here will clear the displayed presets from any duplication errors. VERY important. Without this, the script fails 20% of the time. This is also where the script can go wrong, by trying to do this on the timeline, meaning it didn't get the Effects panel window information as it should have.
 sleep 5
 MouseClick, left, , , 1 ;-----------------------the actual click
 sleep 5
 MouseMove, iconX, iconY, 0 ;--------------------moves cursor BACK onto the effect's icon
 ;tooltip, should be back on the effect's icon
-;sleep 50
 sleep 5
+;;+++++If this bug is ever resolved, then the lines ABOVE are no longer necessary.++++++
+
+
 MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---clicks the left button down, drags this effect to the cursor's pervious coordinates and releases the left mouse button, which should be above a clip, on the TIMELINE panel.
 sleep 5
 MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great!
