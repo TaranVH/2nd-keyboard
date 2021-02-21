@@ -515,15 +515,15 @@ MouseMove, www/4, hhh/2, 0, R ;-----------------moves to roughly the CENTER of t
 sleep 5
 MouseClick, left, , , 1 ;-----------------------the actual click
 sleep 5
-MouseMove, iconX, iconY, 0 ;--------------------moves cursor BACK onto the effect's icon
-;tooltip, should be back on the effect's icon
+MouseMove, iconX, iconY, 0 ;--------------------moves cursor BACK onto the preset's icon
+;tooltip, should be back on the preset's icon
 sleep 5
 ;;+++++If this bug is ever resolved, then the lines ABOVE are no longer necessary.++++++
 
 
 MouseClickDrag, Left, , , %xposP%, %yposP%, 0 ;---clicks the left button down, drags this effect to the cursor's pervious coordinates and releases the left mouse button, which should be above a clip, on the TIMELINE panel.
 sleep 5
-MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great!
+MouseClick, middle, , , 1 ;this returns focus to the panel the cursor is hovering above, WITHOUT selecting anything. great! And now timeline shortcuts like JKL will work.
 
 blockinput, MouseMoveOff ;returning mouse movement ability
 BlockInput, off ;do not comment out or delete this line -- or you won't regain control of the keyboard!! However, CTRL ALT DELETE will still work if you get stuck!! Cool.
@@ -546,6 +546,7 @@ IfInString, item, CROP
 	}
 ;;----remove the code above if it makes no sense to you----
 
+;The line below is where all those GOTOs are going to.
 theEnding:
 }
 ;END of preset(). The two lines above this one are super important.
@@ -565,11 +566,11 @@ prFocus(panel)
 ;For this function to work, you MUST Go to Premiere's Keyboard Shortcuts panel, and add the following keyboard shortcuts to the following commands:
 
 ; KEYBOARD SHORTCUT     PREMIERE COMMAND
-; ctrl alt shift 3      Application > Window > Timeline (The default is shift 3)
-; ctrl alt shift 1      Application > Window > Project  (Sets the focus onto a BIN.) (the default is SHIFT 1)
-; ctrl alt shift 4      Application > Window > Program Monitor (Default is SHIFT 4)
-; ctrl alt shift 5      Application > Window > Effect Controls (Default is SHIFT 5)
-; ctrl alt shift 7      Application > Window > Effects  (NOT the Effect Controls panel!) (Default is SHIFT 7)
+; ctrl alt shift 3 .....Application > Window > Timeline (The default is shift 3)
+; ctrl alt shift 1 .....Application > Window > Project  (Sets the focus onto a BIN.) (the default is SHIFT 1)
+; ctrl alt shift 4 .....Application > Window > Program Monitor (Default is SHIFT 4)
+; ctrl alt shift 5 .....Application > Window > Effect Controls (Default is SHIFT 5)
+; ctrl alt shift 7 .....Application > Window > Effects  (NOT the Effect Controls panel!) (Default is SHIFT 7)
 
 ;(Note that ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk has the FULL list of keyboard shortcuts that you need to assign in order for my other functions to work.)
 
@@ -583,6 +584,7 @@ prFocus(panel)
 
 Sendinput, ^!+7 ;bring focus to the effects panel... OR, if any panel had been maximized (using the `~ key by default) this will unmaximize that panel, but sadly, that panel will still be the one in focus.
 ;Note that if the effects panel is ALREADY maximized, then sending the shortcut to switch to it will NOT un-maximize it. This is OK, though, because I never maximize the Effects Panel. If you do, then you might want to switch to the Effect Controls panel first, and THEN the Effects panel after this line.
+;note that sometimes I use ^+! instead... it makes no difference compared to ^!+
 
 sleep 12 ;waiting for Premiere to actaully do the above.
 
@@ -1184,6 +1186,8 @@ if ErrorLevel = 1
 	{
 	;msgbox, we made it to try 2
     tippy("NO CROP WAS FOUND")
+	;YOU DO NOT NEED TIPPY() ... JUST DELETE IT FROM YOUR SCRIPT.
+	;IT'S A DEBUGGING THING, DON'T WORRY ABOUT IT, LOL.
 	goto resetcropper
 	}
 if ErrorLevel = 2
@@ -1213,6 +1217,7 @@ return
 
 reselect()
 {
+;Premiere isn't as buggy with selections anymore, so I don't use this function anymore.
 ;Needs a thing here for chekcing to see what application is open!
 ;alt k??
 Send ^!+k ; another shortcut for Shuttle Stop
@@ -1240,6 +1245,8 @@ send {enter}
 }
 ;end of addGain()
 
+
+
 ;#if GetKeyState("F9") && GetKeyState("F23") ;experimental stuff, just ignore it.
 ;VK27  SC04D  == numpad right (shift numpad6)
 ;VK66  SC04D  == numpad 6
@@ -1250,6 +1257,7 @@ send {enter}
 ;p::msgbox lolhi
 
 
+
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1257,7 +1265,7 @@ send {enter}
 #ifwinactive
 
 marker(){
-sendinput, ^!+K ;Premiere shortcut for STOP
+sendinput, ^!+K ;Premiere shortcut for SHUTTLE STOP
 sleep 5
 send ^{SC027} ;this is the scan code for a semicolon. CTRL SEMICOLON is one of my shortcuts to create a marker.  ^;  You have to set that up in Premiere of course.
 

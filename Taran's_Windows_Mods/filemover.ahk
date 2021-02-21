@@ -249,7 +249,7 @@ Loop, parse, FileList, `n
     foundpos := InStr(A_LoopField, file2move) ;new code. 
     ;msgbox, "foundpos" is %foundpos%
 	if foundpos > 0
-		{
+	{
         Fileposition = %A_Index%
         Loop, parse, FileListLocations, `n
             if A_index = %Fileposition%

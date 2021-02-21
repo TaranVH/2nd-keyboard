@@ -1449,6 +1449,8 @@ if theCLASS = ahk_class Chrome_WidgetWin_1
 	if theEXE = Teams.exe
 		{
 		;tooltip, we have arrived
+		if WinActive("ahk_exe Teams.exe")
+			sendinput, ^e ;;CTRL E is the Teams shortcut to go to the SEARCH bar. So, if I hit the key again, it'll do that.
 		SetTitleMatchMode, 2
 		WinActivate, | Microsoft Teams
 		;WinActivate ahk_exe %theEXE%

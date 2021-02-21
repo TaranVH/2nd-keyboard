@@ -1666,11 +1666,13 @@ return
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe chrome.exe") ;An Explorer window as launched by Chrome
 `::Send !{up} ;DOWN one folder level in explorer
 
+F6::RemoveDashes()
+
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe firefox.exe") ;An Explorer window as launched by Firefox
 `::Send !{up} ;DOWN one folder level in explorer
 ~left & right::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
 Media_Next::Send,{LCtrl down}{NumpadAdd}{LCtrl up} ;expand name field
-F6::RemoveDashes() ;when saving Audioblocks sound effects, because filenames with dashes or underscores in them cannot be searched for in Windows' fole system, which is also stupid. So this makes it so  that i don't have to manaully remove those or retype the filenames.
+F6::RemoveDashes() ;when saving Audioblocks sound effects, because filenames with dashes or underscores in them cannot be searched for in Windows' file system, which is also stupid. So this makes it so  that i don't have to manaully remove those or retype the filenames.
 
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe 4kvideodownloader.exe") 
 `::Send !{up} ;DOWN one folder level in 4k video downloader
@@ -1759,14 +1761,15 @@ If (exphWnd := WinActive("ahk_class CabinetWClass"))
 return
 
 
-; end::
-; If (exphWnd := WinActive("ahk_class CabinetWClass"))
-	; ExplorerViewChange_ICONS(exphWnd) ;icon mode
-; return
+end::
+If (exphWnd := WinActive("ahk_class CabinetWClass"))
+	ExplorerViewChange_ICONS(exphWnd) ;icon mode
+return
 
 ;;;YOU ARE STILL IN THE WINDOWS EXPLORER SHORTCUTS
 
-; ;these are not very reliable, I have been REALLY trying to get a direct execution of this command. might need C++ for that, IDK.
+
+; ;these are not very reliable. I have replaced them with sortByName() and sortByDate()
 ; ; pgup::send, {alt}vo{enter} ;sort by name
 ; ; pgdn::send, {alt}vo{down}{enter} ;sort by date modified, but it functions as a toggle...
 
@@ -1820,7 +1823,7 @@ return
 ;;---These are mostly application switching keys.---
 #IfWinActive
 
-;Macro key G13
+;Macro key G13, which is assigned to F13, which is scan code 064.
 ;F13:: ;it's more reliable to use the scan code, i guess? Maybe because I used "F13::" elsewhere.
 SC064::back()
 
@@ -1864,15 +1867,20 @@ windowSaver()
 msgbox,,, savedCLASS = %savedCLASS% `nsavedEXE = %savedEXE%, 0.6
 Return
 
+;^F7 is Everything search.
 
 ;No K95 macro key assigned:
 ; ^F8::windowSwitcher("ahk_exe AfterFX.exe","C:\Program Files\Adobe\Adobe After Effects CC 2017\Support Files\AfterFX.exe") ;NOTE: was used for toggle all video tracks in premiere.
+
+
+;^F9 is FREE i think.
 
 ; ; ^F10::windowSwitcher("ahk_exe StreamDeck.exe","C:\Program Files\Elgato\StreamDeck\StreamDeck.exe")
 
 ; ^F11 is taken by filemover.ahk
 ; ^F12 is also taken by filemover.ahk
-;NOTE: ^F12 (ctrl F12) is forbidden by Premiere, since it opens the Premiere CONSOLE. interesting.
+
+;NOTE: ^F12 (ctrl F12) is forbidden by Premiere's shortcuts panel, since it opens the Premiere CONSOLE. interesting.
 
 ;;------END OF CTRL FUNCITON KEYS----------
 
@@ -2268,8 +2276,8 @@ F6::cropClick()
 
 ;;DELETE SINGLE CLIP AT CURSOR
 F9::
-prFocus("timeline") ; you can't just send ^+!3 because it'll change the sequence if you do. You have to go to the effect controls first. That is what this function does.
-send, ^!d ;ctrl alt d is my Premiere shortcut for DESELECT. This only works if the timeline is in focus.
+prFocus("timeline") ;This will bring focus to the timeline. ; you can't just send ^+!3 because it'll change the sequence if you alkready have the timeline in focus. You have to go to the effect controls first. That is what this function does.
+send, ^!d ;ctrl alt d is my Premiere shortcut for DESELECT. This shortcut only works if the timeline is in focus, which is why we did that on the previous line!! And you need to deselect all the timeline clips becuase otherwise, those clips will also get deleted later. I think.
 send, v ;This is my Premiere shortcut for the SELECTION tool.
 send, {alt down}
 send, {lbutton}
@@ -2963,6 +2971,7 @@ ConvertSentence()
 
 ;::---::— ;this one just results in â€” being typed.
 :*:--- ::{Asc 0151}
+
 ;converts three dashes into an EM dash. https://superuser.com/questions/857338/how-to-add-the-em-dash-to-my-keyboard
 
 ; ^-:: ;en dash (150/x96)
@@ -2978,8 +2987,8 @@ ConvertSentence()
 ; Return
 ;;https://www.experts-exchange.com/questions/29046416/Favorite-way-to-make-an-em-dash.html
 
-
-
+#IfWinActive ahk_exe winword.exe
+:*:--- ::{Asc 0151}
 
 ;;;Script to use F11 and F12 to scroll down and up! Useful for wacom tablet users who don't have a scroll wheel.
 ;;i found the code here https://stackoverflow.com/questions/24001634/how-can-i-bind-my-mouse-wheel-to-scroll-down-with-a-key-and-this-key-is-ahk
@@ -3077,6 +3086,8 @@ ConvertSentence()
 
 ;testing...
 
+
+
 ^+F12::
 WinGet, the_current_id, ID, A
 
@@ -3092,7 +3103,7 @@ return
 
 
 
-#ifwinactive
-END::sendinput, {numlock}
-;this is for PARSEC only. it's a temporary thing. gotta control numlock somehow!
+; #ifwinactive
+; END::sendinput, {numlock}
+; ;this is for PARSEC only. it's a temporary thing. gotta control numlock somehow!
 
