@@ -25,6 +25,8 @@ https://docs.google.com/spreadsheets/d/18e6-OlUzc_1wbGvm9zqMOwtC4oysm6C7XMU1bOf8
 - MacroMyKBD https://github.com/lal12/macroMyKBD
 - 2key, which uses a Raspberry Pi. https://github.com/Gum-Joe/2Keys/blob/v0.3.5/docs/SETUP.md
 - https://mediachance.com/multikeyboard/ More info: https://twitter.com/iamnottani/status/1271530470052974595 and https://twitter.com/weirdoyt/status/1257282783044493312
+Here's an alternative to LuaMacros:
+https://github.com/VollRahm/NotEnoughHotkeys/
 - Here is an alternative to the Hasu USB converter: https://github.com/oschwartz10612/Scanner-Pro-MK3
 
 
@@ -94,13 +96,22 @@ Make sure to populate your startup folder with file shortcuts, to launch all the
 
 **Some interesting-looking related repositories**
 
+This is the kind of next-level macro stuff I would do if I was a real programmer:
+https://github.com/sebinside/HotkeylessAHK
+https://github.com/sebinside/AHK2PremiereCEP
+Explanatory video: https://www.twitch.tv/videos/628889342
+
 https://github.com/TaranVH/2nd-keyboard/pull/27 (easier install of Interception)
 
 https://github.com/evilC/AutoHotInterception (also easier, ppl seem to prefer it.)
 
-https://github.com/sebinside/AHK2PremiereCEP
 
-More info on how to use Adobe CEP:
+
+After Effects scripts from a guy with 11 years After Effects experience who just discovered AHK:
+https://github.com/ivycomb/AutoAfterEffects
+
+
+More info on how to use Adobe CEP stuff:
 
 https://www.youtube.com/channel/UCmq_t_-4GLFu_nYaEDDModw/videos
 

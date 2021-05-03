@@ -236,6 +236,17 @@ sleep 10
 return 
 
 
+;;;for parsec, for windows that are outside the range of the new, smaller resolution...
++F12::
+tooltip, moving the active window to the center of the screen!
+WinGetPos,,, Width, Height, A
+WinMove, A,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2)
+;WinMove, 50, 50
+; to try to rescue the tangent ripple UI which has gone missing off the side of a monitor long ago and cannot be brought back with anything I've tried!.
+;edit: it worked!!!!!
+sleep 30
+tooltip,
+return
 
 
 ; ; ctrlbreak::
@@ -615,9 +626,20 @@ if not WinActive(ahk_exe waifu2x-caffe.exe)
 ; I had to do this directly because it has the same AHK_class as a regular explorer window, so my usual use od openApp() woudln't work. Oh teh wells.
 return
 
-numpaddown::
-numpad2::SendKey(A_thishotkey, ,"nudge down")
+; numpaddown::
+; numpad2::SendKey(A_thishotkey, ,"nudge down")
 
+numpaddown::
+numpad2::
+switchToEdge()
+
+;windowSwitcher("ahk_class Chrome_WidgetWin_1", "msedge.exe")
+;windowSwitcher(theClass, theEXE)
+; ahk_class Chrome_WidgetWin_1
+; ahk_exe msedge.exe
+; ahk_pid 36788
+
+return
 
 
 numpadpgdn:: ;(this is SHIFT numpad3, OR what happens with numlock enabled, i think. it's weird.)
@@ -673,23 +695,20 @@ numpad9::switchToAudacity()
 ;numpadMult::SendKey("numpadmult", ,"pink")
 
 
-numpadSub::
-;open tight VNC
-openTightVNC()
-return
-
-
-
-
 ; numpadSub::
-; If Not WinExist("ahk_class AU3Reveal")
-	; openApp("ahk_class AU3Reveal", "C:\Program Files\AutoHotkey\WindowSpy.ahk", "Active Window Info")
-; ; else
-	; ; msgbox, heyyyy ;doesn't work for some raisin.
-; ; if WinExist("ahk_class AU3Reveal")
-	; ; msgbox, heyyo
-	; ;WinClose, Window Spy
+; ;open tight VNC
+; openTightVNC()
 ; return
+
+numpadSub::
+If Not WinExist("ahk_class AU3Reveal")
+	openApp("ahk_class AU3Reveal", "C:\Program Files\AutoHotkey\WindowSpy.ahk", "Active Window Info")
+; else
+	; msgbox, heyyyy ;doesn't work for some raisin.
+; if WinExist("ahk_class AU3Reveal")
+	; msgbox, heyyo
+	;WinClose, Window Spy
+return
 
 
 
@@ -932,8 +951,15 @@ F7::
 F9::
 F8::
 F10::
-F11::
-F12::tooltip, you pressed F24 then %A_thishotkey%
+F11::tooltip, you pressed F24 then %A_thishotkey%
+F12::
+tooltip, moving the active window to the center of the screen!
+WinGetPos,,, Width, Height, A
+WinMove, A,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2)
+;WinMove, 50, 50
+; to try to rescue the tangent ripple UI which has gone missing off the side of a monitor long ago and cannot be brought back with anything I've tried!.
+;edit: it worked!
+return
 
 ;`::tooltip, tilde thing 
 `::
@@ -1021,7 +1047,7 @@ capslock::gotoChromeTab("Production Planner | Trello","https://trello.com/b/NevT
 ;;;this is(was) Lshift::
 ;Lshift:: / LEFTSHIFT -to-> SC070 / International2 -to-> Chrome calendar open
 ; SC070::gotofiretab("Calendar - October 2020","https://calendar.google.com/calendar/b/0/r")
-SC070::gotoChromeTab("Calendar - February 2021","https://calendar.google.com/calendar/u/0/r")
+SC070::gotoChromeTab("Calendar - April 2021","https://calendar.google.com/calendar/u/0/r")
 ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
@@ -1050,7 +1076,7 @@ return
 a::
 ;this is amazing. I can launch photoshop actions DIRECTLY from AHK, without needing to go through one of the 44 very restricted shortcuts!!
 psApp := ComObjActive("Photoshop.Application")
-psApp.DoAction("WHITE TO ALPHA", "taran actions")
+psApp.DoAction("WHITE TO ALPHA - WHOLE LAYER", "taran actions")
 return
 
 s::
@@ -1218,23 +1244,41 @@ SC078::
 ;This doesn't work because the AZIO keyboard does not HAVE a RWIN key, HAH!!
 return
 
+; SC079::
+; tooltip, "[AZIO] AppsKey -to-> SC079-International 4"
+; sleep 200
+; tooltip,
+; return
+
 SC079::
-tooltip, "[AZIO] AppsKey -to-> SC079-International 4"
-sleep 200
-tooltip,
+;ControlSend, wxWindowNR57, ^+0, ahk_exe audacity.exe
+;ControlSend, wxWindowNR57, +T, ahk_exe audacity.exe
+;ControlSend,, +T, ahk_exe audacity.exe
+;ControlSend,, {ctrl down}0{ctrl up}, ahk_exe audacity.exe
+ControlSend, wxWindowNR57, {ctrl down}0{ctrl up}, ahk_exe audacity.exe
+
+; Audacity
+; ahk_class wxWindowNR
+; ahk_exe audacity.exe
+; ahk_pid 24760
+
 return
 
-SC07B:: ;rCTRL:: -to-> SC07B:International5
-;tooltip, rightCTRL -> SC078:Lang3 -> OBS
-if Not WinExist("ahk_exe obs64.exe")
-	{
-	msgbox,,, OBS is opening`, hold your horses.,0.8
-	;Run, C:\Program Files\obs-studio\bin\64bit\obs64.exe
-	Run, C:\ProgramData\Microsoft\Windows\Start Menu\Programs\OBS Studio\OBS Studio (64bit)
-	}
-if WinExist("ahk_exe obs64.exe")
-	WinActivate ahk_exe obs64.exe
-return
+
+SC07B::WinMinimize, A
+
+
+; SC07B:: ;rCTRL:: -to-> SC07B:International5
+; ;tooltip, rightCTRL -> SC078:Lang3 -> OBS
+; if Not WinExist("ahk_exe obs64.exe")
+	; {
+	; msgbox,,, OBS is opening`, hold your horses.,0.8
+	; ;Run, C:\Program Files\obs-studio\bin\64bit\obs64.exe
+	; Run, C:\ProgramData\Microsoft\Windows\Start Menu\Programs\OBS Studio\OBS Studio (64bit)
+	; }
+; if WinExist("ahk_exe obs64.exe")
+	; WinActivate ahk_exe obs64.exe
+; return
 
 
 
@@ -1257,27 +1301,27 @@ insert::sendinput, ^!+l ;lock/unlock all video tracks
 
 
 
-;up::tooltip, you pressed F24 then %A_thishotkey%
-up::
-	While(GetKeyState("up","P")){
-		Mousemove,25,0,,R
-		sleep 1
-	}
-return
+; ;up::tooltip, you pressed F24 then %A_thishotkey%
+; up::
+	; While(GetKeyState("up","P")){
+		; Mousemove,25,0,,R
+		; sleep 1
+	; }
+; return
 
-down:: 
-MouseClick, left,,, 1, 0, D ; Hold down the left mouse button. 
-;tooltip, hi
-Loop 
-{ 
-Sleep, 30
-MouseMove, 1, 0, 0, R
-GetKeyState, state, down, P 
-if state = U
-	break
-} 
-MouseClick, left,,, 1, 0, U
-return
+; down:: 
+; MouseClick, left,,, 1, 0, D ; Hold down the left mouse button. 
+; ;tooltip, hi
+; Loop 
+; { 
+; Sleep, 30
+; MouseMove, 1, 0, 0, R
+; GetKeyState, state, down, P 
+; if state = U
+	; break
+; } 
+; MouseClick, left,,, 1, 0, U
+; return
 
 
 
@@ -1287,8 +1331,8 @@ MouseClick, left,,, 1, 0, D ; Hold down the left mouse button.
 ;tooltip, hi
 Loop 
 { 
-Sleep, 10
-MouseMove, 1, 0, 0, R
+Sleep, 16
+MouseMove, -5, 0, 0, R
 GetKeyState, state, left, P 
 if state = U
 	break
@@ -1296,16 +1340,20 @@ if state = U
 MouseClick, left,,, 1, 0, U
 return
 
-
-
-
-return
-
 right::
 click down
-MouseMove, 800, 0, 100, R
+MouseMove, -2200, 0, 100, R
 click up
 return
+
+
+up::
+down::
+;left::
+;right::
+return
+
+
 
 ;;;;;next area;;;;;;;;
 ;;;this is the azio F24 keyboard;;;
@@ -1463,108 +1511,29 @@ F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
 
 
 
-;;;;;;;;THE BELOW CODE IS FOR SUPER SLOW SCROLLING IN FIREFOX. SADLY, IT TURNS OUT TO NOT BE AS SMOOTH AS AUTOSCROLLING (USING MIDDLE CLICK AND THEN MOVING THE CURSOR SLIGHTLY) SO I'M NOT USING IT FOR NOW...
-; F9::
-; tooltip, is it working
-; ;PostMessage 0x20A, 0x780000, (mY<<16)|mX, %Ctrl%, ahk_id %WinID%
-; MouseGetPos mX, mY, WinID, Ctrl
-; ;PostMessage 0x20A, 0x780000, (mY<<16)|mX, %Ctrl%, ahk_id %WinID%
-; ;PostMessage 0x20A, -0x780000, (mY<<16)|mX, %Ctrl%, ahk_id %WinID%
-; PostMessage 0x20A, -0x780000, (30)|mX, %Ctrl%, ahk_id %WinID%
-; return
-
-; CoordMode, Mouse, Screen
-; return
-
-; WheelUp::
-	; MouseGetPos, m_x, m_y
-	; hw_m_target := DllCall( "WindowFromPoint", "int", m_x, "int", m_y )
-
-	; ; WM_MOUSEWHEEL
-	; ;	WHEEL_DELTA = 120
-	; SendMessage, 0x20A, 12 << 16, ( m_y << 16 )|m_x,, ahk_id %hw_m_target%
-; return
-
-
-;WheelDown::
+;PHOTOSHOP
+;f1 - not on help anymnore
+;f2 none
+;f3 none
+;f4 pixel grid
+;F5 - rasterize layer
+;F6 RGB color
+;F7 LAB color
+;f8 - none ... vector mask custom action?
+;f9 -none?
+;F10 - smooth selection!
+;f11 - expand selection 1px
+;f12 - 200% Nearest neighbor
 
 
 
-
-; F8::
-; CoordMode, Mouse, Screen
-
-
-; WheelUp::
-	; CoordMode, Mouse, Screen
-	; MouseGetPos, m_x, m_y
-	; hw_m_target := DllCall( "WindowFromPoint", "int", m_x, "int", m_y )
-
-	; ; WM_MOUSEWHEEL
-	; ;	WHEEL_DELTA = 120
-	; SendMessage, 0x20A, 120 << 16, ( m_y << 16 )|m_x,, ahk_id %hw_m_target%
-; return
-
-; WheelDown::
-	; CoordMode, Mouse, Screen
-	; MouseGetPos, m_x, m_y
-	; hw_m_target := DllCall( "WindowFromPoint", "int", m_x, "int", m_y )
-
-	; ; WM_MOUSEWHEEL
-	; ;	WHEEL_DELTA = 120
-	; SendMessage, 0x20A, -120 << 16, ( m_y << 16 )|m_x,, ahk_id %hw_m_target%
-; return
-
-/*
-F9::
-;;https://www.autohotkey.com/boards/viewtopic.php?t=68578
-;,PostMessage, 0x20A, 1<<16, 0,, A ;WM_MOUSEWHEEL := 0x20A
-	
-While GetKeyState("F9", "p")
-{
-	
-	;;;;https://autohotkey.com/board/topic/16505-sending-wheeldown-to-a-control/
-    MouseGetPos, m_x, m_y
-	hw_m_target := DllCall( "WindowFromPoint", "int", m_x, "int", m_y )
-
-	; WM_MOUSEWHEEL
-	;	WHEEL_DELTA = 120
-	; SendMessage, 0x20A, -2 << 16, ( m_y << 16 )|m_x,, ahk_id %hw_m_target%
-	; SendMessage, Msg  , wParam  , lParam   , Control, WinTitle, [WinText, ExcludeTitle, ExcludeText, Timeout]
-	;SendMessage, 0x20A  , -2 << 16  , 1700 << 16|2100 ,, A ;with this, it won't work until window X is 430 or greater. So fuckin weird.
-	SendMessage, 0x20A  , -4 << 16  , 700 << 16|700 ,, A ;with this, it won't work until window Y is more than 280. also fuckin weird. also x must be below 695. ugh note i had line 1458 active, uuuugh.
-	
-	
-    Sleep, 5 ; Add a delay if you want to increase the interval between keystokes.
-}
-
-return
-*/	
-
-;;;;;;; BE SUPER CAREFUL WITH    */   ... IF YOU DO    ;*/    IT LOOKS LIKE IT STILL CANCELS THE COMMENT AREA, ACCORDING TO THE SYNTAX HIGHLIGHTING IN NOTEPAD++ ... BUT IT DOESN'T. THE COMMENT AREA STILL ENXTENDS ALL THE WAY UNTIL A TRUE */ OR TO THE BOTTOM OF THE DOCUMENT.
-
-; ;;https://www.autohotkey.com/boards/viewtopic.php?p=157799#p157799
-; #IfWinActive ahk_class MozillaWindowClass
-; ;note: tested on Firefox v69
-; ;note: the cursor must be over the Firefox window for WM_MOUSEWHEEL/WM_MOUSEHWHEEL to work
-
-; ^+w:: ;mozilla firefox - scroll up/down
-; PostMessage, 0x20A, 1<<16, 0,, A ;WM_MOUSEWHEEL := 0x20A
-; ;PostMessage, 0x115, 0, 1,, A ;WM_VSCROLL := 0x115 ;SB_LINEUP := 0
-; return
-
-
-;;;/////////END OF FIREFOX SUPER SLOW SCROLLING EXPERIMENT//////////////
-
-
-
-
-
+;;AFTER EFFECTS
 #IfWinActive ahk_exe AfterFX.exe
 ;super useful, and a feature that AE should definteily have. PRIMARY [GAMEPLAY] LOOP!!
 F1::twirlAE(1)
 F2::twirlAE(0)
 
+;CHROME
 #IfWinActive ahk_class Chrome_WidgetWin_1
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
@@ -2023,9 +1992,29 @@ return
 #IfWinActive ahk_exe chrome.exe
 F19::Sendinput, !+5 ;alt shift 5 is "strikethrough" in Google docs...
 
+;keys for video speed up and slow down, on youtube.
+Media_Next::+.
+Media_Play_Pause::k
+Media_Prev::+,
 
 ;;note to self - try to get this script here working
 ;Macro Key G12 (labeled "scale")
+;;;note to self 2: I have no idea what the above note is talking about.
+
+
+#IfWinActive ahk_exe vivaldi.exe
+;keys for video speed up and slow down, on youtube.
+Media_Next::+.
+Media_Play_Pause::k
+Media_Prev::+,
+
+#IfWinActive ahk_exe msedge.exe
+;keys for video speed up and slow down, on youtube.
+Media_Next::+.
+Media_Play_Pause::k
+Media_Prev::+,
+
+
 
 #IfWinActive ahk_exe winword.exe
 ~F14::F2 ;F2 is set to "go to previous comment" in Word.
@@ -2591,13 +2580,14 @@ Media_Prev::+,
 #if WinActive("ahk_exe Photoshop.exe")
 
 ;;YOU CAN GET TO PHOTOSHOP SHORTCUTS BY HITTING CTRL SHIFT K
+
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^o ;this WAS ctrl W instead, but i wanted to use that for duplicating layers. so i do. Also note that CTRL E is combining layers.
 
-;F4 is AVAILABLE for photoshop!?
+;F4 is SHOW PIXEL GRID by default, which is quite useful and i want to keep it like that.
 
-;F5 is to SUPER rasterize a layer. It does 3 things to flatten/rasterize a layer instead of one.
+;F5 is my macro to SUPER rasterize a layer. It does 3 things to flatten/rasterize a layer instead of one.
 F5::
 sendinput, {F5} ;this is my PS shortcut command for "Rasterize > Layer." You may think it's odd to nest a lesser command inside of itself, sort of, but trust me, it actually works great!
 sleep 1
@@ -2609,11 +2599,12 @@ return
 
 ;F6 convert to sRGB
 ;F7 convert to LAB
-;F8 is now LENS BLUR (default is Info window.)
+;F8 is now My MAKE VECTOR MASK(/layer mask?) ACTION. (The default is the Info window.)
 
-;F9 is AVAILABLE
+;F9 is  "convert to smart object" shortcut... not an action.
 
-;F10 is SMOOTH SELECTION? I don't feel great about it.
+;F10 is now SAVE AS JPEG
+
 ;F11 is EXPAND SELECTION by 1
 ;+F11 should make CONTRACT SELECTION by 1
 
@@ -2624,8 +2615,9 @@ return
 
 
 ;anyway, f14 is labeled "scale" already on my Corsair K95, so I'm going to use it for brush resizing in Photoshop.
+;This macro is INCREDIBLY USEFUL, and I use it constantly.
 F14::
-tooltip, f14, brush resize
+tooltip, f14, photoshop brush resize
 sendinput {Lalt down}
 sendinput {Rbutton down}
 sleep 1 ;just because. Maybe this is a bad idea though.
@@ -2768,14 +2760,13 @@ return
 ;;ATTENTION WACOM TABLET USERS. I APOLOGISE FOR BREAKING YOUR SHIT. WACOM/ADOBE COULD THINK OF NO WAY TO LIKE, INTERFACE DIRECTLY. THEY HAD TO GO AND STEAL SOME OBSCURE SHORTCUTS THAT THEY THOUGHT NOBODY WOULD USE. WELL THEY DIDN'T KNOW THAT TARAN "MACRO" VAN HEMERT WAS ON THE CASE.
 ;;ANYWAY, YOU CAN JUST REMOVE THE ABOVE STUFF AND GET YOUR WACOM SHORTCUTS BACK. (Thread about wacom stuff: https://forums.adobe.com/thread/1453594)
 
+
 ;; RIP Monty Oum - https://youtu.be/O6ERELse_QY?t=13933
 ;; https://youtu.be/qSuTnCFqMkw?t=1m21s <-- the original video is no longer available. (Infonaut: Red vs Blue Hollywood (part 2 of 3))
 ; #IfWinActive ahk_exe Photoshop.exe
 ; F1::sendinput, {alt down}iac{alt up}
 
 ;;&&&&&&&&&&&&&&&&&&&& PHOTOSHOP END &&&&&&&&&&&&&&&&&&&&&
-
-
 
 
 
@@ -3103,7 +3094,102 @@ return
 
 
 
-; #ifwinactive
-; END::sendinput, {numlock}
-; ;this is for PARSEC only. it's a temporary thing. gotta control numlock somehow!
+#ifwinactive
+END::sendinput, {numlock}
+;this is for PARSEC only. it's a temporary thing. gotta control numlock somehow!
 
+
+
+
+;;;;;;;;THE BELOW CODE IS FOR SUPER SLOW SCROLLING IN FIREFOX. SADLY, IT TURNS OUT TO NOT BE AS SMOOTH AS AUTOSCROLLING (USING MIDDLE CLICK AND THEN MOVING THE CURSOR SLIGHTLY) SO I'M NOT USING IT FOR NOW...
+; F9::
+; tooltip, is it working
+; ;PostMessage 0x20A, 0x780000, (mY<<16)|mX, %Ctrl%, ahk_id %WinID%
+; MouseGetPos mX, mY, WinID, Ctrl
+; ;PostMessage 0x20A, 0x780000, (mY<<16)|mX, %Ctrl%, ahk_id %WinID%
+; ;PostMessage 0x20A, -0x780000, (mY<<16)|mX, %Ctrl%, ahk_id %WinID%
+; PostMessage 0x20A, -0x780000, (30)|mX, %Ctrl%, ahk_id %WinID%
+; return
+
+; CoordMode, Mouse, Screen
+; return
+
+; WheelUp::
+	; MouseGetPos, m_x, m_y
+	; hw_m_target := DllCall( "WindowFromPoint", "int", m_x, "int", m_y )
+
+	; ; WM_MOUSEWHEEL
+	; ;	WHEEL_DELTA = 120
+	; SendMessage, 0x20A, 12 << 16, ( m_y << 16 )|m_x,, ahk_id %hw_m_target%
+; return
+
+
+;WheelDown::
+
+
+
+
+; F8::
+; CoordMode, Mouse, Screen
+
+
+; WheelUp::
+	; CoordMode, Mouse, Screen
+	; MouseGetPos, m_x, m_y
+	; hw_m_target := DllCall( "WindowFromPoint", "int", m_x, "int", m_y )
+
+	; ; WM_MOUSEWHEEL
+	; ;	WHEEL_DELTA = 120
+	; SendMessage, 0x20A, 120 << 16, ( m_y << 16 )|m_x,, ahk_id %hw_m_target%
+; return
+
+; WheelDown::
+	; CoordMode, Mouse, Screen
+	; MouseGetPos, m_x, m_y
+	; hw_m_target := DllCall( "WindowFromPoint", "int", m_x, "int", m_y )
+
+	; ; WM_MOUSEWHEEL
+	; ;	WHEEL_DELTA = 120
+	; SendMessage, 0x20A, -120 << 16, ( m_y << 16 )|m_x,, ahk_id %hw_m_target%
+; return
+
+/*
+F9::
+;;https://www.autohotkey.com/boards/viewtopic.php?t=68578
+;,PostMessage, 0x20A, 1<<16, 0,, A ;WM_MOUSEWHEEL := 0x20A
+	
+While GetKeyState("F9", "p")
+{
+	
+	;;;;https://autohotkey.com/board/topic/16505-sending-wheeldown-to-a-control/
+    MouseGetPos, m_x, m_y
+	hw_m_target := DllCall( "WindowFromPoint", "int", m_x, "int", m_y )
+
+	; WM_MOUSEWHEEL
+	;	WHEEL_DELTA = 120
+	; SendMessage, 0x20A, -2 << 16, ( m_y << 16 )|m_x,, ahk_id %hw_m_target%
+	; SendMessage, Msg  , wParam  , lParam   , Control, WinTitle, [WinText, ExcludeTitle, ExcludeText, Timeout]
+	;SendMessage, 0x20A  , -2 << 16  , 1700 << 16|2100 ,, A ;with this, it won't work until window X is 430 or greater. So fuckin weird.
+	SendMessage, 0x20A  , -4 << 16  , 700 << 16|700 ,, A ;with this, it won't work until window Y is more than 280. also fuckin weird. also x must be below 695. ugh note i had line 1458 active, uuuugh.
+	
+	
+    Sleep, 5 ; Add a delay if you want to increase the interval between keystokes.
+}
+
+return
+*/	
+
+;;;;;;; BE SUPER CAREFUL WITH    */   ... IF YOU DO    ;*/    IT LOOKS LIKE IT STILL CANCELS THE COMMENT AREA, ACCORDING TO THE SYNTAX HIGHLIGHTING IN NOTEPAD++ ... BUT IT DOESN'T. THE COMMENT AREA STILL ENXTENDS ALL THE WAY UNTIL A TRUE */ OR TO THE BOTTOM OF THE DOCUMENT.
+
+; ;;https://www.autohotkey.com/boards/viewtopic.php?p=157799#p157799
+; #IfWinActive ahk_class MozillaWindowClass
+; ;note: tested on Firefox v69
+; ;note: the cursor must be over the Firefox window for WM_MOUSEWHEEL/WM_MOUSEHWHEEL to work
+
+; ^+w:: ;mozilla firefox - scroll up/down
+; PostMessage, 0x20A, 1<<16, 0,, A ;WM_MOUSEWHEEL := 0x20A
+; ;PostMessage, 0x115, 0, 1,, A ;WM_VSCROLL := 0x115 ;SB_LINEUP := 0
+; return
+
+
+;;;/////////END OF FIREFOX SUPER SLOW SCROLLING EXPERIMENT//////////////

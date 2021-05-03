@@ -1104,7 +1104,7 @@ switchToFirefox(){
 ; i don't remember why I removed this delay. but i also removed the 5ms of delay in icue, sooooo this might not be necceessary anymore?
 
 
-sendinput, {blind}{SC0E9} ;scan code of an unassigned key. Do I NEED this?
+sendinput, {blind}{SC0EB} ;scan code of an unassigned key. Do I NEED this?
 ;hmmm, this can force a sending of RCTRL UP because this thing itself does NOT have any modifier keys assigned to it. which means if we use BLIND instead, then that should not happen, right? hmmm.
 ;And then it sends rCTRL DOWN just after, because it's trying not to mess stuff up, oh i see what's going on there, okay....
 
@@ -1253,7 +1253,8 @@ IfWinNotExist, ahk_class Premiere Pro
 	;Run, Adobe Premiere Pro.exe
 	;Adobe Premiere Pro CC 2017
 	; Run, C:\Program Files\Adobe\Adobe Premiere Pro CC 2017\Adobe Premiere Pro.exe ;if you have more than one version instlaled, you'll have to specify exactly which one you want to open.
-	Run, Adobe Premiere Pro.exe
+	;Run, Adobe Premiere Pro.exe
+	Run, C:\Program Files\Adobe\Adobe Premiere Pro 2020\Adobe Premiere Pro.exe
 	}
 if WinActive("ahk_class Premiere Pro")
 	{
@@ -1335,6 +1336,23 @@ WinActivate, | Microsoft Teams
 
 }
 
+
+switchToEdge()
+{
+;I use Edge to upload videos for review to an unlisted channel. That's just much easier than always having to deal with switching between youtube accounts on my primary browser.
+;sleep 11 ;this is to avoid the stuck modifiers bug
+IfWinNotExist, ahk_exe msedge.exe
+	Run, msedge.exe
+else
+	windowSwitcher("ahk_class Chrome_WidgetWin_1", "msedge.exe")
+	
+; ahk_class Chrome_WidgetWin_1
+; ahk_exe msedge.exe
+; ahk_pid 36788
+
+}
+
+
 switchToChrome()
 {
 ;Even getting rid of the "sleep" commands, there's still a noticable delay when I switch to chrome for the first time. this is... annoying. It makes itself the window on top, but is not actaully ACTIVATED for about 300 milliseconds... meaning my next command or two will not work, until chrome is ACTUALLY active. AGH i might need to talk directly to the AHK forums about this. find out if there really is a difference between on top and active, because I sure as hell am noticing one.
@@ -1344,7 +1362,10 @@ IfWinNotExist, ahk_exe chrome.exe
 	Run, chrome.exe
 
 if WinActive("ahk_exe chrome.exe")
-	Sendinput {blind}^{tab}
+	{
+	;Sendinput {blind}^{tab} ;idk why i had it this way, but it sometimes wouldn't work.
+	Sendinput  ^{tab}
+	}
 else
 	WinActivate ahk_exe chrome.exe
 	
@@ -1352,7 +1373,7 @@ else
 ;sleep 2
 sendinput {Rctrl up}{Lctrl up}
 ;idk if it helps or not.
-sendinput, {SC0EA} ;scan code of an unassigned key. used for debugging.
+;sendinput, {RAW}{SC0EA} ;scan code of an unassigned key. used for debugging.
 }
 
 switchToOtherChromeWindow(){
@@ -1435,26 +1456,38 @@ if theClass = ahk_class Notepad++
 	}
 
 ; ;if savedCLASS = Chrome_WidgetWin_1
+;tons of applications use Chrome_WidgetWin_1 so I have to make exceptions for all of them...
 if theCLASS = ahk_class Chrome_WidgetWin_1
 	{
 	;tooltip, it is a chrome thingy
 	;msgbox % theEXE
 	if theEXE = vivaldi.exe
 		{
-		;tooltip, we have arrived
+		;tooltip, this is the vivaldi browser. i sometimes use for full page screenshots.
+		; https://docs.google.com/spreadsheets/d/1dVJb7kI_ZETLavrplfARgn9gL8HUpvkq6A0jCPxqA3w/edit#gid=50892840
 		SetTitleMatchMode, 2
 		WinActivate, - Vivaldi
 		;WinActivate ahk_exe %theEXE%
 		}
 	if theEXE = Teams.exe
 		{
-		;tooltip, we have arrived
+		;tooltip, this is microsoft Teams
 		if WinActive("ahk_exe Teams.exe")
 			sendinput, ^e ;;CTRL E is the Teams shortcut to go to the SEARCH bar. So, if I hit the key again, it'll do that.
 		SetTitleMatchMode, 2
 		WinActivate, | Microsoft Teams
 		;WinActivate ahk_exe %theEXE%
 		}
+	if theEXE = msedge.exe 
+		{
+		;tooltip, this is microsoft Edge. I use it just to upload review copies of videos onto an unlisted channel.
+		if WinActive("ahk_exe msedge.exe")
+			sendinput, ^{tab}
+		;SetTitleMatchMode, 2
+		WinActivate, ahk_exe msedge.exe
+		;WinActivate ahk_exe %theEXE%
+		}
+	
 	goto, switchEND
 	;programmer status: Triggered
 	; https://xkcd.com/292/

@@ -401,7 +401,7 @@ prFocus("effects") ;Brings focus to the effects panel. You must find, then copy/
 ;sleep 12
 ;Sendinput, ^!+7 ;you must send this shortcut again, because there are some edge cases where it may not have worked the first time.
 
-sendinput, {blind}{SC0EC} ;for debugging. YOU DO NOT NEED THIS LINE.
+sendinput, {blind}{SC0ED} ;for debugging. YOU DO NOT NEED THIS LINE.
 
 sleep 15 ;"sleep" means the script will wait for 15 milliseconds before the next command. This is done to give Premiere some time to load its own things.
 
@@ -592,7 +592,7 @@ Sendinput, ^!+7 ;Bring focus to the effects panel AGAIN. Just in case some panel
 
 sleep 5 ;waiting for Premiere to actaully do the above.
 
-sendinput, {blind}{SC0EA} ;scan code of an unassigned key. Used for debugging. You do not need this.
+sendinput, {blind}{SC0EC} ;scan code of an unassigned key. Used for debugging. You do not need this.
 
 if (panel = "effects")
 	goto theEnd ;do nothing. The shortcut has already been sent.
