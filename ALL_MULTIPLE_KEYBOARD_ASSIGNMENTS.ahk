@@ -236,17 +236,17 @@ sleep 10
 return 
 
 
-;;;for parsec, for windows that are outside the range of the new, smaller resolution...
-+F12::
-tooltip, moving the active window to the center of the screen!
-WinGetPos,,, Width, Height, A
-WinMove, A,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2)
-;WinMove, 50, 50
-; to try to rescue the tangent ripple UI which has gone missing off the side of a monitor long ago and cannot be brought back with anything I've tried!.
-;edit: it worked!!!!!
-sleep 30
-tooltip,
-return
+; ;;;for parsec, for windows that are outside the range of the new, smaller resolution... This works GREAT for parsec stuff, cause your resolution has been lowered maybe, and some dialouge boxes are outside the edge now. this will fix!
+; +F12::
+; tooltip, moving the active window to the center of the screen!
+; WinGetPos,,, Width, Height, A
+; WinMove, A,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2)
+; ;WinMove, 50, 50
+; ; to try to rescue the tangent ripple UI which has gone missing off the side of a monitor long ago and cannot be brought back with anything I've tried!.
+; ;edit: it worked!!!!!
+; sleep 30
+; tooltip,
+; return
 
 
 ; ; ctrlbreak::
@@ -1047,7 +1047,7 @@ capslock::gotoChromeTab("Production Planner | Trello","https://trello.com/b/NevT
 ;;;this is(was) Lshift::
 ;Lshift:: / LEFTSHIFT -to-> SC070 / International2 -to-> Chrome calendar open
 ; SC070::gotofiretab("Calendar - October 2020","https://calendar.google.com/calendar/b/0/r")
-SC070::gotoChromeTab("Calendar - April 2021","https://calendar.google.com/calendar/u/0/r")
+SC070::gotoChromeTab("Calendar - June 2021","https://calendar.google.com/calendar/u/0/r")
 ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
@@ -1540,7 +1540,7 @@ F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^w ;control w, which closes a tab
 F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
 
-F14::send, {F11} ;scale key is fullscreen key meow.
+F14::send, {F11} ;scale key is fullscreen key meow. ;;this line went missing somehow, wtf?
 
 ;these are also for APMmusic.ca surfing.
 ;macro key G8, labeled as horizontal anchor.
@@ -2359,16 +2359,22 @@ F20::home ;yes, this does actually press the HOME key, rather than hitting the 4
 ;note that in iCue, I have capslock remapped to F20
 ; and in premiere's keyboard shortcuts panel, "home" is set to "Disable (clip)" 
 ; But you can actually assign Disable (clip) to F20 directly. So I'm not sure why I set it up that way... I may change this later.
+;update -- i have HOME and F20 both assigned to "enable" in premiere. hopefully that'll work.
 
 ;;taran note: END is still free inside of premiere.
 
 
 ;F21 is used as a function key in premiere and elsewhere. this is to avoid the stuck modifiers bug associated with pairing keystrokes with CTRL, SHIFT, and/or ALT.
 
-;;------AFTER EFFECTS ONLY F21 ASSIGNMENTS--------
+;;------AFTER EFFECTS SUPER FUNCTION KEY ASSIGNMENTS--------
 
 
 #IfWinActive ahk_exe AfterFX.exe
+
+F14::send, +s ;shift S, to add "scale" parameter
+F15::send, +a ;vertical anchor
+F18::send, +p ;horizontal anchor
+F17::send +r
 
 ;macro key G7
 F19::sendinput, ^{up} ;select prev layer
@@ -2499,14 +2505,22 @@ return
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Disable single clip at cursor - must turn this into a proper function.
+
 Xbutton2::
-;F8::
+;so the issue with this is that if I hit this button while hovering over NOT premiere, it doens't know that, and will send these  keystrokes to THAT window. Well, at least it'll send stuff after the left click, to that window.
+;I need to have it DETECT that you have actually clicked on premiere.
+
 send, ^!d ;ctrl alt d is DESELECT
 send, v ;selection tool
 send, {alt down}
 send, {lbutton}
 send, {alt up}
-send, {home} ;disable
+
+;send, {home} ;disable
+
+
+send, {F20} ;disable??? Alternative to the above.
+
 sleep 10
 ;I have a fancy way of figuring out which tool i WAS using. Is just be a thing that listens for v t r y b x h p and saves that as a string.
 
@@ -3033,6 +3047,11 @@ ConvertSentence()
 
 #ifwinactive
 
+^+!t::
+;always on top toggle
+Winset, Alwaysontop, , A
+return
+
 ;;i used this to delete premiere title styles quickly.
 ; numpadsub::
 ; click right
@@ -3095,7 +3114,7 @@ return
 
 
 #ifwinactive
-END::sendinput, {numlock}
+;END::sendinput, {numlock}
 ;this is for PARSEC only. it's a temporary thing. gotta control numlock somehow!
 
 
@@ -3193,3 +3212,5 @@ return
 
 
 ;;;/////////END OF FIREFOX SUPER SLOW SCROLLING EXPERIMENT//////////////
+
+

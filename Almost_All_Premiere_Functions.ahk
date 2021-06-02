@@ -63,9 +63,10 @@ SetTimer, noTip, %wait% ;--in 1/3 seconds by default, remove the tooltip
 
 ;um I am trying this because i think the tooltip was being deleted like every bazillionth of a second?
 noTip:
-ToolTip,,,,8
-;removes the tooltip
+ToolTip,,,,8 ;removes the tooltip
+SetTimer, noTip, Off
 ;I REALLY need to figure out how subroutines work...
+return ;hoey sit, i didn't have a return here for a long time
 
 ;;;;;;/temporary tooltip maker;;;;;;
 

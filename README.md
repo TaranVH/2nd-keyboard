@@ -1,6 +1,11 @@
 # 2nd-keyboard
 ALL of Taran's scripts - (not just for the 2nd keyboard.)
 
+IF YOU ARE NEW TO AUTOHOTKEY, AND WANT TO USE IT FOR VIDEO EDITING, START BY WATCHING THIS FULLY COMPREHENSIVE TUTORIAL VIDEO I MADE:
+https://www.youtube.com/watch?v=T3vG8U5RoFw
+
+------------
+
 I'm the main video editor for Linus Media Group. We put out multiple videos every day, so I had to learn how to work quickly, without sacrificing quality.
 These AutoHotKey scripts speed up my workflow significantly. (Mostly for Premiere Pro and Explorer)
 
@@ -32,7 +37,7 @@ https://github.com/VollRahm/NotEnoughHotkeys/
 
 If all of this just seems like a huge PITA, just buy a Stream Deck instead: https://youtu.be/vhPLhfP1b_s
 
-NOTE: You do not need a 2nd keyboard to use AutoHotKey. Most poeple don't. By the time you need to add a 2nd keyboard, you should already be quite familiar with how AutoHotKey works. You can probably use your function keys for AHK macros, and if your main keyboard has dedicated macro keys, you can also use those.
+NOTE: You do not need a 2nd keyboard to use AutoHotKey. Most poeple don't. By the time you need to add a 2nd keyboard, you should already be quite familiar with how AutoHotKey works. You can probably use your function keys for AHK macros, and if your main keyboard has dedicated macro keys, you can also use those. (Assign them to obscure shortcuts like CTRL SHIFT ALT F1, and then, in AutoHotKey, assign that key combo to whatever you want.)
 
 Basically, don't just add a 2nd keyboard because you think it's cool! Make sure you actually need it, because you've run out of space on your main keyboard.
 
@@ -40,6 +45,7 @@ Basically, don't just add a 2nd keyboard because you think it's cool! Make sure 
 
 IF YOU ARE NEW TO AUTOHOTKEY, start here:
 https://autohotkey.com/docs/Tutorial.htm
+https://www.youtube.com/watch?v=T3vG8U5RoFw
 
 I know there's a lot of scripts in this repository. Look here to see what launches when I start my computer:
 https://github.com/TaranVH/2nd-keyboard/blob/master/INFO_and_PROFILES/startup_folder_TARAN_Aug_2018.png

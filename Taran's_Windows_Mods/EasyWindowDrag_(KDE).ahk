@@ -230,6 +230,7 @@ or (WinActive("ahk_class DroverLord - Window Class") and WinActive("ahk_exe Adob
 Xbutton2::
 ;tooltip, xbutton2
 ;;need to add code so that it will NOT make Explorer into full screen IF you click on a full screen firefox or chrome.
+;keep in mind that this CAN conflict with the Xbutton2 assignment in all_multiple_keyboard_shortcuts.ahk.
 
 killFullScreen()
 
