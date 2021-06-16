@@ -293,6 +293,11 @@ Sendinput, %SECRET_TEXT%
 ; sleep 10
 return
 
+F3::
+letext := "Emily Seddon - @emilypls"
+sendinput, %letext%
+return
+
 
 ;F2::insertSFX("Whoosh19-Short") ;you may not use spaces for filenames of sounds that you want to retreive in this way... since searching in premiere will disregard spaces in a a weird way... returning multiple wrong results....
 ; F3::insertSFX("Whoosh7-Short")
@@ -593,7 +598,7 @@ return
 ; return
 
 
-;;;STILL IN THE K120 KEYBOARD. WE ARE NOW ON ITS NUMPAD
+;;;STILL IN THE K120 KEYBOARD. WE ARE ON ITS NUMPAD
 
 ;;NumLock -to-> SC05C-International 6
 ; SC05C::
@@ -607,6 +612,11 @@ return
 ; else
 	; search()
 ; return
+
+
+;NumLock -to-> SC05C-International 6
+SC05C::
+return
 
 numpadins:: ;(this is SHIFT NUMPAD0)
 numpad0::SendKey("numpad0", , "sky blue")
@@ -671,17 +681,20 @@ return
 
 
 numpadleft::
-numpad4::SendKey(A_thishotkey, ,"nudge left")
+numpad4::send, ^{F7} ;ctrl F7, open Everything Search.
+;SendKey(A_thishotkey, ,"nudge left")
+
 numpadclear::
 numpad5::numpad5
 ;numpad5::Rctrl ;because I use it... well, as a ctrl key. baka.
 
 numpadright::
-numpad6::send, ^{F7} ;ctrl F7, open Everything Search.
+numpad6::openApp("ahk_class Photoshop", "Photoshop.exe")
 ;numpad6::SendKey(A_thishotkey, ,"nudge right")
 
 numpadhome::
-numpad7::SendKey(A_thishotkey, ,"purple")
+numpad7::return
+;SendKey(A_thishotkey, ,"purple")
 
 numpadup::
 numpad8::SendKey(A_thishotkey, ,"nudge up")
@@ -718,7 +731,7 @@ numpadAdd::openApp("ahk_class Notepad++", "notepad++.exe") ;msgbox, , , num ADD,
 numpadEnter::switchToFirefox()
 
 numpaddel::
-numpadDot::openApp("ahk_class Photoshop", "Photoshop.exe") ;msgbox, , , num dot, 0.5
+numpadDot::return ;msgbox, , , num dot, 0.5
 
 
 
@@ -973,9 +986,58 @@ return
 
 4::gotoChromeTab("Music Hypercube - Google Docs","https://docs.google.com/document/d/11hIiENqLMtuQRLV4FjZMRY2uNFLtPw5QW6fivMix9VE/edit")
 
-5::
-6::tooltip, you pressed F24 then %A_thishotkey%
+5::tooltip, you pressed F24 then %A_thishotkey%
+
+6::
+;ExportJPG
+;original:  https://autohotkey.com/board/topic/118890-photoshop-com-booleans-exportdocument/
+app := ComObjActive("Photoshop.Application")
+doc := app.activeDocument
+options := ComObjCreate("Photoshop.ExportOptionsSaveForWeb")
+options.Quality := 90
+options.Format := 6 ; 6=jpeg 13=png 17=tif
+options.Optimized := ComObj(0xB, -1) ; 0xB = VT_Bool || -1 = true, 0 = false
+
+;inputBox, filename, file name, file name(no extension)
+filename := app.activeDocument
+
+WinActivate, ahk_class Photoshop
+doc.export(doc.path . filename.name . ".jpg",SAVEFORWEB:=2,options)
+;this works, but it does
+;thumb-atx-12-vo.psd.jpg
+;isntead of
+;thumb atx 12 vo.jpg
+return
+	
+	
+	
+	
+
 7::
+;ExportJPG v2
+;will return to this. it's possible i can copy this code driectly.
+app := ComObjActive("Photoshop.Application")
+doc := app.activeDocument
+options := ComObjCreate("Photoshop.ExportOptionsSaveForWeb")
+options.Quality := 90
+options.Format := 6 ; 6=jpeg 13=png 17=tif
+options.Optimized := ComObj(0xB, -1) ; 0xB = VT_Bool || -1 = true, 0 = false
+
+msgbox % app.activeDocument.fullname ;this does work actaully.
+filename := app.activeDocument.name ;sadly this uses hyphens and includes the extension
+msgbox, %filename% ;this also works, AND even shows it wihtout having hyphens. weird.
+
+
+WinActivate, ahk_class Photoshop
+doc.export(doc.path . filename . ".jpg",SAVEFORWEB:=2,options)
+;i think you look at ExportOptionsSaveForWeb...
+
+
+return
+
+;; https://feedback.photoshop.com/conversations/photoshop/photoshop-how-to-quick-save-as-jpg-and-overwrite-a-image-with-one-click/5f5f45c14b561a3d425e1fa1
+; var saveName = docRef.fullName + ".jpg" ??
+
 8::
 9::
 0::
@@ -1009,6 +1071,37 @@ if WinActive("ahk_class Photoshop")
 }
 return
 
+;some reading https://www.autohotkey.com/docs/commands/ComObjError.htm
+
+; Below you'll find a simple AHK function with proper error handling to
+; run actions. Feel free to replace the message boxes with whatever kind
+; of error handling you prefer.
+; Best,
+; Mike
+
+; ; example call:
+; RunPhotoshopAction("action name", "action set name")
+
+; RunPhotoshopAction(action, actionSet)
+; {
+    ; try {
+        ; psApp := ComObjActive("Photoshop.Application")
+    ; }
+    ; catch e {
+        ; MsgBox, % "Unable to connect to running Photoshop instance: " e.message
+    ; }
+
+    ; try {
+        ; if(psApp.Documents.Count < 1)
+            ; return
+
+        ; psApp.DoAction(action, actionSet)
+    ; }
+    ; catch e {
+        ; MsgBox, % "Photoshop API error: " e.message
+    ; }
+; }
+
 w::
 psApp := ComObjActive("Photoshop.Application")
 psApp.DoAction("50% smaller NN", "taran actions")
@@ -1028,7 +1121,70 @@ psApp.DoAction("Surface blur - dejpeg", "taran actions")
 return
 
 y::
-u::tooltip, you pressed F24 then %A_thishotkey%
+;really cool script that MIXES the color under your cursor, with the one already in the forground swatch. like real painting! works perfectly and instantly... so cool!
+;https://www.autohotkey.com/boards/viewtopic.php?t=4984
+
+		; sample under cursor color
+		MouseGetPos X, Y
+		PixelGetColor sample, %X%, %Y%, RGB 
+		SplitRGBColor(sample,R,G,B) ; convert sample to RGB
+		; get ps foreground color
+		appRef := ComObjActive("Photoshop.Application")
+		fgc :=  appRef.ForegroundColor.rgb
+		;mix with sampled color
+		MixRGB(0.15,fgc.Red,fgc.Green,fgc.Blue,R,G,B,ORed,OGrn,OBlu)
+		; set ps foreground to mixed color
+		solidColorRef := ComObjCreate("Photoshop.SolidColor")
+		solidColorRef.rgb.red := ORed
+		solidColorRef.rgb.green := Ogrn
+		solidColorRef.rgb.blue := OBlu
+		appRef.ForegroundColor := solidColorRef
+		Return
+	
+SplitRGBColor(RGBColor, ByRef Red, ByRef Green, ByRef Blue)
+	{
+    Red := RGBColor >> 16 & 0xFF
+    Green := RGBColor >> 8 & 0xFF
+    Blue := RGBColor & 0xFF
+	}	
+
+MixRGB(alph,R,G,B,RR,GG,BB,ByRef ORed,ByRef OGrn,ByRef OBlu)
+	{
+	ORed:=Floor(alph*RR+(1-alph)*R)
+	OGrn:=Floor(alph*GG+(1-alph)*G)
+	OBlu:=Floor(alph*BB+(1-alph)*B)
+	}
+
+simpleRGB(RGBColor, ByRef TRed, ByRef TGreen, ByRef TBlue)
+	{
+    Red := RGBColor >> 16 & 0xFF
+    Green := RGBColor >> 8 & 0xFF
+    Blue := RGBColor & 0xFF
+	}	
+
+;u::tooltip, you pressed F24 then %A_thishotkey%
+u::
+;SETTING a foreground or background color directly.
+;autohotkey.com/boards/viewtopic.php?p=29050#p29050
+
+;in this case, it sets it to gray. but i can use any color i want! and with some more scripting, the notation will become very easy. just call a funciton with one parameter.
+appRef := ComObjActive("Photoshop.Application")
+solidColorRef := ComObjCreate("Photoshop.SolidColor")
+
+solidColorRef.rgb.red := 66
+solidColorRef.rgb.green := 66
+solidColorRef.rgb.blue := 66
+;(cause you can also do it in CMYK.)
+
+;oh, here is the documentation. page 135. https://www.adobe.com/content/dam/acom/en/devnet/photoshop/pdfs/photoshop-cc-vbs-ref.pdf
+; solidColorRef.rgb.hexvalue := FFFFFF ;this sadly does not work
+
+appRef.ForegroundColor := solidColorRef
+;msgbox % appRef.BackgroundColor.rgb.hexvalue
+;tooltip % appRef.ForegroundColor.rgb.hexvalue
+Return
+
+
 i::sendinput, {U+2611} ; check box! ☑
 o::sendinput, {ASC 0176} ;the degree symbol!
 p::sendinput, {U+00A0} ;a blank charcter that is NOT a space. It's from braille.
@@ -2489,7 +2645,13 @@ return
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;cut single clip at cursor.
 Xbutton1::
-;F7::
+
+;if you are NOT using EasyWindowDrag_(KDE).ahk then you can delete the 3 lines below.
+tellme := isPremiereUnderCursor(yesno)
+if (tellme = 0)
+	return
+
+
 send, ^!d ;ctrl alt d is DESELECT
 send, b ;blade tool
 ;keywait, F7 ;waits for the key to go UP.
@@ -2503,12 +2665,39 @@ send, %currentTool%
 return
 
 
+
+
+
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;Disable single clip at cursor - must turn this into a proper function.
 
 Xbutton2::
-;so the issue with this is that if I hit this button while hovering over NOT premiere, it doens't know that, and will send these  keystrokes to THAT window. Well, at least it'll send stuff after the left click, to that window.
-;I need to have it DETECT that you have actually clicked on premiere.
+
+;if you are NOT using EasyWindowDrag_(KDE).ahk then you can delete the 3 lines below.
+tellme := isPremiereUnderCursor(yesno)
+if (tellme = 0)
+	return
+
+; ;so the issue with this is that if I hit this button while Premiere is active, but the cursor is hovering over some OTHER application, it doesn't know that, and will send these  keystrokes to THAT window. Well, at least it'll send stuff after the left click, to that window.
+; ;I need to have it DETECT that you have actually clicked on premiere.
+; ;note that the code below is for the sake of compatibility with EasyWindowDrag_(KDE).ahk
+; MouseGetPos,,,KDE_id
+; WinGet,KDE_Win,MinMax,ahk_id %KDE_id%
+; ; If KDE_Win
+    ; ; return ;I am not sure exactly what this is for
+; ; ;tooltip, %KDE_Win%
+; WinGetClass,fancyclass,ahk_id %KDE_id%
+; If (fancyclass != "Premiere Pro")
+	; {
+	; tooltip, NOT IN PREMIERE
+	; sleep 100
+	; tooltip,
+	; ;winactivate?
+	; WinActivate, ahk_id %KDE_id%
+	; goto skipitAMKA
+	; }
+;;BELOW HERE WE CAN ASSUME THAT WE ARE IN FACT STILL INSIDE OF PREMIERE
 
 send, ^!d ;ctrl alt d is DESELECT
 send, v ;selection tool
@@ -2525,7 +2714,33 @@ sleep 10
 ;I have a fancy way of figuring out which tool i WAS using. Is just be a thing that listens for v t r y b x h p and saves that as a string.
 
 send, %currentTool%
+
+; skipitAMKA:
 return
+
+
+isPremiereUnderCursor(yesno := 1)
+{
+;so the issue with this is that if I hit this button while Premiere is active, but the cursor is hovering over some OTHER application, it doesn't know that, and will send these  keystrokes to THAT window. Well, at least it'll send stuff after the left click, to that window.
+; ;I need to have it DETECT that you have actually clicked on premiere.
+MouseGetPos,,,KDE_id
+WinGet,KDE_Win,MinMax,ahk_id %KDE_id%
+; If KDE_Win
+    ; return ;I am not sure exactly what this is for
+; ;tooltip, %KDE_Win%
+WinGetClass,fancyclass,ahk_id %KDE_id%
+If (fancyclass != "Premiere Pro")
+	{
+	tooltip, NOT IN PREMIERE
+	sleep 100
+	tooltip,
+	;winactivate?
+	WinActivate, ahk_id %KDE_id%
+	return 0
+	}
+else
+	return 1
+}
 
 
 
@@ -2599,9 +2814,9 @@ F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
 F3::send ^o ;this WAS ctrl W instead, but i wanted to use that for duplicating layers. so i do. Also note that CTRL E is combining layers.
 
-;F4 is SHOW PIXEL GRID by default, which is quite useful and i want to keep it like that.
+;F4:: is SHOW PIXEL GRID by default, which is quite useful and i want to keep it like that.
 
-;F5 is my macro to SUPER rasterize a layer. It does 3 things to flatten/rasterize a layer instead of one.
+;F5:: is my macro to SUPER rasterize a layer. It does 3 things to flatten/rasterize a layer instead of one.
 F5::
 sendinput, {F5} ;this is my PS shortcut command for "Rasterize > Layer." You may think it's odd to nest a lesser command inside of itself, sort of, but trust me, it actually works great!
 sleep 1
@@ -2611,18 +2826,18 @@ sleep 10
 sendinput, ^!k ;ctrl alt K is my photoshop shortcut for Layer Mask > Apply.
 return
 
-;F6 convert to sRGB
-;F7 convert to LAB
-;F8 is now My MAKE VECTOR MASK(/layer mask?) ACTION. (The default is the Info window.)
+;F6:: convert to sRGB
+;F7:: convert to LAB
+;F8:: is now My MAKE VECTOR MASK(/layer mask?) ACTION. (The default is the Info window.)
 
-;F9 is  "convert to smart object" shortcut... not an action.
+;F9:: is  "convert to smart object" shortcut... not an action.
 
-;F10 is now SAVE AS JPEG
+;F10:: is now SAVE AS JPEG
 
-;F11 is EXPAND SELECTION by 1
+;F11:: is EXPAND SELECTION by 1
 ;+F11 should make CONTRACT SELECTION by 1
 
-; F12 is 200% nearest
+; F12:: is 200% nearest
 ; ^F12 is 300% Nearest
 ; +F12 is 50% bicubic sharper?
 ; ^+F12 is 50% Nearest? Maybe switch with the previous one.
@@ -2631,7 +2846,8 @@ return
 ;anyway, f14 is labeled "scale" already on my Corsair K95, so I'm going to use it for brush resizing in Photoshop.
 ;This macro is INCREDIBLY USEFUL, and I use it constantly.
 F14::
-tooltip, f14, photoshop brush resize
+tooltip, F14 ; photoshop brush resize
+;I think i need to use COM here to detect if the user has a brush, eraser, rubber stamp, etc etc... and if they do NOT, then i can change to the brush tool? aaaah idk. i think not worth it.
 sendinput {Lalt down}
 sendinput {Rbutton down}
 sleep 1 ;just because. Maybe this is a bad idea though.
@@ -2642,10 +2858,74 @@ sendinput {Lalt up}
 tooltip,
 return
 
-;and this is for the color picker HUD in photoshop. NICE!
+; Here's a whole thread about this, which i found later.
+; https://community.adobe.com/t5/photoshop/changing-brush-size-shortcuts-ctrl-alt-second-click-and-drag/td-p/8922180
+; I think I'm going to code my own overlay which will work even when not above the canvas, and will have better control over small brushes. I can do this using the photoshop COM or OLE objects and the AHK gui to make my own shapes and things... and package it up into a exe for other poeple and it'll be just great. will take a LOT of coding but it is possible in theory, i think.
+;this could be useful for the offsets that i need, but it has no COM integration sadly. https://www.carbodydesign.com/archive/2008/09/30-photoshop-brush-controller/3/
+; that's a project for another time...
+; https://www.ps-scripts.com/viewtopic.php?f=53&t=24088&start=10
+; https://www.adobe.com/content/dam/acom/en/devnet/scripting/estk/javascript_tools_guide.pdf
+; newbrush()
+; https://www.ps-scripts.com/viewtopic.php?f=77&t=22770&p=143524&hilit=brushes#p143524
+
+;https://community.adobe.com/t5/photoshop/how-to-read-out-current-brush-size-in-javascript/m-p/8045339
+
+
+
+;https://community.adobe.com/t5/photoshop/how-to-read-out-current-brush-size-in-javascript/m-p/8045339
+
+; function getCurrentBrushInfo() {
+
+    ; var brsh = {};
+
+    ; var ref = new ActionReference();
+	
+    ; ref.putEnumerated(charIDToTypeID("capp"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt"));
+
+    ; var currentBrush = executeActionGet(ref).getObjectValue(stringIDToTypeID("currentToolOptions")).getObjectValue(charIDToTypeID('Brsh'));
+
+    ; brsh.diameter = currentBrush.getDouble(charIDToTypeID('Dmtr'));
+
+    ; brsh.hardness = currentBrush.getDouble(charIDToTypeID('Hrdn'));
+
+    ; brsh.angle = currentBrush.getDouble(charIDToTypeID('Angl'));
+
+    ; brsh.roundness = currentBrush.getDouble(charIDToTypeID('Rndn'));
+
+    ; brsh.spacing = currentBrush.getDouble(charIDToTypeID('Spcn'));
+
+    ; return brsh
+
+; }
+
+
+
+;https://stackoverflow.com/questions/44508493/photoshop-javascript-how-to-change-the-brush-mode-with-javascript
+
+;https://www.ps-scripts.com/viewtopic.php?t=7046
+
+
+
+
+
+
+;----------------------------------------------------
+
+
+
+;and this next one is for the color picker HUD in photoshop. NICE!
 ;i just wish it worked when i am on the canvas even while NOT above the actual image, but also on the dark grey edges.
+;;;oh, this is dangerous because it only works properly if you have the brush tool selected. if you have some other tool, like the move tool, it'll start selecting layers, and change the blend mode and shit. i can solve this by switching to the brush tool first if it's not already present. i can use ps COM actions to do so., will code that all in later.
+;this is macro key G11, vertical anchor.
 F15::
 ;tooltip, f15
+
+;https://www.autohotkey.com/boards/viewtopic.php?f=5&t=4236#p23679
+ComObjActive("Photoshop.application").currentTool := "paintbrushTool"
+;the above code works flawlessly. I am amazed.
+;turns out I don't need to check for what tool is active, since choosing a color really only affects the paintbrush.
+
+
 sendinput {Lalt down}
 sendinput {Lshift down}
 sendinput {Rbutton down}
@@ -2688,7 +2968,7 @@ F20::return ;this caused issues with capslock being rapidly toggled on and off..
 ; sendinput {Rctrl up}
 ; return
 
-; zoom using your mouse movement, again.
+; photoshop, zoom using your mouse movement, again.
 F17::
 ;My Corsiar K95 RGB macro key G7 is set to F18. I'm just trying this macro here as well.
 sendinput {Rctrl down}

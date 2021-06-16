@@ -65,8 +65,10 @@ WinGet, chromeStyle, Style, ahk_id %id%
 If (class2 = "Premiere Pro")
 	{
 	tooltip, it's premiere`, don't kill full screen.
+	;tooltip, %class2%
 	sleep 100
 	tooltip,
+	WinActivate, ahk_class %class2%
 	goto skipitfull
 	}
 
