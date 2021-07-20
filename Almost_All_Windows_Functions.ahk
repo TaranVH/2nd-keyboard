@@ -1256,7 +1256,7 @@ IfWinNotExist, ahk_class Premiere Pro
 	;Adobe Premiere Pro CC 2017
 	; Run, C:\Program Files\Adobe\Adobe Premiere Pro CC 2017\Adobe Premiere Pro.exe ;if you have more than one version instlaled, you'll have to specify exactly which one you want to open.
 	;Run, Adobe Premiere Pro.exe
-	Run, C:\Program Files\Adobe\Adobe Premiere Pro 2020\Adobe Premiere Pro.exe
+	Run, C:\Program Files\Adobe\Adobe Premiere Pro 2021\Adobe Premiere Pro.exe
 	}
 if WinActive("ahk_class Premiere Pro")
 	{

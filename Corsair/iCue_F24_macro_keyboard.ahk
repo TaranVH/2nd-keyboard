@@ -32,16 +32,16 @@ SendMode Input
 ;________________________________________________________________________________________
 ;                                                                                        
 ;		  2ND KEYBOARD USING iCue (and the K55, though it'll work with any of them.)     
-;  
 ;________________________________________________________________________________________
 ;																						 
-;     Please watch [link not yet available] for a comprehensive tutorial. 		 		 
+; Please watch https://www.youtube.com/watch?v=cQ2atofn3lE for a comprehensive tutorial. 
 ;________________________________________________________________________________________
 
 ; https://www.corsair.com/us/en/Categories/Products/Gaming-Keyboards/Standard-Gaming-Keyboards/K55-RGB-Gaming-Keyboard/p/CH-9206015-NA
 
 ; I personally use the Hasu USB to USB keyboard converter instead of this.
 ; https://www.1upkeyboards.com/shop/controllers/usb-to-usb-converter/
+; Tutorial for Hasu: https://www.youtube.com/watch?v=GZEoss4XIgc	
 
 ; IMPORTANT NOTE: (As of Jan 2019)
 ; Corsair's iCue CANNOT distinguish between different keyboards.

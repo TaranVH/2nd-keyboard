@@ -26,8 +26,13 @@ Menu, Tray, Icon, shell32.dll, 42 ;turns the tray icon into a dumb green tree. I
 ;		  2ND KEYBOARD USING Razer Synapse (and the Cyonosa Chroma, specifially)		 
 ;________________________________________________________________________________________
 ;																						 
-;     Please watch [link not yet available] for a comprehensive tutorial. 		 		 
+; Please watch https://www.youtube.com/watch?v=GttedCcyxa4 for a comprehensive tutorial. 
 ;________________________________________________________________________________________
+
+; (I personally use the Hasu USB to USB keyboard converter instead of this.)
+; https://www.1upkeyboards.com/shop/controllers/usb-to-usb-converter/
+; Tutorial for Hasu: https://www.youtube.com/watch?v=GZEoss4XIgc	
+
 
 ;; You should DEFINITELY not be trying to add a 2nd keyboard unless you're already
 ;; familiar with how AutoHotkey works. I recommend that you at least take this tutorial:
@@ -39,7 +44,7 @@ Menu, Tray, Icon, shell32.dll, 42 ;turns the tray icon into a dumb green tree. I
 ;;----------------------------------------------------------------------------
 ;;;;;;Receive_WM_COPYDATA RECIEVES MESSAGES AND TURNS THEM INTO FUNCTIONS:;;;;
 ;;----------------------------------------------------------------------------
-;;Discussion:https://autohotkey.com/board/topic/18361-anyway-to-pass-params-to-script-while-running/
+;;Discussion: https://autohotkey.com/board/topic/18361-anyway-to-pass-params-to-script-while-running/
 ;;Where I got the script from:
 ; https://autohotkey.com/docs/commands/OnMessage.htm
 
@@ -108,6 +113,8 @@ DoSomething := Var = "ESC" ? function("Escape!")
 	: Var = "g" ?			function("g")
 	: Var = "h" ?			function("h")
 	: Var = "j" ?			function("j")
+
+;Remember, the idea is to replace "function()" with whatever function or command you want.
 
 ;;Our expression gets too long if we continue.
 ;; https://autohotkey.com/board/topic/70201-ahk-110200-u32-error-expression-too-long/

@@ -2095,7 +2095,7 @@ if IsFunc("Keyshower") {
 ;Trying to bring focus to the TIMELINE itself is really dangerous and unpredictable, since its Class# is always changing, based upon how many sequences, and other panels, that might be open.
 
 ;ControlFocus, DroverLord - Window Class3,ahk_exe Adobe Premiere Pro.exe ;the problem wiht this is that a project panel on the 2nd monitor also can qualify
-ControlFocus, DroverLord - Window Class3,Adobe Premiere Pro 2020 ;this works because "Adobe Premiere Pro 2020" is found on the MAIN premiere window, but not the one on the 2nd or 3rd monitors.
+ControlFocus, DroverLord - Window Class3,Adobe Premiere Pro 2021 ;this works because "Adobe Premiere Pro 2021" is found on the MAIN premiere window, but not the one on the 2nd or 3rd monitors.
 
 ; Window Class14 is the Program monitor, at least on my machine.
 ; well, now it's Window Class13. it really does change around a lot.
@@ -2124,12 +2124,12 @@ sleep 30
 
 ;NOTE: the "5" keystroke is sent to Premiere, but it will NOT show up in the keyhistory. I'm not sure why... i guess it has to do with ControlSend. Just FYI for debugging.
 ;ControlSend,DroverLord - Window Class3, ^+!5,ahk_exe Adobe Premiere Pro.exe ;this shortcut will highlight the EFFECT CONTROLS, which will NOT also stop playback of the source monitor, if it is already playing.
-ControlSend,DroverLord - Window Class3, ^+!5,Adobe Premiere Pro 2020 ;this shortcut will highlight the EFFECT CONTROLS, which will NOT also stop playback of the source monitor, if it is already playing.
+ControlSend,DroverLord - Window Class3, ^+!5,Adobe Premiere Pro 2021 ;this shortcut will highlight the EFFECT CONTROLS, which will NOT also stop playback of the source monitor, if it is already playing.
 sleep 40
 ;msgbox,,, srsly wtf,0.5
 ;msgbox,srsly wtf
 ;ControlSend,DroverLord - Window Class3, ^+!5,ahk_exe Adobe Premiere Pro.exe
-ControlSend,DroverLord - Window Class3, ^+!5,Adobe Premiere Pro 2020
+ControlSend,DroverLord - Window Class3, ^+!5,Adobe Premiere Pro 2021
 sleep 10 ;this asn't here at all for a long time. dunno if i really need it.
 
 ;FYI, {space} also doesn't show up in the keyhistory.

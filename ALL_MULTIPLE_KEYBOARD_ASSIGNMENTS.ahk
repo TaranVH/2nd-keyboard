@@ -20,13 +20,14 @@ global savedEXE = "Teams.exe" ;BEFORE the #include is apparently the only place 
 #include C:\AHK\2nd-keyboard\Almost_All_Premiere_Functions.ahk
 #include C:\AHK\2nd-keyboard\Almost_All_Windows_Functions.ahk
 #include C:\AHK\2nd-keyboard\After_Effects_Functions.ahk
+#include C:\AHK\2nd-keyboard\Photoshop_Functions.ahk
 
 ;; #include causes the script to behave as though the specified file's contents are present at this exact position.
 ;; https://www.autohotkey.com/docs/commands/_Include.htm
 
 
 
-SetKeyDelay, 0 ;warning ---this was absent for some reason. i just added it back in. IDK if I removed it for a reason or not...
+SetKeyDelay, -1 ;warning ---this was absent for some reason. i just added it back in. IDK if I removed it for a reason or not...
 
 ;-------------------------------------------------------------------------
 ; HELLO PEOPLES 
@@ -616,6 +617,7 @@ return
 
 ;NumLock -to-> SC05C-International 6
 SC05C::
+;WinMinimize, A
 return
 
 numpadins:: ;(this is SHIFT NUMPAD0)
@@ -685,7 +687,7 @@ numpad4::send, ^{F7} ;ctrl F7, open Everything Search.
 ;SendKey(A_thishotkey, ,"nudge left")
 
 numpadclear::
-numpad5::numpad5
+numpad5::openApp("AE_CApplication_17.5", "AfterFX.exe")
 ;numpad5::Rctrl ;because I use it... well, as a ctrl key. baka.
 
 numpadright::
@@ -1005,7 +1007,7 @@ WinActivate, ahk_class Photoshop
 doc.export(doc.path . filename.name . ".jpg",SAVEFORWEB:=2,options)
 ;this works, but it does
 ;thumb-atx-12-vo.psd.jpg
-;isntead of
+;instead of
 ;thumb atx 12 vo.jpg
 return
 	
@@ -1103,25 +1105,40 @@ return
 ; }
 
 w::
+if WinActive("ahk_class Photoshop")
+{
 psApp := ComObjActive("Photoshop.Application")
 psApp.DoAction("50% smaller NN", "taran actions")
+}
 return
 
 e::
+if WinActive("ahk_class Photoshop")
+{
 psApp := ComObjActive("Photoshop.Application")
 psApp.DoAction("200% nearest neighbor", "taran actions")
+}
 return
+
 r::
+if WinActive("ahk_class Photoshop")
+{
 psApp := ComObjActive("Photoshop.Application")
 psApp.DoAction("300% Nearest Neighbor", "taran actions")
+}
 return
+
 t::
+if WinActive("ahk_class Photoshop")
+{
 psApp := ComObjActive("Photoshop.Application")
 psApp.DoAction("Surface blur - dejpeg", "taran actions")
+}
 return
 
 y::
 ;really cool script that MIXES the color under your cursor, with the one already in the forground swatch. like real painting! works perfectly and instantly... so cool!
+;one disadvantage is that it's mixing with the color AFTER software calibration has been applied. not great. also is it gamma correct? le hmmmmmmmm
 ;https://www.autohotkey.com/boards/viewtopic.php?t=4984
 
 		; sample under cursor color
@@ -1186,8 +1203,8 @@ Return
 
 
 i::sendinput, {U+2611} ; check box! ☑
-o::sendinput, {ASC 0176} ;the degree symbol!
-p::sendinput, {U+00A0} ;a blank charcter that is NOT a space. It's from braille.
+o::sendinput, {ASC 0176} ;the degree symbol! °
+p::sendinput, {U+00A0} ;a blank character that is NOT a space. It's from braille. Very useful for changing around websites sometimes.
 
 [::
 ]::tooltip, you pressed F24 then %A_thishotkey%
@@ -1231,31 +1248,44 @@ return
 
 a::
 ;this is amazing. I can launch photoshop actions DIRECTLY from AHK, without needing to go through one of the 44 very restricted shortcuts!!
-psApp := ComObjActive("Photoshop.Application")
-psApp.DoAction("WHITE TO ALPHA - WHOLE LAYER", "taran actions")
+if WinActive("ahk_class Photoshop")
+	{
+	psApp := ComObjActive("Photoshop.Application")
+	psApp.DoAction("WHITE TO ALPHA - WHOLE LAYER", "taran actions")
+	}
 return
 
 s::
-; psApp is actaully defined already in the autoexecute part of this AHK script.
-psApp := ComObjActive("Photoshop.Application")
-psApp.DoAction("expand selection 1px", "taran actions")
+if WinActive("ahk_class Photoshop")
+	{
+	psApp := ComObjActive("Photoshop.Application")
+	psApp.DoAction("expand selection 1px", "taran actions")
+	}
 return
 
 d::
-psApp := ComObjActive("Photoshop.Application")
-psApp.DoAction("smooth selection", "taran actions")
+if WinActive("ahk_class Photoshop")
+	{
+	psApp := ComObjActive("Photoshop.Application")
+	psApp.DoAction("smooth selection", "taran actions")
+	}
 return
 
 f::
-psApp := ComObjActive("Photoshop.Application")
-psApp.DoAction("invert selection", "taran actions")
+if WinActive("ahk_class Photoshop")
+	{
+	psApp := ComObjActive("Photoshop.Application")
+	psApp.DoAction("invert selection", "taran actions")
+	}
 ;this is BETTER than going through the keyboard shortcut CTRL SHIFT I. I'll probably start doing more and more stuff this way...
 return
 
 g::
-
-psApp := ComObjActive("Photoshop.Application")
-psApp.DoAction("add layer mask action", "taran actions")
+if WinActive("ahk_class Photoshop")
+	{
+	psApp := ComObjActive("Photoshop.Application")
+	psApp.DoAction("add layer mask action", "taran actions")
+	}
 return
 
 h::return
@@ -1383,15 +1413,15 @@ appskey::msgbox, "this is the appskey KEY maybe. You should never see this messa
 ;AZIO Ralt -to-> SC077:Lang4 -to-> pin to clip
 SC077::
 if WinActive("ahk_class Premiere Pro")
-{
-tippy("pin to clip")
-prFocus("effect controls")
-send, ^!p ;my premiere shortcut for pin to clip: CTRL ALT P
-}
+	{
+	tippy("pin to clip")
+	prFocus("effect controls")
+	send, ^!p ;my premiere shortcut for pin to clip: CTRL ALT P
+	}
 else
-{
-msgbox, you are not in premiere but you pressed Ralt on the AZIO keyboard.
-}
+	{
+	msgbox, you are not in premiere but you pressed Ralt on the AZIO keyboard.
+	}
 return
 
 
@@ -2091,7 +2121,7 @@ return
 ;~^+=::effectsPanelType("presets") ;this WAS macro key G3. ;Types in "presets," which reveals my own entire list of presets. ;;I have canceled this one in favor of a global pause/play. 
 
 #ifWinActive
-;Macro key G3 on the K95
+;Macro key G3:: on the K95
 ;^+L:: ;this was the old shortcut. modifier keys are bad because they can get stuck down...
 F21 & F3::
 stopPlaying()
@@ -2516,6 +2546,7 @@ F20::home ;yes, this does actually press the HOME key, rather than hitting the 4
 ; and in premiere's keyboard shortcuts panel, "home" is set to "Disable (clip)" 
 ; But you can actually assign Disable (clip) to F20 directly. So I'm not sure why I set it up that way... I may change this later.
 ;update -- i have HOME and F20 both assigned to "enable" in premiere. hopefully that'll work.
+;update again... after switching to 2021, premiere doens't have F20 assigned there anymore, i THINK. so i re-assigned it there. idk WHAT is going on now.
 
 ;;taran note: END is still free inside of premiere.
 
@@ -2554,7 +2585,8 @@ F21 & F9::sendinput, ^{down} ;select next layer
 F21 & F4::
 sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error. Edit: this may or may not be necessary now that I'm no longer using the traditional modifier keys.
 ;audioMonoMaker("left") ;this function doesn't work as well anymore and I don't need it as much lately.
-preset("50%")
+; preset("50%") ; nah.
+preset("L 90 IRE websites")
 return
 
 
@@ -2678,7 +2710,8 @@ Xbutton2::
 tellme := isPremiereUnderCursor(yesno)
 if (tellme = 0)
 	return
-
+	
+;tooltip, xbutton2 was pressed
 ; ;so the issue with this is that if I hit this button while Premiere is active, but the cursor is hovering over some OTHER application, it doesn't know that, and will send these  keystrokes to THAT window. Well, at least it'll send stuff after the left click, to that window.
 ; ;I need to have it DETECT that you have actually clicked on premiere.
 ; ;note that the code below is for the sake of compatibility with EasyWindowDrag_(KDE).ahk
@@ -2705,10 +2738,9 @@ send, {alt down}
 send, {lbutton}
 send, {alt up}
 
-;send, {home} ;disable
+send, {home} ;disable
 
-
-send, {F20} ;disable??? Alternative to the above.
+;send, {F20} ;disable??? Alternative to the above.
 
 sleep 10
 ;I have a fancy way of figuring out which tool i WAS using. Is just be a thing that listens for v t r y b x h p and saves that as a string.
@@ -2804,11 +2836,16 @@ Media_Play_Pause::k
 Media_Prev::+,
 
 
+
+
 ;;&&&&&&&&&&& KEY ASSIGNMENTS FOR PHOTOSHOP &&&&&&&&&&&&&&&&&&
 ;#IfWinActive ahk_exe Photoshop.exe ;kinda obsolete code
 #if WinActive("ahk_exe Photoshop.exe")
 
 ;;YOU CAN GET TO PHOTOSHOP SHORTCUTS BY HITTING CTRL SHIFT K
+
+^j::PhotoshopExport() ; (as jpeg)
+;the above function is found in Photoshop_Functions.ahk
 
 F1::send ^+{tab} ;control shift tab, which goes to the next tab
 F2::send ^{tab} ;control tab, which goes to the previous tab
@@ -3029,7 +3066,7 @@ sleep 5
 return
 
 
-;#IfWinActive ahk_exe Photoshop.exe
+#IfWinActive ahk_exe Photoshop.exe
 
 
 ;;---FYI----
@@ -3059,6 +3096,12 @@ return
 ;; https://youtu.be/qSuTnCFqMkw?t=1m21s <-- the original video is no longer available. (Infonaut: Red vs Blue Hollywood (part 2 of 3))
 ; #IfWinActive ahk_exe Photoshop.exe
 ; F1::sendinput, {alt down}iac{alt up}
+
+
+
+
+
+
 
 ;;&&&&&&&&&&&&&&&&&&&& PHOTOSHOP END &&&&&&&&&&&&&&&&&&&&&
 
@@ -3330,6 +3373,9 @@ ConvertSentence()
 ^+!t::
 ;always on top toggle
 Winset, Alwaysontop, , A
+tooltip, ALWAYS ON TOP TOGGLE
+sleep 100
+tooltip,v
 return
 
 ;;i used this to delete premiere title styles quickly.

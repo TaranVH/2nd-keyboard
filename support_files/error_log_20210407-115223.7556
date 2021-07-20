@@ -1,6 +1,0 @@
-Log file created at: 2021/04/07 11:52:23
-Running on machine: TVANHEMERT-WS
-Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
-E0407 11:52:23.262403 12436 common.cpp:167] Cannot create Cublas handle. Cublas won't be available.
-E0407 11:52:23.264405 12436 common.cpp:173] Cannot create Curand generator. Curand won't be available.
-F0407 11:52:23.274906 12436 syncedmem.hpp:22] Check failed: error == cudaSuccess (30 vs. 0)  unknown error

@@ -1,44 +1,18 @@
-SetWorkingDir, C:\AHK\2nd-keyboard\support_files
+#Warn All, MsgBox
 
-#NoEnv
-;Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyboard!
-;#Warn All, MsgBox ; had to turn this off because it warns me of a bunch of global/local variable name stuff in the ACC library, which isn't even mine.
-SendMode Input 
-#SingleInstance force ;only one instance of this script may run at a time!
-#MaxHotkeysPerInterval 2000
-#WinActivateForce ;https://autohotkey.com/docs/commands/_WinActivateForce.htm
-Menu, Tray, Icon, imageres.dll, 251 ;makes the icon into two blue window thingies. would prefer a PS icon if only i knew how to make custom icons.
+^+e::
 
-;Menu, Tray, Icon, C:\My Icon.ico
-;https://superuser.com/questions/1102307/change-the-picture-from-the-icon-tray
+; for example
+PhotoshopExport()
+return
+; or 
+;PhotoshopExport("C:\foo\", "jpeg")
 
-
-
-;-------------------------------------------------------------------------
-; HELLO PEOPLES!
-; IF YOU ARE NEW TO AUTOHOTKEY, YOU MUST AT LEAST TAKE THE FOLLOWING TUTORIAL:
-; https://autohotkey.com/docs/Tutorial.htm
-;
-; You will need to know some basic scripting to custom tailor most
-; of these scripts to your own machine, if you want to use them!
-; VERY IMPORTANT NOTE:
-; This file works in tandem with ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk.
-; All the functions from HERE are actually CALLED from keyboard shortcuts
-; in THAT script. I had to do it this way because of the Stream Deck(s)...
-; But you can put your key bindings and functions in the same script if
-; you want.
-;------------------------------------------------------------------------
-
-
-
-PhotoshopExport(baseDir := "", format := "jpeg", forcePath := false)
-{
-;shout outs to Michael Bunzel for making this whole script for me! YEEAH BOIIIIIII
 ; baseDir: optional path to save the image if the document is unsaved or forcePath is true
 ; format: psd, png, jpeg or tif. more are available through the api but I'm lazy
 ; forcePath: force saving the file to baseDir
-;;; #Warn All, MsgBox
-
+PhotoshopExport(baseDir := "", format := "jpeg", forcePath := false)
+{
 	try {
 		psApp := ComObjActive("Photoshop.Application")
 	}
@@ -108,8 +82,7 @@ PhotoshopExport(baseDir := "", format := "jpeg", forcePath := false)
 
 	try {
 		; 2 stands for ExportType SAVEFORWEB
-		; doc.export(exportFullPath , 2, options)
-		doc.saveAs(2)
+		doc.export(exportFullPath , 2, options)
 	}
 	catch e {
 		MsgBox, % "Error exporting the image: " e.message
@@ -118,4 +91,3 @@ PhotoshopExport(baseDir := "", format := "jpeg", forcePath := false)
 	ObjRelease(options)
 	ObjRelease(psApp)
 }
-; end of PhotoshopExport()
