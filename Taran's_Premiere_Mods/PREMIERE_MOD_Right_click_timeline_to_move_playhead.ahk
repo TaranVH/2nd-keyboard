@@ -39,6 +39,9 @@ timeline6 = 0xE4E4E4 ;the color of a SELECTED blank space on the timeline, IN th
 timeline7 = 0xBEBEBE ;the color of a SELECTED blank space on the timeline, IN the in/out points, on an UNTARGETED track
 
 
+
+
+
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;exact name was gotten from windowspy
 ;--------EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO!----------
 
@@ -111,3 +114,56 @@ Return
 ; theEnd2:
 ; Return
 
+
+
+
+
+
+; #IfWinNotActive ahk_exe Adobe Premiere Pro.exe
+
+; ~Rbutton::
+; tellme := isPremiereUnderCursor(yesno)
+; if (tellme = 0)
+	; {
+	; sendinput {Rbutton} ;function as normal. sadly does not maintain the holding down of right click, in cases where it may be important.
+	; return ;do nothing else
+	; }
+; ;tooltip, yes it is
+; send, {mButton} ;middle mouse button will bring focus to Premiere
+; return
+
+
+
+
+
+; isPremiereUnderCursor(yesno := 1)
+; {
+; ;so the issue with this is that if I hit this button while Premiere is active, but the cursor is hovering over some OTHER application, it doesn't know that, and will send these  keystrokes to THAT window. Well, at least it'll send stuff after the left click, to that window.
+; ; ;I need to have it DETECT that you have actually clicked on premiere.
+; MouseGetPos,,,KDE_id
+; WinGet,KDE_Win,MinMax,ahk_id %KDE_id%
+; ; If KDE_Win
+    ; ; return ;I am not sure exactly what this is for
+; ; ;tooltip, %KDE_Win%
+; WinGetClass,fancyclass,ahk_id %KDE_id%
+; ;tooltip, fancyclass = %fancyclass%
+; ;sleep 1000
+; If (fancyclass = "DroverLord - Window Class") ;this is in case you use this on a floating Premiere window NOT connected to the main premiere window!
+	; {
+	; tooltip, on floating window
+	; sleep 100
+	; tooltip,
+	; return 1
+	; }
+; else If (fancyclass != "Premiere Pro")
+	; {
+	; ;tooltip, NOT IN PREMIERE
+	; ;sleep 100
+	; ;tooltip,
+	; ;winactivate?
+	; WinActivate, ahk_id %KDE_id%
+	; return 0
+	; }
+; else
+	; return 1
+; }

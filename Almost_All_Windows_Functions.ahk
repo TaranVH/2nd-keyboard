@@ -1447,6 +1447,14 @@ windowSwitcher(theClass, theEXE)
 ;;YOU MIGHT WANT TO USE openApp() INSTEAD, lol
 
 sleep 10 ;this is to avoid the stuck modifiers bug
+if theEXE = Discord.exe
+	{
+	;if WinActive("ahk_exe Discord.exe")
+	WinActivate, ahk_exe Discord.exe
+	
+	}
+
+
 if theClass = ahk_class Notepad++
 	{
 	;msgbox,,, is notepad++,0.5

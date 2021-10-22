@@ -28,11 +28,12 @@ https://docs.google.com/spreadsheets/d/18e6-OlUzc_1wbGvm9zqMOwtC4oysm6C7XMU1bOf8
 
 #### Other potential methods that I have not personally tested
 - MacroMyKBD https://github.com/lal12/macroMyKBD
-- 2key, which uses a Raspberry Pi. https://github.com/Gum-Joe/2Keys/blob/v0.3.5/docs/SETUP.md
-- https://mediachance.com/multikeyboard/ More info: https://twitter.com/iamnottani/status/1271530470052974595 and https://twitter.com/weirdoyt/status/1257282783044493312
-- Here's an alternative to LuaMacros:
+- 2key, which uses a Raspberry Pi https://github.com/Gum-Joe/2Keys/blob/v0.3.5/docs/SETUP.md
+- An alternative to the Hasu USB converter: https://github.com/oschwartz10612/Scanner-Pro-MK3
+- An alternative to LuaMacros:
 https://github.com/VollRahm/NotEnoughHotkeys/
-- Here is an alternative to the Hasu USB converter: https://github.com/oschwartz10612/Scanner-Pro-MK3
+- Mulitkeyboard https://mediachance.com/multikeyboard/ apparently has many problems. More info: https://twitter.com/iamnottani/status/1271530470052974595 and https://twitter.com/weirdoyt/status/1257282783044493312
+
 
 
 If all of this just seems like a huge PITA, just buy a Stream Deck instead: https://youtu.be/vhPLhfP1b_s

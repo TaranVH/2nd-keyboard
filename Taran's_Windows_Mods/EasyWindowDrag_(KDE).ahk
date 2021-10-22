@@ -12,6 +12,11 @@
 ;https://www.autohotkey.com/boards/viewtopic.php?f=14&t=13810
 ;
 
+; possibly BETTER script here:
+; https://github.com/AadiSahni/2nd-keyboard/blob/main/Windows_Mods/KDE-Mover-Sizer.ahk
+ 
+
+
 ; okay, so ACTIVE WINDOW POSITION seems to be the only thing shared amongst all windows, yeah... need to uh, see if I can use THAT, thank you very much.
 ;also look into A_ScreenDPI 
 
@@ -315,7 +320,7 @@ return
 ;------------------------
 
 Xbutton1::
-;tooltip, xbutton1
+;tooltip, xbutton1 ;my button has been acting up. this is here so i know if it's been released when it shoudln't be. might need another mouse soon... hopefulyl i can just clean this one out... —EDIT: I got a new mouse. it was old and beyond repair.
 killFullScreen()
 
 ; If DoubleAlt
@@ -389,6 +394,7 @@ Loop
     KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
     KDE_Y1 := (KDE_Y2 + KDE_Y1)
 }
+tooltip,
 return
 
 

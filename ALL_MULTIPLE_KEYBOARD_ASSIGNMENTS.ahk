@@ -299,6 +299,11 @@ letext := "Emily Seddon - @emilypls"
 sendinput, %letext%
 return
 
+F4::
+letext := "Marcus Blackstock - @kacboy"
+sendinput, %letext%
+return
+
 
 ;F2::insertSFX("Whoosh19-Short") ;you may not use spaces for filenames of sounds that you want to retreive in this way... since searching in premiere will disregard spaces in a a weird way... returning multiple wrong results....
 ; F3::insertSFX("Whoosh7-Short")
@@ -309,7 +314,19 @@ return
 ; F9::insertSFX("SimpleWhoosh3")
 ; F8::insertSFX("SimpleWhoosh8")
 ; F10::insertSFX("woosh2")
-; F11::insertSFX("woosh1")
+
+F11::
+;https://autohotkey.com/board/topic/64576-the-definitive-autofire-thread/
+;autoclicker
+ ; While GetKeyState("F11","p"){
+  ; click
+  ; Sleep 50
+ ; }
+ 
+return
+
+
+
 ;F12::instantExplorer("N:\Team_Documents\N_TARAN_THINGS\prompter and cutting_room_floor") ;"FLOOR"
 F12::instantExplorer("C:\Users\Taran\Downloads") ;open the downloads folder, yup.
 
@@ -322,7 +339,8 @@ F12::instantExplorer("C:\Users\Taran\Downloads") ;open the downloads folder, yup
 ;;;;K120 keyboard;;;;;
 
 `::msgbox tilde or weird quote thing?? K120
-1::preset("T wipe straight left")
+;1::preset("T wipe straight left")
+1::DrakeynPreset("T wipe straight left")
 2::preset("T wipe straight down")
 3::preset("T wipe straight up")
 4::preset("T wipe straight right")
@@ -620,8 +638,11 @@ SC05C::
 ;WinMinimize, A
 return
 
+
 numpadins:: ;(this is SHIFT NUMPAD0)
-numpad0::SendKey("numpad0", , "sky blue")
+numpad0::openApp("ahk_class Photoshop", "Photoshop.exe")
+;;;numpad0::SendKey("numpad0", , "sky blue") ;;old assignment
+
 
 numpadend:: ;(this is SHIFT NUMPAD1)
 numpad1::
@@ -733,7 +754,11 @@ numpadAdd::openApp("ahk_class Notepad++", "notepad++.exe") ;msgbox, , , num ADD,
 numpadEnter::switchToFirefox()
 
 numpaddel::
-numpadDot::return ;msgbox, , , num dot, 0.5
+numpadDot::
+;hyello
+WinMinimize, A
+
+return ;msgbox, , , num dot, 0.5
 
 
 
@@ -1220,7 +1245,7 @@ capslock::gotoChromeTab("Production Planner | Trello","https://trello.com/b/NevT
 ;;;this is(was) Lshift::
 ;Lshift:: / LEFTSHIFT -to-> SC070 / International2 -to-> Chrome calendar open
 ; SC070::gotofiretab("Calendar - October 2020","https://calendar.google.com/calendar/b/0/r")
-SC070::gotoChromeTab("Calendar - June 2021","https://calendar.google.com/calendar/u/0/r")
+SC070::gotoChromeTab("Calendar - October 2021","https://calendar.google.com/calendar/u/0/r")
 ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
@@ -1248,11 +1273,11 @@ return
 
 a::
 ;this is amazing. I can launch photoshop actions DIRECTLY from AHK, without needing to go through one of the 44 very restricted shortcuts!!
-if WinActive("ahk_class Photoshop")
-	{
+;if WinActive("ahk_class Photoshop")
+;	{
 	psApp := ComObjActive("Photoshop.Application")
 	psApp.DoAction("WHITE TO ALPHA - WHOLE LAYER", "taran actions")
-	}
+;	}
 return
 
 s::
@@ -1452,8 +1477,6 @@ return
 
 
 SC07B::WinMinimize, A
-
-
 ; SC07B:: ;rCTRL:: -to-> SC07B:International5
 ; ;tooltip, rightCTRL -> SC078:Lang3 -> OBS
 ; if Not WinExist("ahk_exe obs64.exe")
@@ -1998,6 +2021,7 @@ SC064::back()
 
 ;macro key G18
 ^F3::switchToPremiere()
++^F3::send, {F12} ;full screen
 
 ;macro key G15
 ^F4::switchToWord()
@@ -2132,13 +2156,13 @@ return
 
 #ifWinNotActive ahk_exe Adobe Premiere Pro.exe
 ;macro key G4
-F21 & F4::msgbox,,,TBD. Macro G4 not yet assigned outside premiere,0.7 ;It was CTRL SHIFT ,
+;F21 & F4::msgbox,,,TBD. Macro G4 not yet assigned outside premiere,0.7 ;It was CTRL SHIFT ,
 
 ;macro key G5
-F21 & F5::msgbox,,,TBD. Macro G5 not yet assigned outside premiere,0.7 ;It was CTRL SHIFT .
+;F21 & F5::msgbox,,,TBD. Macro G5 not yet assigned outside premiere,0.7 ;It was CTRL SHIFT .
 
 ;macro key G6
-F21 & F6::Lbutton
+;F21 & F6::Lbutton
 ;G6 is assigned to single left click when not in premiere. I mostly use it in Firefox when perusing the apmmusic.ca library, since my hand is over there anyway. Gotta save my hands from RSI!
 
 ;Macro key G10
@@ -2351,7 +2375,7 @@ G18: Activate/switch to Premiere
 ;tab::7 ;"7" is set to enable/disable for now. just testing stuff
 appskey::sendinput, ^!k ;in premiere's shortcuts panel, CTRL ALT K is set to "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
 
-^w::closeTitler()
+;^w::closeTitler()
 
 ;Pressing ALT W will send CTRL ALT SHIFT W, which is set to "Trim Next Edit to Playhead" in Premiere. This is to get around Premiere's horrible menu acceleration, and annoying warning noise. Otherwise, I would have just assigned these commands directly to ALT Q and ALT W.
 !w::^!+w ;"Trim Next Edit to Playhead" (not RIPPLE trim.)
@@ -2476,10 +2500,11 @@ return
 
 /*
 ;Premiere, Sorted by Macro key
-G7:  F17 - rotation
-G8:  F19 - V1 A1 locker
-G9:  F21 & F9 - add 7 gain
-G10: F18 - Horizontal Anchor
+
+G7:  F19 - V1 A1 locker
+G8:  F18 - Horizontal Anchor
+G9:  F17 - rotation
+G10: F21 & F9 - 90 IRE
 G11: F15 - Vertical Anchor
 G12: F14 - Scale
 G13: F13 - "Back" in a bin
@@ -2530,14 +2555,14 @@ return
 
 
 
-;Macro key G10
+;Macro key G8
 ~F18::
 global VFXkey = "F18"
 instantVFX("anchor_point")
 return
 
 
-;Macro key G8
+;Macro key G7
 ~F19::tracklocker()
 ~+F19::tracklocker() ;idk why i have this working for SHIFT as well, but i suspect it actually works differently within the function, if shift is being held down? IDK MAN.
 
@@ -2566,7 +2591,7 @@ F17::send +r
 ;macro key G7
 F19::sendinput, ^{up} ;select prev layer
 
-;Macro key G9
+;Macro key G10
 F21 & F9::sendinput, ^{down} ;select next layer
 
 
@@ -2586,7 +2611,7 @@ F21 & F4::
 sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error. Edit: this may or may not be necessary now that I'm no longer using the traditional modifier keys.
 ;audioMonoMaker("left") ;this function doesn't work as well anymore and I don't need it as much lately.
 ; preset("50%") ; nah.
-preset("L 90 IRE websites")
+preset("90 IRE")
 return
 
 
@@ -2624,12 +2649,12 @@ sleep 11 ;;this may or may not be necessary
 search()
 return
 
-;Macro key G9
+;Macro key G10
 F21 & F9::
-sleep 11 ;this may not be necessary to avoid the stuck keys bug, as neither F21, nor F7 are used in this macro. However, I guess it's possible that F7 could get stuck down? which would be bad, i guess? Hmmmm.
-Send {F2}7{enter} ;adds 7 gain. ; +7db 
-
-;note to self, maybe have some code here to fix a stuck shift or CTRL key...
+sleep 11 ;this may not be necessary to avoid the stuck keys bug, as neither F21, nor F9 are used in this macro. However, I guess it's possible that F9 could get stuck down? which would be bad, i guess? Hmmmm.
+preset("a0p0 pan down")
+;;Send {F2}7{Enter} ;adds 7 gain. ; +7db 
+;;note to self, maybe have some code here to fix a stuck shift or CTRL key...
 ;update to note, that is no longer needed!
 return
 
@@ -2761,7 +2786,16 @@ WinGet,KDE_Win,MinMax,ahk_id %KDE_id%
     ; return ;I am not sure exactly what this is for
 ; ;tooltip, %KDE_Win%
 WinGetClass,fancyclass,ahk_id %KDE_id%
-If (fancyclass != "Premiere Pro")
+;tooltip, fancyclass = %fancyclass%
+;sleep 1000
+If (fancyclass = "DroverLord - Window Class") ;this is in case you use this on a floating Premiere window NOT connected to the main premiere window!
+	{
+	tooltip, on floating window
+	sleep 100
+	tooltip,
+	return 1
+	}
+else If (fancyclass != "Premiere Pro")
 	{
 	tooltip, NOT IN PREMIERE
 	sleep 100
@@ -3068,6 +3102,14 @@ return
 
 #IfWinActive ahk_exe Photoshop.exe
 
+;macro key G4
+;F21 & F4:
+
+;macro key G5
+F21 & F5::send, !{backspace} ;alt backspace is "fill with foreground" in photoshop
+
+;macro key G6
+F21 & F6::send, ^{backspace} ;ctrl backspace is "fill with background" in photoshop
 
 ;;---FYI----
 ;;In Photoshop,
@@ -3371,11 +3413,11 @@ ConvertSentence()
 #ifwinactive
 
 ^+!t::
-;always on top toggle
+;always on top toggle / in front
 Winset, Alwaysontop, , A
 tooltip, ALWAYS ON TOP TOGGLE
 sleep 100
-tooltip,v
+tooltip,
 return
 
 ;;i used this to delete premiere title styles quickly.
@@ -3538,5 +3580,3 @@ return
 
 
 ;;;/////////END OF FIREFOX SUPER SLOW SCROLLING EXPERIMENT//////////////
-
-

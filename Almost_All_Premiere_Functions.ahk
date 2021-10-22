@@ -246,7 +246,11 @@ if (useSpace = "1")
 
 
 
-
+effectsPanelFindBox()
+{
+prFocus(effects)
+sendinput, ^b ;select find box
+}
 
 
 
@@ -255,7 +259,7 @@ effectsPanelType(item := "lol")
 ;THIS IS A VERY SIMPLE FUNCTION FOR JUST TYPING STUFF INTO THE SEARCH BAR
 ;but it doesn't apply them to the clips, unlike preset()
 
-MODSL() ;this is probably no longer needed, but IDK for sure.
+;MODSL() ;this is probably no longer needed, but IDK for sure.
 
 ;prFocus("effects") ;reliably brings focus to the effects panel. This is an alternative to the next line.
 Sendinput, ^+!7 ;CTRL SHIFT ALT 7 -- set in premiere to "effects" panel
@@ -551,6 +555,98 @@ IfInString, item, CROP
 theEnding:
 }
 ;END of preset(). The two lines above this one are super important.
+
+
+
+; https://github.com/Drakeyn/AdobeMacros/blob/master/Premiere%20Pro/Functions/ApplyPreset.ahk
+; this is a sort of preset2() I am testing.
+DrakeynPreset(item)
+{
+
+SendMode Event
+
+;Waits to make sure any previous hotkeys have been released
+;keywait, %A_PriorHotKey%
+
+;Just in case we're not in Premiere Pro
+if(WinActive("ahk_exe Adobe Premiere Pro.exe") = 0)
+	goto apEnd
+
+;Sets up the coord modes, making sure our pixel distances are consistent
+coordmode, pixel, Window
+coordmode, mouse, Window
+coordmode, Caret, Window
+
+;Disables mouse and keyboard input to make sure the function runs properly
+BlockInput, SendAndMouse
+BlockInput, MouseMove
+BlockInput, On
+
+;Sets the keypress delay for Send/Sendinput commands to be zero.
+SetKeyDelay, 0
+
+;Gets the current position of the mouse and stores it in ox and oy (Original X and Original Y)
+MouseGetPos, oX, oY 
+
+; ;Selects the Effects Panel -> Find Box
+; SendInput, %kbSelectEffectsPanel%
+; SendInput,%kbSelectFindBox%
+effectsPanelFindBox()
+
+;Types the preset we're looking for into the find box
+Send %item%
+
+;this is where we'd usually need to wait for premiere to update the presets list.
+;If, however, it's pre-opened like mine (and reset to be pre-opened at the end of this function)
+;then premiere will update the list instantly
+;however, if not, or we want it to be reliable no matter what the current state is, we need to delay
+;70 ms seems to be about right for my system, you may want to increase/decrease for your own
+sleep 70
+
+;get effects panel position
+ControlGetPos, cX, cY, cW, cH, %wdEffectsPanel%, ahk_class Premiere Pro
+msgbox, %cX%, %cY%, %cW%, %cH%
+;find top preset icon
+;ImageSearch, iX, iY, cX, cY, cX + cW, cY + cH, %A_WorkingDir%\preset.png
+ImageSearch, iX, iY, cX, cY, cX + cW, cY + cH, C:\AHK\2nd-keyboard\support_files\preset.png
+msgbox, %ErrorLevel%
+if(ErrorLevel == 1)
+	goto apEnd
+if(ErrorLevel == 2)
+	goto apEnd
+
+;move mouse to preset
+MouseMove, iX, iY + 5, 0
+
+;drag preset back
+MouseClickDrag, Left, , , oX, oY, 0
+
+apEnd:
+
+;Resets and pre-opens the presets list for easier editing - this is just for how [Draken] works
+;SendInput, %kbSelectEffectsPanel%
+prFocus(effects)
+
+;SendInput, %kbSelectFindBox%
+sendinput, ^b ;select find box
+
+;;could use effectsPanelType() but it's not really the same thing because it deletes whatever is in there.
+;;could use
+;effectsPanelFindBox()
+;;and i might later.
+
+Send AAA Taran
+
+;Puts the mouse back where it started
+MouseMove oX, oY, 0
+
+;Re-selects the timeline panel
+MouseClick, middle, , , 1 
+
+;Re-enables input
+BlockInput, MouseMoveOff 
+BlockInput, off 
+}
 
 
 
