@@ -2469,9 +2469,9 @@ return
 F5::clickTransformIcon2()
 F6::cropClick()
 
-;F7:: is export frame (to .png)
+;F7:: is export frame (to .png) - this is more likely to change.
 
-;F8:: IS FREE. I had it on "selection follows playhead" but that's not useful enough.
+;F8:: is also export frame (to .png)
 
 ;;DELETE SINGLE CLIP AT CURSOR
 F9::

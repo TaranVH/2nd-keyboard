@@ -2,7 +2,7 @@
 
 If you need context, watch my Hasu USB converer video, linked here: https://youtu.be/GZEoss4XIgc
 
-This readme file has an associated video, available here: https://youtu.be/GttedCcyxa4
+This readme file has an associated video, available here: https://youtu.be/1Cr2S0O--vc
 
 [If there are updates / corrections, they will be in this paragraph]
 

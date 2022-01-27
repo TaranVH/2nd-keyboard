@@ -2,7 +2,7 @@
 
 MAIN TUTORIAL VIDEO IS HERE - YOU MUST WATCH THIS FIRST!: https://youtu.be/GZEoss4XIgc
 
-An accompanying video tutorial for creating the hex file is here: https://youtu.be/kTXK8kZaZ8c
+An accompanying video tutorial for creating the hex file is here: https://youtu.be/mVGK7Vo6DFY
 
 The converter: https://www.1upkeyboards.com/shop/controllers/usb-to-usb-converter/
 The K120: (But any cheap keyboard will work) https://www.logitech.com/en-ca/product/k120
@@ -14,7 +14,8 @@ Oh, there's also a QMK one, but I don't know if it has full functionality either
 https://config.qmk.fm/#/converter/usb_usb/hasu/LAYOUT_all
 
 As another alternative, you can just use this .hex file that I already created for you:
- https://github.com/TaranVH/2nd-keyboard/blob/master/HASU_USB/F24/F24.hex
+
+https://github.com/TaranVH/2nd-keyboard/blob/master/HASU_USB/F24/F24.hex
 
 Here are some alternative instructions for how to set up the environment, using MSYS2 rather than Ubuntu in Windows: https://beta.docs.qmk.fm/newbs/newbs_getting_started#set-up-your-environment (I tried it and failed to get it working)
 

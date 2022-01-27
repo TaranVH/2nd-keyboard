@@ -1,7 +1,7 @@
 # Creating a secondary, macro keyboard with Corsair iCue
 
 If you need context, watch my Hasu USB converer video: https://youtu.be/GZEoss4XIgc
-And here is the assocated tutorial that goes with this readme: https://www.youtube.com/watch?v=cQ2atofn3lE
+And here is the assocated tutorial that goes with this readme: https://youtu.be/I9HYN6qA5CY
 
 [Before you begin, please check the description of the video in case there are any corrections or updates.]
 
