@@ -38,6 +38,7 @@ install-interception.exe /install
 - Unzip intercept.zip to some location on your computer.
 - Plug in your second keyboard and ensure that it is working normally.
 - Double click on intercept.exe. It will open a command prompt thingy.
+  (Note: If you get "System Error" messages about missing .dll files or an "Application Error" reading "The application was unable to start correctly (0xc000007b).", you need to download the files msvcr100.dll and msvcp100.dll (hosted in this directory) and put them into the same folder as intercept.exe. See the next section for details.)
 - Type <kbd>a</kbd> to add a key.
 - On the SECONDARY keyboard, press the <kbd>Q</kbd> key once.
 - You will be prompted with "Enter combo for this trigger, end with ESC."
@@ -56,6 +57,41 @@ install-interception.exe /install
 - Now repeat the above steps, but using the keys <kbd>W</kbd>, <kbd>E</kbd>, and <kbd>R</kbd>.
 - If you make a mistake, you can always just open the .ini file in a text editor and delete any bad entries.
 
+### DLLs NEEDED TO RUN INTERCEPT.EXE -- (You don't need this if intercept.exe works for you already.)
+
+The version of intercept.exe hosted here needs the **32-bit** versions of the following DLLs to run successfully:
+
+- msvcr100.dll
+- msvcp100.dll
+
+These 32-bit versions may be missing on newer 64-bit Windows systems. Confusingly, your system might have
+**64-bit** versions of these files installed in `C:\Windows\System32` (sic!). In
+this case, intercept.exe will either complain that it cannot find these files
+or it will stop with an "Application Error" reading "The application was unable
+to start correctly (0xc000007b)."
+
+The correct 32-bit versions of these DLLs must be in the same folder as intercept.exe (or somewhere in the system's search
+path for DLLs) in order to run intercept.exe. The two DLLs are part of Microsoft's "Visual C++ Redistributable" package
+for "Visual Studio 2010 (VC++ 10.0) SP1".
+
+For your convenience, the two DLLs are hosted in this directory. Just download them and put them next to `intercept.exe`
+in the same folder. Do NOT replace the existing DLLs in `C:\Windows\System32` with the downloaded files! (Other programs
+may need these 64-bit versions to work correctly.)
+
+If you prefer to get the DLLs directly from Microsoft, instead, proceed as follows:
+
+- Go to https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170
+ (If this link should become bad, search the Microsoft site for "Visual C++ Redistributable Downloads".)
+- Find the downloads for "Visual Studio 2010 (VC++ 10.0) SP1".
+- Download the file `vcredist_x86.exe`.
+- Do NOT run this file (unless you really want to install these very old components system-wide).
+- Instead, use 7-Zip to open `vcredist_x86.exe` as an archive! (This may or may not work with other archiver tools, but I only have 7-Zip to test.)
+- Within the archive, find the file `vc_red.cab`. It is in the top-level directory of the archive but
+  for some strange reason, you may have to open the `.` (dot) folder in the archive several times until you see it.
+- Still in 7-Zip, double-click `vc_red.cab` to open it as an archive.
+- You should now see a list of files including `F_CENTRAL_msvcr100_x86` and `F_CENTRAL_msvcp100_x86`.
+- Extract these two files to the same folder as `intercept.exe` and rename them to `msvcr100.dll` and `msvcp100.dll`, respectively.
+- Now, double-clicking `intercept.exe` should successfully start the program.
 
 ### CREATING THE AUTOHOTKEY SCRIPT
 - Download and install autohotkey if you don't have it:
