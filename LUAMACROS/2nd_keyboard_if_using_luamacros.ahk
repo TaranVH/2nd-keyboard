@@ -26,10 +26,6 @@ Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyb
 ; Lots of other explanatory videos other AHK scripts can be found on my youtube channel! https://www.youtube.com/user/TaranVH/videos 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-; message from windingtheropes
-; i've left the core parts of the script the same, but i've changed how luamacros contacts autohotkey, now it runs the script over command line, passing the key as an argument.
-; like noted in the lua script, you might need to add autohotkey.exe to your PATH environment variable
-
 ;-------------2ND KEYBOARD USING LUAMACROS-----------------
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO. But you can change this to anything you like. You can use Window Spy to determine the ahk_exe of any program, so that your macros will only work when and where you want them to.
