@@ -34,13 +34,13 @@ lmc.minimizeToTray = true
 --Start Script
 sendToAHK = function (key)
       --print('It was assigned string:    ' .. key)
-      local file = io.open("C:\\AHK\\2nd-keyboard\\LUAMACROS\\keypressed.txt", "w") -- writing this string to a text file on disk is probably NOT the best method. Feel free to program something better!
+--       local file = io.open("C:\\AHK\\2nd-keyboard\\LUAMACROS\\keypressed.txt", "w") -- writing this string to a text file on disk is probably NOT the best method. Feel free to program something better!
       --If you didn't put your AutoHotKey scripts into C:/AHK, Make sure to substitute the path that leads to your own "keypressed.txt" file, using the double backslashes.
 	  --print("we are inside the text file")
-      file:write(key)
-      file:flush() --"flush" means "save." Lol.
-      file:close()
-	lmc_spawn('AutoHotkey.exe','C:\\LOCATION\\TO\\AHK\\SCRIPT.ahk') --change this to wherever your ahk script is, you might need to add AutoHotkey.exe to your path
+--       file:write(key)
+--       file:flush() --"flush" means "save." Lol.
+--       file:close()
+	lmc_spawn('AutoHotkey.exe','C:\\PATH\\TO\\AHK\\SCRIPT.ahk', key) --change C:\\PATH\\TO\\AHK\\SCRIPT.ahk to wherever your ahk script is, you might need to add AutoHotkey.exe to your path
 --       lmc_send_keys('{F24}')  -- Disable this, as we can trigger the ahk script using lmc_spawn, above
 end
 
