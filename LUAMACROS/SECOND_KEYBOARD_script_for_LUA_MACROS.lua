@@ -40,7 +40,8 @@ sendToAHK = function (key)
       file:write(key)
       file:flush() --"flush" means "save." Lol.
       file:close()
-      lmc_send_keys('{F24}')  -- This presses F24. Using the F24 key to trigger AutoHotKey is probably NOT the best method. Feel free to program something better!
+	lmc_spawn('AutoHotkey.exe','C:\\LOCATION\\TO\\AHK\\SCRIPT.ahk') --change this to wherever your ahk script is, you might need to add AutoHotkey.exe to your path
+--       lmc_send_keys('{F24}')  -- Disable this, as we can trigger the ahk script using lmc_spawn, above
 end
 
 local config = {
