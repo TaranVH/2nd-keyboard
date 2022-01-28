@@ -26,6 +26,9 @@ Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyb
 ; Lots of other explanatory videos other AHK scripts can be found on my youtube channel! https://www.youtube.com/user/TaranVH/videos 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+; message from windingtheropes
+; i've left the core parts of the script the same, but i've changed how luamacros contacts autohotkey, now it runs the script over command line, passing the key as an argument.
+; like noted in the lua script, you might need to add autohotkey.exe to your PATH environment variable
 
 ;-------------2ND KEYBOARD USING LUAMACROS-----------------
 
@@ -35,8 +38,13 @@ Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyb
 
 #IfWinActive ;---- This will allow for everything below this line to work in ANY application.
 
-; ~F24:: we don't need this, because the script is now activated via the command line. in the future it *could* be possible to eliminate the need for the keypress file, using command line arguments. 
-FileRead, key, C:\AHK\2nd-keyboard\support_files\keypressed.txt
+; ~F24:: this can be disabled since we now activate this script via the command line, every time a key is pressed
+; FileRead, key, C:\AHK\2nd-keyboard\support_files\keypressed.txt for the same reason we no longer need this
+key = null ; initialize the key variable
+for n, param in A_Args  ; For each parameter passed over command line, the lua script does this (autohotkey.exe script.ahk key)
+{   
+    key = %param%
+}
 tippy(key) ;<--- this function will just launch a quick tooltip that shows you what key you pressed. OPTIONAL.
 If (key = "o")
 preset("flip horizontal") 
@@ -189,6 +197,7 @@ Send {NumpadDiv}
 else if(key = "numMult")
 Send {NumpadMult}
 
+ExitApp ; make sure the script closes when it's done so it doesn't fill up the tray.
 Return ;from luamacros F24
 ;THE BLOCK OF CODE ABOVE is the original, simple Luamacros-dependant script.
 
