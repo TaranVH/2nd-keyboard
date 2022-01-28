@@ -21,6 +21,7 @@ A quickstart guide for using a second keyboard purely for macros on Windows.
 9. Scroll down and find and change the filepath `C:\AHK\2nd-keyboard\LUAMACROS\keypressed.txt` to the correct location of keypressed.txt on your own computer. (If it is different.)
 10. `2nd_keyboard_if_using_luamacros.ahk` only has bare functions for proof of concept. You can write your own functions, or copy/paste some from from `Almost_All_Premiere_Functions.ahk`, but you'll probably need to modify them to fit your own system, by changing coordinates, windowClasses, colors, shortcuts, and so on.
 
+11. There is a startup script (runonstartup.bat) that you could use, requiring luamacros.exe in your PATH as well.
 
 ### Don't Panic!
 
