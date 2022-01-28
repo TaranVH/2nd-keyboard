@@ -35,7 +35,7 @@ Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyb
 
 #IfWinActive ;---- This will allow for everything below this line to work in ANY application.
 
-~F24::
+; ~F24:: we don't need this, because the script is now activated via the command line. in the future it *could* be possible to eliminate the need for the keypress file, using command line arguments. 
 FileRead, key, C:\AHK\2nd-keyboard\support_files\keypressed.txt
 tippy(key) ;<--- this function will just launch a quick tooltip that shows you what key you pressed. OPTIONAL.
 If (key = "o")
