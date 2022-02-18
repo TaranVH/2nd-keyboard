@@ -15,7 +15,7 @@ I pioneered the use of a 2nd keyboard purely for macros, and later, the concept 
 
 Adding a 2nd, independent keyboard is remarkably difficult, as Windows has no native support for distinguishing between multiple keyboards. There are many possible solutions, which vary greatly in difficulty, functionality, stability, and price. Here's a spreadsheet that breaks it all down for you. My preferred solution (QMK) might not be best for you:
 
-https://docs.google.com/spreadsheets/d/18e6-OlUzc_1wbGvm9zqMOwtC4oysm6C7XMU1bOf8Nrc/edit?usp=sharing
+https://docs.google.com/spreadsheets/d/1jQ7-oyg92GWNsyaBCxExailzyZ5kYvSDXkTyMxQSR7Y/edit?usp=sharing
 
 
 #### So, to summarize, if you want to make your own macro keyboard, these are all the methods that I know of:
