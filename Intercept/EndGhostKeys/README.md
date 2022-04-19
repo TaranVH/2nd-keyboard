@@ -176,7 +176,7 @@ After finalizing all these steps, restart Interception, apply your filters, and 
 
 If you are facing problems getting the script to work, don't hesitate to open a new issue, or try to look through the previous versions in the [history](https://github.com/MasterBubbles/End-Ghost-Keys/commits/main/endghostkeys.sh) of `endghostkeys.sh` on the original repo (the previous versions were creating the lines within files instead of variables, but it's a little messy). Your last resort could be to manually edit your keyremap.ini using the examples shown above, but as a pro-automation I wouldn't suggest it...
 
---------
+-------
 
 Also, don't forget to have fun! ;-)
 
