@@ -294,8 +294,6 @@ F1::msgbox, You pressed F1 on your secondary keyboard while inside of Premiere P
 ;;At the very least, you'll have some duplicate keys.
 
 
-#if
-
 ;;*******************************************************************************
 ;;~~~~~~~~~~~~~DEFINE YOUR NORMAL KEY ASSIGNMENTS BELOW THIS LINE~~~~~~~~~~~~~~~~
 ;;*******************************************************************************
