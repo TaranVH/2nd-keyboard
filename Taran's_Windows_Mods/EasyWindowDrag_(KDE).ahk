@@ -77,6 +77,18 @@ If (class2 = "Premiere Pro")
 	goto skipitfull
 	}
 
+;tooltip, what
+If (class2 = "Factorio")
+	{
+	;tooltip, HEY
+	;Factorio 1.1.59
+	;ahk_class Factorio
+	;ahk_exe Factorio.exe
+	;ahk_pid 28412
+	WinActivate, ahk_class %class2%
+	goto skipitfull
+	}
+
 If (class2 = "SUMATRA_PDF_FRAME")
 	{
 	; tooltip, it's SumatraPDF`, just hit F11.
@@ -216,8 +228,8 @@ return
 
 ;Note that another #if thingy will only apply to all the code directly beneath it, until you hit another #if thingy. So the below line replaces the one above. I am keeping the above one because it's more likely what you're gonna want to use.
 
-#if not (WinActive("ahk_class Premiere Pro") and WinActive("ahk_exe Adobe Premiere Pro.exe") or (WinActive("ahk_exe AfterFX.exe"))
-or (WinActive("ahk_class DroverLord - Window Class") and WinActive("ahk_exe Adobe Premiere Pro.exe") ) ) ;YOU CAN DELETE THIS LINE ENTIRELY. i have this just for a SINGLE exception in Premiere when i want to use window dragging on Save/load dialouge boxes and sheeyt. Also i want it to work when the timeline is NOT on the main Premiere window. ;edit: wow, it works incredibly well. nice! ;edit2: now it also deliberately won't work in after effects. Nice! so i can keep adding ORs to the end to add more applications. I just remember that pairing OR and NOT together can sometimes result in everything being accepted by the IF statement...
+#if not (WinActive("ahk_class Premiere Pro") and WinActive("ahk_exe Adobe Premiere Pro.exe") or (WinActive("ahk_exe Factorio.exe")) or (WinActive("ahk_exe AfterFX.exe"))
+or (WinActive("ahk_class DroverLord - Window Class") and WinActive("ahk_exe Adobe Premiere Pro.exe") ) ) ;YOU CAN DELETE THIS LINE ENTIRELY. i [had] this just for a SINGLE exception in Premiere (now for more excepotions) when i want to use window dragging on Save/load dialouge boxes and sheeyt. Also i want it to work when the timeline is NOT on the main Premiere window. ;edit: wow, it works incredibly well. nice! ;edit2: now it also deliberately won't work in after effects. Nice! so i can keep adding ORs to the end to add more applications. I just remember that pairing OR and NOT together can sometimes result in everything being accepted by the IF statement...
 
 ;(WinActive("ahk_class DroverLord - Window Class") and WinActive("ahk_exe Adobe Premiere Pro.exe")
 
@@ -285,7 +297,15 @@ If (fancyclass = "Premiere Pro")
 	tooltip,
 	goto skipit
 	}
-	
+
+If (fancyclass = "Factorio")
+	{
+	tooltip, Factorio
+	sleep 100
+	tooltip,
+	goto skipit
+	}
+
 ; ;;interestingly, this code WILL run on a premiere sub-window. like, if you use premiere on multiple monitors. since the class becomes "driverlord" and stuff.
 ; ;;in that case, if it's important, which it isn't for me right now, I'd use some kinda code like this:
 ; ;;https://www.autohotkey.com/boards/viewtopic.php?t=66137
@@ -356,7 +376,7 @@ Else
 Loop
 {
 	;tooltip, xbutton1 loopy before break
-	
+	sleep 10
 	;;the below line DOES work, but not over parsec
     GetKeyState,KDE_Button,Xbutton1,P ; Break if button has been released. Note that checking the physical state of a key will NOT work over applications like Parsec or (possibly) Teamviewer. (untested)
 	
@@ -394,7 +414,7 @@ Loop
     KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
     KDE_Y1 := (KDE_Y2 + KDE_Y1)
 }
-tooltip,
+;tooltip,
 return
 
 

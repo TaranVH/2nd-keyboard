@@ -1254,9 +1254,9 @@ IfWinNotExist, ahk_class Premiere Pro
 	{
 	;Run, Adobe Premiere Pro.exe
 	;Adobe Premiere Pro CC 2017
-	; Run, C:\Program Files\Adobe\Adobe Premiere Pro CC 2017\Adobe Premiere Pro.exe ;if you have more than one version instlaled, you'll have to specify exactly which one you want to open.
+	; Run, C:\Program Files\Adobe\Adobe Premiere Pro CC 2017\Adobe Premiere Pro.exe ;if you have more than one version installed, you'll have to specify exactly which one you want to open.
 	;Run, Adobe Premiere Pro.exe
-	Run, C:\Program Files\Adobe\Adobe Premiere Pro 2021\Adobe Premiere Pro.exe
+	Run, C:\Program Files\Adobe\Adobe Premiere Pro 2022\Adobe Premiere Pro.exe
 	}
 if WinActive("ahk_class Premiere Pro")
 	{
@@ -1279,6 +1279,59 @@ sendinput {Rctrl up}{Lctrl up}
 ;idk if it helps or not.
 }
 
+switchToSumatraPDF()
+{
+; Crazy Pleadings -- Most Bizarre Pleadings Of All Time - REVISED DRAFT April 10 2022.pdf - SumatraPDF
+; ahk_class SUMATRA_PDF_FRAME
+; ahk_exe SumatraPDF.exe
+; ahk_pid 23580
+
+sleep 11 ;this is to try to avoid the stuck modifiers bug
+Process, Exist, SumatraPDF.exe
+If errorLevel = 0
+	{
+		Run, SumatraPDF.exe
+	}
+	else
+	{
+		WinActivate ahk_class SUMATRA_PDF_FRAME
+	}
+
+;maybe need to unstick modifiers
+sleep 2
+sendinput {Rctrl up}{Lctrl up}
+sendinput, {SC0EA} ;scan code of an unassigned key. used for debugging.
+}
+
+
+
+switchToWordPad()
+{
+
+; Crazy Pleadings -- Most Bizarre Pleadings Of All Time - REVISED DRAFT April 10 2022 1.docx - WordPad
+; ahk_class WordPadClass
+; ahk_exe WORDPAD.EXE
+; ahk_pid 18016
+
+sleep 11 ;this is to try to avoid the stuck modifiers bug
+;tooltip, why
+Process, Exist, WORDPAD.EXE
+;msgbox errorLevel `n%errorLevel%
+	If errorLevel = 0
+	{
+		Run, WORDPAD.EXE
+	}
+	else
+	{
+		WinActivate ahk_class WordPadClass
+	}
+
+;maybe need to unstick modifiers
+sleep 2
+sendinput {Rctrl up}{Lctrl up}
+;idk if it helps or not.
+sendinput, {SC0EA} ;scan code of an unassigned key. used for debugging.
+}
 
 switchToWord()
 {
@@ -1322,6 +1375,26 @@ sleep 11 ;this is to avoid the stuck modifiers bug
 	else
 		WinActivate ahk_class OpusApp
 	; }
+}
+
+switchToSlack()
+{
+
+; Slack | ******************* | *******
+; ahk_class Chrome_WidgetWin_1
+; ahk_exe slack.exe
+; ahk_pid 2424
+
+sleep 11 ;this is to avoid the stuck modifiers bug
+SetTitleMatchMode, 2
+WinActivate, Slack |
+;ahk_class Chrome_WidgetWin_1
+; General (Editors) | Microsoft Teams
+; ahk_class Chrome_WidgetWin_1
+; ahk_exe Teams.exe
+; ahk_pid 11508
+; https://www.autohotkey.com/docs/misc/WinTitle.htm
+
 }
 
 switchToTeams()
@@ -1465,12 +1538,22 @@ if theClass = ahk_class Notepad++
 		}
 	}
 
+
+
+
 ; ;if savedCLASS = Chrome_WidgetWin_1
 ;tons of applications use Chrome_WidgetWin_1 so I have to make exceptions for all of them...
 if theCLASS = ahk_class Chrome_WidgetWin_1
 	{
 	;tooltip, it is a chrome thingy
 	;msgbox % theEXE
+	
+	if theEXE = slack.exe
+		{	
+		SetTitleMatchMode, 2
+		WinActivate, Slack |
+	
+		}
 	if theEXE = vivaldi.exe
 		{
 		;tooltip, this is the vivaldi browser. i sometimes use for full page screenshots.
@@ -2524,3 +2607,13 @@ msgbox, %stuff%
 ; PostMessage, 0x111, 28715,,, ahk_class CabinetWClass ; List
 ; ;PostMessage, 0x111, 30213,,, ahk_class CabinetWClass ; Date modified
 ; return
+
+^3::
+sendinput, /c
+sendinput, {ENTER}
+sleep 200
+sendinput, You now have 3 seats. 3rd third
+sleep 200
+sendinput, {ENTER}
+return
+

@@ -315,7 +315,7 @@ return
 ; F8::insertSFX("SimpleWhoosh8")
 ; F10::insertSFX("woosh2")
 
-F11::
+;F11::
 ;https://autohotkey.com/board/topic/64576-the-definitive-autofire-thread/
 ;autoclicker
  ; While GetKeyState("F11","p"){
@@ -323,8 +323,9 @@ F11::
   ; Sleep 50
  ; }
  
-return
+;return
 
+F11::preset("TOP BAR")
 
 
 ;F12::instantExplorer("N:\Team_Documents\N_TARAN_THINGS\prompter and cutting_room_floor") ;"FLOOR"
@@ -649,7 +650,7 @@ numpad1::
 ;openApp("", ahk_exe waifu2x-caffe.exe, waifu2x-caffe)
 ;SendKey(A_thishotkey, ,"blue-green")
 IfWinNotExist, ahk_exe waifu2x-caffe.exe
-	Run, C:\waifu2x-caffe\waifu2x-caffe.exe
+	Run, C:\Users\taran\Downloads\waifu2x-caffe\waifu2x-caffe
 if not WinActive(ahk_exe waifu2x-caffe.exe)
 	{
 	WinActivate ahk_exe waifu2x-caffe.exe
@@ -682,7 +683,8 @@ IfWinNotExist, ahk_exe vivaldi.exe
 	Run, vivaldi.exe
 if WinActive("ahk_exe vivaldi.exe")
 	{
-	Sendinput, {blind}^{tab}
+	;Sendinput, {blind}^{tab} ;I've decided I don't like that behaviour, for a browser I use infrequently. I want the button that activates it to always work exactly the same way. thus the new line below. (i am too lazy to properly redo this, and i want the option to easily change my mind later.)
+	windowSwitcher("ahk_class Chrome_WidgetWin_1", "vivaldi.exe")
 	}
 else
 	{
@@ -998,7 +1000,7 @@ WinGetPos,,, Width, Height, A
 WinMove, A,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2)
 ;WinMove, 50, 50
 ; to try to rescue the tangent ripple UI which has gone missing off the side of a monitor long ago and cannot be brought back with anything I've tried!.
-;edit: it worked!
+;edit: it worked!!
 return
 
 ;`::tooltip, tilde thing 
@@ -1007,8 +1009,8 @@ gotoChromeTab("ADDENDUM - Google Docs","https://docs.google.com/document/d/1YRr5
 return
 
 
-1::gotoChromeTab("AHK needed","https://docs.google.com/document/d/1xsjjKYggXYig_4lfBMJ6LDGRZ9VOvDd7SCSTSi7GwN8/edit")
-2::gotoChromeTab("LTT To Do - Google Docs","https://docs.google.com/document/d/1Gi8sruMEBEQG3WHPM2jaFOQ1oR1A8bSz47vSxB9NfBQ/edit")
+1::gotoChromeTab("AHK needed (TVH) - Google Docs","https://docs.google.com/document/d/1B6_iDMhUhlmp3qhyKnInPmsLjihKiLsYzWfXfx-CP1Y/edit")
+2::gotoChromeTab("LTT To Do (TVH) - Google Docs","https://docs.google.com/document/d/117yukDZUtxjuFW17j0K7zeahvwJuMQUwCFX-RRdQzpI/edit")
 3::gotoChromeTab("Lnotes - Google Docs","https://docs.google.com/document/d/1CWjC7DWyXGIFDaSwXzUsdHmdktvgV0kdgNOFEK7wf7U/edit")
 
 4::gotoChromeTab("Music Hypercube - Google Docs","https://docs.google.com/document/d/11hIiENqLMtuQRLV4FjZMRY2uNFLtPw5QW6fivMix9VE/edit")
@@ -1245,7 +1247,7 @@ capslock::gotoChromeTab("Production Planner | Trello","https://trello.com/b/NevT
 ;;;this is(was) Lshift::
 ;Lshift:: / LEFTSHIFT -to-> SC070 / International2 -to-> Chrome calendar open
 ; SC070::gotofiretab("Calendar - October 2020","https://calendar.google.com/calendar/b/0/r")
-SC070::gotoChromeTab("Calendar - October 2021","https://calendar.google.com/calendar/u/0/r")
+SC070::gotoChromeTab("Calendar - February 2022","https://calendar.google.com/calendar/u/0/r")
 ;even though i directly copied the text, it does not work. and IDK how to split a string so I'll have to write in the months manually...
 ;SC070::gotofiretab("2018","https://calendar.google.com/calendar/b/0/r")
 ;en dash –
@@ -1415,7 +1417,8 @@ space::tooltip, ;this murders tooltips, lol.
 
 ;Lwin -to-> SC072:Lang1. It MUST be done as an UP event. It does not manifest any other way. Bizzare.
 SC072 up::
-switchToTeams()
+; switchToTeams()
+switchToSlack()
 ;switchToSavedApp(ahk_class Chrome_WidgetWin_1)
 ;windowSwitcher(ahk_class Chrome_WidgetWin_1, ahk_exe Teams.exe)
 ;ahk_class Chrome_WidgetWin_1
@@ -1549,10 +1552,24 @@ if state = U
 MouseClick, left,,, 1, 0, U
 return
 
+; right::
+; click down
+; MouseMove, -2200, 0, 100, R
+; click up
+; return
+
 right::
-click down
-MouseMove, -2200, 0, 100, R
-click up
+;;;MouseClick, left,,, 1, 0, D ; Hold down the left mouse button. 
+;tooltip, hi
+Loop 
+{ 
+Sleep, 10
+MouseMove, 2, 0, 0, R
+GetKeyState, state, right, P 
+if state = U
+	break
+} 
+;;;;MouseClick, left,,, 1, 0, U
 return
 
 
@@ -1684,11 +1701,16 @@ return
 ;|                                                          |
 ;| PRIMARY KEYBOARD, (Corsair K95 RGB) AHK KEY ASSIGNMENTS  |
 ;|__________________________________________________________|
-;					(\__/)  ||
-;					(•ㅅ•)  ||
+;					(\__/)||
+;					(•ㅅ•) ||
 ;					/ 　 \づ|| 
 
 ;;;~~~~~~FUNCTION KEYS IN VARIOUS PROGRAMS~~~~
+
+#ifwinactive
+
+
+
 
 ;;FIREFOX KEYS
 #IfWinActive ahk_class MozillaWindowClass
@@ -1721,9 +1743,10 @@ F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
 
 
 ;PHOTOSHOP
+;; defined at ";;&&&&&&&&&&& KEY ASSIGNMENTS FOR PHOTOSHOP &&&&&&&&&&&&&&&&&&"
 ;f1 - not on help anymnore
-;f2 none
-;f3 none
+;f2 previous tab
+;f3 next tab
 ;f4 pixel grid
 ;F5 - rasterize layer
 ;F6 RGB color
@@ -2025,6 +2048,9 @@ SC064::back()
 
 ;macro key G15
 ^F4::switchToWord()
+;^F4::switchToWordPad()
+;^F4::switchToSumatraPDF()
+
 +^F4::switchWordWindow() ; AKA, ^+F4 ^+{F4}
 
 ;No K95 macro key assigned:
@@ -2389,7 +2415,7 @@ appskey::sendinput, ^!k ;in premiere's shortcuts panel, CTRL ALT K is set to "cl
 !m::return
 !g::return
 ;!v::return
-!v::sendinput, ^!+v ; this is "paste on highest enabled track" in Excalibur. ...hmm mit doesn't work unless you go fast... annoying...... idk why, will look into it later.
+!v::sendinput, ^!+v ; this is "paste on highest enabled track" in Excalibur. ...hmm it doesn't work unless you go fast... annoying...... idk why, will look into it later.
 ;!w::return ;ALT W is used for Trim Next Edit to Playhead, though indirectly. See above.
 !h::return
 
@@ -2608,6 +2634,7 @@ F21 & F9::sendinput, ^{down} ;select next layer
 ;macro key G4.
 ;^+,::
 F21 & F4::
+;tooltip, g4
 sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error. Edit: this may or may not be necessary now that I'm no longer using the traditional modifier keys.
 ;audioMonoMaker("left") ;this function doesn't work as well anymore and I don't need it as much lately.
 ; preset("50%") ; nah.
@@ -2881,9 +2908,10 @@ Media_Prev::+,
 ^j::PhotoshopExport() ; (as jpeg)
 ;the above function is found in Photoshop_Functions.ahk
 
-F1::send ^+{tab} ;control shift tab, which goes to the next tab
-F2::send ^{tab} ;control tab, which goes to the previous tab
-F3::send ^o ;this WAS ctrl W instead, but i wanted to use that for duplicating layers. so i do. Also note that CTRL E is combining layers.
+F1::sendinput, ^+{tab} ;control shift tab, which goes to the next tab
+F2::sendinput, ^{tab} ;control tab, which goes to the previous tab
+;both of those might cause stuck modifiers... but it's ALT that is the culprit... so that doesn't ma
+F3::sendinput, ^o ;this WAS ctrl W instead, but i wanted to use that for duplicating layers. so i do. Also note that CTRL E is combining layers.
 
 ;F4:: is SHOW PIXEL GRID by default, which is quite useful and i want to keep it like that.
 
@@ -2914,7 +2942,7 @@ return
 ; ^+F12 is 50% Nearest? Maybe switch with the previous one.
 
 
-;anyway, f14 is labeled "scale" already on my Corsair K95, so I'm going to use it for brush resizing in Photoshop.
+;anyway, f14 is labeled "scale" already on my Corsair K95, so I'm going to use it for brush resizing in Photoshop. This is macro key G12.
 ;This macro is INCREDIBLY USEFUL, and I use it constantly.
 F14::
 tooltip, F14 ; photoshop brush resize
