@@ -1580,6 +1580,15 @@ if theCLASS = ahk_class Chrome_WidgetWin_1
 		WinActivate, ahk_exe msedge.exe
 		;WinActivate ahk_exe %theEXE%
 		}
+	if theEXE = slack.exe 
+		{
+		;tooltip, this is microsoft Edge. I use it just to upload review copies of videos onto an unlisted channel.
+		; if WinActive("ahk_exe slack.exe")
+			; sendinput, ^{tab}
+		;SetTitleMatchMode, 2
+		WinActivate, ahk_exe slack.exe
+		;WinActivate ahk_exe %theEXE%
+		}
 	
 	goto, switchEND
 	;programmer status: Triggered

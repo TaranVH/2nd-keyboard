@@ -129,7 +129,7 @@ SetNumLockState, AlwaysOn ;i think this only works if launched as admin.
 ; shift 1               toggle track targeting for AUDIO LAYER 1
 ; shift 2               toggle track targeting for AUDIO LAYER 2. And so on up to 8.
 ; alt 1                 toggle track targeting for VIDEO LAYER 1
-; alt 2                 toggle track targeting for VIDEO LAYER 2. And so on up to 8. I wish there were DEDICATED shortcuts to enable and disable ALL layers
+; alt 2                 toggle track targeting for VIDEO LAYER 2. And so on up to 8. I wish there were DEDICATED shortcuts to ENABLE and DISABLE each layer
 ; ctrl p                toggle "selection follows playhead" (for human to use)
 ; ctrl alt shift 3      Application > Window > Timeline (default is shift 3)
 ; ctrl alt shift 1      Application > Window > Project  (This sets the focus onto a BIN.) (default is SHIFT 1)
@@ -1233,7 +1233,7 @@ i::sendinput, {U+2611} ; check box! ☑
 o::sendinput, {ASC 0176} ;the degree symbol! °
 p::sendinput, {U+00A0} ;a blank character that is NOT a space. It's from braille. Very useful for changing around websites sometimes.
 
-[::
+[::sendinput, {U+2588}  ; Unicode Character “█” (U+2588) ; Unicode Character “▮” (U+25AE)
 ]::tooltip, you pressed F24 then %A_thishotkey%
 \::run, C:\Program Files (x86)\Corsair\Corsair Utility Engine\CUE.exe
 
@@ -1278,7 +1278,7 @@ a::
 ;if WinActive("ahk_class Photoshop")
 ;	{
 	psApp := ComObjActive("Photoshop.Application")
-	psApp.DoAction("WHITE TO ALPHA - WHOLE LAYER", "taran actions")
+	psApp.DoAction("white to Alpha", "taran actions")
 ;	}
 return
 
@@ -2499,7 +2499,7 @@ F6::cropClick()
 
 ;F8:: is also export frame (to .png)
 
-;;DELETE SINGLE CLIP AT CURSOR
+;;DELETE SINGLE CLIP AT CURSOR. This is far more useful being on the mouse button 4 or 5, whereever I put it. I never use it on F9 anymore and should reassign this to something else.
 F9::
 prFocus("timeline") ;This will bring focus to the timeline. ; you can't just send ^+!3 because it'll change the sequence if you alkready have the timeline in focus. You have to go to the effect controls first. That is what this function does.
 send, ^!d ;ctrl alt d is my Premiere shortcut for DESELECT. This shortcut only works if the timeline is in focus, which is why we did that on the previous line!! And you need to deselect all the timeline clips becuase otherwise, those clips will also get deleted later. I think.

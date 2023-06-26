@@ -21,8 +21,8 @@ https://docs.google.com/spreadsheets/d/18e6-OlUzc_1wbGvm9zqMOwtC4oysm6C7XMU1bOf8
 #### So, to summarize, if you want to make your own macro keyboard, these are all the methods that I know of:
 - Luamacros (unstable/buggy, no longer recommended) https://youtu.be/Arn8ExQ2Gjg
 - Interception https://youtu.be/y3e_ri-vOIo and https://youtu.be/Hn18vv--sFY
-- iCue (K55) https://youtu.be/cQ2atofn3lE
-- Razer Synapse (Cyonosa Chroma) https://youtu.be/GttedCcyxa4
+- iCue (K55) https://www.youtube.com/watch?v=I9HYN6qA5CY
+- Razer Synapse (Cyonosa Chroma) https://www.youtube.com/watch?v=1Cr2S0O--vc
 - QMK (Hasu USB converter, my current solution.) https://youtu.be/GZEoss4XIgc
 
 
