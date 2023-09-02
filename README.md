@@ -49,7 +49,7 @@ https://autohotkey.com/docs/Tutorial.htm
 https://www.youtube.com/watch?v=T3vG8U5RoFw
 
 I know there's a lot of scripts in this repository. Look here to see what launches when I start my computer:
-https://github.com/TaranVH/2nd-keyboard/blob/master/INFO_and_PROFILES/startup_folder_TARAN_Aug_2018.png
+https://github.com/TaranVH/2nd-keyboard/blob/master/INFO_and_PROFILES/Taran_startup_folder_2019_JULY.png
 
 Some of the scripts are #include-d in other scripts. The MAIN script from which most others are run, is this one - so, you can start here: https://github.com/TaranVH/2nd-keyboard/blob/master/ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk
 
