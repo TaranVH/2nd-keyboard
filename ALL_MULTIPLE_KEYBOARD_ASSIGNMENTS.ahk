@@ -255,7 +255,14 @@ return
 ;both removed from here because they're useless.
 ;https://autohotkey.com/board/topic/110524-how-to-create-a-hot-key-for-ctrl-scrolllock-vs-ctrl-pause/
 
-
+;rapid fire left click for RCT2 no joke. Will comment this all out when not playing, lol
+~LButton::
+~RButton::
+	while(getKeyState("LButton", "P") && getKeyState("RButton", "P")) {
+		Send {Click}
+		Sleep 20
+	}
+return	
 
 ;____________________________________________________________________
 ;                                                                    

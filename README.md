@@ -6,7 +6,7 @@ https://www.youtube.com/watch?v=T3vG8U5RoFw
 
 ------------
 
-I'm the main video editor for Linus Media Group. We put out multiple videos every day, so I had to learn how to work quickly, without sacrificing quality.
+I (was) the main video editor for Linus Media Group. We put out multiple videos every day, so I had to learn how to work quickly, without sacrificing quality.
 These AutoHotKey scripts speed up my workflow significantly. (Mostly for Premiere Pro and Explorer)
 
 I pioneered the use of a 2nd keyboard purely for macros, and later, the concept of "wrapping" keystrokes inside of other keystrokes, (ideally, the super-function keys (F13-F24)) as a means of massively multiplying the number of unique available keys.
@@ -32,6 +32,7 @@ https://docs.google.com/spreadsheets/d/18e6-OlUzc_1wbGvm9zqMOwtC4oysm6C7XMU1bOf8
 - An alternative to the Hasu USB converter: https://github.com/oschwartz10612/Scanner-Pro-MK3
 - An alternative to LuaMacros:
 https://github.com/VollRahm/NotEnoughHotkeys/
+- An alternative to Interception, sort of: https://github.com/evilC/AutoHotInterception
 - Mulitkeyboard https://mediachance.com/multikeyboard/ apparently has many problems. More info: https://twitter.com/iamnottani/status/1271530470052974595 and https://twitter.com/weirdoyt/status/1257282783044493312
 
 
@@ -71,6 +72,9 @@ You're free to use any of these scripts for yourself. Take what you need, modify
 
 My most used, most useful, simplest script is this one: https://www.youtube.com/watch?v=OqyQABySV8k
 
+2023 update: Since quitting LMG, I don't edit nearly as many videos as I used to, so I also haven't been updating my scripts as much. I certainly have not abandoned this repo, but if you want a version that uses Autohotkey 2.0 and is written far more like a real programmer would, I recommend you check this out: https://github.com/Tomshiii/ahk
+I am always very happy when poeple take the things I've stared and build and improve upon them, and this is a great example.
+
 -----
 
 To see all my currently assigned scan codes and virual keys, take a look at this spreadsheet: https://docs.google.com/spreadsheets/d/1GSj0gKDxyWAecB3SIyEZ2ssPETZkkxn67gdIwL1zFUs/edit?usp=drive_web&ouid=107638578296445823789
@@ -108,13 +112,9 @@ https://github.com/sebinside/HotkeylessAHK
 https://github.com/sebinside/AHK2PremiereCEP
 Explanatory video: https://www.twitch.tv/videos/628889342
 
-https://github.com/TaranVH/2nd-keyboard/pull/27 (easier install of Interception)
+https://github.com/TaranVH/2nd-keyboard/pull/27 (easier install of Interception, apparently.)
 
-https://github.com/evilC/AutoHotInterception (also easier, ppl seem to prefer it.)
-
-
-
-After Effects scripts from a guy with 11 years After Effects experience who just discovered AHK:
+After Effects scripts from someone with 11 years After Effects experience who just discovered AHK:
 https://github.com/ivycomb/AutoAfterEffects
 
 
