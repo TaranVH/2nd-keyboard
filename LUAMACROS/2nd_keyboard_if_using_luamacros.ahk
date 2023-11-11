@@ -26,7 +26,6 @@ Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyb
 ; Lots of other explanatory videos other AHK scripts can be found on my youtube channel! https://www.youtube.com/user/TaranVH/videos 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
 ;-------------2ND KEYBOARD USING LUAMACROS-----------------
 
 #IfWinActive ahk_exe Adobe Premiere Pro.exe ;---EVERYTHING BELOW THIS LINE WILL ONLY WORK INSIDE PREMIERE PRO. But you can change this to anything you like. You can use Window Spy to determine the ahk_exe of any program, so that your macros will only work when and where you want them to.
@@ -35,8 +34,13 @@ Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyb
 
 #IfWinActive ;---- This will allow for everything below this line to work in ANY application.
 
-~F24::
-FileRead, key, C:\AHK\2nd-keyboard\support_files\keypressed.txt
+; ~F24:: this can be disabled since we now activate this script via the command line, every time a key is pressed
+; FileRead, key, C:\AHK\2nd-keyboard\support_files\keypressed.txt for the same reason we no longer need this
+key = null ; initialize the key variable
+for n, param in A_Args  ; For each parameter passed over command line, the lua script does this (autohotkey.exe script.ahk key)
+{   
+    key = %param%
+}
 tippy(key) ;<--- this function will just launch a quick tooltip that shows you what key you pressed. OPTIONAL.
 If (key = "o")
 preset("flip horizontal") 
@@ -189,6 +193,7 @@ Send {NumpadDiv}
 else if(key = "numMult")
 Send {NumpadMult}
 
+ExitApp ; make sure the script closes when it's done so it doesn't fill up the tray.
 Return ;from luamacros F24
 ;THE BLOCK OF CODE ABOVE is the original, simple Luamacros-dependant script.
 
