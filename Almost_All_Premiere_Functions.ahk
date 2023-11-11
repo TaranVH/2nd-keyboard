@@ -1084,7 +1084,7 @@ saveToFile(name) {
 	;change this path ----|                  																 and this one --------|    to your own folder locations.
 	;    	              |																										  |
 	;                     v																									  	  v
-	RunWait, %comspec% /c C:\AHK\2nd-keyboard\insideclipboard\InsideClipboard.exe /saveclp %name%, C:\AHK\2nd-keyboard\insideclipboard\clipboards\
+	RunWait, %comspec% /c C:\AHK\2nd-keyboard\insideclipboard\InsideClipboard.exe /saveclp %name%, C:\AHK\2nd-keyboard\insideclipboard\clipboards\, hide
 	
 	
 	;just saving the below lines of code, which didn't work because %pathh% nor %Exec% variables could not be defined properly. Or something... IDK....
@@ -1095,7 +1095,7 @@ saveToFile(name) {
 
 loadFromFile(name) {
 	; You'll need to change these paths too!
-	RunWait, %comspec% /c C:\AHK\2nd-keyboard\insideclipboard\InsideClipboard.exe /loadclp %name%, C:\AHK\2nd-keyboard\insideclipboard\clipboards\
+	RunWait, %comspec% /c C:\AHK\2nd-keyboard\insideclipboard\InsideClipboard.exe /loadclp %name%, C:\AHK\2nd-keyboard\insideclipboard\clipboards\, hide
 }
 
 ;i think the line below is probably useless buti am afraid to delete it
