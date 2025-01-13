@@ -14,11 +14,6 @@ local keyboardIdentifier = '0000AAA'
 -- It's usually 7 or 8 characters long.
 --Once you have this identifier, replace the value of keyboardIdentifier with it
 
---Don't ask for keyboard assignment help if the user has manually entered a keyboard identifier
-if keyboardIdentifier == '0000AAA' then
-	lmc_assign_keyboard('MACROS');
-else lmc_device_set_name('MACROS', keyboardIdentifier);
-end
 --This lists connected keyboards
 dev = lmc_get_devices()
 for key,value in pairs(dev) do
