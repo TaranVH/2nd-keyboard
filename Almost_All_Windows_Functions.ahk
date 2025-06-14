@@ -800,7 +800,7 @@ if f_Edit1Pos <>   ; we know it should have an Edit1 control.
 	ControlSetText, Edit1, %f_path%, ahk_id %f_window_id%
 	;(it adds a space to the end too.)
 	sleep 2
-	ControlFocus, DirectUIHWND2, ahk_id %f_window_id% ;to try to get the focus back into the center area, so you can now type letters and have it go to a file or fodler, rather than try to SEARCH or try to change the FILE NAME by default.
+	ControlFocus, DirectUIHWND2, ahk_id %f_window_id% ;to try to get the focus back into the center area, so you can now type letters and have it go to a file or folder, rather than try to SEARCH or try to change the FILE NAME by default.
 	send, {end} ;to get to the end of the search box. best place to search for the actual thing i want to find.
 	return
 	}
@@ -1256,7 +1256,7 @@ IfWinNotExist, ahk_class Premiere Pro
 	;Adobe Premiere Pro CC 2017
 	; Run, C:\Program Files\Adobe\Adobe Premiere Pro CC 2017\Adobe Premiere Pro.exe ;if you have more than one version installed, you'll have to specify exactly which one you want to open.
 	;Run, Adobe Premiere Pro.exe
-	Run, C:\Program Files\Adobe\Adobe Premiere Pro 2022\Adobe Premiere Pro.exe
+	Run, C:\Program Files\Adobe\Adobe Premiere Pro 2024\Adobe Premiere Pro.exe
 	}
 if WinActive("ahk_class Premiere Pro")
 	{
@@ -2341,6 +2341,7 @@ gotoChrometab(name,URL,alternativeName := "cwifhladirhs")
 {
 ;;OKAY SO THIS CODE IS PRETTY GOOD, BUT it will (sometimes?!) return a vRet value of 0 if a tab is currently loading. it's bizzare. idk how to fix it.
 ;anyway, this code will basically open a tab of a given URL, unless it is already open, in which case, it'll switch to that tab.
+;Note from 2025, this is no longer working -- it won't switch to an existing tab anymore. IDK what's wrong now.
 
 
 ;unfortunately, I cannot use the CLASS to activate Chrome, since so many other chrome-based applications use it.... so i am forced to use the .exe, which seems to be less reliable...
@@ -2585,12 +2586,23 @@ msgbox, %stuff%
 
 }
 
+toggleAudioDevice(){
+;https://superuser.com/questions/444214/using-autohotkey-to-change-audio-output-source
+; Toggles default audio device in Control Panel (switches between headset and speakers).
+toggle:=!toggle ;toggles up and down states. 
+Run, mmsys.cpl 
+WinWait,Sound
+if toggle
+  ControlSend,SysListView321,{Down 6}
+Else
+  ControlSend,SysListView321,{Down 2}
+ControlClick,&Set Default
+ControlClick,OK 
+return
 
 
 
-
-
-
+}
 
 
 

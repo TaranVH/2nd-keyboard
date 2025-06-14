@@ -255,14 +255,14 @@ return
 ;both removed from here because they're useless.
 ;https://autohotkey.com/board/topic/110524-how-to-create-a-hot-key-for-ctrl-scrolllock-vs-ctrl-pause/
 
-;rapid fire left click for RCT2 no joke. Will comment this all out when not playing, lol
-~LButton::
-~RButton::
-	while(getKeyState("LButton", "P") && getKeyState("RButton", "P")) {
-		Send {Click}
-		Sleep 20
-	}
-return	
+; ;rapid fire left click for RCT2, no joke. Will comment this all out when not playing, lol. This is a bad idea, i should absolutely have had a #ifwinactive thing above this, lolol
+; ~LButton::
+; ~RButton::
+	; while(getKeyState("LButton", "P") && getKeyState("RButton", "P")) {
+		; Send {Click}
+		; Sleep 20
+	; }
+; return	
 
 ;____________________________________________________________________
 ;                                                                    
@@ -289,28 +289,19 @@ F23::return ;F23 is the dedicated 2nd keyboard "modifier key." You MUST allow it
 
 escape::msgbox,,, you pressed escape. this might cause like problems maybe, 0.9
 
-F1::
-FileRead, SECRET_TEXT, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SECRET_TEXT_NOT_ON_GITHUB.txt
-Sendinput, %SECRET_TEXT%
-; sleep 10
-return
 
-F2::
-FileRead, SECRET_TEXT, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SECRET_TEXT_2.txt
-Sendinput, %SECRET_TEXT%
-; sleep 10
-return
 
-F3::
-letext := "Emily Seddon - @emilypls"
-sendinput, %letext%
-return
 
-F4::
-letext := "Marcus Blackstock - @kacboy"
-sendinput, %letext%
-return
+; F1::
+; FileRead, SECRET_TEXT, C:\AHK\2nd-keyboard\Taran's_Windows_Mods\SECRET_TEXT_NOT_ON_GITHUB.txt
+; Sendinput, %SECRET_TEXT%
+; ; sleep 10
+; return
 
+; F3::
+; letext := "Emily Seddon - @emilypls"
+; sendinput, %letext%
+; return
 
 ;F2::insertSFX("Whoosh19-Short") ;you may not use spaces for filenames of sounds that you want to retreive in this way... since searching in premiere will disregard spaces in a a weird way... returning multiple wrong results....
 ; F3::insertSFX("Whoosh7-Short")
@@ -332,23 +323,41 @@ return
  
 ;return
 
-F11::preset("TOP BAR")
+;F11::preset("TOP BAR")
 
 
 ;F12::instantExplorer("N:\Team_Documents\N_TARAN_THINGS\prompter and cutting_room_floor") ;"FLOOR"
-F12::instantExplorer("C:\Users\Taran\Downloads") ;open the downloads folder, yup.
-
-
+;F12::instantExplorer("C:\Users\Taran\Downloads") ;open the downloads folder, yup.
 
 ;F12::search() ;"search" is also used on ^+j 
 ; F12 must not used here IF it is the keyboard's launching key. You MAY put it here if you used F13 to F24 as the launching key
+
+
+;1::gotoChromeTab("AHK needed (TVH) - Google Docs","https://docs.google.com/document/d/1B6_iDMhUhlmp3qhyKnInPmsLjihKiLsYzWfXfx-CP1Y/edit")
+
+F12::gotoChromeTab("REAL TO DO - Google Docs","https://docs.google.com/document/d/1LoUGEZ7sahmbgwo8LKoUkjrC38LMhq0blBAp5zrJ28c/edit?tab=t.0")
+
+F11::gotofiretab("WORK TO DO - Google Docs","https://docs.google.com/document/d/13YRJql0Yp3BWMothkUl4Ylqjo-1loIkVRuWpuildL7E/edit?tab=t.0")
+
+F10::return
+
+F9::gotofiretab("(NEWEST) FEB 17 2025 ONLY INTERMEDIATE AGAIN","https://trello.com/b/Tck6WIgO/newest-feb-17-2025-only-intermediate-again")
+
+;;; ugh all they do is make a new tab instad of activating an existing tab liek i wanted. 
+;also tehre's this to comb through but i feel it's not worth it. https://www.autohotkey.com/boards/viewtopic.php?f=6&t=3702
+
+
+
+
+
 
 ;;;;;next line;;;;;;;;
 ;;;;K120 keyboard;;;;;
 
 `::msgbox tilde or weird quote thing?? K120
-;1::preset("T wipe straight left")
-1::DrakeynPreset("T wipe straight left")
+
+;1::DrakeynPreset("T wipe straight left")
+1::Preset("T wipe straight left")
 2::preset("T wipe straight down")
 3::preset("T wipe straight up")
 4::preset("T wipe straight right")
@@ -420,7 +429,7 @@ if WinActive("ahk_exe Photoshop.exe")
 	sendinput, ^h ;my photoshop shortcut for horizontal flip
 return
 
-[::preset("T impact flash MED")
+[::preset("T impact flash HIGH")
 ]::preset("T Impact Pop")
 
 \::
@@ -538,13 +547,22 @@ SC07E::InstantExplorer("N:\Linus Tech Tips")
 ; pause::msgbox, is this the PAUSE key?? IDK
 ; Break::msgbox, Maybe THIS is the pause/break key?? WHAT CAN I BELEVE ANYMORE??
 
-insert::InstantExplorer("Z:\Linus\17. Short Circuit\SC Transcode\_SC Delivery")
-home::InstantExplorer("Z:\Linus\5. Fast As Possible\_FAP Transcoding\_FAP Delivery") 
-pgup::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\_LTT DELIVERY")
+; insert::InstantExplorer("Z:\Linus\17. Short Circuit\SC Transcode\_SC Delivery")
+; home::InstantExplorer("Z:\Linus\5. Fast As Possible\_FAP Transcoding\_FAP Delivery") 
+; pgup::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Transcode\_LTT DELIVERY")
 
-delete::InstantExplorer("Z:\Linus\17. Short Circuit\Pending")
-end::InstantExplorer("Z:\Linus\5. Fast As Possible\1. TQ Pending")
-pgdn::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Pending")
+; delete::InstantExplorer("Z:\Linus\17. Short Circuit\Pending")
+; end::InstantExplorer("Z:\Linus\5. Fast As Possible\1. TQ Pending")
+; pgdn::InstantExplorer("Z:\Linus\1. Linus Tech Tips\Pending")
+
+insert::return
+home::preset("T TRAVEL up")
+pgup::return
+
+delete::preset("T TRAVEL left")
+end::preset("T TRAVEL down")
+pgdn::preset("T TRAVEL right")
+
 
 up::preset("push up")
 down::preset("push down")
@@ -1571,7 +1589,7 @@ right::
 Loop 
 { 
 Sleep, 10
-MouseMove, 2, 0, 0, R
+MouseMove, 1, 0, 0, R
 GetKeyState, state, right, P 
 if state = U
 	break
@@ -1648,8 +1666,9 @@ numpadAdd::sendinput, !{F10} ;shadowplay retroactive record last X minutes.
 
 
 numpadEnter::
-sendinput, ^!m ;mute/unmute mic - shadowplay ;unfortunately ctrl alt m is also NEW COMMENT in google sheets... i might wish to change it
+;sendinput, ^!m ;mute/unmute mic - shadowplay ;unfortunately ctrl alt m is also NEW COMMENT in google sheets... i might wish to change it
 ;tippy("this should work")
+toggleAudioDevice()
 return
 
 numpadDot::
@@ -1734,11 +1753,14 @@ PgDn::send ^{tab} ;control tab, which goes to the previous tab
 
 PgUp::send ^w ;control w, which closes a tab
 
-;these are also for APMmusic.ca surfing.
-;macro key G8, labeled as horizontal anchor.
-F18::up
-;macro key G11, labeled as vertical anchor.
-F15::down
+F18::send !+5 ;strikethrough in google docs
+F15::return
+
+; ;these are also for APMmusic.ca surfing.
+; ;macro key G8, labeled as horizontal anchor.
+; F18::up
+; ;macro key G11, labeled as vertical anchor.
+; F15::down
 
 ;macro key G9: labeled as rotation.
 F17::enter ;idk if this is the corect assignment now that i moved keys.
@@ -1781,11 +1803,14 @@ F4::send {mButton} ; middle mouse button, which opens a link in a new tab.
 
 F14::send, {F11} ;scale key is fullscreen key meow. ;;this line went missing somehow, wtf?
 
-;these are also for APMmusic.ca surfing.
-;macro key G8, labeled as horizontal anchor.
-F18::up
-;macro key G11, labeled as vertical anchor.
-F15::down
+F18::send !+5 ;strikethrough in google docs
+F15::return
+
+; ; these are also for APMmusic.ca surfing.
+; ; macro key G8, labeled as horizontal anchor.
+; F18::up
+; ; macro key G11, labeled as vertical anchor.
+; F15::down
 
 
 #IfWinActive ahk_exe notepad++.exe
@@ -1844,6 +1869,8 @@ return
 #if WinActive("ahk_class #32770") and WinActive("ahk_exe ShareX.exe") ;this is very specifically premiere's save/load dialoge, and it is NOT the Export Settings window.
 
 `::Sendinput, !{up} ; go DOWN one folder level in explorer
+
+
 
 
 ; left & right::msgbox, hello
@@ -1944,6 +1971,8 @@ F11::return ; It acts as a full screen-ifier. Don't need that.
 ;;The script above worked fine 99% of the time. But if you have a FILE selected, and that file has a preview thingy showing, it would NOT work -- instead, it would highlight the menu acceleration. Sad!! Manually hitting ALT UP  would still work in that situation, though.
 ;;After some experimentation, I discovered that adding a small delay between virtual keystrokes is essential for this to work in those situations.
 ;so instead, I have to use the script below:
+
+
 `::
 Sendinput, {alt Down}
 sleep 5
@@ -2014,16 +2043,62 @@ return
 ; ^!+f::Run, %comspec% /c "taskkill.exe /F /IM firefox.exe",, hide
 
 
-; ;shortcut to forcefully CLOSE PREMIERE ALREADY, WITH NO BULLSHIT. BULLDOZE IT FLAT, BURN IT, SALT THE EATH, NUKE IT FROM ORBIT. JUST FUCKING DIE!!!
-; ;.......This doesn't work.... Might need C++ for this...
-; ^!+p::
+; ;shortcut to forcefully CLOSE PREMIERE ALREADY, WITH NO BULLSHIT. BULLDOZE IT FLAT, BURN IT, SALT THE EATH, NUKE IT FROM ORBIT. JUST F***ING DIE!!!
+;.......This doesn't work.... Might need C++ for this...
+^!+p::
 ; Run, %comspec% /c "taskkill.exe /IM /Adobe Premiere Pro.exe /T /F" ;,, hide
 ; sleep 100
 ; ;Run, %comspec% /c "taskkill.exe /F /PID 72536",, hide
-; tooltip, killed premiere
-; sleep 100
-; tooltip,
-; return
+
+tooltip, killing premiere
+sleep 200
+tooltip,
+
+;;;https://www.autohotkey.com/boards/viewtopic.php?t=74338
+
+	Process, Exist, Adobe Premiere Pro.exe
+	PID := ErrorLevel
+	RunWait, taskkill /pid %PID%,,hide
+	If not PID
+		return
+	;this one works, but only if premiere is.... not being buggy. sooooo it's kinda useless.
+		
+;;;these two don't work:
+; Run, %comspec% /c taskkill /f /im Adobe Premiere Pro.exe,,hide
+
+; Run,%ComSpec% /c Taskkill -f -im ""Adobe Premiere Pro.exe"",,Hide
+
+return
+
+^+!F1::
+;;For quick and easy 1080p tutorials on my 4K screen
+WinGetActiveTitle, OutputVar
+;msgbox, %OutputVar%
+
+tooltip, trying 1080p
+;WinMove, %OutputVar%, , X, Y, 1920, 1080, ExcludeTitle, ExcludeText
+;WinMove, %OutputVar%, , 954, 498, 1964, 1184, ExcludeTitle, ExcludeText
+WinMove, %OutputVar%, , 961, 458, 1941, 1190, ExcludeTitle, ExcludeText
+;Client:	x: 0	y: 0	w: 1930	h: 1128
+sleep 100
+tooltip,
+
+;CenterWindow(OutputVar)
+
+return
+
+
+CenterWindow(WinTitle)
+{
+    WinGetPos,,, Width, Height, %WinTitle%
+    WinMove, %WinTitle%,, (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2)
+}
+
+; Adobe Premiere Pro 2024 - W:\TARANVH\TRANSITIONS\Project\Transitions plz dont freeze again.prproj *
+; ahk_class Premiere Pro
+; ahk_exe Adobe Premiere Pro.exe
+; ahk_pid 30968
+
 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -2148,6 +2223,45 @@ Joy3::msgbox you hit Joy3
 F21 & F1::search() ;it will go straight to effectsPanelType() if Premiere is active.
 
 
+#IfWinActive, ahk_exe Adobe Premiere Pro.exe
+;;https://vakago-tools.com/premiere-pro-true-fullscreen-tutorial/
+;Hotkey: Ctrl + Shift + F
+^+F::
+
+;; Premiere Pro Top Bar
+;Control, Style, ^0x10000000 , DroverLord - Window Class30, ahk_class Premiere Pro
+;Control, Style, ^0x10000000 , DroverLord - Window Class29, ahk_class Premiere Pro
+
+;; Premiere Pro Bottom Bar
+;Control, Style, ^0x10000000 , DroverLord - Window Class31, ahk_class Premiere Pro
+;Control, Style, ^0x10000000 , DroverLord - Window Class32, ahk_class Premiere Pro
+
+;; Hide Title Bar 
+;WinSet, Style, ^0x800000, ahk_class Premiere Pro
+
+;; Refreshes the Window
+;WinSet, Redraw ,, ahk_class Premiere Pro
+;WinShow, ahk_class Premiere Pro
+
+
+;Premiere Pro Top Bar
+Control, Style, ^0x10000000 , DroverLord - Window Class124, ahk_class Premiere Pro
+Control, Style, ^0x10000000 , DroverLord - Window Class29, ahk_class Premiere Pro
+
+;Premiere Pro Bottom Bar
+Control, Style, ^0x10000000 , DroverLord - Window Class128, ahk_class Premiere Pro
+Control, Style, ^0x10000000 , DroverLord - Window Class128, ahk_class Premiere Pro
+
+;Hide Title Bar 
+WinSet, Style, ^0x800000, ahk_class Premiere Pro
+
+;Refreshes the Window
+WinSet, Redraw ,, ahk_class Premiere Pro
+WinShow, ahk_class Premiere Pro
+
+return
+
+
 #ifWinActive
 
 ;Note that i have other premiere extended function key assignments somewhere around line 2090. Yeah it's a bit of a mess.
@@ -2236,9 +2350,13 @@ return
 F19::Sendinput, !+5 ;alt shift 5 is "strikethrough" in Google docs...
 
 ;keys for video speed up and slow down, on youtube.
-Media_Next::+.
+;Media_Next::+.
+Media_Next::sendinput {shift down}{. down}{. up}{shift up} ;certain video players would not recognise the previous line's shortcut, but they do recognise this one. weird. I recommend you use the previous line. This one might have issues with SHIFT getting stuck down. it happens sometimes.
 Media_Play_Pause::k
-Media_Prev::+,
+;Media_Prev::+,
+Media_Prev::sendinput {shift down}{, down}{, up}{shift up}
+
+F8::sendinput {shift down}{. down}{. up}{shift up}
 
 ;;note to self - try to get this script here working
 ;Macro Key G12 (labeled "scale")
@@ -2407,6 +2525,7 @@ G18: Activate/switch to Premiere
 #IfWinActive ahk_exe Adobe Premiere Pro.exe
 ;tab::7 ;"7" is set to enable/disable for now. just testing stuff
 appskey::sendinput, ^!k ;in premiere's shortcuts panel, CTRL ALT K is set to "clear selected marker." You can't assign it DIRECTLY to appskey, so I do it here.
++appskey::sendinput, ^!k ;just so i can easily use next marker and delete marker without taking my hand off SHIFT.
 
 ;^w::closeTitler()
 
@@ -2466,7 +2585,8 @@ return
 F1::
 Send ^!s ;ctrl alt s  is assigned to [select clip at playhead]
 sleep 1
-Send ^+!d ;ctrl alt shift d  is [ripple delete]
+;Send ^+!d ;ctrl alt shift d  is [ripple delete]. I had disabled CTRL CHIFT D for some raisin. i guess I'll see why later.
+Send ^+d ;ctrl  shift d  is also [ripple delete]. Premier 2024 wasn't working with the old shortcut, for some reason. Note there are two versions of it, and only one of them is explicitly for the timeline panel. That's the one that I think you're supposed to use now, but it's also finicky now, perhaps getting confused if it has another general assignment.
 sleep 1
 return
 
@@ -2653,9 +2773,10 @@ return
 ; macro key G5.
 ;^+.::
 F21 & F5::
-sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
+;sleep 11 ;you can remove this if only if you also remove the 10ms delay inside of iCue. Otherwise you get the stuck modifiers error.
 ;audioMonoMaker("right")
-preset("50%") ;TBD. this is a TEMPORARY assignment until I can get a better thing for this key.
+;preset("50%") ;TBD. this is a TEMPORARY assignment until I can get a better thing for this key.
+;DO NOTHING (for now)
 return
 
 
@@ -2753,6 +2874,7 @@ send, {lbutton}
 send, {alt up}
 sleep 10
 send, %currentTool%
+sleep 80 ;this is because I think my mouse is starting to fail and has some debounce issues. so it was sending double and triple clicks. Trying to slow it down
 return
 
 
@@ -2805,6 +2927,7 @@ sleep 10
 ;I have a fancy way of figuring out which tool i WAS using. Is just be a thing that listens for v t r y b x h p and saves that as a string.
 
 send, %currentTool%
+sleep 80 ;this is because I think my mouse is starting to fail and has some debounce issues. so it was sending double and triple clicks. Trying to slow it down
 
 ; skipitAMKA:
 return
@@ -3190,12 +3313,20 @@ return
 ;
 ;;I can't use ~ thingies or these keys can very easily get stuck...
 ;oh boy THIS RIGHT HERE IS A MESS i gotta clean up someday. caplock sometimes gets stuck or maybe it's just the shift key(s). gotta make this better. work better.
+
+;These two lines work totally fine:
 Rshift & Lshift::capslock
 Lshift & Rshift::capslock
-^capslock::capslock ;only CTRL CAPSLOCK will now turn on capslock, freeing the real capslock key to be used as a MODIFIER KEY, just like CTRL.
-^F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
-~F20 & LCTRL::Capslock ;IN CASE THE CAPslock key goes down first.
-;capslock::F20 ;not needed if you can do it directly, with a Corsair keyboard
+
+;the below line is no longer needed.
+; ; ^capslock::capslock ;only CTRL CAPSLOCK will now turn on capslock, freeing the real capslock key to be used as a MODIFIER KEY, just like CTRL.
+
+;the below 2 lines are no longer needed; I never use it. I just do both shifts instead.
+; ; ^F20::capslock ;because I actually used my Corsair keyboard to remap capslock to F20 DIRECTLY, this is the real line that I need to give myself the REAL capslock key.
+; ; ~F20 & LCTRL::Capslock ;IN CASE THE CAPslock key goes down first.
+
+;capslock::F20 ;This line is not needed if you can do it directly, with a Corsair keyboard
+
 
 ;F20 is triggered by capslock, and adds a 2nd layer to keyboard #1.
 ;F21 - being used as a modifier key to avoid the stuck modifiers bug.
@@ -3214,8 +3345,8 @@ Lshift & Rshift::capslock
 #IfWinActive
 
 
-
-MouseClick, left,,, 1, 0, U ; Release the mouse button. 
+;what the hell is this line??? Is it left over from something?? I'm going to comment it out and hope nothing breaks.
+;MouseClick, left,,, 1, 0, U ; Release the mouse button. 
 
 return
 

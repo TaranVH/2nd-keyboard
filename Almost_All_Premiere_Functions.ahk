@@ -2,8 +2,8 @@
 ;the above will supposedly set A_WorkingDir. It MUST be done in the autoexecute area, BEFORE the code below.
 ;SetWorkingDir, C:\Users\TaranWORK\Documents\GitHub\2nd-keyboard\2nd keyboard support files
 
-;NOTE that I am now on Premiere 22.2.0 (Build 128)
-;I was previously on Premiere 15.4.1. All the below scripts will work for that version, except for some instances where you need to change "2022" to "2021" for functions that are trying to target a specific window.
+;NOTE that I am now on Premiere 2024
+;I was previously on Premiere 15.4.1. All the below scripts will work for that version, except for some instances where you need to change "2024" to "2021" for functions that are trying to target a specific window.
 
 #NoEnv
 Menu, Tray, Icon, shell32.dll, 283 ; this changes the tray icon to a little keyboard!
@@ -17,6 +17,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 ; HELLO PEOPLES!
 ; IF YOU ARE NEW TO AUTOHOTKEY, YOU MUST AT LEAST TAKE THE FOLLOWING TUTORIAL:
 ; https://autohotkey.com/docs/Tutorial.htm
+;DO NOT USE CHATGPT OR ANY OTHER AI TO FIGURE OUT THE CODE FOR YOU! IT WILL NOT WORK!!
 ;
 ; You will need to know some basic scripting to custom tailor most
 ; of these scripts to your own machine, if you want to use them!
@@ -27,7 +28,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 ;
 ; VERY IMPORTANT NOTE:
 ; This file works in tandem with ALL_MULTIPLE_KEYBOARD_ASSIGNMENTS.ahk.
-; That script has this one 
+; That script has this one inside of it, kinda.
 ; All the functions from HERE are actually CALLED from keyboard shortcuts
 ; in THAT script. I had to do it this way because of the Stream Deck(s)...
 ; But you can put your key bindings and functions in the same script if
@@ -93,7 +94,7 @@ if WinActive("ahk_exe Adobe Premiere Pro.exe") ;AHA, it is better to use the EXE
 
 if (whichMonitor = "source")
 	{
-	x := "1800"
+	x := "1700"
 	y := "500"
 	;;tooltip, source here
 	;coordinates that are very likely to be within my Source Monitor's usual area
@@ -112,7 +113,7 @@ else
 
 
 ;testing some sheeit
-x := "1800"
+x := "1700"
 y := "500"
 
 ActiveHwnd := WinExist("A")
@@ -178,24 +179,28 @@ if (shortcut = "^{numpad1}")
 	{
 	;sleep 30
 	sendinput, ^+1
+	;program monitor panel > Full
 	}
 if (shortcut = "^{numpad2}")
 	{
 	sendinput, ^+2
+	;program monitor panel > 1/2
 	}
 if (shortcut = "^{numpad5}")
 	{
 	;sleep 30
 	;tooltip, yeah ctrl numpad 5
 	sendinput, ^+2
+	;program monitor panel > 1/2 
 	}
 if (shortcut = "^{numpad3}")
-	sendinput, ^+3
+	sendinput, ^+3 ;program monitor panel > 1/4
 
 if (shortcut = "^+1")
 	{
 	;tooltip, taran whyyy
 	sendinput, ^{numpad1}
+	;source monitor panel > Full
 	}
 if (shortcut = "^+2")
 	{
@@ -314,7 +319,7 @@ preset(item)
 ; THIS WILL NOT WORK UNLESS YOU DO SOME SETUP FIRST!
 ; Fortunately,
 ; THERE IS A FULL VIDEO TUTORIAL THAT TEACHES YOU HOW TO USE THIS, STEP BY STEP.
-; [[[[[LINK TBD, IT'S NOT FINISHED JUST YET.]]]]]
+; https://youtu.be/T3vG8U5RoFw?t=4061
 ;
 ; Even if Adobe does one day add this feature to Premiere, this video tutorial will
 ; still be very useful to anyone who is learning how to use AHK with Premiere,
@@ -500,11 +505,15 @@ Sendinput, %item%
 
 sleep 5
 
-;MouseMove, 62, 95, 0, R ;----------------------(for 150% UI.)
+;;MouseMove, 62, 95, 0, R ;----------------------(for 150% UI.)
 MouseMove, 41, 63, 0, R ;----------------------(for 100% UI)
 ;;relative to the position of the magnifying glass (established earlier,) this moves the cursor down and directly onto the preset's icon.
-
 ;;In my case, all of my presets are contained inside of folders, which themselves are inside the "presets" folder. Your preset's written name should be completely unique so that it is the first and only item.
+
+;;;UPDATE!!! >:(
+;;IT USED TO BE that the item I wanted would always be on the 3rd row--- with my main "AAA Presets" folder being the first row, and another folder inside of it, such as "AA Transitions," would be on the 2nd row, with the preset I actually wanted always being on the 3rd row. But ever since I imported someone else's presets into my Effect folder, now my "AAA presets" folder is at the BOTTOM, underneath several other folders. This means I need to change the coordinates of where the cursor goes, to be much lower.
+;MouseMove, 41, 183, 0, R ;----------------------(for 100% UI)
+;;UPDATE UPDATE -- now the "AAA presets" folder is back at the top of the list of folders in the Effects panel. I don't know why. So now I'm gonna comment the previous line back out!!
 
 ;msgbox, The cursor should be directly on top of the preset's icon. `n If not, the script needs modification.
 
@@ -1627,8 +1636,8 @@ BlockInput, on
 BlockInput, MouseMove
 MouseGetPos xPosCursor, yPosCursor
 
-xPos = 400
-yPos = 1050 ;the coordinates of roughly where my timeline usually is located on the screen (a 4k screen.)
+xPos = 450
+yPos = 1000 ;the coordinates of roughly where my timeline usually is located on the screen (a 4k screen.)
 CoordMode Pixel ;, screen  ; IDK why, but it works like this...
 CoordMode Mouse, screen
 ; CoordMode, mouse, window

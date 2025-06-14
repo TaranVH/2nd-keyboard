@@ -30,13 +30,17 @@ Menu, Tray, Icon, imageres.dll, 90
 ;First, we define all the timeline's DEFAULT possible colors.
 ;(Note that your colors will be different if you changed the UI brightness inside preferences > appearance > brightness.)
 ;I used Window Spy (it comes with AHK) to detect the exact colors onscreen.
-timeline1 = 0x414141 ;timeline color inside the in/out points ON a targeted track
+timeline0 = 0x424242 ;timeline color inside the in/out points ON a targeted track, after some UPDATE in like 2024
+timeline1 = 0x414141 ;timeline color inside the in/out points ON a targeted track, BEFORE some update in 2024
 timeline2 = 0x313131 ;timeline color of the separating LINES between targeted AND non targeted tracks inside the in/out points
-timeline3 = 0x1b1b1b ;the timeline color inside in/out points on a NON targeted track
+timeline3 = 0x1b1b1b ;the timeline color inside in/out points on a NON targeted track... before 2024. Now, this no longer works, which is turbo lame.
 timeline4 = 0x202020 ;the color of the bare timeline NOT inside the in out points
 timeline5 = 0xDFDFDF ;the color of a SELECTED blank space on the timeline, NOT in the in/out points
 timeline6 = 0xE4E4E4 ;the color of a SELECTED blank space on the timeline, IN the in/out points, on a TARGETED track
 timeline7 = 0xBEBEBE ;the color of a SELECTED blank space on the timeline, IN the in/out points, on an UNTARGETED track
+
+timeline8 = 0x1c1c1c ;NEW color as of 2024, of the NON TARGETED space between in/out points. UNFORTUNATELY, this is also the same color as the BINS in areas where there are no items, meaning now you can't right click to make new items and folders and stuff, and therefore, I must remove it from the list below. SUPER LAME.
+
 
 
 
@@ -51,7 +55,7 @@ PixelGetColor colorr, %X%, %Y%, RGB
 if (colorr = timeline5 || colorr = timeline6 || colorr = timeline7) ;these are the timeline colors of a selected clip or blank space, in or outside of in/out points.
 	send {ESC} ;in Premiere 13.0, ESCAPE will now deselect clips on the timeline, in addition to its other uses. i think it is good ot use here, now. But you can swap this out with CTRL SHIFT D if you like.
 ;send ^!d ;in Premiere, set CTRL ALT D to "DESELECT ALL"
-if (colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7) ;alternatively, i think I can use "if in" for this kind of thing..
+if (colorr = timeline0 || colorr = timeline1 || colorr = timeline2 || colorr = timeline3 || colorr = timeline4 || colorr = timeline5 || colorr = timeline6 || colorr = timeline7) ;alternatively, i think I can use "if in" for this kind of thing..
 {
 	;BREAKTHROUGH -- it looks like a middle mouse click will BRING FOCUS TO a panel without doing ANYTHING ELSE like selecting or going through tabs or anything. Unfortunately, i still can't know with AHK which panel is already in focus.
 	click middle ;sends the middle mouse button to BRING FOCUS TO the timeline, WITHOUT selecting any clips or empty spaces between clips. very nice!
